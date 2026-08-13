@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join - Trivia Survival</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+
+  <!-- JOIN VIEW -->
+  <div id="joinView">
+    <h1 class="center">🐾 JOIN GAME</h1>
+    <div class="card">
+      <label>Room Code</label>
+      <input id="codeInput" type="text" maxlength="5" style="text-transform:uppercase; text-align:center; letter-spacing:4px;">
+      <label>Your Name</label>
+      <input id="nameInput" type="text" maxlength="16" placeholder="Enter your name">
+      <label>Pick an Avatar Color</label>
+      <div class="avatar-grid" id="avatarGrid"></div>
+      <button class="primary" style="margin-top:14px;" onclick="joinGame()">JOIN</button>
+      <div class="error-msg" id="joinError"></div>
+    </div>
+  </div>
+
+  <!-- LOBBY VIEW -->
+  <div id="lobbyView" style="display:none;">
+    <h1 class="center">You're in!</h1>
+    <div class="card center">
+      <p class="muted">Waiting for host to start the game...</p>
+      <button class="primary" id="readyBtn" onclick="toggleReady()">READY UP</button>
+      <h3 style="margin-top:20px;">Players (<span id="playerCount">0</span>)</h3>
+      <div class="player-list" id="playerList"></div>
+    </div>
+  </div>
+
+  <!-- GAME VIEW -->
+  <div id="gameView" style="display:none;">
+    <div class="status-strip">
+      <span class="badge" id="youStatus">Status: Alive</span>
+      <span class="badge alive">Alive: <span id="aliveCount">0</span></span>
+    </div>
+    <div class="q-indicator">
+      <div class="q-big">Q <span id="qIndex">1</span><span class="q-sep">/</span><span id="qTotal">10</span></div>
+    </div>
+    <div class="question-banner">
+      <h3 id="questionText">Get ready...</h3>
+      <div class="options-row" id="optionsRow"></div>
+      <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
+    </div>
+    <canvas id="arena"></canvas>
+    <p class="controls-hint">Move: WASD / Arrow Keys &nbsp;|&nbsp; Jump: Space</p>
+  </div>
+
+  <!-- END VIEW -->
+  <div id="endView" class="card center" style="display:none;">
+    <h2 id="endTitle">GAME OVER</h2>
+    <p class="muted" id="endReason"></p>
+    <div class="winners-list" id="winnersList"></div>
+    <p class="muted" id="rematchHint" style="margin-top:14px; display:none;">Waiting for the host to start a rematch...</p>
+    <button class="primary" style="margin-top:16px;" onclick="location.href='index.html'">BACK TO MENU</button>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/arena-render.js"></script>
+<script src="js/player.js"></script>
+</body>
+</html>

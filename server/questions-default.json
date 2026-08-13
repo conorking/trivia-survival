@@ -1,0 +1,22 @@
+[
+  { "q": "What planet is known as the Red Planet?", "options": { "A": "Venus", "B": "Mars", "C": "Jupiter" }, "correct": "B" },
+  { "q": "How many legs does a spider have?", "options": { "A": "6", "B": "8", "C": "10" }, "correct": "B" },
+  { "q": "What is the capital of France?", "options": { "A": "Paris", "B": "Rome", "C": "Berlin" }, "correct": "A" },
+  { "q": "Which ocean is the largest?", "options": { "A": "Atlantic", "B": "Indian", "C": "Pacific" }, "correct": "C" },
+  { "q": "What gas do plants absorb from the air?", "options": { "A": "Oxygen", "B": "Carbon Dioxide", "C": "Nitrogen" }, "correct": "B" },
+  { "q": "How many strings does a standard guitar have?", "options": { "A": "4", "B": "6", "C": "8" }, "correct": "B" },
+  { "q": "What is the largest mammal in the world?", "options": { "A": "Elephant", "B": "Blue Whale", "C": "Giraffe" }, "correct": "B" },
+  { "q": "Which country invented pizza?", "options": { "A": "Italy", "B": "France", "C": "Greece" }, "correct": "A" },
+  { "q": "What is the freezing point of water in Celsius?", "options": { "A": "0", "B": "32", "C": "100" }, "correct": "A" },
+  { "q": "How many continents are there on Earth?", "options": { "A": "5", "B": "7", "C": "9" }, "correct": "B" },
+  { "q": "What is the tallest mountain in the world?", "options": { "A": "K2", "B": "Kilimanjaro", "C": "Everest" }, "correct": "C" },
+  { "q": "Which animal is known as man's best friend?", "options": { "A": "Cat", "B": "Dog", "C": "Horse" }, "correct": "B" },
+  { "q": "What color do you get by mixing blue and yellow?", "options": { "A": "Green", "B": "Purple", "C": "Orange" }, "correct": "A" },
+  { "q": "How many players are on a standard soccer team on the field?", "options": { "A": "9", "B": "11", "C": "13" }, "correct": "B" },
+  { "q": "What is the chemical symbol for gold?", "options": { "A": "Ag", "B": "Gd", "C": "Au" }, "correct": "C" },
+  { "q": "Which planet has the most moons?", "options": { "A": "Saturn", "B": "Earth", "C": "Mars" }, "correct": "A" },
+  { "q": "What do bees make?", "options": { "A": "Silk", "B": "Honey", "C": "Milk" }, "correct": "B" },
+  { "q": "What is the smallest prime number?", "options": { "A": "0", "B": "1", "C": "2" }, "correct": "C" },
+  { "q": "Which instrument has keys, pedals, and strings?", "options": { "A": "Piano", "B": "Trumpet", "C": "Violin" }, "correct": "A" },
+  { "q": "What is the main language spoken in Brazil?", "options": { "A": "Spanish", "B": "Portuguese", "C": "French" }, "correct": "B" }
+]

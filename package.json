@@ -1,0 +1,15 @@
+{
+  "name": "trivia-survival",
+  "version": "1.0.0",
+  "description": "Fast browser icebreaker game: Trivia Survival",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "uuid": "^9.0.1"
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host - Trivia Survival</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="center">🎮 HOST CONSOLE</h1>
+
+  <!-- LOBBY VIEW -->
+  <div id="lobbyView">
+    <div class="card center" id="roomInfoCard" style="display:none;">
+      <h2>Room Code</h2>
+      <div class="join-info">
+        <div class="join-code" id="roomCode">-----</div>
+        <button class="copy-icon-btn" title="Copy code" onclick="copyCode()">📋</button>
+        <div id="qrcode-box"></div>
+      </div>
+      <div class="link-row">
+        <input id="joinUrl" type="text" readonly>
+        <button onclick="copyLink()">COPY LINK</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Game Config</h2>
+      <div class="row">
+        <div>
+          <label>Total game duration (seconds)</label>
+          <input type="number" id="cfgDuration" value="600" min="30" max="3600">
+        </div>
+        <div>
+          <label>Answer time per question (seconds)</label>
+          <input type="number" id="cfgAnswerTime" value="15" min="3" max="120">
+        </div>
+        <div>
+          <label>Number of questions</label>
+          <input type="number" id="cfgQuestionCount" value="10" min="1" max="100">
+        </div>
+      </div>
+      <label>Question Set</label>
+      <select id="cfgQuestionSet">
+        <option value="default">Built-in Default Set</option>
+        <option value="custom">Custom Upload</option>
+      </select>
+      <div id="uploadRow" style="display:none; margin-top:10px;">
+        <label>Upload questions (.json)</label>
+        <input type="file" id="questionFile" accept="application/json">
+        <p class="muted" id="uploadStatus">Format: [{ "q": "...", "options": {"A":"..","B":"..","C":".."}, "correct": "A" }, ...]</p>
+      </div>
+      <button class="primary" style="margin-top:14px;" onclick="saveConfig()">SAVE CONFIG</button>
+      <div class="error-msg" id="cfgError"></div>
+    </div>
+
+    <div class="card">
+      <h2>Players (<span id="playerCount">0</span>)</h2>
+      <div class="player-list" id="playerList"></div>
+      <button class="primary" style="margin-top:16px;" id="startBtn" onclick="startGame()" disabled>START GAME</button>
+      <div class="error-msg" id="startError"></div>
+    </div>
+  </div>
+
+  <!-- GAME VIEW -->
+  <div id="gameView" style="display:none;">
+    <div class="status-strip">
+      <div class="code-badge">
+        <span class="code-val" id="gameCodeVal">-----</span>
+        <button class="copy-btn" onclick="copyCode()">Copy</button>
+      </div>
+      <span class="badge alive">Alive: <span id="aliveCount">0</span></span>
+      <span class="badge ghost">Ghosts: <span id="ghostCount">0</span></span>
+      <button class="danger" onclick="endGameEarly()">END GAME</button>
+    </div>
+    <div class="q-indicator">
+      <div class="q-big">Q <span id="qIndex">1</span><span class="q-sep">/</span><span id="qTotal">10</span></div>
+    </div>
+    <div class="question-banner">
+      <h3 id="questionText">Waiting for question...</h3>
+      <div class="options-row" id="optionsRow"></div>
+      <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
+    </div>
+    <canvas id="arena"></canvas>
+  </div>
+
+  <!-- END VIEW -->
+  <div id="endView" class="card center" style="display:none;">
+    <h2>🏆 GAME OVER</h2>
+    <p class="muted" id="endReason"></p>
+    <div class="winners-list" id="winnersList"></div>
+    <div class="row" style="max-width:420px; margin:16px auto 0;">
+      <button class="primary" onclick="rematch()">REMATCH</button>
+      <button class="ghost-btn" onclick="newRoom()">NEW ROOM</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="js/arena-render.js"></script>
+<script src="js/host.js"></script>
+</body>
+</html>
