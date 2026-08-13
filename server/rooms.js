@@ -17,12 +17,17 @@ const DOG_HOME_RADIUS = 26; // how close to its pen slot counts as "home"
 const DOG_CATCH_RADIUS = 24;
 const REVEAL_DELAY_MS = 3000;
 const ESCAPE_MS = 2400; // window to flee a just-opened wrong door before it becomes lethal
-const DOG_CATCH_CAPACITY = 2; // catches before a dog is "full" and heads home
+const DOG_CATCH_CAPACITY_PCT = 0.25; // each dog's catch cap = this fraction of that round's hunt pool
+const DOG_CATCH_CAPACITY_MIN = 2; // ...but never less than this
 const DOG_GIVEUP_MS = 9000; // a dog heads home if it hasn't filled up by this long after release
+const DOG_EAT_MS = 2500; // a dog pauses to "eat" after a catch before resuming the hunt
 const DOG_PHASE_HARD_TIMEOUT_MS = 30000; // last-resort safety net only, never kills anyone
-const DEATH_ANIM_MS = 1300; // grace hold after the last kill so the fall animation can finish
+const DEATH_ANIM_MS = 1300; // grace hold after the last death so the fall/death animation can finish
 const HOME_SETTLE_MS = 500; // small buffer when the round ends via dogs-all-home w/ survivors
+const FALL_ANIM_HOLD_MS = 1000; // grace hold after escape-window stragglers fall, before dogs release
 const OBSTACLE_MARGIN = 18; // extra clearance dogs try to keep from trapdoor rects
+const TRAP_TRIGGER_RADIUS = 20;
+const TRAP_ROOT_MS = 1800; // how long a bear trap roots whoever steps on it
 const JUMP_MS = 320;
 const TICK_MS = 40; // 25Hz
 
@@ -138,6 +143,20 @@ function randomSpawn() {
   return { x, y };
 }
 
+function spawnTraps() {
+  const count = 2 + Math.floor(Math.random() * 2); // 2 or 3
+  const traps = [];
+  for (let i = 0; i < count; i++) {
+    let pos, tries = 0;
+    do {
+      pos = randomSpawn();
+      tries++;
+    } while (tries < 10 && traps.some(t => Math.hypot(t.x - pos.x, t.y - pos.y) < 60));
+    traps.push({ x: pos.x, y: pos.y, sprung: false });
+  }
+  return traps;
+}
+
 function shortCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = '';
@@ -145,11 +164,50 @@ function shortCode() {
   return code;
 }
 
+// Fisher-Yates shuffle of a question's option texts across A/B/C, so the correct
+// answer's letter isn't a fixed, learnable property of the source data. Returns a new
+// object - never mutates the shared source question (reused across rooms/games).
+function shuffleOptionLetters(q) {
+  const letters = ['A', 'B', 'C'];
+  const texts = letters.map(k => q.options[k]);
+  const correctIdx = letters.indexOf(q.correct);
+  const order = [0, 1, 2];
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  const options = {};
+  let correct = 'A';
+  order.forEach((origIdx, newPos) => {
+    const letter = letters[newPos];
+    options[letter] = texts[origIdx];
+    if (origIdx === correctIdx) correct = letter;
+  });
+  return { q: q.q, options, correct };
+}
+
 const DOG_PEN_SLOTS = [
   { x: DOG_PEN.x + 20, y: DOG_PEN.y + 30 },
   { x: DOG_PEN.x + 70, y: DOG_PEN.y + 30 },
   { x: DOG_PEN.x + 120, y: DOG_PEN.y + 30 }
 ];
+const DOG_HOME_ANGLE = Math.PI / 2; // facing south, out into the arena
+
+function createPennedDogs() {
+  return DOG_PEN_SLOTS.map((slot, i) => ({
+    id: i,
+    x: slot.x,
+    y: slot.y,
+    angle: DOG_HOME_ANGLE,
+    targetId: null,
+    catches: 0,
+    capacity: DOG_CATCH_CAPACITY_MIN,
+    state: 'home', // home | hunting | eating | returning
+    giveUpAt: 0,
+    eatUntil: 0,
+    homeSlot: slot
+  }));
+}
 
 class Room {
   constructor(code, hostSocketId) {
@@ -161,21 +219,23 @@ class Room {
       durationSec: 600, // total game length cap (10 min default)
       answerTimeSec: 15,
       questionCount: 10,
-      questionSet: 'default' // 'default' | 'custom'
+      questionSet: 'default', // 'default' | 'custom'
+      bearTraps: false // opt-in escape-phase hazard
     };
     this.customQuestions = null;
-    this.state = 'lobby'; // lobby | question | reveal | escape | resolve | death_anim | ended
+    this.state = 'lobby'; // lobby | question | reveal | escape | fall_pause | resolve | death_anim | ended
     this.questions = [];
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
     this.gameEndsAt = 0;
-    this.dogs = [];
+    this.dogs = createPennedDogs();
+    this.traps = [];
     this.cages = { A: [], B: [], C: [] };
     this.exposed = [];
     this.cageSolid = { A: false, B: false, C: false }; // true while a cage's perimeter blocks entry
     this.pitOpen = { A: false, B: false, C: false }; // true while a sprung door is a fall hazard
-    this.lastCatchAt = 0;
+    this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
     this.chaseGiveUpAt = 0;
     this.manualEnd = false;
@@ -196,6 +256,7 @@ class Room {
       y: spawn.y,
       input: { up: false, down: false, left: false, right: false },
       jumpUntil: 0,
+      rootedUntil: 0,
       alive: true,
       isGhost: false,
       connected: true,
@@ -219,7 +280,8 @@ class Room {
       connected: p.connected,
       ready: p.ready,
       caged: !!p.cagedAt,
-      jumpUntil: p.jumpUntil
+      jumpUntil: p.jumpUntil,
+      rootedUntil: p.rootedUntil || 0
     }));
   }
 
@@ -231,15 +293,16 @@ class Room {
     let source = this.config.questionSet === 'custom' && this.customQuestions
       ? this.customQuestions
       : DEFAULT_QUESTIONS;
-    // shuffle copy
+    // shuffle copy, then reshuffle each question's own A/B/C letter assignment
     const arr = [...source].sort(() => Math.random() - 0.5);
     const count = Math.min(this.config.questionCount, arr.length);
-    this.questions = arr.slice(0, count);
+    this.questions = arr.slice(0, count).map(shuffleOptionLetters);
   }
 
   resetHazards() {
     this.cageSolid = { A: false, B: false, C: false };
     this.pitOpen = { A: false, B: false, C: false };
+    this.traps = [];
   }
 
   start(io) {
@@ -249,12 +312,13 @@ class Room {
     this.currentQuestion = this.questions[0];
     this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
     this.gameEndsAt = Date.now() + this.config.durationSec * 1000;
-    this.dogs = [];
+    this.dogs = createPennedDogs();
     this.resetHazards();
     for (const p of this.players.values()) {
       p.alive = true;
       p.isGhost = false;
       p.cagedAt = null;
+      p.rootedUntil = 0;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;
@@ -300,11 +364,14 @@ class Room {
 
     // 1. Input-driven movement for everyone, then per-state containment rules.
     for (const p of this.players.values()) {
+      const rooted = p.rootedUntil && now < p.rootedUntil;
       let dx = 0, dy = 0;
-      if (p.input.up) dy -= 1;
-      if (p.input.down) dy += 1;
-      if (p.input.left) dx -= 1;
-      if (p.input.right) dx += 1;
+      if (!rooted) {
+        if (p.input.up) dy -= 1;
+        if (p.input.down) dy += 1;
+        if (p.input.left) dx -= 1;
+        if (p.input.right) dx += 1;
+      }
       if (dx !== 0 || dy !== 0) {
         const len = Math.sqrt(dx * dx + dy * dy);
         dx /= len; dy /= len;
@@ -350,7 +417,24 @@ class Room {
       }
     }
 
-    // 3. Pit-fall hazard - only live once the chase is actually on, never during the escape
+    // 3. Bear-trap hazard - escape phase only, one-shot: whoever steps on an unsprung
+    // trap gets rooted for a couple seconds. Traps are cleared once escape ends.
+    if (this.state === 'escape' && this.traps.length) {
+      for (const p of solidPlayers) {
+        if (p.cagedAt) continue;
+        if (p.rootedUntil && now < p.rootedUntil) continue;
+        for (const trap of this.traps) {
+          if (trap.sprung) continue;
+          if (Math.hypot(p.x - trap.x, p.y - trap.y) < TRAP_TRIGGER_RADIUS) {
+            trap.sprung = true;
+            p.rootedUntil = now + TRAP_ROOT_MS;
+            break;
+          }
+        }
+      }
+    }
+
+    // 4. Pit-fall hazard - only live once the chase is actually on, never during the escape
     // window itself (that's the whole point of giving players a couple seconds to flee).
     if (this.state === 'resolve') {
       const drops = [];
@@ -359,7 +443,7 @@ class Room {
         for (const key of ['A', 'B', 'C']) {
           if (!this.pitOpen[key]) continue;
           if (rectContains(TRAPDOORS[key], p.x, p.y)) {
-            drops.push(this.fallIntoPit(p, key));
+            drops.push(this.fallIntoPit(p, key, now));
             break;
           }
         }
@@ -378,6 +462,8 @@ class Room {
       this.doReveal(io, now);
     } else if (this.state === 'escape' && now >= this.phaseEndsAt) {
       this.doEscapeEnd(io, now);
+    } else if (this.state === 'fall_pause' && now >= this.phaseEndsAt) {
+      this.releaseDogs(io, now);
     } else if (this.state === 'resolve') {
       this.doDogChase(io, now);
     } else if (this.state === 'death_anim' && now >= this.phaseEndsAt) {
@@ -388,17 +474,19 @@ class Room {
     io.to(this.code).emit('game:tick', {
       state: this.state,
       players: this.getPlayersPublic(),
-      dogs: this.dogs.map(d => ({ x: d.x, y: d.y, angle: d.angle, state: d.state }))
+      dogs: this.dogs.map(d => ({ x: d.x, y: d.y, angle: d.angle, state: d.state })),
+      traps: this.traps.map(t => ({ x: t.x, y: t.y, sprung: t.sprung }))
     });
   }
 
   // Shared by the mid-chase pit-fall check and the escape-window straggler sweep.
-  fallIntoPit(p, key) {
+  fallIntoPit(p, key, now) {
     const door = TRAPDOORS[key];
     const fromX = p.x, fromY = p.y;
     p.alive = false;
     p.isGhost = true;
     p.cagedAt = null;
+    this.lastDeathAt = now;
     const jitter = (Math.random() - 0.5) * 60;
     p.x = clamp(door.x + door.w / 2 + jitter, PLAYER_RADIUS, ARENA_W - PLAYER_RADIUS);
     p.y = clamp(door.y - 30, PLAYER_RADIUS, ARENA_H - PLAYER_RADIUS);
@@ -432,10 +520,11 @@ class Room {
 
   doReveal(io, now) {
     const correct = this.currentQuestion.correct;
-    io.to(this.code).emit('game:reveal', { correct });
+    const escapeEndsAt = now + ESCAPE_MS;
+    io.to(this.code).emit('game:reveal', { correct, escapeEndsAt });
 
     // Wrong doors swing open and their occupants are freed - but not killed yet.
-    // They (and anyone else) now have ESCAPE_MS to get off the pit before it's lethal.
+    // They (and anyone else) now have until escapeEndsAt to get off the pit before it's lethal.
     for (const key of ['A', 'B', 'C']) {
       if (key === correct) continue;
       this.cageSolid[key] = false;
@@ -446,11 +535,15 @@ class Room {
       }
     }
 
+    this.traps = this.config.bearTraps ? spawnTraps() : [];
+
     this.state = 'escape';
-    this.phaseEndsAt = now + ESCAPE_MS;
+    this.phaseEndsAt = escapeEndsAt;
   }
 
   doEscapeEnd(io, now) {
+    this.traps = []; // only a hazard during the escape window itself
+
     // Anyone still standing on an open pit when the grace window closes falls through.
     const drops = [];
     for (const p of this.players.values()) {
@@ -458,31 +551,41 @@ class Room {
       for (const key of ['A', 'B', 'C']) {
         if (!this.pitOpen[key]) continue;
         if (rectContains(TRAPDOORS[key], p.x, p.y)) {
-          drops.push(this.fallIntoPit(p, key));
+          drops.push(this.fallIntoPit(p, key, now));
           break;
         }
       }
     }
-    if (drops.length) io.to(this.code).emit('game:dropped', { drops });
-    this.releaseDogs(io, now);
+    if (drops.length) {
+      io.to(this.code).emit('game:dropped', { drops });
+      // Give the fall animation time to play before the chase visibly kicks off.
+      this.state = 'fall_pause';
+      this.phaseEndsAt = now + FALL_ANIM_HOLD_MS;
+    } else {
+      this.releaseDogs(io, now);
+    }
   }
 
   releaseDogs(io, now) {
+    const huntPool = Array.from(this.players.values())
+      .filter(p => p.alive && !p.isGhost && !p.cagedAt);
+    const capacity = Math.max(
+      DOG_CATCH_CAPACITY_MIN,
+      Math.round(huntPool.length * DOG_CATCH_CAPACITY_PCT)
+    );
     const giveUpAt = now + DOG_GIVEUP_MS;
-    this.dogs = DOG_PEN_SLOTS.map((slot, i) => ({
-      id: i,
-      x: slot.x,
-      y: slot.y,
-      angle: -Math.PI / 2,
-      targetId: null,
-      catches: 0,
-      state: 'hunting',
-      giveUpAt,
-      homeSlot: slot
-    }));
+    for (const dog of this.dogs) {
+      dog.state = 'hunting';
+      dog.catches = 0;
+      dog.capacity = capacity;
+      dog.targetId = null;
+      dog.giveUpAt = giveUpAt;
+      dog.eatUntil = 0;
+      // x/y/angle stay as-is - they're already sitting at their pen slot.
+    }
     this.chaseGiveUpAt = giveUpAt;
     this.hardTimeoutAt = now + DOG_PHASE_HARD_TIMEOUT_MS;
-    this.lastCatchAt = 0;
+    this.lastDeathAt = 0;
     this.state = 'resolve';
     io.to(this.code).emit('game:dogs_released', { giveUpAt });
   }
@@ -498,19 +601,36 @@ class Room {
     for (const dog of this.dogs) {
       if (dog.state === 'home') continue;
 
+      if (dog.state === 'eating') {
+        if (now >= dog.eatUntil) {
+          dog.state = (dog.catches >= dog.capacity || now >= dog.giveUpAt) ? 'returning' : 'hunting';
+        } else {
+          continue; // holding position, chewing - no movement this tick
+        }
+      }
+
       if (dog.state === 'hunting') {
-        if (dog.catches >= DOG_CATCH_CAPACITY || now >= dog.giveUpAt) {
+        if (dog.catches >= dog.capacity || now >= dog.giveUpAt) {
           dog.state = 'returning';
           dog.targetId = null;
         } else {
           let target = dog.targetId ? this.players.get(dog.targetId) : null;
           if (!target || !target.alive || target.isGhost || target.cagedAt) target = null;
           if (!target) {
+            // Priority 1: nearest target nobody else is currently hunting.
             let nearest = null, nearestDist = Infinity;
             for (const p of huntPool) {
               if (claimed.has(p.id)) continue;
               const d = Math.hypot(p.x - dog.x, p.y - dog.y);
               if (d < nearestDist) { nearestDist = d; nearest = p; }
+            }
+            // Priority 2 (fallback): nearest overall - a dog should always have a
+            // target if anyone is huntable at all, even if that means sharing.
+            if (!nearest) {
+              for (const p of huntPool) {
+                const d = Math.hypot(p.x - dog.x, p.y - dog.y);
+                if (d < nearestDist) { nearestDist = d; nearest = p; }
+              }
             }
             if (nearest) { dog.targetId = nearest.id; claimed.add(nearest.id); }
           }
@@ -543,6 +663,8 @@ class Room {
 
       if (dog.state === 'returning' && Math.hypot(dog.x - dog.homeSlot.x, dog.y - dog.homeSlot.y) < DOG_HOME_RADIUS) {
         dog.state = 'home';
+        dog.x = dog.homeSlot.x; dog.y = dog.homeSlot.y;
+        dog.angle = DOG_HOME_ANGLE;
       }
     }
 
@@ -562,27 +684,34 @@ class Room {
         target.isGhost = true;
         dog.catches += 1;
         dog.targetId = null;
-        this.lastCatchAt = now;
+        dog.state = 'eating';
+        dog.eatUntil = now + DOG_EAT_MS;
+        this.lastDeathAt = now;
         io.to(this.code).emit('player:caught', {
           id: target.id, x: target.x, y: target.y, dogX: dog.x, dogY: dog.y
         });
       }
     }
 
-    const hard = now >= this.hardTimeoutAt;
-    if (hard) {
-      // Last-resort safety net: send every dog home instantly. Never kills survivors.
-      for (const dog of this.dogs) dog.state = 'home';
-    }
-
     const huntPoolAlive = huntPool.filter(p => p.alive && !p.isGhost);
     const allDogsHome = this.dogs.every(d => d.state === 'home');
     const allDead = huntPoolAlive.length === 0;
+    const hard = now >= this.hardTimeoutAt;
 
     if (allDead || allDogsHome || hard) {
+      // Round's over one way or another - make sure every dog ends up cleanly back at
+      // its pen slot (whether mid-chase, eating, or already homeward bound) so the pen
+      // reads right for the next round, regardless of which condition ended this one.
+      for (const dog of this.dogs) {
+        if (dog.state !== 'home') {
+          dog.state = 'home';
+          dog.x = dog.homeSlot.x; dog.y = dog.homeSlot.y;
+          dog.angle = DOG_HOME_ANGLE;
+        }
+      }
       this.state = 'death_anim';
       this.phaseEndsAt = allDead
-        ? Math.max(now, (this.lastCatchAt || now) + DEATH_ANIM_MS)
+        ? Math.max(now, (this.lastDeathAt || now) + DEATH_ANIM_MS)
         : now + HOME_SETTLE_MS;
     }
   }
@@ -594,7 +723,6 @@ class Room {
       if (p) p.cagedAt = null;
     }
     this.cageSolid[correct] = false;
-    this.dogs = [];
     io.to(this.code).emit('game:round_complete', {});
     this.advanceRound(io, now);
   }
@@ -634,11 +762,11 @@ class Room {
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
     this.gameEndsAt = 0;
-    this.dogs = [];
+    this.dogs = createPennedDogs();
     this.cages = { A: [], B: [], C: [] };
     this.exposed = [];
     this.resetHazards();
-    this.lastCatchAt = 0;
+    this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
     this.chaseGiveUpAt = 0;
     this.manualEnd = false;
@@ -647,6 +775,7 @@ class Room {
       p.isGhost = false;
       p.cagedAt = null;
       p.ready = false;
+      p.rootedUntil = 0;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;

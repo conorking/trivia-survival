@@ -4,6 +4,7 @@ let currentConfig = null;
 let uploadedQuestions = null;
 let latestPlayers = [];
 let latestDogs = [];
+let latestTraps = [];
 
 const existingCode = sessionStorage.getItem('trivia_host_room');
 
@@ -94,7 +95,7 @@ socket.on('game:lockin', () => {
 });
 
 socket.on('game:reveal', (data) => {
-  ArenaRender.onReveal(data.correct);
+  ArenaRender.onReveal(data.correct, data.escapeEndsAt);
   document.querySelectorAll('.option-pill').forEach(el => {
     if (el.classList.contains(data.correct)) el.classList.add('correct');
     else el.classList.add('wrong');
@@ -120,6 +121,7 @@ socket.on('game:round_complete', () => {
 socket.on('game:tick', (data) => {
   latestPlayers = data.players;
   latestDogs = data.dogs;
+  latestTraps = data.traps || [];
   updateCounts(data.players);
   drawFrame();
 });
@@ -162,9 +164,13 @@ function showRoomInfo(code) {
 
 function populateConfigForm(config) {
   document.getElementById('cfgDuration').value = config.durationSec;
+  document.getElementById('cfgDurationRange').value = config.durationSec;
   document.getElementById('cfgAnswerTime').value = config.answerTimeSec;
+  document.getElementById('cfgAnswerTimeRange').value = config.answerTimeSec;
   document.getElementById('cfgQuestionCount').value = config.questionCount;
+  document.getElementById('cfgQuestionCountRange').value = config.questionCount;
   document.getElementById('cfgQuestionSet').value = config.questionSet;
+  document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
   document.getElementById('uploadRow').style.display = config.questionSet === 'custom' ? 'block' : 'none';
 }
 
@@ -187,14 +193,28 @@ document.getElementById('questionFile').addEventListener('change', (e) => {
   reader.readAsText(file);
 });
 
-function saveConfig() {
-  document.getElementById('cfgError').textContent = '';
-  socket.emit('host:updateConfig', {
+// Keep each slider and its paired number box in sync, both directions.
+function linkSlider(rangeId, numberId) {
+  const range = document.getElementById(rangeId);
+  const number = document.getElementById(numberId);
+  range.addEventListener('input', () => { number.value = range.value; });
+  number.addEventListener('input', () => {
+    const clamped = Math.max(Number(number.min), Math.min(Number(number.max), Number(number.value) || 0));
+    range.value = clamped;
+  });
+}
+linkSlider('cfgDurationRange', 'cfgDuration');
+linkSlider('cfgAnswerTimeRange', 'cfgAnswerTime');
+linkSlider('cfgQuestionCountRange', 'cfgQuestionCount');
+
+function collectConfig() {
+  return {
     durationSec: Number(document.getElementById('cfgDuration').value),
     answerTimeSec: Number(document.getElementById('cfgAnswerTime').value),
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
-    questionSet: document.getElementById('cfgQuestionSet').value
-  });
+    questionSet: document.getElementById('cfgQuestionSet').value,
+    bearTraps: document.getElementById('cfgBearTraps').checked
+  };
 }
 
 function renderPlayerList(players) {
@@ -212,7 +232,8 @@ function renderPlayerList(players) {
 
 function startGame() {
   document.getElementById('startError').textContent = '';
-  socket.emit('host:startGame');
+  document.getElementById('cfgError').textContent = '';
+  socket.emit('host:startGame', { config: collectConfig() });
 }
 
 function endGameEarly() {
@@ -270,5 +291,5 @@ function drawFrame() {
   const canvas = document.getElementById('arena');
   if (!canvas || canvas.style.display === 'none') return;
   const ctx = canvas.getContext('2d');
-  ArenaRender.render(ctx, { players: latestPlayers, dogs: latestDogs, myId: null });
+  ArenaRender.render(ctx, { players: latestPlayers, dogs: latestDogs, traps: latestTraps, myId: null });
 }

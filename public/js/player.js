@@ -5,6 +5,7 @@ let myRoomCode = null;
 let ready = false;
 let latestPlayers = [];
 let latestDogs = [];
+let latestTraps = [];
 let myAliveGhostState = { alive: true, isGhost: false };
 let myLocalJumpUntil = 0;
 
@@ -129,7 +130,7 @@ socket.on('game:lockin', () => {
 });
 
 socket.on('game:reveal', (data) => {
-  ArenaRender.onReveal(data.correct);
+  ArenaRender.onReveal(data.correct, data.escapeEndsAt);
   document.querySelectorAll('.option-pill').forEach(el => {
     if (el.classList.contains(data.correct)) el.classList.add('correct');
     else el.classList.add('wrong');
@@ -155,6 +156,7 @@ socket.on('game:round_complete', () => {
 socket.on('game:tick', (data) => {
   latestPlayers = data.players;
   latestDogs = data.dogs;
+  latestTraps = data.traps || [];
   const me = data.players.find(p => p.id === myId);
   if (me) {
     myAliveGhostState = { alive: me.alive, isGhost: me.isGhost };
@@ -230,7 +232,7 @@ function drawFrame() {
       return serverJump >= myLocalJumpUntil ? p : { ...p, jumpUntil: myLocalJumpUntil };
     });
   }
-  ArenaRender.render(ctx, { players, dogs: latestDogs, myId });
+  ArenaRender.render(ctx, { players, dogs: latestDogs, traps: latestTraps, myId });
 }
 
 // ---- Input handling ----

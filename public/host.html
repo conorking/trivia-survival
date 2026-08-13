@@ -27,18 +27,28 @@
 
     <div class="card">
       <h2>Game Config</h2>
+      <p class="muted">Settings apply when you hit START GAME below - no separate save step.</p>
       <div class="row">
         <div>
           <label>Total game duration (seconds)</label>
-          <input type="number" id="cfgDuration" value="600" min="30" max="3600">
+          <div class="slider-row">
+            <input type="range" id="cfgDurationRange" min="30" max="3600" step="10" value="600">
+            <input type="number" id="cfgDuration" value="600" min="30" max="3600">
+          </div>
         </div>
         <div>
           <label>Answer time per question (seconds)</label>
-          <input type="number" id="cfgAnswerTime" value="15" min="3" max="120">
+          <div class="slider-row">
+            <input type="range" id="cfgAnswerTimeRange" min="3" max="120" step="1" value="15">
+            <input type="number" id="cfgAnswerTime" value="15" min="3" max="120">
+          </div>
         </div>
         <div>
           <label>Number of questions</label>
-          <input type="number" id="cfgQuestionCount" value="10" min="1" max="100">
+          <div class="slider-row">
+            <input type="range" id="cfgQuestionCountRange" min="1" max="100" step="1" value="10">
+            <input type="number" id="cfgQuestionCount" value="10" min="1" max="100">
+          </div>
         </div>
       </div>
       <label>Question Set</label>
@@ -51,7 +61,10 @@
         <input type="file" id="questionFile" accept="application/json">
         <p class="muted" id="uploadStatus">Format: [{ "q": "...", "options": {"A":"..","B":"..","C":".."}, "correct": "A" }, ...]</p>
       </div>
-      <button class="primary" style="margin-top:14px;" onclick="saveConfig()">SAVE CONFIG</button>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgBearTraps">
+        <span>🪤 Bear traps during the escape phase (root anyone who steps on one)</span>
+      </label>
       <div class="error-msg" id="cfgError"></div>
     </div>
 

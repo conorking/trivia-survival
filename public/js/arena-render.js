@@ -13,18 +13,23 @@ const ArenaRender = (() => {
   let DOG_PEN = { x: 330, y: 20, w: 140, h: 60 };
 
   const DOOR_COLORS = { A: '#ef8f4f', B: '#4fb8ef', C: '#b84fef' };
-  const DOOR_OPEN_DUR = 900;
+  const BAR_FADE_MS = 250; // cage bars vanish fast right when a wrong door's occupant is freed
+  const SHUDDER_MS = 500; // warning shudder in the last stretch before a door snaps open
+  const SNAP_MS = 180; // the door itself opens fast, timed to the real lethal instant
   const FALL_DUR = 900;
   const DEATH_ANIM_DUR = 1200; // roughly matches server DEATH_ANIM_MS
+  const GATE_ANIM_MS = 450;
+  const GATE_W = 46;
 
   // ---- animation state ----
   let doorsCaged = { A: false, B: false, C: false };
   let correctDoor = null;
   let revealedAt = 0;
-  let doorOpenStart = {};
-  let dropAnims = new Map(); // playerId -> {start, fromX, fromY, toX, toY}
-  let deathAnims = new Map(); // playerId -> {start, x, y, dogX, dogY, color, name}
+  let escapeEndsAt = 0; // when the wrong doors actually snap open / become lethal
+  let dropAnims = new Map(); // playerId -> {start, fromX, fromY, toX, toY, doorKey}
+  let deathAnims = new Map(); // playerId -> {start, x, y, dogX, dogY}
   let chaseGiveUpAt = 0;
+  let releasedAt = 0; // when dogs were released - drives the pen gate animation
 
   function setArena(arena) {
     if (!arena) return;
@@ -41,9 +46,10 @@ const ArenaRender = (() => {
     doorsCaged = { A: false, B: false, C: false };
     correctDoor = null;
     revealedAt = 0;
-    doorOpenStart = {};
+    escapeEndsAt = 0;
     deathAnims.clear();
     chaseGiveUpAt = 0;
+    releasedAt = 0;
   }
 
   function onLockIn() {
@@ -51,21 +57,21 @@ const ArenaRender = (() => {
     doorsCaged = { A: true, B: true, C: true };
     correctDoor = null;
     revealedAt = 0;
-    doorOpenStart = {};
+    escapeEndsAt = 0;
   }
 
-  function onReveal(correct) {
+  function onReveal(correct, escapeEndsAtParam) {
     correctDoor = correct;
     revealedAt = Date.now();
-    for (const key of ['A', 'B', 'C']) {
-      if (key !== correct) doorOpenStart[key] = Date.now();
-    }
+    escapeEndsAt = escapeEndsAtParam || (revealedAt + 2400);
   }
 
   function onDropped(drops) {
     const now = Date.now();
     for (const d of drops || []) {
-      dropAnims.set(d.id, { start: now, fromX: d.fromX, fromY: d.fromY, toX: d.toX, toY: d.toY });
+      dropAnims.set(d.id, {
+        start: now, fromX: d.fromX, fromY: d.fromY, toX: d.toX, toY: d.toY, doorKey: d.doorKey
+      });
     }
   }
 
@@ -73,9 +79,10 @@ const ArenaRender = (() => {
     doorsCaged = { A: false, B: false, C: false };
     correctDoor = null;
     revealedAt = 0;
-    doorOpenStart = {};
+    escapeEndsAt = 0;
     deathAnims.clear();
     chaseGiveUpAt = 0;
+    releasedAt = 0;
   }
 
   function onCaught(data) {
@@ -89,6 +96,7 @@ const ArenaRender = (() => {
 
   function onDogsReleased(data) {
     chaseGiveUpAt = (data && data.giveUpAt) || 0;
+    releasedAt = Date.now();
   }
 
   function shade(hex, factor) {
@@ -118,15 +126,37 @@ const ArenaRender = (() => {
   }
 
   function drawDogPen(ctx) {
+    const now = Date.now();
+    const gateT = releasedAt ? Math.min(1, (now - releasedAt) / GATE_ANIM_MS) : 0;
+    const gateOpen = gateT > 0.02;
+    const gx = DOG_PEN.x + DOG_PEN.w / 2 - GATE_W / 2;
+    const gy = DOG_PEN.y + DOG_PEN.h;
+
     ctx.fillStyle = '#5b3a29';
     ctx.fillRect(DOG_PEN.x, DOG_PEN.y, DOG_PEN.w, DOG_PEN.h);
+    ctx.fillStyle = '#2e1c14';
+    for (let x = DOG_PEN.x + 8; x < DOG_PEN.x + DOG_PEN.w; x += 12) {
+      if (gateOpen && x > gx - 4 && x < gx + GATE_W + 4) continue; // gap where the gate opened
+      ctx.fillRect(x, DOG_PEN.y, 3, DOG_PEN.h);
+    }
     ctx.strokeStyle = '#2e1c14';
     ctx.lineWidth = 4;
     ctx.strokeRect(DOG_PEN.x, DOG_PEN.y, DOG_PEN.w, DOG_PEN.h);
-    ctx.fillStyle = '#2e1c14';
-    for (let x = DOG_PEN.x + 8; x < DOG_PEN.x + DOG_PEN.w; x += 12) {
-      ctx.fillRect(x, DOG_PEN.y, 3, DOG_PEN.h);
-    }
+
+    // Gate: two hinged panels that swing open from the bottom edge when dogs are released.
+    const t = gateT * 1.3;
+    const panelLen = GATE_W / 2;
+    ctx.save();
+    ctx.strokeStyle = '#e8d7b0';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(gx, gy);
+    ctx.lineTo(gx + Math.cos(t) * panelLen, gy + Math.sin(t) * panelLen);
+    ctx.moveTo(gx + GATE_W, gy);
+    ctx.lineTo(gx + GATE_W - Math.cos(t) * panelLen, gy + Math.sin(t) * panelLen);
+    ctx.stroke();
+    ctx.restore();
+
     ctx.fillStyle = '#e8d7b0';
     ctx.font = '11px monospace';
     ctx.textAlign = 'center';
@@ -140,35 +170,63 @@ const ArenaRender = (() => {
       const color = DOOR_COLORS[key];
       const isCorrect = revealedAt && correctDoor === key;
       const isWrong = revealedAt && correctDoor && correctDoor !== key;
-      const openProgress = isWrong && doorOpenStart[key]
-        ? Math.min(1, (now - doorOpenStart[key]) / DOOR_OPEN_DUR)
-        : 0;
+
+      // Timing: a wrong door stays visually shut through the whole escape window
+      // (shuddering as the deadline nears) and snaps open fast exactly when it becomes
+      // lethal - synced to the server's real escapeEndsAt, not a fixed local duration.
+      let openProgress = 0;
+      let shudderMag = 0;
+      if (isWrong) {
+        const untilLethal = escapeEndsAt - now;
+        if (untilLethal <= 0) {
+          openProgress = Math.min(1, -untilLethal / SNAP_MS);
+        } else if (untilLethal <= SHUDDER_MS) {
+          shudderMag = 1 - untilLethal / SHUDDER_MS;
+        }
+      }
 
       // Pit (always underneath)
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(d.x, d.y, d.w, d.h);
 
-      // Wood/colored door halves
+      // Wood/colored door - clipped to the hole's own footprint so a fast snap can never
+      // visibly spill panels onto the surrounding floor.
       if (openProgress < 1) {
-        const halfW = d.w / 2;
-        const shift = openProgress * halfW;
-        ctx.fillStyle = color;
-        ctx.fillRect(d.x - shift, d.y, halfW, d.h);
-        ctx.fillRect(d.x + halfW + shift, d.y, halfW, d.h);
-        ctx.strokeStyle = shade(color, 0.6);
-        ctx.lineWidth = 2;
+        ctx.save();
         ctx.beginPath();
-        ctx.moveTo(d.x - shift + halfW / 2, d.y); ctx.lineTo(d.x - shift + halfW / 2, d.y + d.h);
-        ctx.moveTo(d.x + halfW + shift + halfW / 2, d.y); ctx.lineTo(d.x + halfW + shift + halfW / 2, d.y + d.h);
-        ctx.stroke();
-        if (openProgress > 0) {
-          ctx.fillStyle = '#0a0a0a';
-          ctx.fillRect(d.x + shift, d.y, d.w - shift * 2, d.h);
+        ctx.rect(d.x, d.y, d.w, d.h);
+        ctx.clip();
+
+        if (openProgress === 0) {
+          const jitterX = shudderMag ? Math.sin(now / 30) * 2.5 * shudderMag : 0;
+          const jitterY = shudderMag ? Math.sin(now / 21 + 1) * 1.5 * shudderMag : 0;
+          ctx.fillStyle = color;
+          ctx.fillRect(d.x + jitterX, d.y + jitterY, d.w, d.h);
+          if (shudderMag > 0.4) {
+            ctx.save();
+            ctx.globalAlpha = (shudderMag - 0.4) * 0.6;
+            ctx.fillStyle = '#ef4f6b';
+            ctx.fillRect(d.x, d.y, d.w, d.h);
+            ctx.restore();
+          }
+        } else {
+          const halfW = d.w / 2;
+          const shift = openProgress * halfW;
+          ctx.fillStyle = color;
+          ctx.fillRect(d.x - shift, d.y, halfW, d.h);
+          ctx.fillRect(d.x + halfW + shift, d.y, halfW, d.h);
+          ctx.strokeStyle = shade(color, 0.6);
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(d.x - shift + halfW / 2, d.y); ctx.lineTo(d.x - shift + halfW / 2, d.y + d.h);
+          ctx.moveTo(d.x + halfW + shift + halfW / 2, d.y); ctx.lineTo(d.x + halfW + shift + halfW / 2, d.y + d.h);
+          ctx.stroke();
         }
+
         ctx.strokeStyle = '#20140c';
         ctx.lineWidth = 3;
-        ctx.strokeRect(d.x - shift, d.y, halfW, d.h);
-        ctx.strokeRect(d.x + halfW + shift, d.y, halfW, d.h);
+        ctx.strokeRect(d.x, d.y, d.w, d.h);
+        ctx.restore();
       }
 
       // Letter label
@@ -177,10 +235,12 @@ const ArenaRender = (() => {
       ctx.textAlign = 'center';
       ctx.fillText(key, d.x + d.w / 2, d.y - 14);
 
-      // Cage bars
+      // Cage bars - the wrong doors' bars vanish FAST right when their occupant is
+      // freed (reveal instant), decoupled from the later door-snap timing, so players
+      // get a crisp "you can move now" signal.
       if (doorsCaged[key]) {
         let barAlpha = 1;
-        if (isWrong) barAlpha = 1 - openProgress;
+        if (isWrong) barAlpha = Math.max(0, 1 - (now - revealedAt) / BAR_FADE_MS);
         if (barAlpha > 0.02) {
           ctx.save();
           ctx.globalAlpha = barAlpha;
@@ -212,8 +272,14 @@ const ArenaRender = (() => {
       let caption = '';
       let capColor = '#f4f1de';
       if (doorsCaged[key] && !revealedAt) { caption = 'LOCKED'; capColor = '#dddddd'; }
-      else if (isCorrect) { caption = 'SAFE \u2713'; capColor = '#58d68d'; }
-      else if (isWrong && openProgress < 1) { caption = 'OPENING...'; capColor = '#ef4f6b'; }
+      else if (isCorrect) { caption = 'SAFE ✓'; capColor = '#58d68d'; }
+      else if (isWrong) {
+        if (openProgress > 0 && openProgress < 1) { caption = 'OPENING...'; capColor = '#ef4f6b'; }
+        else if (openProgress === 0) {
+          if (shudderMag > 0) { caption = 'BRACE!'; capColor = '#ff8a3d'; }
+          else { caption = 'RUN!'; capColor = '#ef4f6b'; }
+        }
+      }
       if (caption) {
         ctx.fillStyle = capColor;
         ctx.font = 'bold 11px monospace';
@@ -262,30 +328,49 @@ const ArenaRender = (() => {
       scale = 1 + Math.sin(t * Math.PI) * 0.12;
     }
     const alpha = p.isGhost ? 0.45 : (p.connected === false ? 0.6 : 1);
-    const label = p.isGhost ? `\uD83D\uDC7B ${p.name}` : p.name;
+    const label = p.isGhost ? `👻 ${p.name}` : p.name;
     drawPlayerBody(ctx, p.x, p.y + bob + squashY, p.color, p.isGhost, isMe, label, alpha, scale);
   }
 
   function drawFallingGhost(ctx, p, anim, isMe) {
     const now = Date.now();
     const t = Math.max(0, Math.min(1, (now - anim.start) / FALL_DUR));
-    const x = anim.fromX + (anim.toX - anim.fromX) * t;
-    const y = anim.fromY + (anim.toY - anim.fromY) * t;
-    const scale = 1 - 0.55 * Math.sin(t * Math.PI);
-    const alpha = 0.35 + 0.65 * t;
-    const label = `\uD83D\uDC7B ${p.name}`;
-    drawPlayerBody(ctx, x, y, p.color, true, isMe, label, alpha, Math.max(0.35, scale));
+    const door = TRAPDOORS[anim.doorKey];
+    const pitX = door ? door.x + door.w / 2 : anim.fromX;
+    const pitY = door ? door.y + door.h / 2 : anim.fromY;
+
+    let x, y, scale, alpha;
+    if (t < 0.4) {
+      // Phase 1: sink down into the hole they fell through.
+      const pt = t / 0.4;
+      x = anim.fromX + (pitX - anim.fromX) * pt;
+      y = anim.fromY + (pitY - anim.fromY) * pt;
+      scale = 1 - 0.85 * pt;
+      alpha = 1 - 0.7 * pt;
+    } else {
+      // Phase 2: pop back up nearby as a ghost.
+      const pt = (t - 0.4) / 0.6;
+      const rise = Math.sin(pt * Math.PI * 0.5);
+      x = pitX + (anim.toX - pitX) * pt;
+      y = pitY + (anim.toY - pitY) * pt;
+      scale = 0.15 + 0.85 * rise;
+      alpha = 0.3 + 0.7 * pt;
+    }
+    const label = `👻 ${p.name}`;
+    drawPlayerBody(ctx, x, y, p.color, true, isMe, label, alpha, Math.max(0.15, scale));
   }
 
   function drawDog(ctx, dog) {
     const now = Date.now();
     const angle = dog.angle || 0;
     const resting = dog.state === 'home';
-    const wag = resting ? 0.15 : Math.sin(now / 90) * 0.55;
-    const trot = resting ? 0 : Math.sin(now / 70) * 2;
+    const eating = dog.state === 'eating';
+    const wag = resting ? 0.15 : (eating ? 0.05 : Math.sin(now / 90) * 0.55);
+    const trot = (resting || eating) ? 0 : Math.sin(now / 70) * 2;
+    const chewBob = eating ? Math.abs(Math.sin(now / 160)) * 2 : 0;
 
     ctx.save();
-    ctx.translate(dog.x, dog.y);
+    ctx.translate(dog.x, dog.y + chewBob);
     ctx.rotate(angle);
     if (resting) ctx.globalAlpha = 0.75;
 
@@ -332,25 +417,26 @@ const ArenaRender = (() => {
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Head (toward heading, +x)
+    // Head (toward heading, +x) - dips slightly while eating
+    const headY = eating ? 3 : 0;
     ctx.fillStyle = furColor;
     ctx.beginPath();
-    ctx.ellipse(11, 0, 7, 6.5, 0, 0, Math.PI * 2);
+    ctx.ellipse(11, headY, 7, 6.5, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     // Snout
     ctx.fillStyle = furDark;
     ctx.beginPath();
-    ctx.moveTo(15, -3);
-    ctx.lineTo(21, -1);
-    ctx.lineTo(21, 1);
-    ctx.lineTo(15, 3);
+    ctx.moveTo(15, headY - 3);
+    ctx.lineTo(21, headY - 1);
+    ctx.lineTo(21, headY + 1);
+    ctx.lineTo(15, headY + 3);
     ctx.closePath();
     ctx.fill();
     ctx.fillStyle = furDarker;
     ctx.beginPath();
-    ctx.arc(20.5, 0, 1.6, 0, Math.PI * 2);
+    ctx.arc(20.5, headY, 1.6, 0, Math.PI * 2);
     ctx.fill();
 
     // Ears
@@ -365,7 +451,52 @@ const ArenaRender = (() => {
     // Eye
     ctx.fillStyle = '#0f0a06';
     ctx.beginPath();
-    ctx.arc(13, -2.5, 1.3, 0, Math.PI * 2);
+    ctx.arc(13, headY - 2.5, 1.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawBearTrap(ctx, trap) {
+    const r = 11;
+    ctx.save();
+    ctx.translate(trap.x, trap.y);
+
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.beginPath();
+    ctx.ellipse(0, 3, r, r * 0.55, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#4a4a4a';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r, r * 0.7, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#222';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    const jawColor = trap.sprung ? '#8a1c1c' : '#c9c9c9';
+    const spread = trap.sprung ? 0.15 : 1; // sprung = jaws mostly closed
+    ctx.strokeStyle = jawColor;
+    ctx.lineWidth = 2.2;
+    const teeth = 6;
+    for (let side = -1; side <= 1; side += 2) {
+      ctx.save();
+      ctx.rotate(side * (0.5 + spread * 0.55));
+      for (let i = 0; i < teeth; i++) {
+        const a = -0.8 + (i / (teeth - 1)) * 1.6;
+        const tx1 = Math.cos(a) * r * 0.45, ty1 = Math.sin(a) * r * 0.45;
+        const tx2 = Math.cos(a) * r, ty2 = Math.sin(a) * r;
+        ctx.beginPath();
+        ctx.moveTo(tx1, ty1);
+        ctx.lineTo(tx2, ty2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    ctx.fillStyle = '#8a1c1c';
+    ctx.beginPath();
+    ctx.arc(0, 0, 2.4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -448,11 +579,12 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
-  function render(ctx, { players, dogs, myId }) {
+  function render(ctx, { players, dogs, traps, myId }) {
     ctx.clearRect(0, 0, ARENA_W, ARENA_H);
     drawFloor(ctx);
     drawDogPen(ctx);
     drawTrapdoors(ctx);
+    for (const trap of (traps || [])) drawBearTrap(ctx, trap);
 
     const now = Date.now();
     for (const [id, anim] of dropAnims.entries()) {
@@ -466,9 +598,16 @@ const ArenaRender = (() => {
     for (const p of sorted) {
       const deathAnim = deathAnims.get(p.id);
       const dropAnim = dropAnims.get(p.id);
-      if (deathAnim) drawDeathAnim(ctx, p, deathAnim, p.id === myId);
-      else if (dropAnim) drawFallingGhost(ctx, p, dropAnim, p.id === myId);
-      else drawPlayer(ctx, p, p.id === myId);
+      if (deathAnim) {
+        drawDeathAnim(ctx, p, deathAnim, p.id === myId);
+      } else if (dropAnim) {
+        drawFallingGhost(ctx, p, dropAnim, p.id === myId);
+      } else {
+        if (!p.isGhost && p.rootedUntil && p.rootedUntil > now) {
+          drawBearTrap(ctx, { x: p.x, y: p.y + 9, sprung: true });
+        }
+        drawPlayer(ctx, p, p.id === myId);
+      }
     }
     for (const d of (dogs || [])) drawDog(ctx, d);
     drawChaseCountdown(ctx);

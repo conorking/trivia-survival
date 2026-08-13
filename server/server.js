@@ -24,6 +24,7 @@ function sanitizeConfig(input, current) {
   if (input.answerTimeSec) cfg.answerTimeSec = Math.max(3, Math.min(120, Number(input.answerTimeSec)));
   if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(100, Number(input.questionCount)));
   if (input.questionSet === 'default' || input.questionSet === 'custom') cfg.questionSet = input.questionSet;
+  if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
   return cfg;
 }
 
@@ -42,13 +43,6 @@ io.on('connection', socket => {
       code: room.code,
       config: room.config
     });
-  });
-
-  socket.on('host:updateConfig', (payload = {}) => {
-    const room = manager.getRoom(joinedRoomCode);
-    if (!room || !isHost || room.state !== 'lobby') return;
-    room.config = sanitizeConfig(payload, room.config);
-    io.to(room.code).emit('room:config', room.config);
   });
 
   socket.on('host:uploadQuestions', (payload = {}) => {
@@ -86,9 +80,10 @@ io.on('connection', socket => {
     socket.emit('host:roomState', publicRoomState(room));
   });
 
-  socket.on('host:startGame', () => {
+  socket.on('host:startGame', (payload = {}) => {
     const room = manager.getRoom(joinedRoomCode);
     if (!room || !isHost || room.state !== 'lobby') return;
+    if (payload.config) room.config = sanitizeConfig(payload.config, room.config);
     const readyCount = Array.from(room.players.values()).filter(p => p.connected).length;
     if (readyCount < 2) {
       socket.emit('host:error', { message: 'Need at least 2 players to start.' });
