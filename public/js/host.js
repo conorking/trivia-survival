@@ -105,6 +105,14 @@ socket.on('game:dropped', (data) => {
   ArenaRender.onDropped(data.drops);
 });
 
+socket.on('player:caught', (data) => {
+  ArenaRender.onCaught(data);
+});
+
+socket.on('game:dogs_released', (data) => {
+  ArenaRender.onDogsReleased(data);
+});
+
 socket.on('game:round_complete', () => {
   ArenaRender.onRoundComplete();
 });

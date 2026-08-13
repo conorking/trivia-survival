@@ -15,6 +15,7 @@ const ArenaRender = (() => {
   const DOOR_COLORS = { A: '#ef8f4f', B: '#4fb8ef', C: '#b84fef' };
   const DOOR_OPEN_DUR = 900;
   const FALL_DUR = 900;
+  const DEATH_ANIM_DUR = 1200; // roughly matches server DEATH_ANIM_MS
 
   // ---- animation state ----
   let doorsCaged = { A: false, B: false, C: false };
@@ -22,6 +23,8 @@ const ArenaRender = (() => {
   let revealedAt = 0;
   let doorOpenStart = {};
   let dropAnims = new Map(); // playerId -> {start, fromX, fromY, toX, toY}
+  let deathAnims = new Map(); // playerId -> {start, x, y, dogX, dogY, color, name}
+  let chaseGiveUpAt = 0;
 
   function setArena(arena) {
     if (!arena) return;
@@ -39,6 +42,8 @@ const ArenaRender = (() => {
     correctDoor = null;
     revealedAt = 0;
     doorOpenStart = {};
+    deathAnims.clear();
+    chaseGiveUpAt = 0;
   }
 
   function onLockIn() {
@@ -69,6 +74,21 @@ const ArenaRender = (() => {
     correctDoor = null;
     revealedAt = 0;
     doorOpenStart = {};
+    deathAnims.clear();
+    chaseGiveUpAt = 0;
+  }
+
+  function onCaught(data) {
+    if (!data || !data.id) return;
+    deathAnims.set(data.id, {
+      start: Date.now(),
+      x: data.x, y: data.y,
+      dogX: data.dogX, dogY: data.dogY
+    });
+  }
+
+  function onDogsReleased(data) {
+    chaseGiveUpAt = (data && data.giveUpAt) || 0;
   }
 
   function shade(hex, factor) {
@@ -258,18 +278,173 @@ const ArenaRender = (() => {
   }
 
   function drawDog(ctx, dog) {
+    const now = Date.now();
+    const angle = dog.angle || 0;
+    const resting = dog.state === 'home';
+    const wag = resting ? 0.15 : Math.sin(now / 90) * 0.55;
+    const trot = resting ? 0 : Math.sin(now / 70) * 2;
+
     ctx.save();
-    ctx.fillStyle = '#5b3a29';
+    ctx.translate(dog.x, dog.y);
+    ctx.rotate(angle);
+    if (resting) ctx.globalAlpha = 0.75;
+
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
     ctx.beginPath();
-    ctx.ellipse(dog.x, dog.y, 12, 8, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, 10, 13, 5, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#3a2418';
+
+    const furColor = '#8a5a3b';
+    const furDark = '#5b3a29';
+    const furDarker = '#3a2418';
+
+    // Tail (rear = -x in local space since +x is "forward")
+    ctx.save();
+    ctx.translate(-12, 0);
+    ctx.rotate(wag);
+    ctx.fillStyle = furDark;
     ctx.beginPath();
-    ctx.ellipse(dog.x + 9, dog.y - 2, 5, 4, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = '#1e1209';
-    ctx.lineWidth = 2;
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(-8, -8, -10, -14);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = furDark;
     ctx.stroke();
+    ctx.restore();
+
+    // Legs (simple running ticks)
+    ctx.strokeStyle = furDarker;
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-6, 6); ctx.lineTo(-6 - trot, 12);
+    ctx.moveTo(5, 6); ctx.lineTo(5 + trot, 12);
+    ctx.moveTo(-6, -6); ctx.lineTo(-6 + trot, -12);
+    ctx.moveTo(5, -6); ctx.lineTo(5 - trot, -12);
+    ctx.stroke();
+
+    // Body
+    ctx.fillStyle = furColor;
+    ctx.beginPath();
+    ctx.ellipse(-2, 0, 13, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = furDarker;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Head (toward heading, +x)
+    ctx.fillStyle = furColor;
+    ctx.beginPath();
+    ctx.ellipse(11, 0, 7, 6.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Snout
+    ctx.fillStyle = furDark;
+    ctx.beginPath();
+    ctx.moveTo(15, -3);
+    ctx.lineTo(21, -1);
+    ctx.lineTo(21, 1);
+    ctx.lineTo(15, 3);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = furDarker;
+    ctx.beginPath();
+    ctx.arc(20.5, 0, 1.6, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ears
+    ctx.fillStyle = furDarker;
+    ctx.beginPath();
+    ctx.moveTo(6, -6); ctx.lineTo(4, -13); ctx.lineTo(10, -8); ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(6, 6); ctx.lineTo(4, 13); ctx.lineTo(10, 8); ctx.closePath();
+    ctx.fill();
+
+    // Eye
+    ctx.fillStyle = '#0f0a06';
+    ctx.beginPath();
+    ctx.arc(13, -2.5, 1.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawBloodPuddle(ctx, x, y, t) {
+    const grow = Math.min(1, t / 0.4);
+    const w = 22 * grow, h = 11 * grow;
+    ctx.save();
+    ctx.globalAlpha = 0.75 * Math.min(1, grow + 0.2);
+    ctx.fillStyle = '#7a0f14';
+    ctx.beginPath();
+    ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 0.45 * Math.min(1, grow + 0.2);
+    ctx.fillStyle = '#4a0a0d';
+    ctx.beginPath();
+    ctx.ellipse(x, y, w * 0.5, h * 0.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawDeathAnim(ctx, p, anim, isMe) {
+    const now = Date.now();
+    const t = Math.max(0, (now - anim.start) / 1000);
+    const x = anim.x, y = anim.y;
+
+    drawBloodPuddle(ctx, x, y, t);
+
+    const fallT = Math.min(1, t / 0.45);
+    const rotate = fallT * (Math.PI / 2); // tips over onto its side
+    const alpha = t > 0.9 ? Math.max(0.3, 1 - (t - 0.9) * 2) : 1;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-10, -14, 20, 18);
+    ctx.fillRect(-8, -24, 16, 12);
+    ctx.strokeStyle = '#10102a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-10, -14, 20, 18);
+    ctx.strokeRect(-8, -24, 16, 12);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, alpha + 0.3);
+    ctx.fillStyle = isMe ? '#ffd23f' : '#f4f1de';
+    ctx.font = isMe ? 'bold 11px monospace' : '10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(p.name, x, y - 30);
+    ctx.restore();
+  }
+
+  function drawChaseCountdown(ctx) {
+    if (!chaseGiveUpAt) return;
+    const remainingMs = chaseGiveUpAt - Date.now();
+    if (remainingMs <= 0) return;
+    const secs = Math.ceil(remainingMs / 1000);
+    const label = `🐾 dogs give up in ${secs}s`;
+    const cx = DOG_PEN.x + DOG_PEN.w / 2;
+    const y = DOG_PEN.y + DOG_PEN.h + 34;
+    ctx.save();
+    ctx.font = 'bold 12px monospace';
+    ctx.textAlign = 'center';
+    const textWidth = ctx.measureText(label).width;
+    const padX = 10, padY = 6;
+    ctx.fillStyle = 'rgba(16,16,42,0.85)';
+    ctx.strokeStyle = '#f4f1de';
+    ctx.lineWidth = 2;
+    const boxW = textWidth + padX * 2, boxH = 20 + padY;
+    ctx.beginPath();
+    ctx.rect(cx - boxW / 2, y - boxH / 2, boxW, boxH);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#ffd23f';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, cx, y + 1);
     ctx.restore();
   }
 
@@ -283,19 +458,26 @@ const ArenaRender = (() => {
     for (const [id, anim] of dropAnims.entries()) {
       if (now - anim.start > FALL_DUR) dropAnims.delete(id);
     }
+    for (const [id, anim] of deathAnims.entries()) {
+      if (now - anim.start > DEATH_ANIM_DUR) deathAnims.delete(id);
+    }
 
     const sorted = [...players].sort((a, b) => a.y - b.y);
     for (const p of sorted) {
-      const anim = dropAnims.get(p.id);
-      if (anim) drawFallingGhost(ctx, p, anim, p.id === myId);
+      const deathAnim = deathAnims.get(p.id);
+      const dropAnim = dropAnims.get(p.id);
+      if (deathAnim) drawDeathAnim(ctx, p, deathAnim, p.id === myId);
+      else if (dropAnim) drawFallingGhost(ctx, p, dropAnim, p.id === myId);
       else drawPlayer(ctx, p, p.id === myId);
     }
     for (const d of (dogs || [])) drawDog(ctx, d);
+    drawChaseCountdown(ctx);
   }
 
   return {
     setArena, fitCanvas, render,
     onNewQuestion, onLockIn, onReveal, onDropped, onRoundComplete,
+    onCaught, onDogsReleased,
     get ARENA_W() { return ARENA_W; }, get ARENA_H() { return ARENA_H; }
   };
 })();

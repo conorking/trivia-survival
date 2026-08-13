@@ -37,9 +37,10 @@ snapshot.
 - `public/player.html` + `public/js/player.js` — join/avatar picker, keyboard input
   capture, gameplay view.
 - `public/js/arena-render.js` — the only place canvas drawing happens. Shared by host
-  and player. Owns its own animation state (door-opening, fall/respawn, cage pulses) via
-  `onLockIn/onReveal/onDropped/onRoundComplete/onNewQuestion` — callers just tell it what
-  happened, it handles timing/interpolation internally using `Date.now()`.
+  and player. Owns its own animation state (door-opening, fall/respawn, cage pulses,
+  death/blood-puddle, chase countdown) via `onLockIn/onReveal/onDropped/onCaught/
+  onDogsReleased/onRoundComplete/onNewQuestion` — callers just tell it what happened, it
+  handles timing/interpolation internally using `Date.now()`.
 - `public/css/style.css` — GBA/retro pixel styling, single stylesheet, no preprocessor.
 
 ## Game state machine (server/rooms.js, `Room.tick()`)
@@ -47,37 +48,59 @@ snapshot.
 Per-room states, driven by a single tick loop (`TICK_MS`, currently 40ms / 25Hz):
 
 ```
-lobby → question → reveal → door_anim → resolve → (loop to question, or → ended)
+lobby → question → reveal → escape → resolve → death_anim → (loop to question, or → ended)
 ```
 
 - **question**: answer timer running, players move freely.
 - **reveal**: (3s, `REVEAL_DELAY_MS`) cages already risen on all 3 doors (visual only —
-  `doLockIn` computed real occupancy into `this.cages`/`this.exposed` right before this).
-  Suspense delay before the correct answer is shown.
-- At the end of `reveal`, `doReveal()` fires: kills+respawns wrong-cage players
-  immediately (server truth), emits `game:reveal` + `game:dropped`, then holds in
-  **door_anim** (`DOOR_OPEN_ANIM_MS`, ~1.1s) purely so clients have time to *play* the
-  door-opening/fall animation before dogs show up. Server state is already "true" by
-  this point — the delay is cosmetic pacing, not logic.
-- **resolve**: dogs released, chase `this.exposed` (players never caged at all — NOT
-  wrong-cage players, those already fell). Nearest-target chase AI, `DOG_PHASE_TIMEOUT_MS`
-  safety net (~14s) force-kills stragglers so a round can never hang forever.
-- On resolve complete: safe-cage players freed (`cagedAt = null`), `advanceRound()`
-  decides next question vs `endGame()` (reasons: `all_eliminated`, `questions_complete`,
-  `time_up`, `host_ended`).
+  `doLockIn` computed real occupancy into `this.cages`/`this.exposed` right before this,
+  and set `cageSolid` true on all 3). Suspense delay before the correct answer is shown.
+  Caged players can move/jump inside their own cage during this whole phase — they're
+  contained, not frozen (see movement rule below).
+- At the end of `reveal`, `doReveal()` fires: wrong doors open (`cageSolid[key]=false`,
+  `pitOpen[key]=true`) and their occupants are freed (`cagedAt=null`) but **not killed**.
+  State becomes **escape** (`ESCAPE_MS`, ~2.4s) — a real physics window, not just a
+  cosmetic pause: anyone (the freed occupant or anyone who wanders in) standing on an
+  open pit is safe *during* this window and only falls if still there when it ends
+  (`doEscapeEnd`, reuses the same `fallIntoPit`/`game:dropped` path as the mid-chase
+  pit-fall check below).
+- **resolve**: dogs released (`releaseDogs`) hunting whoever currently has `!cagedAt`
+  (computed fresh each tick — this is also when standing on an open pit becomes
+  instantly lethal, movement-block-gated to this state only). Dogs use persistent
+  per-dog target claims + `seek+avoid` steering around the 3 trapdoor rects (always
+  avoided, solid or open) so they don't cut through cages/pits, plus a dog-dog
+  separation pass so they don't stack. Each dog goes `'returning'` (walks itself home,
+  stops hunting) once it's caught `DOG_CATCH_CAPACITY` (2) players or `DOG_GIVEUP_MS`
+  (~9s) has passed since release, then `'home'` once it arrives. The phase ends when
+  either **all dogs are home** or **everyone outside the safe cage is dead** — a round
+  can end with live survivors if the dogs simply got full/gave up first.
+  `DOG_PHASE_HARD_TIMEOUT_MS` (~30s) is a last-resort safety net that forces all dogs
+  home instantly; it never kills anyone.
+- **death_anim**: a short hold before finishing. If the round ended because everyone
+  died, this waits until `DEATH_ANIM_MS` (~1.3s) after the last catch so the client's
+  fall-over + blood-puddle animation (`player:caught` → `ArenaRender.onCaught`) has
+  time to play. If it ended via dogs-all-home with survivors, it's just a small
+  (`HOME_SETTLE_MS`) buffer. `finishRound()` then frees the safe cage
+  (`cagedAt=null`, `cageSolid[correct]=false`), clears `dogs`, and calls
+  `advanceRound()` (reasons: `all_eliminated`, `questions_complete`, `time_up`,
+  `host_ended`).
 - **ended → lobby**: `host:rematch` calls `Room.resetForRematch()` — same room/code/
-  players, resets alive/ghost/cagedAt/ready, does NOT require players to rejoin.
+  players, resets alive/ghost/cagedAt/ready/hazards, does NOT require players to rejoin.
 
-Movement rule used throughout: a player only moves if `!player.cagedAt` — this is the
-single flag that freezes someone in a cage. Ghosts (`isGhost=true`) always have
-`cagedAt=null` so they roam freely, per spec.
+Movement rule used throughout: caged players (`player.cagedAt` set) can move and jump
+but are clamped inside their own trapdoor rect; free players are pushed out of any
+`cageSolid` rect they don't belong in (`resolveCircleRect`) and separated from other
+players (`separatePairs`) every tick. Ghosts (`isGhost=true`) always have
+`cagedAt=null` and skip all collision/containment — they roam freely, per spec.
 
 ## Known tuning constants (server/rooms.js top)
 
-`PLAYER_SPEED=235`, `DOG_SPEED=185`, `DOG_CATCH_RADIUS=24`, `JUMP_MS=320`,
-`REVEAL_DELAY_MS=3000`, `DOOR_OPEN_ANIM_MS=1100`, `DOG_PHASE_TIMEOUT_MS=14000`,
-`TICK_MS=40`. If gameplay feels off, these are the first things to touch — tune before
-restructuring logic.
+`PLAYER_SPEED=235`, `DOG_SPEED=185`, `DOG_RADIUS=13`, `DOG_CATCH_RADIUS=24`,
+`DOG_HOME_RADIUS=26`, `DOG_CATCH_CAPACITY=2`, `DOG_GIVEUP_MS=9000`,
+`DOG_PHASE_HARD_TIMEOUT_MS=30000`, `JUMP_MS=320`, `REVEAL_DELAY_MS=3000`,
+`ESCAPE_MS=2400`, `DEATH_ANIM_MS=1300`, `HOME_SETTLE_MS=500`,
+`OBSTACLE_MARGIN=18`, `TICK_MS=40`. If gameplay feels off, these are the first things
+to touch — tune before restructuring logic.
 
 ## Reconnect model
 
@@ -99,18 +122,28 @@ host token if this were ever exposed to hostile users.
 - Avatars are procedural pixel-blocks (canvas rects), no sprite sheets.
 - No audio yet — hook points are the socket events already firing (`game:question`,
   `game:lockin`, `game:reveal`, `game:dropped`, `player:caught`, `game:end`).
-- Dog AI is simple nearest-target chase, no pathfinding/obstacle avoidance (arena is open,
-  so this is fine).
+- Dog AI is local steering (seek target + avoid the 3 trapdoor rects, with a tangential
+  slide around whichever edge is closer), not full pathfinding — see the state machine
+  section above. Fine for this arena's small, static, all-rectangular obstacle set;
+  would need a real nav-mesh/A* if the arena ever grows more complex obstacles.
 - No persistence layer — rooms/tokens are in-memory, wiped on restart or after 3hr/no-
   connection sweep (`GameManager.sweep()`).
 
 ## Feedback already implemented (most recent round)
 
-Reveal/door/fall animation sequence, colored trapdoors matching answer choices, rematch
-flow, always-visible cages on lockin, copy-code buttons + toast, yellow name highlight for
-"you" (no more circle), faster/more responsive movement + jump prediction, alive-count
-shown to players (not just host), more prominent question-number display. All server
-timing changes and client animation-state ownership described above are a result of that
+Physics collisions: players push apart instead of overlapping, and can't cross a locked
+cage's perimeter from outside (but can move/jump freely once caged) — see
+`resolveCircleRect`/`separatePairs` in `rooms.js`. Wrong-answer reveal no longer kills
+instantly; it opens the door into a real ~2.4s **escape** window (state `escape`) before
+the pit becomes lethal. Dog AI reworked: persistent per-dog target claims (no more
+dogpiling), `seek+avoid` steering around the trapdoor rects, dog-dog separation, and a
+catch-capacity/give-up system where dogs go home once full or bored (`resolve` phase can
+now end with survivors still standing — see state machine above). Dog catches now play a
+fall-over + blood-puddle death animation (`player:caught` → `ArenaRender.onCaught`) with
+a short `death_anim` hold before the round advances, instead of an instant vanish. Dog
+sprite redrawn heading-oriented (head/snout/ears/wagging tail) instead of two ellipses,
+and a "dogs give up in Xs" countdown renders during the chase. All server state-machine
+changes and client animation-state ownership described above are a result of that
 round — if picking this back up, this is the most current ground truth, more current than
 anything a chat transcript would say.
 
