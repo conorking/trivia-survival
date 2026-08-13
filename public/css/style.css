@@ -42,7 +42,7 @@ h3 { font-size: 13px; }
 .container {
   width: 100%;
   max-width: 900px;
-  padding: 24px 16px 60px;
+  padding: 14px 12px 20px;
 }
 
 .card {
@@ -148,6 +148,11 @@ label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
 .dot { width: 12px; height: 12px; border-radius: 50%; }
 .player-chip.not-ready { opacity: 0.55; }
 .player-chip.dead { text-decoration: line-through; opacity: 0.4; }
+.player-chip.ready {
+  border-color: var(--safe);
+  box-shadow: 0 0 0 2px rgba(88,214,141,0.35);
+}
+.player-chip .ready-tick { color: var(--safe); font-weight: bold; margin-left: 2px; }
 
 .avatar-grid { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
 .avatar-swatch {
@@ -156,15 +161,36 @@ label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
 }
 .avatar-swatch.selected { outline: 3px solid var(--accent); outline-offset: 2px; }
 
+/* Game view: a flex column bound to the viewport height so the whole screen (HUD +
+   canvas + controls hint) fits without scrolling on a phone, while letting the canvas
+   - the one flexible element - grow to fill whatever's left over. On a tall/large
+   display that's a lot of room, so the arena naturally renders bigger there too. */
+#gameView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  height: calc(100vh - 34px);
+  height: calc(100dvh - 34px); /* dvh accounts for mobile browser chrome; vh above is the fallback */
+}
+#gameView > * { flex: 0 0 auto; }
+
 canvas#arena {
   image-rendering: pixelated;
   background: #3a6b35;
   border: 4px solid var(--border);
   border-radius: 8px;
-  width: 100%;
-  max-width: 800px;
   display: block;
-  margin: 0 auto;
+  margin: 6px auto;
+  touch-action: none; /* pointer/drag controls own gestures on the canvas - no scroll/zoom */
+  flex: 1 1 auto;
+  min-height: 0;
+  align-self: center;
+  aspect-ratio: 400 / 720;
+  max-width: min(95vw, 520px);
+  max-height: 950px;
 }
 
 .question-banner {
@@ -188,8 +214,30 @@ canvas#arena {
 .option-pill.B { background: #4fb8ef; }
 .option-pill.C { background: #b84fef; color: white; }
 
-.timer-bar-wrap { height: 10px; background: #10102a; border-radius: 6px; overflow: hidden; margin-top: 10px; border: 2px solid var(--border); }
+.phase-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 10px;
+  min-height: 16px;
+}
+.timer-bar-wrap { height: 10px; background: #10102a; border-radius: 6px; overflow: hidden; margin-top: 6px; border: 2px solid var(--border); }
 .timer-bar { height: 100%; background: var(--accent); width: 100%; transition: width 0.1s linear; }
+
+/* End-of-game overlay - sits on top of the still-visible arena instead of replacing it */
+.end-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,26,0.82);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 500;
+  overflow-y: auto;
+}
+.end-overlay .card { max-width: 480px; width: 100%; margin: auto; }
 
 .status-strip { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
 .badge { background: #10102a; border: 2px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 16px; }
@@ -197,6 +245,18 @@ canvas#arena {
 .badge.alive { color: var(--safe); }
 
 .controls-hint { text-align: center; color: #9a9ac0; font-size: 15px; margin-top: 8px; }
+
+/* Extra compaction on short viewports (small phones) so the HUD leaves more room for
+   the arena itself instead of squeezing it down to make space for its own padding. */
+@media (max-height: 700px) {
+  .question-banner { padding: 8px 12px; margin-bottom: 4px; }
+  .question-banner h3 { font-size: 13px; margin-bottom: 4px; }
+  .q-indicator { margin-bottom: 4px; }
+  .q-indicator .q-big { padding: 6px 14px; font-size: 18px; }
+  .status-strip { margin-bottom: 4px; }
+  .controls-hint { font-size: 12px; margin-top: 4px; }
+  .phase-label { font-size: 10px; margin-top: 6px; }
+}
 
 .link-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 10px; }
 .link-row input { max-width: 340px; text-align: center; }

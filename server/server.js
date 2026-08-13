@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const os = require('os');
 const path = require('path');
 const { Server } = require('socket.io');
 const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, JUMP_MS } = require('./rooms');
@@ -7,7 +8,12 @@ const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, JUMP_MS } = require('
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  maxHttpBufferSize: 2e6 // allow custom question JSON uploads up to ~2MB
+  maxHttpBufferSize: 2e6, // allow custom question JSON uploads up to ~2MB
+  // Ping frequently so a dropped/navigated-away client (e.g. a player who hit "back to
+  // menu") is detected within ~10s instead of the ~45s default - otherwise resetForRematch
+  // (and the "need 2 players" gate) can briefly treat a departed player as still present.
+  pingInterval: 5000,
+  pingTimeout: 5000
 });
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -25,6 +31,8 @@ function sanitizeConfig(input, current) {
   if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(100, Number(input.questionCount)));
   if (input.questionSet === 'default' || input.questionSet === 'custom') cfg.questionSet = input.questionSet;
   if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
+  if (typeof input.dogLunge === 'boolean') cfg.dogLunge = input.dogLunge;
+  if (typeof input.dynamicCellScaling === 'boolean') cfg.dynamicCellScaling = input.dynamicCellScaling;
   return cfg;
 }
 
@@ -124,7 +132,8 @@ io.on('connection', socket => {
       code: room.code,
       playerId: player.id,
       token: player.token,
-      config: room.config
+      config: room.config,
+      arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN }
     });
     io.to(room.code).emit('room:players', room.getPlayersPublic());
   });
@@ -147,6 +156,7 @@ io.on('connection', socket => {
       token: player.token,
       state: room.state,
       config: room.config,
+      arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN },
       you: {
         name: player.name, color: player.color, alive: player.alive, isGhost: player.isGhost
       },
@@ -155,7 +165,8 @@ io.on('connection', socket => {
         total: room.questions.length,
         q: room.currentQuestion.q,
         options: room.currentQuestion.options,
-        endsAt: room.phaseEndsAt
+        endsAt: room.phaseEndsAt,
+        trapdoors: room.trapdoors
       } : null
     });
     io.to(room.code).emit('room:players', room.getPlayersPublic());
@@ -175,9 +186,8 @@ io.on('connection', socket => {
     if (!room || !playerId) return;
     const player = room.players.get(playerId);
     if (!player || !player.connected) return;
-    player.input = {
-      up: !!input.up, down: !!input.down, left: !!input.left, right: !!input.right
-    };
+    const clampAxis = (v) => Math.max(-1, Math.min(1, Number(v) || 0));
+    player.input = { dx: clampAxis(input.dx), dy: clampAxis(input.dy) };
   });
 
   socket.on('player:jump', () => {
@@ -197,7 +207,7 @@ io.on('connection', socket => {
       const player = room.players.get(playerId);
       if (player) {
         player.connected = false;
-        player.input = { up: false, down: false, left: false, right: false };
+        player.input = { dx: 0, dy: 0 };
       }
       io.to(room.code).emit('room:players', room.getPlayersPublic());
     }
@@ -210,19 +220,38 @@ function publicRoomState(room) {
     state: room.state,
     config: room.config,
     players: room.getPlayersPublic(),
-    arena: { w: ARENA_W, h: ARENA_H, trapdoors: TRAPDOORS, dogPen: DOG_PEN },
+    arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN },
     currentQuestion: room.currentQuestion ? {
       index: room.currentQuestionIndex,
       total: room.questions.length,
       q: room.currentQuestion.q,
       options: room.currentQuestion.options,
-      endsAt: room.phaseEndsAt
+      endsAt: room.phaseEndsAt,
+      trapdoors: room.trapdoors
     } : null
   };
 }
 
 app.get('/api/arena', (req, res) => {
   res.json({ w: ARENA_W, h: ARENA_H, trapdoors: TRAPDOORS, dogPen: DOG_PEN });
+});
+
+// Lets the host page swap a localhost/127.0.0.1 origin for a real LAN address, so the
+// QR code / join link it builds actually works for other devices on the same wifi
+// (scanning a "localhost" URL from another phone would just point back at that phone).
+function getLanIPs() {
+  const nets = os.networkInterfaces();
+  const ips = [];
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name] || []) {
+      if (net.family === 'IPv4' && !net.internal) ips.push(net.address);
+    }
+  }
+  return ips;
+}
+
+app.get('/api/lan-info', (req, res) => {
+  res.json({ ips: getLanIPs(), port: PORT });
 });
 
 const PORT = process.env.PORT || 3000;

@@ -2,9 +2,6 @@ const socket = io();
 let roomCode = null;
 let currentConfig = null;
 let uploadedQuestions = null;
-let latestPlayers = [];
-let latestDogs = [];
-let latestTraps = [];
 
 const existingCode = sessionStorage.getItem('trivia_host_room');
 
@@ -13,6 +10,10 @@ if (existingCode) {
 } else {
   socket.emit('host:createRoom', {});
 }
+
+// If the browser tab is closing/navigating away, disconnect immediately rather than
+// waiting for the transport to time out - keeps room presence data accurate promptly.
+window.addEventListener('pagehide', () => { socket.disconnect(); });
 
 socket.on('host:roomCreated', ({ code, config }) => {
   roomCode = code;
@@ -28,12 +29,11 @@ socket.on('host:roomState', (state) => {
   ArenaRender.setArena(state.arena);
   showRoomInfo(state.code);
   populateConfigForm(state.config);
-  latestPlayers = state.players;
   renderPlayerList(state.players);
   if (state.state === 'ended') {
     document.getElementById('lobbyView').style.display = 'none';
     document.getElementById('gameView').style.display = 'none';
-    document.getElementById('endView').style.display = 'block';
+    document.getElementById('endView').style.display = 'flex';
     document.getElementById('endReason').textContent = '';
     document.getElementById('winnersList').innerHTML = '<p class="muted">Game already ended.</p>';
   } else if (state.state !== 'lobby') {
@@ -54,7 +54,6 @@ socket.on('host:questionsUploaded', ({ count }) => {
 socket.on('room:config', (config) => { currentConfig = config; populateConfigForm(config); });
 
 socket.on('room:players', (players) => {
-  latestPlayers = players;
   renderPlayerList(players);
 });
 
@@ -73,25 +72,46 @@ function renderQuestion(data) {
     pill.textContent = `${key}: ${data.options[key]}`;
     row.appendChild(pill);
   }
+  if (data.trapdoors) ArenaRender.setTrapdoors(data.trapdoors);
   ArenaRender.onNewQuestion();
-  const remaining = data.endsAt ? data.endsAt - Date.now() : data.answerTimeMs;
-  animateTimer(Math.max(0, remaining));
 }
 
 socket.on('game:question', renderQuestion);
 
-function animateTimer(durationMs) {
+// ---- Unified phase timer: one bar + label used across every round phase ----
+const PHASE_LABELS = {
+  question: (s) => `Choose your answer! ${s}s`,
+  reveal: (s) => `Revealing the answer... ${s}s`,
+  escape: (s) => `Get off the wrong doors! ${s}s`,
+  fall_pause: () => 'Uh oh...',
+  resolve: (s) => `Survive the dogs for another ${s}s...`,
+  death_anim: () => 'Round over...'
+};
+let lastPhaseState = null;
+
+function updatePhaseTimer(state, phaseEndsAt) {
+  const label = document.getElementById('phaseLabel');
   const bar = document.getElementById('timerBar');
-  bar.style.transition = 'none';
-  bar.style.width = '100%';
-  requestAnimationFrame(() => {
-    bar.style.transition = `width ${durationMs}ms linear`;
-    bar.style.width = '0%';
-  });
+  if (!label || !bar) return;
+  const build = PHASE_LABELS[state];
+  if (!build) { label.textContent = ''; return; }
+
+  const remainingMs = Math.max(0, (phaseEndsAt || 0) - Date.now());
+  label.textContent = build(Math.ceil(remainingMs / 1000));
+
+  if (state !== lastPhaseState) {
+    lastPhaseState = state;
+    bar.style.transition = 'none';
+    bar.style.width = '100%';
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${remainingMs}ms linear`;
+      bar.style.width = '0%';
+    });
+  }
 }
 
-socket.on('game:lockin', () => {
-  ArenaRender.onLockIn();
+socket.on('game:lockin', (data) => {
+  ArenaRender.onLockIn(data.cages);
 });
 
 socket.on('game:reveal', (data) => {
@@ -119,16 +139,15 @@ socket.on('game:round_complete', () => {
 });
 
 socket.on('game:tick', (data) => {
-  latestPlayers = data.players;
-  latestDogs = data.dogs;
-  latestTraps = data.traps || [];
+  pushSnapshot(data.players, data.dogs, data.traps || []);
   updateCounts(data.players);
-  drawFrame();
+  updatePhaseTimer(data.state, data.phaseEndsAt);
 });
 
 socket.on('game:end', ({ reason, winners }) => {
-  document.getElementById('gameView').style.display = 'none';
-  document.getElementById('endView').style.display = 'block';
+  // Leave gameView (and its last-rendered frame) visible behind the summary overlay,
+  // instead of cutting away from the arena entirely.
+  document.getElementById('endView').style.display = 'flex';
   const reasonText = {
     all_eliminated: 'Everyone was eliminated!',
     questions_complete: 'All questions answered!',
@@ -144,7 +163,7 @@ socket.on('game:end', ({ reason, winners }) => {
 
 socket.on('game:rematch', ({ config, players }) => {
   currentConfig = config;
-  latestPlayers = players;
+  lastPhaseState = null;
   document.getElementById('endView').style.display = 'none';
   document.getElementById('gameView').style.display = 'none';
   document.getElementById('lobbyView').style.display = 'block';
@@ -156,10 +175,34 @@ socket.on('game:rematch', ({ config, players }) => {
 function showRoomInfo(code) {
   document.getElementById('roomInfoCard').style.display = 'block';
   document.getElementById('roomCode').textContent = code;
-  const url = `${location.origin}/player.html?code=${code}`;
+  renderJoinUrl(code);
+  maybeUseLanOrigin(code);
+}
+
+function renderJoinUrl(code, originOverride) {
+  const base = originOverride || location.origin;
+  const url = `${base}/player.html?code=${code}`;
   document.getElementById('joinUrl').value = url;
   document.getElementById('qrcode-box').innerHTML = '';
   new QRCode(document.getElementById('qrcode-box'), { text: url, width: 120, height: 120 });
+}
+
+// If the host opened this page via localhost/127.0.0.1, that address is meaningless to
+// any other device scanning the QR code - swap in the host machine's actual LAN IP
+// (reported by the server) so phones on the same wifi can actually reach it.
+let lanOriginPromise = null;
+function maybeUseLanOrigin(code) {
+  const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+  if (!isLoopback) return;
+  if (!lanOriginPromise) {
+    lanOriginPromise = fetch('/api/lan-info')
+      .then(r => r.json())
+      .then(data => (data.ips && data.ips[0]) ? `http://${data.ips[0]}:${data.port}` : null)
+      .catch(() => null);
+  }
+  lanOriginPromise.then(origin => {
+    if (origin && roomCode === code) renderJoinUrl(code, origin);
+  });
 }
 
 function populateConfigForm(config) {
@@ -171,6 +214,8 @@ function populateConfigForm(config) {
   document.getElementById('cfgQuestionCountRange').value = config.questionCount;
   document.getElementById('cfgQuestionSet').value = config.questionSet;
   document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
+  document.getElementById('cfgDogLunge').checked = !!config.dogLunge;
+  document.getElementById('cfgDynamicCellScaling').checked = !!config.dynamicCellScaling;
   document.getElementById('uploadRow').style.display = config.questionSet === 'custom' ? 'block' : 'none';
 }
 
@@ -213,7 +258,9 @@ function collectConfig() {
     answerTimeSec: Number(document.getElementById('cfgAnswerTime').value),
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
     questionSet: document.getElementById('cfgQuestionSet').value,
-    bearTraps: document.getElementById('cfgBearTraps').checked
+    bearTraps: document.getElementById('cfgBearTraps').checked,
+    dogLunge: document.getElementById('cfgDogLunge').checked,
+    dynamicCellScaling: document.getElementById('cfgDynamicCellScaling').checked
   };
 }
 
@@ -221,9 +268,10 @@ function renderPlayerList(players) {
   document.getElementById('playerCount').textContent = players.length;
   const list = document.getElementById('playerList');
   list.innerHTML = players.map(p => `
-    <div class="player-chip ${p.ready ? '' : 'not-ready'} ${!p.connected ? 'dead' : ''}">
+    <div class="player-chip ${p.ready ? 'ready' : 'not-ready'} ${!p.connected ? 'dead' : ''}">
       <span class="dot" style="background:${p.color}"></span>
       ${p.name} ${p.connected ? '' : '(offline)'}
+      ${p.ready ? '<span class="ready-tick">✔</span>' : ''}
     </div>
   `).join('');
   const connectedCount = players.filter(p => p.connected).length;
@@ -274,7 +322,7 @@ function showToast(message) {
 function showGameView() {
   document.getElementById('lobbyView').style.display = 'none';
   document.getElementById('endView').style.display = 'none';
-  document.getElementById('gameView').style.display = 'block';
+  document.getElementById('gameView').style.display = 'flex';
   document.getElementById('gameCodeVal').textContent = roomCode || '-----';
   const canvas = document.getElementById('arena');
   ArenaRender.fitCanvas(canvas);
@@ -287,9 +335,73 @@ function updateCounts(players) {
   document.getElementById('ghostCount').textContent = ghosts;
 }
 
+// ---- Rendering: a requestAnimationFrame loop decoupled from network tick arrival ----
+// The server only broadcasts state at 25Hz and network delivery is jittery on top of
+// that; redrawing exactly when a message lands looks stuttery. Instead we buffer the
+// last few snapshots and render a point in time slightly in the past (INTERP_DELAY_MS),
+// smoothly interpolated between the two real snapshots that bracket it - this runs at
+// the display's actual refresh rate and reads much smoother, at the cost of a small,
+// constant, imperceptible visual latency.
+const INTERP_DELAY_MS = 80; // ~2 server ticks behind "now"
+let snapshotBuffer = [];
+
+function pushSnapshot(players, dogs, traps) {
+  snapshotBuffer.push({ t: Date.now(), players, dogs, traps });
+  if (snapshotBuffer.length > 8) snapshotBuffer.shift();
+}
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function lerpAngle(a, b, t) {
+  let diff = b - a;
+  while (diff > Math.PI) diff -= Math.PI * 2;
+  while (diff < -Math.PI) diff += Math.PI * 2;
+  return a + diff * t;
+}
+
+function interpolateEntities(older, newer, t, angleKey) {
+  const byKey = new Map(older.map((e, i) => [e.id !== undefined ? e.id : i, e]));
+  return newer.map((eb, i) => {
+    const ea = byKey.get(eb.id !== undefined ? eb.id : i);
+    if (!ea) return eb;
+    const out = { ...eb, x: lerp(ea.x, eb.x, t), y: lerp(ea.y, eb.y, t) };
+    if (angleKey && typeof eb[angleKey] === 'number' && typeof ea[angleKey] === 'number') {
+      out[angleKey] = lerpAngle(ea[angleKey], eb[angleKey], t);
+    }
+    return out;
+  });
+}
+
+function getRenderSnapshot() {
+  if (snapshotBuffer.length === 0) return { players: [], dogs: [], traps: [] };
+  const renderAt = Date.now() - INTERP_DELAY_MS;
+  const first = snapshotBuffer[0], last = snapshotBuffer[snapshotBuffer.length - 1];
+  if (renderAt <= first.t) return first;
+  if (renderAt >= last.t) return last;
+  for (let i = 0; i < snapshotBuffer.length - 1; i++) {
+    const a = snapshotBuffer[i], b = snapshotBuffer[i + 1];
+    if (renderAt >= a.t && renderAt <= b.t) {
+      const span = b.t - a.t;
+      const t = span > 0 ? (renderAt - a.t) / span : 1;
+      return {
+        players: interpolateEntities(a.players, b.players, t, null),
+        dogs: interpolateEntities(a.dogs, b.dogs, t, 'angle'),
+        traps: b.traps
+      };
+    }
+  }
+  return last;
+}
+
 function drawFrame() {
   const canvas = document.getElementById('arena');
-  if (!canvas || canvas.style.display === 'none') return;
+  if (!canvas || canvas.offsetParent === null) return;
   const ctx = canvas.getContext('2d');
-  ArenaRender.render(ctx, { players: latestPlayers, dogs: latestDogs, traps: latestTraps, myId: null });
+  const snap = getRenderSnapshot();
+  ArenaRender.render(ctx, { players: snap.players, dogs: snap.dogs, traps: snap.traps, myId: null });
 }
+
+(function renderLoop() {
+  drawFrame();
+  requestAnimationFrame(renderLoop);
+})();

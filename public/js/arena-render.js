@@ -4,13 +4,15 @@
 // onLockIn / onReveal / onDropped / onRoundComplete / onNewQuestion calls.
 
 const ArenaRender = (() => {
-  let ARENA_W = 800, ARENA_H = 500;
+  // Fallback defaults, overwritten by setArena()/setTrapdoors() once real data arrives
+  // from the server - kept in sync with server/rooms.js's constants as a sane baseline.
+  let ARENA_W = 400, ARENA_H = 720;
   let TRAPDOORS = {
-    A: { x: 130, y: 400, w: 110, h: 90 },
-    B: { x: 345, y: 400, w: 110, h: 90 },
-    C: { x: 560, y: 400, w: 110, h: 90 }
+    A: { x: 32, y: 605, w: 95, h: 85 },
+    B: { x: 152, y: 605, w: 95, h: 85 },
+    C: { x: 272, y: 605, w: 95, h: 85 }
   };
-  let DOG_PEN = { x: 330, y: 20, w: 140, h: 60 };
+  let DOG_PEN = { x: 130, y: 20, w: 140, h: 60 };
 
   const DOOR_COLORS = { A: '#ef8f4f', B: '#4fb8ef', C: '#b84fef' };
   const BAR_FADE_MS = 250; // cage bars vanish fast right when a wrong door's occupant is freed
@@ -21,20 +23,45 @@ const ArenaRender = (() => {
   const GATE_ANIM_MS = 450;
   const GATE_W = 46;
 
+  // ---- optional sprite support ----
+  // No art assets ship with the project yet - this just wires up the loading/fallback
+  // plumbing so dropping real files into public/sprites/ (see its README) is picked up
+  // automatically without further code changes. Until then every draw call below just
+  // takes the "not loaded" branch and renders the existing procedural vector shapes.
+  const SPRITES = {};
+  function trySprite(key, src) {
+    const entry = { img: new Image(), loaded: false };
+    entry.img.onload = () => { entry.loaded = true; };
+    entry.img.onerror = () => { /* no sprite shipped - keep using procedural drawing */ };
+    entry.img.src = src;
+    SPRITES[key] = entry;
+  }
+  trySprite('player', 'sprites/player.png');
+  trySprite('dog', 'sprites/dog.png');
+
   // ---- animation state ----
   let doorsCaged = { A: false, B: false, C: false };
   let correctDoor = null;
   let revealedAt = 0;
   let escapeEndsAt = 0; // when the wrong doors actually snap open / become lethal
+  let lastCages = { A: [], B: [], C: [] }; // from game:lockin - who ended up where
+  let promptRunIds = new Set(); // players who should see "RUN!" above their head
+  let promptSafeIds = new Set(); // players who should see "SAFE!" above their head
   let dropAnims = new Map(); // playerId -> {start, fromX, fromY, toX, toY, doorKey}
   let deathAnims = new Map(); // playerId -> {start, x, y, dogX, dogY}
-  let chaseGiveUpAt = 0;
   let releasedAt = 0; // when dogs were released - drives the pen gate animation
 
   function setArena(arena) {
     if (!arena) return;
     ARENA_W = arena.w; ARENA_H = arena.h;
     TRAPDOORS = arena.trapdoors; DOG_PEN = arena.dogPen;
+  }
+
+  // Lighter-weight update for just the cage rects - used every round (dynamic cell
+  // scaling can resize them round to round even when the rest of the arena is static).
+  function setTrapdoors(trapdoors) {
+    if (!trapdoors) return;
+    TRAPDOORS = trapdoors;
   }
 
   function fitCanvas(canvas) {
@@ -47,23 +74,32 @@ const ArenaRender = (() => {
     correctDoor = null;
     revealedAt = 0;
     escapeEndsAt = 0;
+    promptRunIds = new Set();
+    promptSafeIds = new Set();
     deathAnims.clear();
-    chaseGiveUpAt = 0;
     releasedAt = 0;
   }
 
-  function onLockIn() {
+  function onLockIn(cages) {
     // Cages rise on ALL doors, regardless of who's actually standing there.
     doorsCaged = { A: true, B: true, C: true };
     correctDoor = null;
     revealedAt = 0;
     escapeEndsAt = 0;
+    lastCages = cages || { A: [], B: [], C: [] };
   }
 
   function onReveal(correct, escapeEndsAtParam) {
     correctDoor = correct;
     revealedAt = Date.now();
     escapeEndsAt = escapeEndsAtParam || (revealedAt + 2400);
+    promptRunIds = new Set();
+    promptSafeIds = new Set();
+    for (const key of ['A', 'B', 'C']) {
+      const ids = lastCages[key] || [];
+      if (key === correct) ids.forEach(id => promptSafeIds.add(id));
+      else ids.forEach(id => promptRunIds.add(id));
+    }
   }
 
   function onDropped(drops) {
@@ -80,8 +116,9 @@ const ArenaRender = (() => {
     correctDoor = null;
     revealedAt = 0;
     escapeEndsAt = 0;
+    promptRunIds = new Set();
+    promptSafeIds = new Set();
     deathAnims.clear();
-    chaseGiveUpAt = 0;
     releasedAt = 0;
   }
 
@@ -94,9 +131,8 @@ const ArenaRender = (() => {
     });
   }
 
-  function onDogsReleased(data) {
-    chaseGiveUpAt = (data && data.giveUpAt) || 0;
-    releasedAt = Date.now();
+  function onDogsReleased() {
+    releasedAt = Date.now(); // drives the pen gate opening animation
   }
 
   function shade(hex, factor) {
@@ -209,6 +245,16 @@ const ArenaRender = (() => {
             ctx.fillRect(d.x, d.y, d.w, d.h);
             ctx.restore();
           }
+          // Letter stenciled onto the floor tile itself - only while the panel with it
+          // painted on is actually still there (it "leaves" once the door pops open).
+          ctx.save();
+          ctx.globalAlpha = 0.38;
+          ctx.fillStyle = '#000';
+          ctx.font = `bold ${Math.round(Math.min(d.w, d.h) * 0.55)}px monospace`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(key, d.x + d.w / 2 + jitterX, d.y + d.h / 2 + jitterY);
+          ctx.restore();
         } else {
           const halfW = d.w / 2;
           const shift = openProgress * halfW;
@@ -228,12 +274,6 @@ const ArenaRender = (() => {
         ctx.strokeRect(d.x, d.y, d.w, d.h);
         ctx.restore();
       }
-
-      // Letter label
-      ctx.fillStyle = color;
-      ctx.font = 'bold 20px monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(key, d.x + d.w / 2, d.y - 14);
 
       // Cage bars - the wrong doors' bars vanish FAST right when their occupant is
       // freed (reveal instant), decoupled from the later door-snap timing, so players
@@ -267,25 +307,6 @@ const ArenaRender = (() => {
         ctx.strokeRect(d.x - 8, d.y - 12, d.w + 16, d.h + 20);
         ctx.restore();
       }
-
-      // Caption
-      let caption = '';
-      let capColor = '#f4f1de';
-      if (doorsCaged[key] && !revealedAt) { caption = 'LOCKED'; capColor = '#dddddd'; }
-      else if (isCorrect) { caption = 'SAFE ✓'; capColor = '#58d68d'; }
-      else if (isWrong) {
-        if (openProgress > 0 && openProgress < 1) { caption = 'OPENING...'; capColor = '#ef4f6b'; }
-        else if (openProgress === 0) {
-          if (shudderMag > 0) { caption = 'BRACE!'; capColor = '#ff8a3d'; }
-          else { caption = 'RUN!'; capColor = '#ef4f6b'; }
-        }
-      }
-      if (caption) {
-        ctx.fillStyle = capColor;
-        ctx.font = 'bold 11px monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText(caption, d.x + d.w / 2, d.y + d.h + 16);
-      }
     }
   }
 
@@ -300,13 +321,18 @@ const ArenaRender = (() => {
     ctx.ellipse(0, 12, 12, 5, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = isGhost ? '#cfd8ff' : color;
-    ctx.fillRect(-10, -14, 20, 18);
-    ctx.fillRect(-8, -24, 16, 12);
-    ctx.strokeStyle = '#10102a';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(-10, -14, 20, 18);
-    ctx.strokeRect(-8, -24, 16, 12);
+    if (SPRITES.player && SPRITES.player.loaded) {
+      ctx.globalAlpha = isGhost ? alpha * 0.6 : alpha;
+      ctx.drawImage(SPRITES.player.img, -14, -28, 28, 40);
+    } else {
+      ctx.fillStyle = isGhost ? '#cfd8ff' : color;
+      ctx.fillRect(-10, -14, 20, 18);
+      ctx.fillRect(-8, -24, 16, 12);
+      ctx.strokeStyle = '#10102a';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-10, -14, 20, 18);
+      ctx.strokeRect(-8, -24, 16, 12);
+    }
 
     ctx.globalAlpha = Math.min(1, alpha + 0.4);
     ctx.fillStyle = isMe ? '#ffd23f' : '#f4f1de';
@@ -330,6 +356,26 @@ const ArenaRender = (() => {
     const alpha = p.isGhost ? 0.45 : (p.connected === false ? 0.6 : 1);
     const label = p.isGhost ? `👻 ${p.name}` : p.name;
     drawPlayerBody(ctx, p.x, p.y + bob + squashY, p.color, p.isGhost, isMe, label, alpha, scale);
+  }
+
+  // "RUN!" / "SAFE!" prompt above a player who just found out which door they were in.
+  function drawPlayerPrompt(ctx, p) {
+    if (!revealedAt || Date.now() >= escapeEndsAt) return;
+    let text = null, color = null;
+    if (promptSafeIds.has(p.id)) { text = 'SAFE!'; color = '#58d68d'; }
+    else if (promptRunIds.has(p.id)) { text = 'RUN!'; color = '#ef4f6b'; }
+    if (!text) return;
+    const now = Date.now();
+    const bob = Math.sin(now / 120) * 2;
+    ctx.save();
+    ctx.font = 'bold 13px monospace';
+    ctx.textAlign = 'center';
+    ctx.strokeStyle = '#10102a';
+    ctx.lineWidth = 3;
+    ctx.strokeText(text, p.x, p.y - 44 + bob);
+    ctx.fillStyle = color;
+    ctx.fillText(text, p.x, p.y - 44 + bob);
+    ctx.restore();
   }
 
   function drawFallingGhost(ctx, p, anim, isMe) {
@@ -365,6 +411,8 @@ const ArenaRender = (() => {
     const angle = dog.angle || 0;
     const resting = dog.state === 'home';
     const eating = dog.state === 'eating';
+    const windup = !!dog.windup;
+    const lunging = !!dog.lunging;
     const wag = resting ? 0.15 : (eating ? 0.05 : Math.sin(now / 90) * 0.55);
     const trot = (resting || eating) ? 0 : Math.sin(now / 70) * 2;
     const chewBob = eating ? Math.abs(Math.sin(now / 160)) * 2 : 0;
@@ -372,13 +420,33 @@ const ArenaRender = (() => {
     ctx.save();
     ctx.translate(dog.x, dog.y + chewBob);
     ctx.rotate(angle);
+    // Lunge tells: a brief crouch (windup) then an elongated forward burst (lunging).
+    const lungeScaleX = lunging ? 1.3 : (windup ? 0.9 : 1);
+    const lungeScaleY = lunging ? 0.85 : (windup ? 0.92 : 1);
+    ctx.scale(lungeScaleX, lungeScaleY);
     if (resting) ctx.globalAlpha = 0.75;
+
+    if (windup) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(239,79,107,0.85)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 16, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
 
     // Shadow
     ctx.fillStyle = 'rgba(0,0,0,0.3)';
     ctx.beginPath();
     ctx.ellipse(0, 10, 13, 5, 0, 0, Math.PI * 2);
     ctx.fill();
+
+    if (SPRITES.dog && SPRITES.dog.loaded) {
+      ctx.drawImage(SPRITES.dog.img, -17, -13, 34, 26);
+      ctx.restore();
+      return;
+    }
 
     const furColor = '#8a5a3b';
     const furDark = '#5b3a29';
@@ -552,33 +620,6 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
-  function drawChaseCountdown(ctx) {
-    if (!chaseGiveUpAt) return;
-    const remainingMs = chaseGiveUpAt - Date.now();
-    if (remainingMs <= 0) return;
-    const secs = Math.ceil(remainingMs / 1000);
-    const label = `🐾 dogs give up in ${secs}s`;
-    const cx = DOG_PEN.x + DOG_PEN.w / 2;
-    const y = DOG_PEN.y + DOG_PEN.h + 34;
-    ctx.save();
-    ctx.font = 'bold 12px monospace';
-    ctx.textAlign = 'center';
-    const textWidth = ctx.measureText(label).width;
-    const padX = 10, padY = 6;
-    ctx.fillStyle = 'rgba(16,16,42,0.85)';
-    ctx.strokeStyle = '#f4f1de';
-    ctx.lineWidth = 2;
-    const boxW = textWidth + padX * 2, boxH = 20 + padY;
-    ctx.beginPath();
-    ctx.rect(cx - boxW / 2, y - boxH / 2, boxW, boxH);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = '#ffd23f';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, cx, y + 1);
-    ctx.restore();
-  }
-
   function render(ctx, { players, dogs, traps, myId }) {
     ctx.clearRect(0, 0, ARENA_W, ARENA_H);
     drawFloor(ctx);
@@ -607,14 +648,14 @@ const ArenaRender = (() => {
           drawBearTrap(ctx, { x: p.x, y: p.y + 9, sprung: true });
         }
         drawPlayer(ctx, p, p.id === myId);
+        if (!p.isGhost) drawPlayerPrompt(ctx, p);
       }
     }
     for (const d of (dogs || [])) drawDog(ctx, d);
-    drawChaseCountdown(ctx);
   }
 
   return {
-    setArena, fitCanvas, render,
+    setArena, setTrapdoors, fitCanvas, render,
     onNewQuestion, onLockIn, onReveal, onDropped, onRoundComplete,
     onCaught, onDogsReleased,
     get ARENA_W() { return ARENA_W; }, get ARENA_H() { return ARENA_H; }

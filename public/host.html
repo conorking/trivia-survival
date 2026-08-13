@@ -65,6 +65,14 @@
         <input type="checkbox" id="cfgBearTraps">
         <span>🪤 Bear traps during the escape phase (root anyone who steps on one)</span>
       </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgDogLunge">
+        <span>🐕‍🦺 Dogs randomly lunge for a burst of speed while hunting</span>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgDynamicCellScaling">
+        <span>📉 Dynamic cell scaling - cages shrink round by round</span>
+      </label>
       <div class="error-msg" id="cfgError"></div>
     </div>
 
@@ -93,19 +101,22 @@
     <div class="question-banner">
       <h3 id="questionText">Waiting for question...</h3>
       <div class="options-row" id="optionsRow"></div>
+      <div class="phase-label" id="phaseLabel"></div>
       <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
     </div>
     <canvas id="arena"></canvas>
   </div>
 
-  <!-- END VIEW -->
-  <div id="endView" class="card center" style="display:none;">
-    <h2>🏆 GAME OVER</h2>
-    <p class="muted" id="endReason"></p>
-    <div class="winners-list" id="winnersList"></div>
-    <div class="row" style="max-width:420px; margin:16px auto 0;">
-      <button class="primary" onclick="rematch()">REMATCH</button>
-      <button class="ghost-btn" onclick="newRoom()">NEW ROOM</button>
+  <!-- END VIEW (overlay - drawn on top of the game view's last frame, not a replacement for it) -->
+  <div id="endView" class="end-overlay" style="display:none;">
+    <div class="card center">
+      <h2>🏆 GAME OVER</h2>
+      <p class="muted" id="endReason"></p>
+      <div class="winners-list" id="winnersList"></div>
+      <div class="row" style="max-width:420px; margin:16px auto 0;">
+        <button class="primary" onclick="rematch()">REMATCH</button>
+        <button class="ghost-btn" onclick="newRoom()">NEW ROOM</button>
+      </div>
     </div>
   </div>
 

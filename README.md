@@ -20,6 +20,37 @@ Then open:
 To test multiplayer locally, open the host in one tab and a few player tabs (or your phone
 on the same wifi network, using your computer's local IP instead of `localhost`).
 
+## Playing over WiFi (same network, no deploy needed)
+
+Other devices on the same network (phones, laptops) can join without any deployment —
+they just need your computer's LAN address instead of `localhost`, which only means "this
+device" to anyone else. If the host opens the dashboard via `localhost:3000`, it
+auto-detects your machine's LAN IP (via a small `/api/lan-info` endpoint) and swaps it
+into the join link/QR code automatically, so scanning it from another phone on the same
+wifi just works. If that detection fails (unusual network setup, VPN interference, etc.),
+find your IP manually (`ipconfig` on Windows / `ifconfig` or `ip addr` on Mac/Linux) and
+open `http://YOUR_LOCAL_IP:3000/index.html` on the host machine instead of `localhost`.
+
+## Playing over the internet without hosting costs or port forwarding
+
+For a one-off session where you don't want to deploy anywhere or open a port on your
+router, a tunnel exposes your local `npm start` process at a temporary public URL:
+
+- **ngrok**: `npm run tunnel:ngrok` (or `npx ngrok http 3000`). Free tier requires a
+  quick account + authtoken setup at [ngrok.com](https://ngrok.com) the first time; after
+  that it prints a public `https://*.ngrok-free.app` URL that proxies straight to your
+  local server, WebSockets included.
+- **Cloudflare Tunnel**: `npm run tunnel:cloudflared` (requires installing the
+  [`cloudflared`](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
+  CLI first). No account needed for a quick anonymous tunnel — prints a public
+  `https://*.trycloudflare.com` URL.
+
+Either way, open the *tunnel's* URL (not `localhost`) on the host machine — the join
+link/QR code is built from whatever URL the browser is actually on
+(`window.location.origin`), so it'll automatically be the public tunnel address once you
+do. Keep the room code private if you don't want strangers finding it; anyone with the
+tunnel URL and a valid room code can join like any other player.
+
 ## Deploying for a real session
 
 This needs a **persistent Node.js process** (not a static host) because it uses WebSockets
@@ -36,14 +67,18 @@ domain (it's built client-side from `window.location.origin`), so no config chan
 
 - **Server** (`server/`): Express serves the static client; Socket.io handles all real-time
   events. `rooms.js` contains the full game state machine — one `Room` per session, driven
-  by a 20Hz server-authoritative tick loop (movement, dog AI, phase timers). The server is
+  by a 25Hz server-authoritative tick loop (movement, dog AI, phase timers). The server is
   the source of truth for positions and outcomes; clients just send input and render.
 - **Client** (`public/`):
   - `index.html` — landing (host or join)
   - `host.html` / `js/host.js` — room creation, config, lobby, live spectator view
-  - `player.html` / `js/player.js` — join/avatar picker, keyboard input, gameplay view
+  - `player.html` / `js/player.js` — join/avatar picker, keyboard + hold-drag/tap touch
+    input, gameplay view
   - `js/arena-render.js` — shared canvas renderer (floor, trapdoors, cages, dogs, players,
-    ghosts) used by both host and player views
+    ghosts) used by both host and player views. Both client files render via a
+    `requestAnimationFrame` loop that interpolates between the last couple of server
+    snapshots, decoupling visual smoothness from the server's 25Hz tick rate and network
+    jitter.
 - **Reconnect**: each player gets a secret token stored in `localStorage`. On disconnect the
   player object stays in the room (frozen in place, still vulnerable to trapdoors/dogs); if
   they reload/reconnect within the same session, `player:rejoin` restores control instantly.
@@ -53,11 +88,16 @@ domain (it's built client-side from `window.location.origin`), so no config chan
 ## Round reveal sequence
 
 After the answer timer ends: cages rise on **all three** trapdoors (even empty ones) →
-after a 3s suspense delay the correct answer is highlighted in the question panel and the
-correct door glows green and stays caged → wrong doors visibly swing open and those
-players fall through, respawning nearby as ghosts a moment later → dogs are released and
-chase down anyone left in the open → once they're all caught, the safe cage opens and the
-next question begins.
+after a 3s suspense delay the correct answer is highlighted, that door glows green and
+stays locked (you can move around inside it, just not leave), and the wrong doors open →
+anyone in a wrong cage now has a few seconds to run clear before the pit actually becomes
+lethal (a shudder warns you right before it snaps open — get out before then, a personal
+"RUN!"/"SAFE!" prompt over your head tells you which applies) → dogs are released and
+hunt down anyone still exposed, each one capping out after eating a share of the group (or
+giving up after a while) and heading back to the pen — a round can end with survivors even
+if not everyone was caught → the safe door opens and the next question begins. A global
+timer bar with the current objective (e.g. "Survive the dogs for another Xs...") runs
+through every phase of this sequence.
 
 ## Rematch
 
@@ -67,11 +107,14 @@ rejoin, they're already there and just need to ready up again.
 
 ## Configuring a round
 
-The host can set, before starting:
+The host sets everything on the lobby screen — sliders/number boxes and a couple of
+opt-in toggles — and it all applies the moment **START GAME** is pressed (no separate
+save step):
 - Total game duration (safety cap on overall length)
 - Answer time per question
 - Number of questions
-- Question set: the built-in default set, or a custom uploaded `.json` file in this shape:
+- Question set: the built-in 120-question default set, or a custom uploaded `.json` file
+  in this shape:
 
 ```json
 [
@@ -80,21 +123,31 @@ The host can set, before starting:
     "correct": "B" }
 ]
 ```
+  (Each question's correct answer is reshuffled onto a random A/B/C slot every game, so
+  it's never a fixed, learnable position.)
+- 🪤 **Bear traps** (opt-in): a couple of one-shot traps appear during the escape window
+  and root anyone who steps on one for a couple seconds.
+- 🐕‍🦺 **Dog lunge** (opt-in): hunting dogs occasionally telegraph and burst toward their
+  target for extra threat.
+- 📉 **Dynamic cell scaling** (opt-in): the trapdoor cages start larger and shrink round
+  by round, so fewer players can physically fit in one by the later questions.
 
 Game needs at least 2 connected players before the host can start.
 
 ## Current scope / what's simplified for this first pass
 
 This build prioritizes a complete, correct gameplay loop end-to-end over visual polish:
-- Avatars and characters are drawn procedurally (colored pixel-blocks), no sprite sheets yet.
+- Avatars and characters are drawn procedurally (colored pixel-blocks) by default; sprite-
+  loading plumbing exists (see `public/sprites/README.md`) and is picked up automatically
+  the moment real art is dropped in, but none ships with the project yet.
 - No audio yet (structure is easy to extend — just add `<audio>` triggers on the socket
   events already firing: `game:question`, `game:lockin`, `game:reveal`, `player:caught`,
   `game:end`).
 - Jump is a visual-only animation (no gameplay effect), matching the brief.
-- Dog AI is a straightforward "nearest target" chase — good enough for the fast, chaotic
-  feel the game wants, easy to tune via `DOG_SPEED` / `DOG_CATCH_RADIUS` in `server/rooms.js`.
+- Dog AI does local steering (seek + obstacle avoidance) with persistent per-dog
+  targeting, a catch-capacity/give-up system, and optional lunge bursts — tune via the
+  `DOG_*` constants at the top of `server/rooms.js`.
 
-Natural next steps if you want to keep building: sprite-sheet based animated characters,
-sound effects/music, more question-set management (multiple saved sets), a lightweight
-admin view to remove disruptive players, and client-side interpolation for extra-smooth
-movement at very high player counts.
+Natural next steps if you want to keep building: sound effects/music, more question-set
+management (multiple saved sets), and a lightweight admin view to remove disruptive
+players.

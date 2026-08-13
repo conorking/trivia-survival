@@ -47,19 +47,22 @@
     <div class="question-banner">
       <h3 id="questionText">Get ready...</h3>
       <div class="options-row" id="optionsRow"></div>
+      <div class="phase-label" id="phaseLabel"></div>
       <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
     </div>
     <canvas id="arena"></canvas>
-    <p class="controls-hint">Move: WASD / Arrow Keys &nbsp;|&nbsp; Jump: Space</p>
+    <p class="controls-hint">Hold &amp; drag to move, tap to jump &nbsp;|&nbsp; or WASD / Arrows + Space</p>
   </div>
 
-  <!-- END VIEW -->
-  <div id="endView" class="card center" style="display:none;">
-    <h2 id="endTitle">GAME OVER</h2>
-    <p class="muted" id="endReason"></p>
-    <div class="winners-list" id="winnersList"></div>
-    <p class="muted" id="rematchHint" style="margin-top:14px; display:none;">Waiting for the host to start a rematch...</p>
-    <button class="primary" style="margin-top:16px;" onclick="location.href='index.html'">BACK TO MENU</button>
+  <!-- END VIEW (overlay - drawn on top of the game view's last frame, not a replacement for it) -->
+  <div id="endView" class="end-overlay" style="display:none;">
+    <div class="card center">
+      <h2 id="endTitle">GAME OVER</h2>
+      <p class="muted" id="endReason"></p>
+      <div class="winners-list" id="winnersList"></div>
+      <p class="muted" id="rematchHint" style="margin-top:14px; display:none;">Waiting for the host to start a rematch...</p>
+      <button class="primary" style="margin-top:16px;" onclick="backToMenu()">BACK TO MENU</button>
+    </div>
   </div>
 
   <div id="toast" class="toast"></div>

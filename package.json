@@ -5,7 +5,9 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "dev": "node server/server.js"
+    "dev": "node server/server.js",
+    "tunnel:ngrok": "npx ngrok http 3000",
+    "tunnel:cloudflared": "cloudflared tunnel --url http://localhost:3000"
   },
   "dependencies": {
     "express": "^4.19.2",

@@ -7,8 +7,9 @@ const DEFAULT_QUESTIONS = JSON.parse(
 );
 
 // ---- Arena constants (logical units, client scales to fit canvas) ----
-const ARENA_W = 800;
-const ARENA_H = 500;
+// Portrait orientation, sized for a typical phone screen.
+const ARENA_W = 400;
+const ARENA_H = 720;
 const PLAYER_RADIUS = 14;
 const PLAYER_SPEED = 235; // px/sec
 const DOG_SPEED = 185; // px/sec
@@ -28,16 +29,29 @@ const FALL_ANIM_HOLD_MS = 1000; // grace hold after escape-window stragglers fal
 const OBSTACLE_MARGIN = 18; // extra clearance dogs try to keep from trapdoor rects
 const TRAP_TRIGGER_RADIUS = 20;
 const TRAP_ROOT_MS = 1800; // how long a bear trap roots whoever steps on it
+// Dog lunge (opt-in via config.dogLunge)
+const LUNGE_RANGE = 140;
+const LUNGE_CHECK_INTERVAL_MS = 500;
+const LUNGE_CHANCE = 0.12; // rolled at most once per LUNGE_CHECK_INTERVAL_MS, while in range & off cooldown
+const LUNGE_WINDUP_MS = 150; // brief telegraph pause before the burst
+const LUNGE_DURATION_MS = 450;
+const LUNGE_SPEED_MULT = 2.1;
+const LUNGE_COOLDOWN_MS = 4000;
+// Dynamic cell scaling (opt-in via config.dynamicCellScaling)
+const CELL_SCALE_START = 1.15; // round 1 cage size, relative to the base layout below
+const CELL_SCALE_END = 0.55; // final round cage size
+const MIN_DOOR_DIM = 40; // safety floor so a cage never shrinks to something unplayable
 const JUMP_MS = 320;
 const TICK_MS = 40; // 25Hz
 
+// Base/default cage layout - the fixed sizes dynamic cell scaling scales from, and the
+// starting point clients render before any round-specific data arrives.
 const TRAPDOORS = {
-  A: { x: 130, y: 400, w: 110, h: 90 },
-  B: { x: 345, y: 400, w: 110, h: 90 },
-  C: { x: 560, y: 400, w: 110, h: 90 }
+  A: { x: 32, y: 605, w: 95, h: 85 },
+  B: { x: 152, y: 605, w: 95, h: 85 },
+  C: { x: 272, y: 605, w: 95, h: 85 }
 };
-const DOG_PEN = { x: 330, y: 20, w: 140, h: 60 };
-const DOG_OBSTACLES = ['A', 'B', 'C'].map(k => TRAPDOORS[k]);
+const DOG_PEN = { x: 130, y: 20, w: 140, h: 60 };
 const AVOID_RADIUS = DOG_RADIUS + OBSTACLE_MARGIN + 20; // steering influence range around obstacles
 
 function clamp(v, min, max) {
@@ -48,8 +62,13 @@ function rectContains(rect, x, y) {
   return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
 }
 
+function cloneTrapdoors(src) {
+  return { A: { ...src.A }, B: { ...src.B }, C: { ...src.C } };
+}
+
 // Push a circle out of a rect if it's overlapping (closest-point method).
-// Used both for "player can't cross a locked cage wall" and "dog can't clip a trapdoor".
+// Used both for "player can't cross a locked cage wall / the dog pen" and "dog can't
+// clip a trapdoor".
 function resolveCircleRect(x, y, r, rect) {
   const closestX = clamp(x, rect.x, rect.x + rect.w);
   const closestY = clamp(y, rect.y, rect.y + rect.h);
@@ -137,9 +156,9 @@ function steer(x, y, tx, ty, obstacles) {
 }
 
 function randomSpawn() {
-  // Spawn in the open area, avoiding trapdoor row and dog pen
-  const x = 40 + Math.random() * (ARENA_W - 80);
-  const y = 100 + Math.random() * (ARENA_H - 220);
+  // Spawn in the open area, avoiding the trapdoor row and dog pen
+  const x = 30 + Math.random() * (ARENA_W - 60);
+  const y = 100 + Math.random() * (ARENA_H - 100 - 200);
   return { x, y };
 }
 
@@ -205,7 +224,11 @@ function createPennedDogs() {
     state: 'home', // home | hunting | eating | returning
     giveUpAt: 0,
     eatUntil: 0,
-    homeSlot: slot
+    homeSlot: slot,
+    lungePhase: 'idle', // idle | windup | lunging
+    lungePhaseEndsAt: 0,
+    lungeReadyAt: 0,
+    nextLungeCheckAt: 0
   }));
 }
 
@@ -220,7 +243,9 @@ class Room {
       answerTimeSec: 15,
       questionCount: 10,
       questionSet: 'default', // 'default' | 'custom'
-      bearTraps: false // opt-in escape-phase hazard
+      bearTraps: false, // opt-in escape-phase hazard
+      dogLunge: false, // opt-in dog lunge bursts
+      dynamicCellScaling: false // opt-in shrinking cages round over round
     };
     this.customQuestions = null;
     this.state = 'lobby'; // lobby | question | reveal | escape | fall_pause | resolve | death_anim | ended
@@ -233,11 +258,11 @@ class Room {
     this.traps = [];
     this.cages = { A: [], B: [], C: [] };
     this.exposed = [];
+    this.trapdoors = cloneTrapdoors(TRAPDOORS); // this round's (possibly scaled) cage rects
     this.cageSolid = { A: false, B: false, C: false }; // true while a cage's perimeter blocks entry
     this.pitOpen = { A: false, B: false, C: false }; // true while a sprung door is a fall hazard
     this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
-    this.chaseGiveUpAt = 0;
     this.manualEnd = false;
     this.loop = null;
     this.createdAt = Date.now();
@@ -254,7 +279,7 @@ class Room {
       color: avatarColor || '#4f8fef',
       x: spawn.x,
       y: spawn.y,
-      input: { up: false, down: false, left: false, right: false },
+      input: { dx: 0, dy: 0 },
       jumpUntil: 0,
       rootedUntil: 0,
       alive: true,
@@ -302,7 +327,28 @@ class Room {
   resetHazards() {
     this.cageSolid = { A: false, B: false, C: false };
     this.pitOpen = { A: false, B: false, C: false };
-    this.traps = [];
+  }
+
+  // Recomputes this.trapdoors for the current round. With dynamicCellScaling off, this
+  // is always just the fixed base layout. With it on, cage size shrinks (around each
+  // door's fixed center point) as currentQuestionIndex advances toward the last round.
+  computeTrapdoorsForRound() {
+    if (!this.config.dynamicCellScaling) {
+      this.trapdoors = cloneTrapdoors(TRAPDOORS);
+      return;
+    }
+    const total = Math.max(1, this.questions.length);
+    const progress = total > 1 ? this.currentQuestionIndex / (total - 1) : 0;
+    const scale = CELL_SCALE_START + (CELL_SCALE_END - CELL_SCALE_START) * clamp(progress, 0, 1);
+    const trapdoors = {};
+    for (const key of ['A', 'B', 'C']) {
+      const base = TRAPDOORS[key];
+      const cx = base.x + base.w / 2, cy = base.y + base.h / 2;
+      const w = Math.max(MIN_DOOR_DIM, base.w * scale);
+      const h = Math.max(MIN_DOOR_DIM, base.h * scale);
+      trapdoors[key] = { x: cx - w / 2, y: cy - h / 2, w, h };
+    }
+    this.trapdoors = trapdoors;
   }
 
   start(io) {
@@ -310,9 +356,11 @@ class Room {
     this.state = 'question';
     this.currentQuestionIndex = 0;
     this.currentQuestion = this.questions[0];
+    this.computeTrapdoorsForRound();
     this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
     this.gameEndsAt = Date.now() + this.config.durationSec * 1000;
     this.dogs = createPennedDogs();
+    this.traps = [];
     this.resetHazards();
     for (const p of this.players.values()) {
       p.alive = true;
@@ -334,7 +382,8 @@ class Room {
       q: this.currentQuestion.q,
       options: this.currentQuestion.options,
       answerTimeMs: this.config.answerTimeSec * 1000,
-      endsAt: this.phaseEndsAt
+      endsAt: this.phaseEndsAt,
+      trapdoors: this.trapdoors
     });
   }
 
@@ -367,16 +416,13 @@ class Room {
       const rooted = p.rootedUntil && now < p.rootedUntil;
       let dx = 0, dy = 0;
       if (!rooted) {
-        if (p.input.up) dy -= 1;
-        if (p.input.down) dy += 1;
-        if (p.input.left) dx -= 1;
-        if (p.input.right) dx += 1;
+        dx = p.input.dx || 0;
+        dy = p.input.dy || 0;
       }
-      if (dx !== 0 || dy !== 0) {
-        const len = Math.sqrt(dx * dx + dy * dy);
-        dx /= len; dy /= len;
-        p.x += dx * PLAYER_SPEED * dt;
-        p.y += dy * PLAYER_SPEED * dt;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      if (len > 1e-4) {
+        p.x += (dx / len) * PLAYER_SPEED * dt;
+        p.y += (dy / len) * PLAYER_SPEED * dt;
       }
       p.x = clamp(p.x, PLAYER_RADIUS, ARENA_W - PLAYER_RADIUS);
       p.y = clamp(p.y, PLAYER_RADIUS, ARENA_H - PLAYER_RADIUS);
@@ -385,41 +431,46 @@ class Room {
 
       if (p.cagedAt) {
         // Contained but mobile: can move and jump, can't cross the cage wall.
-        const rect = TRAPDOORS[p.cagedAt];
+        const rect = this.trapdoors[p.cagedAt];
         p.x = clamp(p.x, rect.x + PLAYER_RADIUS, rect.x + rect.w - PLAYER_RADIUS);
         p.y = clamp(p.y, rect.y + PLAYER_RADIUS, rect.y + rect.h - PLAYER_RADIUS);
       } else {
         for (const key of ['A', 'B', 'C']) {
           if (!this.cageSolid[key]) continue;
-          const pushed = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, TRAPDOORS[key]);
+          const pushed = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, this.trapdoors[key]);
           p.x = pushed.x; p.y = pushed.y;
         }
+        const penPush = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, DOG_PEN);
+        p.x = penPush.x; p.y = penPush.y;
       }
     }
 
     // 2. Player-vs-player separation, then re-apply containment (a shove shouldn't punch
-    // someone out of the arena or into/out of a solid cage).
+    // someone out of the arena, into/out of a solid cage, or into the dog pen).
     const solidPlayers = Array.from(this.players.values()).filter(p => p.alive && !p.isGhost);
     separatePairs(solidPlayers, PLAYER_RADIUS);
     for (const p of solidPlayers) {
       p.x = clamp(p.x, PLAYER_RADIUS, ARENA_W - PLAYER_RADIUS);
       p.y = clamp(p.y, PLAYER_RADIUS, ARENA_H - PLAYER_RADIUS);
       if (p.cagedAt) {
-        const rect = TRAPDOORS[p.cagedAt];
+        const rect = this.trapdoors[p.cagedAt];
         p.x = clamp(p.x, rect.x + PLAYER_RADIUS, rect.x + rect.w - PLAYER_RADIUS);
         p.y = clamp(p.y, rect.y + PLAYER_RADIUS, rect.y + rect.h - PLAYER_RADIUS);
       } else {
         for (const key of ['A', 'B', 'C']) {
           if (!this.cageSolid[key]) continue;
-          const pushed = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, TRAPDOORS[key]);
+          const pushed = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, this.trapdoors[key]);
           p.x = pushed.x; p.y = pushed.y;
         }
+        const penPush = resolveCircleRect(p.x, p.y, PLAYER_RADIUS, DOG_PEN);
+        p.x = penPush.x; p.y = penPush.y;
       }
     }
 
-    // 3. Bear-trap hazard - escape phase only, one-shot: whoever steps on an unsprung
-    // trap gets rooted for a couple seconds. Traps are cleared once escape ends.
-    if (this.state === 'escape' && this.traps.length) {
+    // 3. Bear-trap hazard - one-shot: whoever steps on an unsprung trap gets rooted for
+    // a couple seconds. Traps spawn at escape-start and stay live (still armed) all the
+    // way through the chase, only clearing once the round fully wraps up.
+    if (this.traps.length) {
       for (const p of solidPlayers) {
         if (p.cagedAt) continue;
         if (p.rootedUntil && now < p.rootedUntil) continue;
@@ -442,7 +493,7 @@ class Room {
         if (p.cagedAt) continue;
         for (const key of ['A', 'B', 'C']) {
           if (!this.pitOpen[key]) continue;
-          if (rectContains(TRAPDOORS[key], p.x, p.y)) {
+          if (rectContains(this.trapdoors[key], p.x, p.y)) {
             drops.push(this.fallIntoPit(p, key, now));
             break;
           }
@@ -473,21 +524,25 @@ class Room {
     // Broadcast world state every tick
     io.to(this.code).emit('game:tick', {
       state: this.state,
+      phaseEndsAt: this.phaseEndsAt,
       players: this.getPlayersPublic(),
-      dogs: this.dogs.map(d => ({ x: d.x, y: d.y, angle: d.angle, state: d.state })),
+      dogs: this.dogs.map(d => ({
+        x: d.x, y: d.y, angle: d.angle, state: d.state,
+        lunging: d.lungePhase === 'lunging', windup: d.lungePhase === 'windup'
+      })),
       traps: this.traps.map(t => ({ x: t.x, y: t.y, sprung: t.sprung }))
     });
   }
 
   // Shared by the mid-chase pit-fall check and the escape-window straggler sweep.
   fallIntoPit(p, key, now) {
-    const door = TRAPDOORS[key];
+    const door = this.trapdoors[key];
     const fromX = p.x, fromY = p.y;
     p.alive = false;
     p.isGhost = true;
     p.cagedAt = null;
     this.lastDeathAt = now;
-    const jitter = (Math.random() - 0.5) * 60;
+    const jitter = (Math.random() - 0.5) * Math.min(60, door.w);
     p.x = clamp(door.x + door.w / 2 + jitter, PLAYER_RADIUS, ARENA_W - PLAYER_RADIUS);
     p.y = clamp(door.y - 30, PLAYER_RADIUS, ARENA_H - PLAYER_RADIUS);
     return { id: p.id, doorKey: key, fromX, fromY, toX: p.x, toY: p.y };
@@ -500,7 +555,7 @@ class Room {
       if (p.isGhost || !p.alive) continue;
       let placed = null;
       for (const key of ['A', 'B', 'C']) {
-        if (rectContains(TRAPDOORS[key], p.x, p.y)) { placed = key; break; }
+        if (rectContains(this.trapdoors[key], p.x, p.y)) { placed = key; break; }
       }
       if (placed) {
         this.cages[placed].push(p.id);
@@ -542,15 +597,14 @@ class Room {
   }
 
   doEscapeEnd(io, now) {
-    this.traps = []; // only a hazard during the escape window itself
-
     // Anyone still standing on an open pit when the grace window closes falls through.
+    // Bear traps (if any) stay armed - they're cleared only once the round fully ends.
     const drops = [];
     for (const p of this.players.values()) {
       if (!p.alive || p.isGhost) continue;
       for (const key of ['A', 'B', 'C']) {
         if (!this.pitOpen[key]) continue;
-        if (rectContains(TRAPDOORS[key], p.x, p.y)) {
+        if (rectContains(this.trapdoors[key], p.x, p.y)) {
           drops.push(this.fallIntoPit(p, key, now));
           break;
         }
@@ -581,12 +635,15 @@ class Room {
       dog.targetId = null;
       dog.giveUpAt = giveUpAt;
       dog.eatUntil = 0;
+      dog.lungePhase = 'idle';
+      dog.lungeReadyAt = 0;
+      dog.nextLungeCheckAt = 0;
       // x/y/angle stay as-is - they're already sitting at their pen slot.
     }
-    this.chaseGiveUpAt = giveUpAt;
     this.hardTimeoutAt = now + DOG_PHASE_HARD_TIMEOUT_MS;
     this.lastDeathAt = 0;
     this.state = 'resolve';
+    this.phaseEndsAt = giveUpAt; // drives the shared "survive the dogs for Xs" phase timer
     io.to(this.code).emit('game:dogs_released', { giveUpAt });
   }
 
@@ -597,6 +654,7 @@ class Room {
     const claimed = new Set(
       this.dogs.filter(d => d.state === 'hunting' && d.targetId).map(d => d.targetId)
     );
+    const dogObstacles = ['A', 'B', 'C'].map(k => this.trapdoors[k]);
 
     for (const dog of this.dogs) {
       if (dog.state === 'home') continue;
@@ -637,6 +695,32 @@ class Room {
         }
       }
 
+      // Lunge state machine - only while actively hunting a target, and only if enabled.
+      let lungeSpeedMult = 1;
+      if (this.config.dogLunge && dog.state === 'hunting' && dog.targetId) {
+        const target = this.players.get(dog.targetId);
+        if (target) {
+          if (dog.lungePhase === 'windup' && now >= dog.lungePhaseEndsAt) {
+            dog.lungePhase = 'lunging';
+            dog.lungePhaseEndsAt = now + LUNGE_DURATION_MS;
+          } else if (dog.lungePhase === 'lunging' && now >= dog.lungePhaseEndsAt) {
+            dog.lungePhase = 'idle';
+            dog.lungeReadyAt = now + LUNGE_COOLDOWN_MS;
+          } else if (dog.lungePhase === 'idle' && now >= dog.lungeReadyAt && now >= dog.nextLungeCheckAt) {
+            dog.nextLungeCheckAt = now + LUNGE_CHECK_INTERVAL_MS;
+            const dist = Math.hypot(target.x - dog.x, target.y - dog.y);
+            if (dist <= LUNGE_RANGE && Math.random() < LUNGE_CHANCE) {
+              dog.lungePhase = 'windup';
+              dog.lungePhaseEndsAt = now + LUNGE_WINDUP_MS;
+            }
+          }
+        }
+        if (dog.lungePhase === 'lunging') lungeSpeedMult = LUNGE_SPEED_MULT;
+        else if (dog.lungePhase === 'windup') lungeSpeedMult = 0;
+      } else {
+        dog.lungePhase = 'idle';
+      }
+
       let tx = dog.x, ty = dog.y;
       if (dog.state === 'returning') {
         tx = dog.homeSlot.x; ty = dog.homeSlot.y;
@@ -645,19 +729,21 @@ class Room {
         if (target) { tx = target.x; ty = target.y; }
       }
 
-      const dir = steer(dog.x, dog.y, tx, ty, DOG_OBSTACLES);
-      if (dir.x !== 0 || dir.y !== 0) {
-        const nx = dog.x + dir.x * DOG_SPEED * dt;
-        const ny = dog.y + dir.y * DOG_SPEED * dt;
+      const dir = steer(dog.x, dog.y, tx, ty, dogObstacles);
+      if ((dir.x !== 0 || dir.y !== 0) && lungeSpeedMult > 0) {
+        const nx = dog.x + dir.x * DOG_SPEED * lungeSpeedMult * dt;
+        const ny = dog.y + dir.y * DOG_SPEED * lungeSpeedMult * dt;
         if (nx !== dog.x || ny !== dog.y) dog.angle = Math.atan2(ny - dog.y, nx - dog.x);
         dog.x = nx; dog.y = ny;
+      } else if (dir.x !== 0 || dir.y !== 0) {
+        dog.angle = Math.atan2(dir.y, dir.x); // paused in windup - still face the target
       }
       dog.x = clamp(dog.x, DOG_RADIUS, ARENA_W - DOG_RADIUS);
       dog.y = clamp(dog.y, DOG_RADIUS, ARENA_H - DOG_RADIUS);
       // Hard guarantee on top of steering: a dog can never actually clip a trapdoor rect,
       // solid cage or open pit alike.
       for (const key of ['A', 'B', 'C']) {
-        const pushed = resolveCircleRect(dog.x, dog.y, DOG_RADIUS, TRAPDOORS[key]);
+        const pushed = resolveCircleRect(dog.x, dog.y, DOG_RADIUS, this.trapdoors[key]);
         dog.x = pushed.x; dog.y = pushed.y;
       }
 
@@ -686,6 +772,7 @@ class Room {
         dog.targetId = null;
         dog.state = 'eating';
         dog.eatUntil = now + DOG_EAT_MS;
+        dog.lungePhase = 'idle';
         this.lastDeathAt = now;
         io.to(this.code).emit('player:caught', {
           id: target.id, x: target.x, y: target.y, dogX: dog.x, dogY: dog.y
@@ -723,6 +810,7 @@ class Room {
       if (p) p.cagedAt = null;
     }
     this.cageSolid[correct] = false;
+    this.traps = []; // bear traps (if any) disappear now that dogs are back home
     io.to(this.code).emit('game:round_complete', {});
     this.advanceRound(io, now);
   }
@@ -749,6 +837,7 @@ class Room {
     this.resetHazards();
     this.currentQuestionIndex = nextIndex;
     this.currentQuestion = this.questions[nextIndex];
+    this.computeTrapdoorsForRound();
     this.state = 'question';
     this.phaseEndsAt = now + this.config.answerTimeSec * 1000;
     this.emitQuestion(io);
@@ -763,12 +852,13 @@ class Room {
     this.phaseEndsAt = 0;
     this.gameEndsAt = 0;
     this.dogs = createPennedDogs();
+    this.traps = [];
     this.cages = { A: [], B: [], C: [] };
     this.exposed = [];
+    this.computeTrapdoorsForRound();
     this.resetHazards();
     this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
-    this.chaseGiveUpAt = 0;
     this.manualEnd = false;
     for (const p of this.players.values()) {
       p.alive = true;
