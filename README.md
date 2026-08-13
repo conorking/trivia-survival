@@ -109,12 +109,12 @@ rejoin, they're already there and just need to ready up again.
 
 The host sets everything on the lobby screen — sliders/number boxes and a couple of
 opt-in toggles — and it all applies the moment **START GAME** is pressed (no separate
-save step):
-- Total game duration (safety cap on overall length)
+save step). Game length is simply answer-time × number of questions; there's no separate
+overall duration cap to set.
 - Answer time per question
-- Number of questions
-- Question set: the built-in 120-question default set, or a custom uploaded `.json` file
-  in this shape:
+- Number of questions (up to 200)
+- Question set: the built-in 120-question general-knowledge set, a 200-question web-dev
+  set (HTML/CSS/JS/React/tooling), or a custom uploaded `.json` file in this shape:
 
 ```json
 [
@@ -127,10 +127,12 @@ save step):
   it's never a fixed, learnable position.)
 - 🪤 **Bear traps** (opt-in): a couple of one-shot traps appear during the escape window
   and root anyone who steps on one for a couple seconds.
-- 🐕‍🦺 **Dog lunge** (opt-in): hunting dogs occasionally telegraph and burst toward their
-  target for extra threat.
+- 🐕‍🦺 **Dog lunge** (off / low / high): hunting dogs occasionally telegraph and burst
+  toward their target for extra threat, at a frequency you choose.
 - 📉 **Dynamic cell scaling** (opt-in): the trapdoor cages start larger and shrink round
-  by round, so fewer players can physically fit in one by the later questions.
+  by round, so fewer players can physically fit in one by the later questions. Cages also
+  always grow taller (regardless of this setting) in a big room so a full crowd can
+  actually fit.
 
 Game needs at least 2 connected players before the host can start.
 
@@ -143,7 +145,9 @@ This build prioritizes a complete, correct gameplay loop end-to-end over visual 
 - No audio yet (structure is easy to extend — just add `<audio>` triggers on the socket
   events already firing: `game:question`, `game:lockin`, `game:reveal`, `player:caught`,
   `game:end`).
-- Jump is a visual-only animation (no gameplay effect), matching the brief.
+- Jump gives a small directional speed burst while moving (rate-limited by an
+  exponentially growing cooldown, capped at a couple of seconds) rather than being
+  purely cosmetic.
 - Dog AI does local steering (seek + obstacle avoidance) with persistent per-dog
   targeting, a catch-capacity/give-up system, and optional lunge bursts — tune via the
   `DOG_*` constants at the top of `server/rooms.js`.

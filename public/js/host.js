@@ -151,7 +151,6 @@ socket.on('game:end', ({ reason, winners }) => {
   const reasonText = {
     all_eliminated: 'Everyone was eliminated!',
     questions_complete: 'All questions answered!',
-    time_up: "Time's up!",
     host_ended: 'Game ended by host.'
   }[reason] || '';
   document.getElementById('endReason').textContent = reasonText;
@@ -206,15 +205,13 @@ function maybeUseLanOrigin(code) {
 }
 
 function populateConfigForm(config) {
-  document.getElementById('cfgDuration').value = config.durationSec;
-  document.getElementById('cfgDurationRange').value = config.durationSec;
   document.getElementById('cfgAnswerTime').value = config.answerTimeSec;
   document.getElementById('cfgAnswerTimeRange').value = config.answerTimeSec;
   document.getElementById('cfgQuestionCount').value = config.questionCount;
   document.getElementById('cfgQuestionCountRange').value = config.questionCount;
   document.getElementById('cfgQuestionSet').value = config.questionSet;
   document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
-  document.getElementById('cfgDogLunge').checked = !!config.dogLunge;
+  document.getElementById('cfgDogLunge').value = config.dogLunge || 'off';
   document.getElementById('cfgDynamicCellScaling').checked = !!config.dynamicCellScaling;
   document.getElementById('uploadRow').style.display = config.questionSet === 'custom' ? 'block' : 'none';
 }
@@ -248,18 +245,16 @@ function linkSlider(rangeId, numberId) {
     range.value = clamped;
   });
 }
-linkSlider('cfgDurationRange', 'cfgDuration');
 linkSlider('cfgAnswerTimeRange', 'cfgAnswerTime');
 linkSlider('cfgQuestionCountRange', 'cfgQuestionCount');
 
 function collectConfig() {
   return {
-    durationSec: Number(document.getElementById('cfgDuration').value),
     answerTimeSec: Number(document.getElementById('cfgAnswerTime').value),
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
     questionSet: document.getElementById('cfgQuestionSet').value,
     bearTraps: document.getElementById('cfgBearTraps').checked,
-    dogLunge: document.getElementById('cfgDogLunge').checked,
+    dogLunge: document.getElementById('cfgDogLunge').value,
     dynamicCellScaling: document.getElementById('cfgDynamicCellScaling').checked
   };
 }
@@ -290,15 +285,44 @@ function endGameEarly() {
   }
 }
 
+// navigator.clipboard requires a secure context (HTTPS) and isn't reliably available on
+// every mobile browser - falls back to the older execCommand('copy') technique (via a
+// temporary offscreen textarea) so the copy buttons still work over plain HTTP on a LAN,
+// which is how this is most often opened on a phone.
+function copyToClipboard(text, successMessage) {
+  const done = () => showToast(successMessage);
+  const fail = () => showToast('Copy failed - long-press to copy manually');
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, () => copyViaExecCommand(text, done, fail));
+  } else {
+    copyViaExecCommand(text, done, fail);
+  }
+}
+
+function copyViaExecCommand(text, done, fail) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.position = 'fixed';
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  el.focus();
+  el.select();
+  el.setSelectionRange(0, text.length);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+  document.body.removeChild(el);
+  if (ok) done(); else fail();
+}
+
 function copyLink() {
   const input = document.getElementById('joinUrl');
   input.select();
-  navigator.clipboard.writeText(input.value).then(() => showToast('Link copied!'));
+  copyToClipboard(input.value, 'Link copied!');
 }
 
 function copyCode() {
   if (!roomCode) return;
-  navigator.clipboard.writeText(roomCode).then(() => showToast('Code copied!'));
+  copyToClipboard(roomCode, 'Code copied!');
 }
 
 function rematch() {

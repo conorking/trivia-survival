@@ -8,7 +8,10 @@
 </head>
 <body>
 <div class="container">
-  <h1 class="center">🎮 HOST CONSOLE</h1>
+  <div class="top-nav">
+    <a href="index.html" class="logo-link">🐾 TRIVIA SURVIVAL</a>
+    <span class="nav-sub">HOST CONSOLE</span>
+  </div>
 
   <!-- LOBBY VIEW -->
   <div id="lobbyView">
@@ -28,14 +31,7 @@
     <div class="card">
       <h2>Game Config</h2>
       <p class="muted">Settings apply when you hit START GAME below - no separate save step.</p>
-      <div class="row">
-        <div>
-          <label>Total game duration (seconds)</label>
-          <div class="slider-row">
-            <input type="range" id="cfgDurationRange" min="30" max="3600" step="10" value="600">
-            <input type="number" id="cfgDuration" value="600" min="30" max="3600">
-          </div>
-        </div>
+      <div class="config-row">
         <div>
           <label>Answer time per question (seconds)</label>
           <div class="slider-row">
@@ -46,14 +42,15 @@
         <div>
           <label>Number of questions</label>
           <div class="slider-row">
-            <input type="range" id="cfgQuestionCountRange" min="1" max="100" step="1" value="10">
-            <input type="number" id="cfgQuestionCount" value="10" min="1" max="100">
+            <input type="range" id="cfgQuestionCountRange" min="1" max="200" step="1" value="10">
+            <input type="number" id="cfgQuestionCount" value="10" min="1" max="200">
           </div>
         </div>
       </div>
       <label>Question Set</label>
       <select id="cfgQuestionSet">
         <option value="default">Built-in Default Set</option>
+        <option value="webdev">Web Dev (HTML/CSS/JS/React)</option>
         <option value="custom">Custom Upload</option>
       </select>
       <div id="uploadRow" style="display:none; margin-top:10px;">
@@ -65,10 +62,12 @@
         <input type="checkbox" id="cfgBearTraps">
         <span>🪤 Bear traps during the escape phase (root anyone who steps on one)</span>
       </label>
-      <label class="checkbox-row">
-        <input type="checkbox" id="cfgDogLunge">
-        <span>🐕‍🦺 Dogs randomly lunge for a burst of speed while hunting</span>
-      </label>
+      <label>🐕‍🦺 Dog lunge (random speed bursts while hunting)</label>
+      <select id="cfgDogLunge">
+        <option value="off">Off</option>
+        <option value="low">Low</option>
+        <option value="high">High</option>
+      </select>
       <label class="checkbox-row">
         <input type="checkbox" id="cfgDynamicCellScaling">
         <span>📉 Dynamic cell scaling - cages shrink round by round</span>

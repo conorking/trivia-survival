@@ -209,7 +209,6 @@ socket.on('game:end', ({ reason, winners }) => {
   const reasonText = {
     all_eliminated: 'Everyone was eliminated!',
     questions_complete: 'All questions answered!',
-    time_up: "Time's up!",
     host_ended: 'Game ended by host.'
   }[reason] || '';
   document.getElementById('endReason').textContent = reasonText;
@@ -344,9 +343,26 @@ function sendDirInput(dx, dy) {
   socket.emit('player:input', { dx, dy });
 }
 
+// Mirrors the server's exponential jump-cooldown formula (server/rooms.js attemptJump)
+// purely so the local "instant feedback" animation doesn't play when the server is
+// definitely about to reject the jump (still on cooldown) - the server remains the
+// sole authority on the actual movement-burst effect either way.
+const JUMP_BASE_COOLDOWN_MS = 300;
+const JUMP_COOLDOWN_GROWTH = 2;
+const JUMP_MAX_COOLDOWN_MS = 2000;
+const JUMP_CHAIN_RESET_MS = 2500;
+let myJumpChain = 0, myJumpCooldownUntil = 0, myLastJumpAt = 0;
+
 function triggerJump() {
-  myLocalJumpUntil = Date.now() + 320; // instant local feedback, matches server JUMP_MS
-  socket.emit('player:jump');
+  const now = Date.now();
+  socket.emit('player:jump'); // always tell the server - it's the real authority
+  if (now < myJumpCooldownUntil) return; // predicted cooldown - skip the local animation
+  if (now - myLastJumpAt > JUMP_CHAIN_RESET_MS) myJumpChain = 0;
+  const cooldown = Math.min(JUMP_MAX_COOLDOWN_MS, JUMP_BASE_COOLDOWN_MS * Math.pow(JUMP_COOLDOWN_GROWTH, myJumpChain));
+  myJumpChain += 1;
+  myLastJumpAt = now;
+  myJumpCooldownUntil = now + cooldown;
+  myLocalJumpUntil = now + 320; // instant local feedback, matches server JUMP_MS
 }
 
 const keyState = { up: false, down: false, left: false, right: false };

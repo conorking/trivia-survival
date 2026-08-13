@@ -3,7 +3,7 @@ const http = require('http');
 const os = require('os');
 const path = require('path');
 const { Server } = require('socket.io');
-const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, JUMP_MS } = require('./rooms');
+const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN } = require('./rooms');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,12 +26,11 @@ const tokenIndex = new Map();
 
 function sanitizeConfig(input, current) {
   const cfg = { ...current };
-  if (input.durationSec) cfg.durationSec = Math.max(30, Math.min(3600, Number(input.durationSec)));
   if (input.answerTimeSec) cfg.answerTimeSec = Math.max(3, Math.min(120, Number(input.answerTimeSec)));
-  if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(100, Number(input.questionCount)));
-  if (input.questionSet === 'default' || input.questionSet === 'custom') cfg.questionSet = input.questionSet;
+  if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(200, Number(input.questionCount)));
+  if (['default', 'custom', 'webdev'].includes(input.questionSet)) cfg.questionSet = input.questionSet;
   if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
-  if (typeof input.dogLunge === 'boolean') cfg.dogLunge = input.dogLunge;
+  if (['off', 'low', 'high'].includes(input.dogLunge)) cfg.dogLunge = input.dogLunge;
   if (typeof input.dynamicCellScaling === 'boolean') cfg.dynamicCellScaling = input.dynamicCellScaling;
   return cfg;
 }
@@ -195,7 +194,7 @@ io.on('connection', socket => {
     if (!room || !playerId) return;
     const player = room.players.get(playerId);
     if (!player) return;
-    player.jumpUntil = Date.now() + JUMP_MS;
+    room.attemptJump(player, Date.now());
   });
 
   socket.on('disconnect', () => {

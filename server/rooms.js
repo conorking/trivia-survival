@@ -5,6 +5,9 @@ const path = require('path');
 const DEFAULT_QUESTIONS = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'questions-default.json'), 'utf8')
 );
+const WEBDEV_QUESTIONS = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'questions-webdev.json'), 'utf8')
+);
 
 // ---- Arena constants (logical units, client scales to fit canvas) ----
 // Portrait orientation, sized for a typical phone screen.
@@ -29,19 +32,31 @@ const FALL_ANIM_HOLD_MS = 1000; // grace hold after escape-window stragglers fal
 const OBSTACLE_MARGIN = 18; // extra clearance dogs try to keep from trapdoor rects
 const TRAP_TRIGGER_RADIUS = 20;
 const TRAP_ROOT_MS = 1800; // how long a bear trap roots whoever steps on it
-// Dog lunge (opt-in via config.dogLunge)
+// Dog lunge (opt-in via config.dogLunge: 'off' | 'low' | 'high')
 const LUNGE_RANGE = 140;
-const LUNGE_CHECK_INTERVAL_MS = 500;
-const LUNGE_CHANCE = 0.12; // rolled at most once per LUNGE_CHECK_INTERVAL_MS, while in range & off cooldown
 const LUNGE_WINDUP_MS = 150; // brief telegraph pause before the burst
 const LUNGE_DURATION_MS = 450;
 const LUNGE_SPEED_MULT = 2.1;
-const LUNGE_COOLDOWN_MS = 4000;
+const LUNGE_PRESETS = {
+  // chance is rolled at most once per checkIntervalMs, only while in range & off cooldown
+  low: { chance: 0.05, checkIntervalMs: 800, cooldownMs: 7000 },
+  high: { chance: 0.08, checkIntervalMs: 600, cooldownMs: 5000 }
+};
 // Dynamic cell scaling (opt-in via config.dynamicCellScaling)
 const CELL_SCALE_START = 1.15; // round 1 cage size, relative to the base layout below
 const CELL_SCALE_END = 0.55; // final round cage size
 const MIN_DOOR_DIM = 40; // safety floor so a cage never shrinks to something unplayable
+// Cage height also grows (never shrinks below base) with the room's player count, so a
+// full room can physically fit more people in one cage - independent of dynamic scaling.
+const PLAYER_COUNT_HEIGHT_THRESHOLD = 20; // no boost below this many players
+const PLAYER_COUNT_HEIGHT_PER_PLAYER = 1.4;
+const PLAYER_COUNT_HEIGHT_MAX_BOOST = 90;
 const JUMP_MS = 320;
+const JUMP_SPEED_MULT = 1.55; // move faster than usual while airborne, in whatever direction you're pressing
+const JUMP_BASE_COOLDOWN_MS = 300; // cooldown after the first jump in a fresh chain
+const JUMP_COOLDOWN_GROWTH = 2; // cooldown doubles each consecutive jump
+const JUMP_MAX_COOLDOWN_MS = 2000; // cap - "a couple of seconds"
+const JUMP_CHAIN_RESET_MS = 2500; // this long without jumping resets the chain back to fresh
 const TICK_MS = 40; // 25Hz
 
 // Base/default cage layout - the fixed sizes dynamic cell scaling scales from, and the
@@ -239,12 +254,11 @@ class Room {
     this.hostConnected = true;
     this.players = new Map(); // playerId -> player object
     this.config = {
-      durationSec: 600, // total game length cap (10 min default)
       answerTimeSec: 15,
       questionCount: 10,
-      questionSet: 'default', // 'default' | 'custom'
+      questionSet: 'default', // 'default' | 'custom' | 'webdev'
       bearTraps: false, // opt-in escape-phase hazard
-      dogLunge: false, // opt-in dog lunge bursts
+      dogLunge: 'off', // 'off' | 'low' | 'high'
       dynamicCellScaling: false // opt-in shrinking cages round over round
     };
     this.customQuestions = null;
@@ -253,7 +267,6 @@ class Room {
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
-    this.gameEndsAt = 0;
     this.dogs = createPennedDogs();
     this.traps = [];
     this.cages = { A: [], B: [], C: [] };
@@ -281,6 +294,9 @@ class Room {
       y: spawn.y,
       input: { dx: 0, dy: 0 },
       jumpUntil: 0,
+      jumpChain: 0,
+      jumpCooldownUntil: 0,
+      lastJumpAt: 0,
       rootedUntil: 0,
       alive: true,
       isGhost: false,
@@ -315,9 +331,10 @@ class Room {
   }
 
   buildQuestionSet() {
-    let source = this.config.questionSet === 'custom' && this.customQuestions
-      ? this.customQuestions
-      : DEFAULT_QUESTIONS;
+    let source;
+    if (this.config.questionSet === 'custom' && this.customQuestions) source = this.customQuestions;
+    else if (this.config.questionSet === 'webdev') source = WEBDEV_QUESTIONS;
+    else source = DEFAULT_QUESTIONS;
     // shuffle copy, then reshuffle each question's own A/B/C letter assignment
     const arr = [...source].sort(() => Math.random() - 0.5);
     const count = Math.min(this.config.questionCount, arr.length);
@@ -329,24 +346,32 @@ class Room {
     this.pitOpen = { A: false, B: false, C: false };
   }
 
-  // Recomputes this.trapdoors for the current round. With dynamicCellScaling off, this
-  // is always just the fixed base layout. With it on, cage size shrinks (around each
-  // door's fixed center point) as currentQuestionIndex advances toward the last round.
+  // Recomputes this.trapdoors for the current round. Width scaling is purely the opt-in
+  // dynamicCellScaling round-progress shrink (off by default = base width, centered).
+  // Height also gets a standing boost based on the room's player count - more people
+  // need more physical room to fit in one cage - independent of that setting, and
+  // anchored to the door's *bottom* edge (grows upward) so it never pushes the floor
+  // below the canvas.
   computeTrapdoorsForRound() {
-    if (!this.config.dynamicCellScaling) {
-      this.trapdoors = cloneTrapdoors(TRAPDOORS);
-      return;
+    const playerCount = this.players.size;
+    const heightBoost = Math.min(
+      PLAYER_COUNT_HEIGHT_MAX_BOOST,
+      Math.max(0, playerCount - PLAYER_COUNT_HEIGHT_THRESHOLD) * PLAYER_COUNT_HEIGHT_PER_PLAYER
+    );
+    let scale = 1;
+    if (this.config.dynamicCellScaling) {
+      const total = Math.max(1, this.questions.length);
+      const progress = total > 1 ? this.currentQuestionIndex / (total - 1) : 0;
+      scale = CELL_SCALE_START + (CELL_SCALE_END - CELL_SCALE_START) * clamp(progress, 0, 1);
     }
-    const total = Math.max(1, this.questions.length);
-    const progress = total > 1 ? this.currentQuestionIndex / (total - 1) : 0;
-    const scale = CELL_SCALE_START + (CELL_SCALE_END - CELL_SCALE_START) * clamp(progress, 0, 1);
     const trapdoors = {};
     for (const key of ['A', 'B', 'C']) {
       const base = TRAPDOORS[key];
-      const cx = base.x + base.w / 2, cy = base.y + base.h / 2;
+      const cx = base.x + base.w / 2;
+      const bottom = base.y + base.h;
       const w = Math.max(MIN_DOOR_DIM, base.w * scale);
-      const h = Math.max(MIN_DOOR_DIM, base.h * scale);
-      trapdoors[key] = { x: cx - w / 2, y: cy - h / 2, w, h };
+      const h = Math.max(MIN_DOOR_DIM, base.h * scale + heightBoost);
+      trapdoors[key] = { x: cx - w / 2, y: bottom - h, w, h };
     }
     this.trapdoors = trapdoors;
   }
@@ -356,9 +381,7 @@ class Room {
     this.state = 'question';
     this.currentQuestionIndex = 0;
     this.currentQuestion = this.questions[0];
-    this.computeTrapdoorsForRound();
     this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
-    this.gameEndsAt = Date.now() + this.config.durationSec * 1000;
     this.dogs = createPennedDogs();
     this.traps = [];
     this.resetHazards();
@@ -367,6 +390,9 @@ class Room {
       p.isGhost = false;
       p.cagedAt = null;
       p.rootedUntil = 0;
+      p.jumpChain = 0;
+      p.jumpCooldownUntil = 0;
+      p.lastJumpAt = 0;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;
@@ -407,6 +433,24 @@ class Room {
     this.stopLoop();
   }
 
+  // Jumping while moving gives a brief directional speed burst (see the jump-boost check
+  // in tick()'s movement loop below), so consecutive jumps are rate-limited with an
+  // exponentially growing cooldown - a couple of quick jumps are fine, then it takes a
+  // couple of seconds to recover. Returns whether the jump was actually accepted.
+  attemptJump(player, now) {
+    if (now < player.jumpCooldownUntil) return false;
+    if (now - player.lastJumpAt > JUMP_CHAIN_RESET_MS) player.jumpChain = 0;
+    const cooldown = Math.min(
+      JUMP_MAX_COOLDOWN_MS,
+      JUMP_BASE_COOLDOWN_MS * Math.pow(JUMP_COOLDOWN_GROWTH, player.jumpChain)
+    );
+    player.jumpChain += 1;
+    player.lastJumpAt = now;
+    player.jumpCooldownUntil = now + cooldown;
+    player.jumpUntil = now + JUMP_MS;
+    return true;
+  }
+
   tick(io) {
     const now = Date.now();
     const dt = TICK_MS / 1000;
@@ -421,8 +465,10 @@ class Room {
       }
       const len = Math.sqrt(dx * dx + dy * dy);
       if (len > 1e-4) {
-        p.x += (dx / len) * PLAYER_SPEED * dt;
-        p.y += (dy / len) * PLAYER_SPEED * dt;
+        // Jumping while moving gives a brief speed boost in that same direction.
+        const speed = (p.jumpUntil && now < p.jumpUntil) ? PLAYER_SPEED * JUMP_SPEED_MULT : PLAYER_SPEED;
+        p.x += (dx / len) * speed * dt;
+        p.y += (dy / len) * speed * dt;
       }
       p.x = clamp(p.x, PLAYER_RADIUS, ARENA_W - PLAYER_RADIUS);
       p.y = clamp(p.y, PLAYER_RADIUS, ARENA_H - PLAYER_RADIUS);
@@ -697,7 +743,8 @@ class Room {
 
       // Lunge state machine - only while actively hunting a target, and only if enabled.
       let lungeSpeedMult = 1;
-      if (this.config.dogLunge && dog.state === 'hunting' && dog.targetId) {
+      const lungePreset = LUNGE_PRESETS[this.config.dogLunge];
+      if (lungePreset && dog.state === 'hunting' && dog.targetId) {
         const target = this.players.get(dog.targetId);
         if (target) {
           if (dog.lungePhase === 'windup' && now >= dog.lungePhaseEndsAt) {
@@ -705,11 +752,11 @@ class Room {
             dog.lungePhaseEndsAt = now + LUNGE_DURATION_MS;
           } else if (dog.lungePhase === 'lunging' && now >= dog.lungePhaseEndsAt) {
             dog.lungePhase = 'idle';
-            dog.lungeReadyAt = now + LUNGE_COOLDOWN_MS;
+            dog.lungeReadyAt = now + lungePreset.cooldownMs;
           } else if (dog.lungePhase === 'idle' && now >= dog.lungeReadyAt && now >= dog.nextLungeCheckAt) {
-            dog.nextLungeCheckAt = now + LUNGE_CHECK_INTERVAL_MS;
+            dog.nextLungeCheckAt = now + lungePreset.checkIntervalMs;
             const dist = Math.hypot(target.x - dog.x, target.y - dog.y);
-            if (dist <= LUNGE_RANGE && Math.random() < LUNGE_CHANCE) {
+            if (dist <= LUNGE_RANGE && Math.random() < lungePreset.chance) {
               dog.lungePhase = 'windup';
               dog.lungePhaseEndsAt = now + LUNGE_WINDUP_MS;
             }
@@ -819,7 +866,6 @@ class Room {
     const aliveCount = Array.from(this.players.values()).filter(p => p.alive && !p.isGhost).length;
     const nextIndex = this.currentQuestionIndex + 1;
     const outOfQuestions = nextIndex >= this.questions.length;
-    const outOfTime = now >= this.gameEndsAt;
 
     if (aliveCount === 0) {
       this.endGame(io, 'all_eliminated');
@@ -827,10 +873,6 @@ class Room {
     }
     if (outOfQuestions) {
       this.endGame(io, 'questions_complete');
-      return;
-    }
-    if (outOfTime) {
-      this.endGame(io, 'time_up');
       return;
     }
 
@@ -850,7 +892,6 @@ class Room {
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
-    this.gameEndsAt = 0;
     this.dogs = createPennedDogs();
     this.traps = [];
     this.cages = { A: [], B: [], C: [] };
@@ -866,6 +907,9 @@ class Room {
       p.cagedAt = null;
       p.ready = false;
       p.rootedUntil = 0;
+      p.jumpChain = 0;
+      p.jumpCooldownUntil = 0;
+      p.lastJumpAt = 0;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;

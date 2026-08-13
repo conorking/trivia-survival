@@ -1,0 +1,1802 @@
+[
+  {
+    "q": "What does HTML stand for?",
+    "options": {
+      "A": "HyperText Markup Language",
+      "B": "Home Tool Markup Language",
+      "C": "HyperText Modern Layout"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which tag is used to create a hyperlink?",
+    "options": {
+      "A": "<link>",
+      "B": "<a>",
+      "C": "<href>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which HTML tag creates an unordered (bulleted) list?",
+    "options": {
+      "A": "<ol>",
+      "B": "<list>",
+      "C": "<ul>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which attribute specifies alternate text for an image?",
+    "options": {
+      "A": "alt",
+      "B": "title",
+      "C": "src"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTML tag represents the largest heading?",
+    "options": {
+      "A": "<heading>",
+      "B": "<h1>",
+      "C": "<h6>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which tag is used to embed JavaScript in an HTML document?",
+    "options": {
+      "A": "<js>",
+      "B": "<script>",
+      "C": "<code>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does the br tag insert?",
+    "options": {
+      "A": "A line break",
+      "B": "Bold text",
+      "C": "A border"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is the correct doctype declaration for HTML5?",
+    "options": {
+      "A": "<!DOCTYPE html5>",
+      "B": "<!DOCTYPE HTML PUBLIC>",
+      "C": "<!DOCTYPE html>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which tag defines a table row?",
+    "options": {
+      "A": "<tr>",
+      "B": "<row>",
+      "C": "<td>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which tag defines a standard table data cell?",
+    "options": {
+      "A": "<th>",
+      "B": "<td>",
+      "C": "<cell>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which attribute makes an input field mandatory before submitting a form?",
+    "options": {
+      "A": "mandatory",
+      "B": "validate",
+      "C": "required"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which HTML element represents the main content of a document body?",
+    "options": {
+      "A": "<main>",
+      "B": "<body>",
+      "C": "<content>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which input type creates a checkbox?",
+    "options": {
+      "A": "type=\"box\"",
+      "B": "type=\"checkbox\"",
+      "C": "type=\"check\""
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which tag embeds an image in an HTML page?",
+    "options": {
+      "A": "<image>",
+      "B": "<pic>",
+      "C": "<img>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does the href attribute specify on an anchor tag?",
+    "options": {
+      "A": "The link's destination URL",
+      "B": "The link's display color",
+      "C": "The link's font size"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTML element is intended for site navigation links?",
+    "options": {
+      "A": "<navigate>",
+      "B": "<nav>",
+      "C": "<menu>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which tag defines a footer for a document or section?",
+    "options": {
+      "A": "<footer>",
+      "B": "<bottom>",
+      "C": "<end>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is the correct syntax for an HTML comment?",
+    "options": {
+      "A": "// comment",
+      "B": "<!-- comment -->",
+      "C": "/* comment */"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which attribute uniquely identifies a single HTML element on a page?",
+    "options": {
+      "A": "class",
+      "B": "name",
+      "C": "id"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which tag creates a dropdown selection list?",
+    "options": {
+      "A": "<select>",
+      "B": "<dropdown>",
+      "C": "<list>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTML5 element embeds a video file?",
+    "options": {
+      "A": "<media>",
+      "B": "<film>",
+      "C": "<video>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does the meta charset tag specify?",
+    "options": {
+      "A": "The page's character encoding",
+      "B": "The page's title",
+      "C": "The page's author"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which tag represents a self-contained piece of content, like a blog post?",
+    "options": {
+      "A": "<article>",
+      "B": "<section>",
+      "C": "<post>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which tag groups related form controls together, often with a caption?",
+    "options": {
+      "A": "<group>",
+      "B": "<fieldset>",
+      "C": "<formgroup>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does the src attribute specify on an img or script tag?",
+    "options": {
+      "A": "The element's style",
+      "B": "The source file path",
+      "C": "The element's size"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which tag creates a numbered (ordered) list?",
+    "options": {
+      "A": "<ul>",
+      "B": "<numbered>",
+      "C": "<ol>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does DOM stand for?",
+    "options": {
+      "A": "Document Object Model",
+      "B": "Data Object Management",
+      "C": "Document Order Map"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTML tag semantically marks text as important (bold)?",
+    "options": {
+      "A": "<b>",
+      "B": "<strong>",
+      "C": "<important>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which HTML tag semantically marks emphasized (italic) text?",
+    "options": {
+      "A": "<i>",
+      "B": "<italic>",
+      "C": "<em>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which attribute disables a form input field?",
+    "options": {
+      "A": "readonly",
+      "B": "disabled",
+      "C": "locked"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which tag creates a table header cell?",
+    "options": {
+      "A": "<th>",
+      "B": "<head>",
+      "C": "<td>"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTML element represents a thematic break, drawn as a horizontal line?",
+    "options": {
+      "A": "<line>",
+      "B": "<break>",
+      "C": "<hr>"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which tag embeds an audio file?",
+    "options": {
+      "A": "<sound>",
+      "B": "<audio>",
+      "C": "<media>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which attribute makes a checkbox checked by default?",
+    "options": {
+      "A": "checked",
+      "B": "selected",
+      "C": "active"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which tag represents content set aside from the main content, like a sidebar?",
+    "options": {
+      "A": "<sidebar>",
+      "B": "<aside>",
+      "C": "<extra>"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does CSS stand for?",
+    "options": {
+      "A": "Cascading Style Sheets",
+      "B": "Creative Style System",
+      "C": "Computer Styled Sheets"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which property changes the text color of an element?",
+    "options": {
+      "A": "text-color",
+      "B": "font-color",
+      "C": "color"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which property sets an element's background color?",
+    "options": {
+      "A": "background-color",
+      "B": "bg-color",
+      "C": "color-background"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which CSS property controls space between an element's border and its content?",
+    "options": {
+      "A": "margin",
+      "B": "padding",
+      "C": "spacing"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which CSS property controls space outside an element's border?",
+    "options": {
+      "A": "padding",
+      "B": "gap",
+      "C": "margin"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What is the default value of the CSS position property?",
+    "options": {
+      "A": "relative",
+      "B": "static",
+      "C": "fixed"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which CSS selector targets elements with a specific class?",
+    "options": {
+      "A": "#classname",
+      "B": ".classname",
+      "C": "@classname"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which CSS selector targets an element with a specific id?",
+    "options": {
+      "A": ".idname",
+      "B": "%idname",
+      "C": "#idname"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does flex-direction: column do in a flex container?",
+    "options": {
+      "A": "Stacks items vertically",
+      "B": "Stacks items horizontally",
+      "C": "Reverses item order"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which CSS unit is relative to the root element's font size?",
+    "options": {
+      "A": "em",
+      "B": "rem",
+      "C": "vh"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which CSS property makes text bold?",
+    "options": {
+      "A": "font-weight",
+      "B": "text-weight",
+      "C": "font-style"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does display: none do to an element?",
+    "options": {
+      "A": "Makes it transparent",
+      "B": "Hides it and removes it from layout entirely",
+      "C": "Shrinks it to zero size but keeps its space"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which property gives an element rounded corners?",
+    "options": {
+      "A": "corner-radius",
+      "B": "round-corners",
+      "C": "border-radius"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which CSS layout system uses grid-template-columns?",
+    "options": {
+      "A": "CSS Grid",
+      "B": "Flexbox",
+      "C": "Floats"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does the z-index property control?",
+    "options": {
+      "A": "Element width",
+      "B": "Stacking order along the depth axis",
+      "C": "Text zoom level"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which pseudo-class applies styles when the mouse is over an element?",
+    "options": {
+      "A": ":active",
+      "B": ":hover",
+      "C": ":focus"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which display value turns an element into a flex container?",
+    "options": {
+      "A": "flex",
+      "B": "flexbox",
+      "C": "flex-container"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "With box-sizing: border-box, what's included in an element's declared width?",
+    "options": {
+      "A": "Content only",
+      "B": "Content and padding only",
+      "C": "Content, padding, and border"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which CSS unit is relative to the viewport's width?",
+    "options": {
+      "A": "vw",
+      "B": "vh",
+      "C": "rem"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which property adds space between flex or grid items?",
+    "options": {
+      "A": "space-between",
+      "B": "gap",
+      "C": "spacing"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the correct CSS selector to select all paragraph elements?",
+    "options": {
+      "A": "para",
+      "B": "*p",
+      "C": "p"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which property controls an element's transparency?",
+    "options": {
+      "A": "opacity",
+      "B": "visibility",
+      "C": "transparency"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which CSS at-rule enables responsive breakpoints?",
+    "options": {
+      "A": "@responsive",
+      "B": "@media",
+      "C": "@breakpoint"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does overflow: hidden do to an element's content?",
+    "options": {
+      "A": "Adds a scrollbar",
+      "B": "Clips content that overflows the box",
+      "C": "Wraps content to fit"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which flexbox property aligns items along the main axis?",
+    "options": {
+      "A": "align-items",
+      "B": "justify-content",
+      "C": "align-content"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which flexbox property aligns items along the cross axis?",
+    "options": {
+      "A": "align-items",
+      "B": "justify-content",
+      "C": "flex-align"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "In the CSS box model, moving outward from the content, what comes next?",
+    "options": {
+      "A": "Margin, then padding, then border",
+      "B": "Padding, then border, then margin",
+      "C": "Border, then padding, then margin"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which selector targets the first child element of its parent?",
+    "options": {
+      "A": ":first-of-type",
+      "B": ":first-child",
+      "C": ":nth-child(0)"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "An absolutely positioned element is positioned relative to what?",
+    "options": {
+      "A": "The document body always",
+      "B": "Its nearest positioned ancestor",
+      "C": "The browser window always"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which property sets the font used for text?",
+    "options": {
+      "A": "font-family",
+      "B": "text-font",
+      "C": "font-type"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does text-align: center do?",
+    "options": {
+      "A": "Centers text vertically",
+      "B": "Centers text horizontally",
+      "C": "Justifies text on both edges"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which property adds a shadow effect around an element's box?",
+    "options": {
+      "A": "shadow",
+      "B": "drop-shadow",
+      "C": "box-shadow"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which position value pins an element relative to the viewport, ignoring scroll?",
+    "options": {
+      "A": "sticky",
+      "B": "fixed",
+      "C": "absolute"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "How is a custom CSS variable declared?",
+    "options": {
+      "A": "$main-color",
+      "B": "@main-color",
+      "C": "--main-color"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which property controls whether flex items wrap onto multiple lines?",
+    "options": {
+      "A": "flex-wrap",
+      "B": "flex-flow",
+      "C": "flex-multi"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which keyword declares a block-scoped variable that can be reassigned?",
+    "options": {
+      "A": "var",
+      "B": "let",
+      "C": "const"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which keyword declares a block-scoped constant?",
+    "options": {
+      "A": "let",
+      "B": "final",
+      "C": "const"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which array method adds an element to the end of an array?",
+    "options": {
+      "A": "push",
+      "B": "append",
+      "C": "add"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method removes and returns the last element of an array?",
+    "options": {
+      "A": "shift",
+      "B": "pop",
+      "C": "remove"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Compared to ==, what does the === operator also check?",
+    "options": {
+      "A": "Type, not just value",
+      "B": "Only reference equality",
+      "C": "Nothing extra, they're identical"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which method converts a JSON string into a JavaScript object?",
+    "options": {
+      "A": "JSON.parse",
+      "B": "JSON.toObject",
+      "C": "JSON.decode"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which method converts a JavaScript value into a JSON string?",
+    "options": {
+      "A": "JSON.encode",
+      "B": "JSON.stringify",
+      "C": "JSON.toString"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does typeof null return in JavaScript?",
+    "options": {
+      "A": "\"null\"",
+      "B": "\"undefined\"",
+      "C": "\"object\""
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which array method returns a new array with only the elements that pass a test?",
+    "options": {
+      "A": "map",
+      "B": "filter",
+      "C": "find"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which array method transforms every element and returns a new array of the results?",
+    "options": {
+      "A": "map",
+      "B": "forEach",
+      "C": "reduce"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method reduces an array down to a single accumulated value?",
+    "options": {
+      "A": "filter",
+      "B": "flat",
+      "C": "reduce"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does NaN represent in JavaScript?",
+    "options": {
+      "A": "Not a Number",
+      "B": "Null and None",
+      "C": "New Array Node"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which keyword is used to define a function?",
+    "options": {
+      "A": "func",
+      "B": "def",
+      "C": "function"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What is a closure in JavaScript?",
+    "options": {
+      "A": "A function that remembers variables from its enclosing scope",
+      "B": "A way to close a browser tab",
+      "C": "A loop that never terminates"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which method selects an HTML element by its id?",
+    "options": {
+      "A": "document.querySelector.id",
+      "B": "document.getElementById",
+      "C": "document.selectById"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does adding async before a function declaration do?",
+    "options": {
+      "A": "Makes the function run faster",
+      "B": "Makes the function always return a Promise",
+      "C": "Prevents the function from throwing errors"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which keyword pauses execution inside an async function until a Promise settles?",
+    "options": {
+      "A": "await",
+      "B": "pause",
+      "C": "yield"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "How is an arrow function written?",
+    "options": {
+      "A": "function => ()",
+      "B": "() => {}",
+      "C": "=> function() {}"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which method attaches an event handler to an element?",
+    "options": {
+      "A": "addEventListener",
+      "B": "onEvent",
+      "C": "attachEvent"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does 1 + \"1\" evaluate to in JavaScript?",
+    "options": {
+      "A": "2",
+      "B": "\"11\"",
+      "C": "NaN"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which value represents an intentional absence of any object value?",
+    "options": {
+      "A": "undefined",
+      "B": "NaN",
+      "C": "null"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What value does a declared but unassigned variable have by default?",
+    "options": {
+      "A": "null",
+      "B": "0",
+      "C": "undefined"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which operator is used to spread the elements of an array or object?",
+    "options": {
+      "A": "**",
+      "B": "&&",
+      "C": "..."
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which array method returns true if at least one element passes a test?",
+    "options": {
+      "A": "some",
+      "B": "every",
+      "C": "includes"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method returns true only if all elements pass a test?",
+    "options": {
+      "A": "some",
+      "B": "every",
+      "C": "all"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Inside a regular function called as obj.method(), what does this refer to?",
+    "options": {
+      "A": "The global object always",
+      "B": "The object the method was called on",
+      "C": "undefined always"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which built-in JavaScript object represents dates and times?",
+    "options": {
+      "A": "Time",
+      "B": "Date",
+      "C": "Calendar"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the purpose of a try...catch block?",
+    "options": {
+      "A": "Handling runtime errors gracefully",
+      "B": "Declaring variables",
+      "C": "Looping over arrays"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which loop is best suited to iterate over an object's enumerable property names?",
+    "options": {
+      "A": "for...of",
+      "B": "for...in",
+      "C": "while"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which loop is best suited to iterate over the values of an iterable like an array?",
+    "options": {
+      "A": "for...in",
+      "B": "for...of",
+      "C": "do...while"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which method checks whether a value is an array?",
+    "options": {
+      "A": "Array.isArray()",
+      "B": "value.isArray()",
+      "C": "typeof value === \"array\""
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method returns the first element that matches a condition?",
+    "options": {
+      "A": "filter",
+      "B": "find",
+      "C": "indexOf"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What syntax embeds an expression inside a JavaScript template literal?",
+    "options": {
+      "A": "#{expression}",
+      "B": "%expression%",
+      "C": "${expression}"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which keyword creates a new object instance from a constructor function or class?",
+    "options": {
+      "A": "new",
+      "B": "create",
+      "C": "make"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method removes and returns the first element of an array?",
+    "options": {
+      "A": "pop",
+      "B": "shift",
+      "C": "splice"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which array method adds one or more elements to the start of an array?",
+    "options": {
+      "A": "unshift",
+      "B": "prepend",
+      "C": "push"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does the exponentiation assignment x **= 2 do when x is 5?",
+    "options": {
+      "A": "Sets x to 10",
+      "B": "Sets x to 25",
+      "C": "Sets x to 7"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which global function parses a string and returns an integer?",
+    "options": {
+      "A": "toInt",
+      "B": "Number.int",
+      "C": "parseInt"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does a JavaScript Promise represent?",
+    "options": {
+      "A": "A guaranteed synchronous return value",
+      "B": "The eventual result of an asynchronous operation",
+      "C": "A type of loop"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which array method combines two or more arrays into a new one?",
+    "options": {
+      "A": "concat",
+      "B": "merge",
+      "C": "join"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does typeof return when applied to a function?",
+    "options": {
+      "A": "\"object\"",
+      "B": "\"function\"",
+      "C": "\"method\""
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which keyword prevents a variable binding from being reassigned?",
+    "options": {
+      "A": "let",
+      "B": "const",
+      "C": "static"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is event bubbling?",
+    "options": {
+      "A": "Events propagating from the target element up through its ancestors",
+      "B": "Events firing in a random order",
+      "C": "Multiple events merging into one"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which method stops an event from propagating further up the DOM?",
+    "options": {
+      "A": "preventDefault",
+      "B": "stopPropagation",
+      "C": "cancelBubble()"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which method prevents an event's default browser action?",
+    "options": {
+      "A": "stopPropagation",
+      "B": "preventDefault",
+      "C": "cancelEvent"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the correct syntax for a single-line comment in JavaScript?",
+    "options": {
+      "A": "<!-- comment -->",
+      "B": "# comment",
+      "C": "// comment"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which operator returns the right-hand value only when the left-hand value is null or undefined?",
+    "options": {
+      "A": "||",
+      "B": "??",
+      "C": "&&"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which operator safely accesses a nested property that might not exist?",
+    "options": {
+      "A": "?.",
+      "B": "!.",
+      "C": "::"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does Array.prototype.slice() do?",
+    "options": {
+      "A": "Removes elements from the original array",
+      "B": "Returns a shallow copy of a portion of an array",
+      "C": "Sorts the array in place"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does Array.prototype.splice() do?",
+    "options": {
+      "A": "Returns a copy without modifying the original",
+      "B": "Adds or removes elements in place, modifying the original",
+      "C": "Joins array elements into a string"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which JavaScript primitive type represents a guaranteed unique value?",
+    "options": {
+      "A": "Symbol",
+      "B": "BigInt",
+      "C": "Unique"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Compared to var, how is let scoped?",
+    "options": {
+      "A": "Globally scoped",
+      "B": "Block-scoped",
+      "C": "Module-scoped only"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which built-in method converts most values to a string?",
+    "options": {
+      "A": "toString()",
+      "B": "asString()",
+      "C": "stringify()"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is hoisting in JavaScript?",
+    "options": {
+      "A": "Moving declarations to the top of their scope during compilation",
+      "B": "Deleting unused variables automatically",
+      "C": "Converting var to let automatically"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which array method joins all elements of an array into a single string?",
+    "options": {
+      "A": "join",
+      "B": "concat",
+      "C": "toString only"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does typeof undefined evaluate to?",
+    "options": {
+      "A": "\"null\"",
+      "B": "\"undefined\"",
+      "C": "\"object\""
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which keyword exports a value from a JavaScript module?",
+    "options": {
+      "A": "export",
+      "B": "module",
+      "C": "public"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which keyword imports a value into a JavaScript module?",
+    "options": {
+      "A": "require",
+      "B": "import",
+      "C": "include"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does Object.keys() return for an object?",
+    "options": {
+      "A": "An array of its property values",
+      "B": "An array of its property names",
+      "C": "A count of its properties"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does Object.values() return for an object?",
+    "options": {
+      "A": "An array of its property names",
+      "B": "An array of its property values",
+      "C": "The object's prototype"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which method converts an iterable or array-like object into a real array?",
+    "options": {
+      "A": "Array.from",
+      "B": "Array.of",
+      "C": "Array.convert"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does setTimeout do?",
+    "options": {
+      "A": "Repeats a function forever at an interval",
+      "B": "Runs a function once after a specified delay",
+      "C": "Pauses the entire script for a delay"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which method repeatedly runs a function at a fixed time interval?",
+    "options": {
+      "A": "setTimeout",
+      "B": "setInterval",
+      "C": "setRepeat"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which comparison operator only checks value, allowing type coercion?",
+    "options": {
+      "A": "===",
+      "B": "==",
+      "C": "!=="
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does the logical AND (&&) operator return if the first operand is falsy?",
+    "options": {
+      "A": "The first operand",
+      "B": "true",
+      "C": "The second operand"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does the logical OR (||) operator return if the first operand is truthy?",
+    "options": {
+      "A": "The second operand",
+      "B": "false",
+      "C": "The first operand"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What does JSX stand for?",
+    "options": {
+      "A": "JavaScript XML",
+      "B": "Java Syntax Extension",
+      "C": "JSON Extended"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which React hook adds state to a function component?",
+    "options": {
+      "A": "useEffect",
+      "B": "useState",
+      "C": "useContext"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which React hook performs side effects in a function component?",
+    "options": {
+      "A": "useEffect",
+      "B": "useState",
+      "C": "useMemo"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is the virtual DOM in React?",
+    "options": {
+      "A": "A lightweight in-memory representation of the real DOM",
+      "B": "A browser extension for debugging",
+      "C": "A server-side rendering engine"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "In React 18, which API is used to render a root React element into the DOM?",
+    "options": {
+      "A": "ReactDOM.render()",
+      "B": "createRoot().render()",
+      "C": "React.mount()"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What are props in React?",
+    "options": {
+      "A": "Internal component state",
+      "B": "Data passed from a parent component to a child",
+      "C": "CSS properties applied to a component"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which hook lets a function component read a value from React Context?",
+    "options": {
+      "A": "useContext",
+      "B": "useState",
+      "C": "useRef"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is the key prop used for when rendering a list in React?",
+    "options": {
+      "A": "Styling list items",
+      "B": "Helping React efficiently identify which items changed",
+      "C": "Setting the list's sort order"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which hook memoizes the result of an expensive calculation?",
+    "options": {
+      "A": "useMemo",
+      "B": "useCallback",
+      "C": "useEffect"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which hook memoizes a function so it isn't recreated on every render?",
+    "options": {
+      "A": "useMemo",
+      "B": "useCallback",
+      "C": "useState"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which hook provides a mutable value that persists across renders without causing a re-render when changed?",
+    "options": {
+      "A": "useRef",
+      "B": "useState",
+      "C": "useMemo"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "How does state differ from props in React?",
+    "options": {
+      "A": "State is external and read-only; props are internal and mutable",
+      "B": "State is internal and mutable; props are external and read-only",
+      "C": "There is no difference"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What must a React component function return?",
+    "options": {
+      "A": "A single root element or fragment",
+      "B": "An array of strings only",
+      "C": "Nothing - it must use console.log"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is a React Fragment used for?",
+    "options": {
+      "A": "Grouping children without adding an extra DOM node",
+      "B": "Splitting a component into multiple files",
+      "C": "Creating a portal to another part of the DOM"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which company originally created React?",
+    "options": {
+      "A": "Google",
+      "B": "Facebook (Meta)",
+      "C": "Microsoft"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the recommended way to update state based on its previous value?",
+    "options": {
+      "A": "Read the state variable directly and add to it",
+      "B": "Pass an updater function to the setter, e.g. setCount(c => c + 1)",
+      "C": "Mutate the state object directly"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What primarily triggers a React component to re-render?",
+    "options": {
+      "A": "A change in its state or props",
+      "B": "The browser window resizing",
+      "C": "A page reload only"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does \"lifting state up\" mean in React?",
+    "options": {
+      "A": "Moving shared state to the closest common ancestor component",
+      "B": "Using global variables instead of state",
+      "C": "Moving state into a separate microservice"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What controls when a useEffect callback re-runs?",
+    "options": {
+      "A": "Its dependency array",
+      "B": "The component's file name",
+      "C": "The order hooks are called in"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is \"prop drilling\"?",
+    "options": {
+      "A": "Passing props through many nested components to reach a deeply nested one",
+      "B": "Deleting unused props automatically",
+      "C": "A build-time optimization for props"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "In React forms, what makes an input a \"controlled component\"?",
+    "options": {
+      "A": "Its value is driven by React state",
+      "B": "It has no event handlers",
+      "C": "It can only be edited by the browser, not React"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which file extension is commonly used for TypeScript React components with JSX?",
+    "options": {
+      "A": ".jsx",
+      "B": ".tsx",
+      "C": ".jsts"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the shorthand JSX syntax for React.Fragment?",
+    "options": {
+      "A": "<></>",
+      "B": "[[ ]]",
+      "C": "{{ }}"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is React.StrictMode primarily used for?",
+    "options": {
+      "A": "Highlighting potential problems in an application during development",
+      "B": "Enforcing TypeScript types at runtime",
+      "C": "Minifying the production bundle"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which hook is most commonly used to directly access a DOM node imperatively?",
+    "options": {
+      "A": "useRef",
+      "B": "useContext",
+      "C": "useReducer"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is a Higher-Order Component (HOC) in React?",
+    "options": {
+      "A": "A function that takes a component and returns a new enhanced component",
+      "B": "A component rendered at the top of the page",
+      "C": "A component written in a higher-level language"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does the special children prop represent?",
+    "options": {
+      "A": "The nested content passed between a component's opening and closing tags",
+      "B": "The component's child components in a folder structure",
+      "C": "A list of a component's own state variables"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which library is most commonly used for client-side routing in React apps?",
+    "options": {
+      "A": "React Router",
+      "B": "Express Router",
+      "C": "React Navigate"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does \"conditional rendering\" mean in React?",
+    "options": {
+      "A": "Rendering different UI based on a condition",
+      "B": "Rendering a component only once",
+      "C": "Rendering components in a random order"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What naming convention must custom React component functions follow?",
+    "options": {
+      "A": "Start with a lowercase letter",
+      "B": "Start with a capital letter",
+      "C": "Contain the word Component"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does it mean when a React component \"unmounts\"?",
+    "options": {
+      "A": "It is removed from the DOM",
+      "B": "It is minified for production",
+      "C": "It loses its props but keeps its state"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "How do you run cleanup logic before a component unmounts or before an effect re-runs?",
+    "options": {
+      "A": "Return a cleanup function from useEffect",
+      "B": "Call useCleanup()",
+      "C": "Add an onUnmount prop"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is useReducer primarily used for?",
+    "options": {
+      "A": "Managing complex state logic via a reducer function",
+      "B": "Reducing the size of the production bundle",
+      "C": "Combining multiple components into one"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does wrapping a component in React.memo do?",
+    "options": {
+      "A": "Memoizes it, skipping re-renders when props haven't changed",
+      "B": "Deletes it after first render",
+      "C": "Forces it to re-render on every parent update"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "How do you embed a JavaScript expression inside JSX markup?",
+    "options": {
+      "A": "Wrap it in parentheses ()",
+      "B": "Wrap it in curly braces {}",
+      "C": "Wrap it in square brackets []"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which attribute is used instead of class to apply a CSS class in JSX?",
+    "options": {
+      "A": "cssClass",
+      "B": "styleName",
+      "C": "className"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which modern build tool is commonly used to quickly scaffold a new React app?",
+    "options": {
+      "A": "Vite",
+      "B": "Photoshop",
+      "C": "Postman"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What determines a useState hook's initial state value?",
+    "options": {
+      "A": "The argument passed into useState()",
+      "B": "The component's props automatically",
+      "C": "The previous component's state"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does it mean for React to be \"declarative\"?",
+    "options": {
+      "A": "You describe what the UI should look like for a given state, not the steps to update it",
+      "B": "You must manually update the DOM",
+      "C": "Components must be declared with the keyword declare"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is the requirement for the key prop among sibling elements in a list?",
+    "options": {
+      "A": "It must be unique among those siblings",
+      "B": "It must be globally unique across the whole app",
+      "C": "It must always be a number"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does \"one-way data binding\" mean in React?",
+    "options": {
+      "A": "Data flows from parent to child in one direction",
+      "B": "Data automatically syncs both ways between components",
+      "C": "Only one component can hold data at a time"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which hook is the general replacement for most class component lifecycle logic?",
+    "options": {
+      "A": "useEffect",
+      "B": "useClass",
+      "C": "useLifecycle"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is typically returned by calling the useState hook?",
+    "options": {
+      "A": "A single value",
+      "B": "A pair: the current state and a setter function",
+      "C": "An object with a render method"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What is the purpose of a \"context provider\" in React?",
+    "options": {
+      "A": "Supplying a value down the component tree without prop drilling",
+      "B": "Providing internet connectivity to the app",
+      "C": "Wrapping the app for server-side rendering only"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does HTTP stand for?",
+    "options": {
+      "A": "HyperText Transfer Protocol",
+      "B": "High Transfer Text Program",
+      "C": "HyperText Type Process"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTTP status code means \"Not Found\"?",
+    "options": {
+      "A": "200",
+      "B": "404",
+      "C": "500"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which HTTP status code indicates a successful request?",
+    "options": {
+      "A": "404",
+      "B": "301",
+      "C": "200"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "Which HTTP method is typically used to retrieve data without side effects?",
+    "options": {
+      "A": "GET",
+      "B": "POST",
+      "C": "DELETE"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which HTTP method is typically used to submit new data to a server?",
+    "options": {
+      "A": "GET",
+      "B": "POST",
+      "C": "HEAD"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does REST stand for in web APIs?",
+    "options": {
+      "A": "Representational State Transfer",
+      "B": "Remote Endpoint Service Type",
+      "C": "Reactive State Transition"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does API stand for?",
+    "options": {
+      "A": "Application Programming Interface",
+      "B": "Advanced Program Integration",
+      "C": "Automated Process Instruction"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does CORS stand for?",
+    "options": {
+      "A": "Cross-Origin Resource Sharing",
+      "B": "Client Origin Request System",
+      "C": "Cross-Object Reference Standard"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which Git command creates a new, empty repository?",
+    "options": {
+      "A": "git init",
+      "B": "git start",
+      "C": "git new"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which Git command stages changes for the next commit?",
+    "options": {
+      "A": "git commit",
+      "B": "git add",
+      "C": "git stage"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "Which Git command records staged changes as a new commit?",
+    "options": {
+      "A": "git save",
+      "B": "git push",
+      "C": "git commit"
+    },
+    "correct": "C"
+  },
+  {
+    "q": "What is npm short for?",
+    "options": {
+      "A": "Node Package Manager",
+      "B": "New Program Module",
+      "C": "Network Protocol Manager"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which file lists a Node.js project's dependencies and scripts?",
+    "options": {
+      "A": "config.json",
+      "B": "package.json",
+      "C": "dependencies.json"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does XSS stand for in web security?",
+    "options": {
+      "A": "Cross-Site Scripting",
+      "B": "External Server Script",
+      "C": "Extended Style Sheet"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does a SQL injection attack typically target?",
+    "options": {
+      "A": "A database, via untrusted input in queries",
+      "B": "A user's local filesystem only",
+      "C": "The browser's rendering engine"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What is a \"bundler\" used for in modern web development?",
+    "options": {
+      "A": "Combining and optimizing JS/asset files for the browser",
+      "B": "Compressing images only",
+      "C": "Hosting a website"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "Which fast build tool/dev server is widely used with modern React projects?",
+    "options": {
+      "A": "Vite",
+      "B": "Photoshop",
+      "C": "Docker Compose"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "What does HTTPS add on top of HTTP?",
+    "options": {
+      "A": "Faster page loads always",
+      "B": "Encryption via TLS/SSL",
+      "C": "Automatic caching"
+    },
+    "correct": "B"
+  },
+  {
+    "q": "What does \"responsive design\" mean for a website?",
+    "options": {
+      "A": "The layout adapts to different screen sizes and devices",
+      "B": "The server responds within one second",
+      "C": "The site uses only fixed pixel widths"
+    },
+    "correct": "A"
+  },
+  {
+    "q": "In semantic versioning (major.minor.patch), what does incrementing the major number typically signal?",
+    "options": {
+      "A": "A backwards-incompatible (breaking) change",
+      "B": "A bug fix only",
+      "C": "A documentation update only"
+    },
+    "correct": "A"
+  }
+]

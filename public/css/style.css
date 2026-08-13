@@ -23,7 +23,7 @@ body {
   background-size: 24px 24px;
   color: var(--text);
   font-family: 'VT323', monospace;
-  font-size: 20px;
+  font-size: 21px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,11 +84,12 @@ input[type=text], input[type=number], select, textarea {
   width: 100%;
 }
 
-label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
+label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 
-.slider-row { display: flex; align-items: center; gap: 10px; }
+.slider-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .slider-row input[type=range] {
   flex: 1;
+  min-width: 0;
   accent-color: var(--accent);
   height: 6px;
   cursor: pointer;
@@ -114,11 +115,44 @@ label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
 .row { display: flex; gap: 16px; flex-wrap: wrap; }
 .row > * { flex: 1; min-width: 140px; }
 
+/* Config sliders row - each field gets its own column on wide screens, but stacks onto
+   its own line below ~520px so the slider + number box never gets squeezed. */
+.config-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.config-row > * { flex: 1 1 200px; min-width: 0; }
+@media (max-width: 520px) {
+  .config-row { flex-direction: column; gap: 10px; }
+  .config-row > * { width: 100%; }
+}
+
 .menu-buttons { display: flex; flex-direction: column; gap: 16px; max-width: 320px; margin: 30px auto; }
 .menu-buttons button { font-size: 14px; padding: 20px; }
 
 .center { text-align: center; }
-.muted { color: #9a9ac0; font-size: 16px; }
+.muted { color: #9a9ac0; font-size: 17px; }
+
+/* Persistent top nav - present on every view so there's always a way back to the
+   landing page, without pushing the game view down much. */
+.top-nav {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 0 10px;
+  flex-wrap: wrap;
+}
+.top-nav .logo-link {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.top-nav .logo-link:hover { filter: brightness(1.15); }
+.top-nav .nav-sub {
+  font-size: 15px;
+  color: #9a9ac0;
+}
 
 .join-info {
   display: flex;
@@ -162,9 +196,9 @@ label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
 .avatar-swatch.selected { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 /* Game view: a flex column bound to the viewport height so the whole screen (HUD +
-   canvas + controls hint) fits without scrolling on a phone, while letting the canvas
-   - the one flexible element - grow to fill whatever's left over. On a tall/large
-   display that's a lot of room, so the arena naturally renders bigger there too. */
+   canvas) fits without scrolling on a phone, while letting the canvas - the one
+   flexible element - grow to fill whatever's left over. On a tall/large display
+   that's a lot of room, so the arena naturally renders bigger there too. */
 #gameView {
   display: flex;
   flex-direction: column;
@@ -172,8 +206,10 @@ label { display: block; margin: 12px 0 4px; font-size: 16px; color: #cfcfe8; }
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
-  height: calc(100vh - 34px);
-  height: calc(100dvh - 34px); /* dvh accounts for mobile browser chrome; vh above is the fallback */
+  /* Reserves room for .container's padding + .top-nav above it, so the flex canvas
+     doesn't get sized against the wrong budget and force a scroll. */
+  height: calc(100vh - 76px);
+  height: calc(100dvh - 76px); /* dvh accounts for mobile browser chrome; vh above is the fallback */
 }
 #gameView > * { flex: 0 0 auto; }
 
@@ -205,7 +241,7 @@ canvas#arena {
 .options-row { display: flex; gap: 14px; justify-content: center; margin-top: 8px; }
 .option-pill {
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
+  font-size: 12px;
   padding: 8px 14px;
   border-radius: 6px;
   border: 2px solid var(--border);
@@ -240,22 +276,22 @@ canvas#arena {
 .end-overlay .card { max-width: 480px; width: 100%; margin: auto; }
 
 .status-strip { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-.badge { background: #10102a; border: 2px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 16px; }
+.badge { background: #10102a; border: 2px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 17px; }
 .badge.ghost { color: #9a9ac0; }
 .badge.alive { color: var(--safe); }
 
-.controls-hint { text-align: center; color: #9a9ac0; font-size: 15px; margin-top: 8px; }
-
 /* Extra compaction on short viewports (small phones) so the HUD leaves more room for
-   the arena itself instead of squeezing it down to make space for its own padding. */
+   the arena itself instead of squeezing it down to make space for its own padding.
+   Trims padding/margins, not text size - readability matters more than a few extra
+   pixels of canvas, and the flex canvas below already absorbs most of the pressure. */
 @media (max-height: 700px) {
-  .question-banner { padding: 8px 12px; margin-bottom: 4px; }
-  .question-banner h3 { font-size: 13px; margin-bottom: 4px; }
+  .top-nav { padding: 4px 0 6px; }
+  .question-banner { padding: 8px 14px; margin-bottom: 4px; }
+  .question-banner h3 { margin-bottom: 4px; }
   .q-indicator { margin-bottom: 4px; }
-  .q-indicator .q-big { padding: 6px 14px; font-size: 18px; }
+  .q-indicator .q-big { padding: 6px 16px; }
   .status-strip { margin-bottom: 4px; }
-  .controls-hint { font-size: 12px; margin-top: 4px; }
-  .phase-label { font-size: 10px; margin-top: 6px; }
+  .phase-label { margin-top: 6px; }
 }
 
 .link-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 10px; }

@@ -30,7 +30,9 @@ snapshot.
   token lookup (`tokenIndex` Map: token → {roomCode, playerId}).
 - `server/rooms.js` — the actual game: `Room` class with the full state machine, arena
   constants, tick loop. `GameManager` just tracks rooms by code.
-- `server/questions-default.json` — built-in question set.
+- `server/questions-default.json` — built-in general-knowledge question set (120 entries).
+- `server/questions-webdev.json` — built-in web-dev question set (200 entries: HTML, CSS,
+  JavaScript, React, general tooling).
 - `public/index.html` — landing (host or join).
 - `public/host.html` + `public/js/host.js` — room creation, config form, lobby, live
   spectator view, end screen + rematch.
@@ -51,11 +53,19 @@ snapshot.
 Portrait orientation, `ARENA_W=400`/`ARENA_H=720` (phone-friendly). Dog pen top-center,
 trapdoor row along the bottom, open field between. `TRAPDOORS` (module constant) is the
 *base* layout; each `Room` also has its own `this.trapdoors`, recomputed by
-`computeTrapdoorsForRound()` — normally just a clone of the base, but if
-`config.dynamicCellScaling` is on it shrinks each door (around its fixed center) from
-`CELL_SCALE_START` (1.15x) at round 1 down to `CELL_SCALE_END` (0.55x, floored by
-`MIN_DOOR_DIM`) by the last round, interpolated on `currentQuestionIndex`. **Every
-in-method reference to cage geometry uses `this.trapdoors`, never the module
+`computeTrapdoorsForRound()`, which layers two independent adjustments on top of the
+base width/height:
+- **Width** (opt-in, `config.dynamicCellScaling`): shrinks each door, centered on its
+  fixed horizontal midpoint, from `CELL_SCALE_START` (1.15x) at round 1 down to
+  `CELL_SCALE_END` (0.55x, floored by `MIN_DOOR_DIM`) by the last round, interpolated on
+  `currentQuestionIndex`. Off by default = always base width.
+- **Height** (always on, not a setting): grows with `this.players.size` so a full room
+  can physically fit in one cage — `PLAYER_COUNT_HEIGHT_PER_PLAYER` per player above
+  `PLAYER_COUNT_HEIGHT_THRESHOLD` (20), capped at `PLAYER_COUNT_HEIGHT_MAX_BOOST` (90px).
+  Anchored to the door's *bottom* edge (grows upward) rather than centered, so it can
+  never push the floor below the canvas regardless of how much it grows.
+
+**Every in-method reference to cage geometry uses `this.trapdoors`, never the module
 `TRAPDOORS` constant** — that distinction matters if you're adding new trapdoor-aware
 logic. Recomputed in `start()` and `advanceRound()`'s continue branch; sent to clients
 in `emitQuestion()`'s payload (`trapdoors: this.trapdoors`) since it can differ round to
@@ -113,10 +123,13 @@ lobby → question → reveal → escape → fall_pause? → resolve → death_a
   state for `DOG_EAT_MS` (~2.5s, holds position) before resuming the hunt or heading
   home. A dog goes `'returning'` (walks itself home) once it's at/over capacity or
   `DOG_GIVEUP_MS` (~9s) has passed since release, then `'home'` on arrival. If
-  `config.dogLunge` is on, a hunting dog with a target in range gets occasional
-  windup-then-speed-burst lunges (small state machine on the dog: `lungePhase`
-  `'idle'→'windup'→'lunging'→'idle'`, cooldown-gated) — off by default, dogs behave
-  exactly as before when disabled. The phase ends when either **all dogs are home** or
+  `config.dogLunge` is `'low'` or `'high'` (default `'off'`), a hunting dog with a target
+  in range gets occasional windup-then-speed-burst lunges (small state machine on the
+  dog: `lungePhase` `'idle'→'windup'→'lunging'→'idle'`, cooldown-gated) — frequency/
+  cooldown come from `LUNGE_PRESETS[config.dogLunge]` (`{chance, checkIntervalMs,
+  cooldownMs}`); windup/duration/speed multiplier stay fixed regardless of preset, only
+  frequency differs. Off by default, dogs behave exactly as before when disabled. The
+  phase ends when either **all dogs are home** or
   **everyone outside the safe cage is dead**
   — a round can end with live survivors if the dogs simply got full/bored first.
   Whichever way it ends, every dog is snapped back to `'home'` at its exact pen slot
@@ -130,7 +143,8 @@ lobby → question → reveal → escape → fall_pause? → resolve → death_a
   dogs-all-home with survivors, it's just a small (`HOME_SETTLE_MS`) buffer.
   `finishRound()` then frees the safe cage (`cagedAt=null`, `cageSolid[correct]=false`)
   and calls `advanceRound()` (reasons: `all_eliminated`, `questions_complete`,
-  `time_up`, `host_ended`). Dogs are *not* cleared here — they're already parked at home.
+  `host_ended` — there's no overall game-duration cap anymore, see below). Dogs are *not*
+  cleared here — they're already parked at home.
 - **ended → lobby**: `host:rematch` calls `Room.resetForRematch()` — same room/code/
   players, resets alive/ghost/cagedAt/ready/hazards, does NOT require players to rejoin.
 
@@ -141,6 +155,28 @@ players (`separatePairs`) every tick. Ghosts (`isGhost=true`) always have
 `cagedAt=null` and skip all collision/containment — they roam freely, per spec. A
 rooted player (`rootedUntil > now`, from a bear trap) simply has their input ignored for
 movement that tick — everything else (separation, containment) still applies normally.
+
+There's no `config.durationSec`/`gameEndsAt` overall-length cap anymore (removed —
+it was invisible to players and redundant with `answerTimeSec × questionCount`, which
+already bounds a game). If re-adding any kind of wall-clock safety net, surface it to
+players somewhere — that lack of visibility was the whole reason it got pulled.
+
+### Directional jump + exponential cooldown backoff
+
+Jump stopped being purely cosmetic: while `jumpUntil` is active (`JUMP_MS`, ~320ms) and
+the player has direction input, `tick()`'s movement step multiplies their speed by
+`JUMP_SPEED_MULT` (1.55x) — so jumping while moving is a small forward burst; jumping
+while stationary is still just the visual squash/stretch, nothing to boost. Consecutive
+jumps are rate-limited by `Room.attemptJump(player, now)`: cooldown starts at
+`JUMP_BASE_COOLDOWN_MS` (300ms) and doubles (`JUMP_COOLDOWN_GROWTH`) each consecutive
+jump, capped at `JUMP_MAX_COOLDOWN_MS` (2000ms) — a couple of quick jumps are fine, then
+you're locked at the 2s cap until you stop jumping for `JUMP_CHAIN_RESET_MS` (2500ms,
+longer than the cap itself, so hitting the cap doesn't immediately reset it), which
+resets the chain back to fresh. `server.js`'s `player:jump` handler just calls
+`room.attemptJump()` — all the logic lives in `rooms.js`. Client-side, `player.js`
+mirrors the exact same formula (`myJumpChain`/`myJumpCooldownUntil`) purely to decide
+whether to play the local optimistic jump animation — the server remains the sole
+authority on the actual speed-boost effect regardless of what the client predicts.
 
 ### Trapdoor animation timing (public/js/arena-render.js)
 
@@ -222,19 +258,37 @@ a deliberately-delayed render-only view.
 ### Responsive layout: fills the screen, fits without scrolling
 
 `#gameView` is a flex column with its height bound to the viewport
-(`calc(100dvh - 34px)`, `vh` fallback first for older browsers) — every child except
-`canvas#arena` is `flex: 0 0 auto` (sized to its own content), and the canvas is the one
-`flex: 1 1 auto` element that absorbs whatever vertical space is left, with
+(`calc(100dvh - 76px)`, `vh` fallback first for older browsers — the 76px reserves room
+for `.container`'s own padding plus the persistent `.top-nav` above it) — every child
+except `canvas#arena` is `flex: 0 0 auto` (sized to its own content), and the canvas is
+the one `flex: 1 1 auto` element that absorbs whatever vertical space is left, with
 `aspect-ratio: 400/720` deriving its width from that resolved height (capped by
 `max-width`/`max-height` so it doesn't get silly on a huge monitor). This one mechanism
 handles both ends: on a short phone viewport the canvas shrinks to guarantee everything
-(HUD + canvas + controls hint) fits without scrolling; on a tall/large display there's a
-lot of leftover height, so the canvas — and therefore the whole game — renders
-correspondingly bigger. A `@media (max-height: 700px)` pass further trims HUD
-padding/font-size on very short screens to leave the canvas more room. Because CSS now
-controls `#gameView`'s `display` value (`flex`, not `block`), `showGameView()` in both
-client files must set `style.display = 'flex'` — setting `'block'` there would silently
-break this layout (inline styles beat the stylesheet).
+(HUD + canvas) fits without scrolling; on a tall/large display there's a lot of leftover
+height, so the canvas — and therefore the whole game — renders correspondingly bigger.
+A `@media (max-height: 700px)` pass further trims HUD padding/margins (not font sizes —
+readability took priority over a few extra px of canvas after a previous pass shrank
+text too aggressively) on very short screens. Because CSS now controls `#gameView`'s
+`display` value (`flex`, not `block`), `showGameView()` in both client files must set
+`style.display = 'flex'` — setting `'block'` there would silently break this layout
+(inline styles beat the stylesheet). The touch-control reminder used to be a `<p>` below
+the canvas costing its own line of vertical space; it's now drawn as a faint watermark
+inside the canvas itself (`drawControlsHint()` in `arena-render.js`, player view only).
+
+### App navigation and clipboard copy
+
+A persistent `.top-nav` (logo + optional subtitle) sits outside every view div in both
+`host.html` and `player.html`, so there's always a one-tap way back to `index.html` —
+previously the only escape from a live game was closing the tab. On `player.html` the
+logo calls `backToMenu()` (the same explicit-disconnect function as the end screen's
+button, not a bare link) since leaving mid-game should register as leaving; on
+`host.html` it's a plain link (no equivalent "presence" concern for the host).
+`copyLink()`/`copyCode()` in `host.js` route through a shared `copyToClipboard()` that
+tries `navigator.clipboard` (requires a secure context — HTTPS/localhost) first and
+falls back to a hidden-textarea + `execCommand('copy')` otherwise, since a LAN-IP host
+page is plain HTTP and `navigator.clipboard` silently isn't there on a lot of mobile
+browsers in that case.
 
 ## Known tuning constants (server/rooms.js top)
 
@@ -243,13 +297,18 @@ break this layout (inline styles beat the stylesheet).
 `DOG_GIVEUP_MS=9000`, `DOG_EAT_MS=2500`, `DOG_PHASE_HARD_TIMEOUT_MS=30000`,
 `JUMP_MS=320`, `REVEAL_DELAY_MS=3000`, `ESCAPE_MS=2400`, `FALL_ANIM_HOLD_MS=1000`,
 `DEATH_ANIM_MS=1300`, `HOME_SETTLE_MS=500`, `OBSTACLE_MARGIN=18`,
-`TRAP_TRIGGER_RADIUS=20`, `TRAP_ROOT_MS=1800`, `TICK_MS=40`. Dog lunge (opt-in):
-`LUNGE_RANGE=140`, `LUNGE_CHECK_INTERVAL_MS=500`, `LUNGE_CHANCE=0.12`,
-`LUNGE_WINDUP_MS=150`, `LUNGE_DURATION_MS=450`, `LUNGE_SPEED_MULT=2.1`,
-`LUNGE_COOLDOWN_MS=4000`. Dynamic cell scaling (opt-in): `CELL_SCALE_START=1.15`,
-`CELL_SCALE_END=0.55`, `MIN_DOOR_DIM=40`. Client-side mirrors: `arena-render.js` has
-`BAR_FADE_MS=250`, `SHUDDER_MS=500`, `SNAP_MS=180`, `GATE_ANIM_MS=450`. If gameplay
-feels off, these are the first things to touch — tune before restructuring logic.
+`TRAP_TRIGGER_RADIUS=20`, `TRAP_ROOT_MS=1800`, `TICK_MS=40`. Jump:
+`JUMP_SPEED_MULT=1.55`, `JUMP_BASE_COOLDOWN_MS=300`, `JUMP_COOLDOWN_GROWTH=2`,
+`JUMP_MAX_COOLDOWN_MS=2000`, `JUMP_CHAIN_RESET_MS=2500`. Dog lunge (opt-in, `'low'`/
+`'high'`): `LUNGE_RANGE=140`, `LUNGE_WINDUP_MS=150`, `LUNGE_DURATION_MS=450`,
+`LUNGE_SPEED_MULT=2.1`, plus per-preset `LUNGE_PRESETS.low/high` (`chance`,
+`checkIntervalMs`, `cooldownMs`). Dynamic cell scaling (opt-in): `CELL_SCALE_START=1.15`,
+`CELL_SCALE_END=0.55`, `MIN_DOOR_DIM=40`. Cage player-count height boost (always on):
+`PLAYER_COUNT_HEIGHT_THRESHOLD=20`, `PLAYER_COUNT_HEIGHT_PER_PLAYER=1.4`,
+`PLAYER_COUNT_HEIGHT_MAX_BOOST=90`. Client-side mirrors: `arena-render.js` has
+`BAR_FADE_MS=250`, `SHUDDER_MS=500`, `SNAP_MS=180`, `GATE_ANIM_MS=450`; `player.js`
+mirrors the jump-cooldown constants for local animation prediction. If gameplay feels
+off, these are the first things to touch — tune before restructuring logic.
 
 ## Reconnect model
 
@@ -303,26 +362,31 @@ the tunnel's public URL once the host opens *that* URL instead of `localhost`.
   would need a real nav-mesh/A* if the arena ever grows more complex obstacles.
 - No persistence layer — rooms/tokens are in-memory, wiped on restart or after 3hr/no-
   connection sweep (`GameManager.sweep()`).
-- Question set is single built-in JSON (120 entries) or one custom upload per room —
-  each question's A/B/C letter assignment is reshuffled per-build (`shuffleOptionLetters`
-  in `buildQuestionSet()`), so the same question won't always have its answer on the same
-  letter across rounds/rematches.
+- Three question sources per room (`config.questionSet`): `default` (120 general-
+  knowledge entries), `webdev` (200 HTML/CSS/JS/React entries), or `custom` (one JSON
+  upload, lives only on the `Room` object, gone when the room ends). `questionCount` can
+  go up to 200 to match the larger set. Every question's A/B/C letter assignment is
+  reshuffled per-build (`shuffleOptionLetters` in `buildQuestionSet()`) regardless of
+  source, so the same question won't always have its answer on the same letter across
+  rounds/rematches.
 
 ## Feedback already implemented (most recent round)
 
-Fixed the rematch-presence bug (a player who left via "back to menu" could still be
-counted present) via faster Socket.IO ping settings + proactive `socket.disconnect()` on
-leave/`pagehide` — see "Reconnect model" above. Reworked responsiveness: `#gameView` is
-now a flex+`aspect-ratio` layout that fits the whole screen without scrolling on a phone
-and fills more of a large display's screen — see "Responsive layout" above (remember:
-`showGameView()` must set `display:'flex'`, not `'block'`, for this to apply). Rebuilt
-client rendering around a `requestAnimationFrame` loop with snapshot interpolation
-(`INTERP_DELAY_MS`) instead of drawing synchronously off each `game:tick` — smooths out
-both the server's 25Hz cap and network jitter — see "Client-side rendering" above. Added
-LAN IP auto-detection (`/api/lan-info`) so the host's join link/QR code works for other
-devices when the dashboard was opened via `localhost`, plus documented (README) and
-scripted (`npm run tunnel:ngrok`/`tunnel:cloudflared`) internet exposure via a tunnel, no
-port-forwarding or hosting required — see "Network access" above. All of the above is a
+Bug fixes: mobile clipboard copy (secure-context fallback, see "App navigation and
+clipboard copy" above); config sliders now stack on their own line below ~520px
+(`.config-row`) instead of overlapping. Removed `config.durationSec`/`gameEndsAt`
+entirely (redundant overall-length cap, invisible to players anyway — see the state
+machine section above). Dog lunge went from a flat boolean to `'off'/'low'/'high'`
+(`LUNGE_PRESETS`), tuned quieter than the old always-on values. Trapdoor cages now grow
+taller (never shrink) with the room's player count, independent of dynamic cell scaling
+— see "Arena geometry" above. Text sizes bumped up (and the short-viewport media query
+stopped shrinking fonts, only padding) for small-screen readability. Added a persistent
+top-nav (logo → home) on every view, and moved the touch-controls reminder off its own
+`<p>` line into a faint canvas watermark — see "App navigation" and "Responsive layout"
+above. New `questions-webdev.json` (200 entries) alongside the default set, selectable
+per room, plus `questionCount` cap raised to 200 to match. Jump is no longer purely
+cosmetic: it's now a brief directional speed burst with exponential-backoff cooldown —
+see "Directional jump + exponential cooldown backoff" above. All of the above is a
 result of that round — if picking this back up, this is the most current ground truth,
 more current than anything a chat transcript would say.
 

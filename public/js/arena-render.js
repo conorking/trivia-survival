@@ -161,6 +161,20 @@ const ArenaRender = (() => {
     ctx.strokeRect(4, 4, ARENA_W - 8, ARENA_H - 8);
   }
 
+  // Faint watermark-style controls reminder, drawn into the open field instead of
+  // taking up its own line of page layout below the canvas. Player view only (host is
+  // just spectating, doesn't need it) - low-opacity so it never competes with gameplay.
+  function drawControlsHint(ctx) {
+    ctx.save();
+    ctx.globalAlpha = 0.22;
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 12px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Hold & drag to move', ARENA_W / 2, DOG_PEN.y + DOG_PEN.h + 26);
+    ctx.fillText('Tap to jump', ARENA_W / 2, DOG_PEN.y + DOG_PEN.h + 42);
+    ctx.restore();
+  }
+
   function drawDogPen(ctx) {
     const now = Date.now();
     const gateT = releasedAt ? Math.min(1, (now - releasedAt) / GATE_ANIM_MS) : 0;
@@ -625,6 +639,7 @@ const ArenaRender = (() => {
     drawFloor(ctx);
     drawDogPen(ctx);
     drawTrapdoors(ctx);
+    if (myId) drawControlsHint(ctx);
     for (const trap of (traps || [])) drawBearTrap(ctx, trap);
 
     const now = Date.now();
