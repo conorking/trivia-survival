@@ -131,8 +131,10 @@ save step). Game length is simply answer-time × number of questions; there's no
 overall duration cap to set.
 - Answer time per question
 - Number of questions (up to 200)
-- Question set: the built-in 120-question general-knowledge set, a 200-question web-dev
-  set (HTML/CSS/JS/React/tooling), or a custom uploaded `.json` file in this shape:
+- Question set: the built-in 120-question general-knowledge set, a 200-question "Hard
+  Mode" set (harder/trickier general knowledge, including plenty of common-misconception
+  gotchas), a 200-question web-dev set (HTML/CSS/JS/React/tooling), or a custom uploaded
+  `.json` file in this shape:
 
 ```json
 [

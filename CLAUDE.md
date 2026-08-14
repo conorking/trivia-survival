@@ -33,6 +33,11 @@ snapshot.
 - `server/questions-default.json` — built-in general-knowledge question set (120 entries).
 - `server/questions-webdev.json` — built-in web-dev question set (200 entries: HTML, CSS,
   JavaScript, React, general tooling).
+- `server/questions-hard.json` — built-in "Hard Mode" question set (200 entries): harder/
+  trickier general-knowledge questions across geography, history, science, literature,
+  mythology, math/logic, sports, etymology, and astronomy — many deliberately built
+  around common misconceptions (e.g. "which gas do humans exhale most?" → nitrogen, not
+  CO₂) rather than just obscure facts.
 - `public/index.html` — landing (host or join).
 - `public/host.html` + `public/js/host.js` — room creation, config form, lobby, live
   spectator view (always the `'overview'` camera — whole map, scroll-wheel zoom), end
@@ -99,19 +104,27 @@ client-side rendering + input concerns.
   compound). Called on load *and* on `resize`/`orientationchange` in both `host.js` and
   `player.js` (previously only once, when showing the game view).
 - **Virtual joystick** (`player.js`, replaces the old hold-drag-toward-absolute-point
-  touch scheme): real multi-touch via Pointer Events keyed by `pointerId`. First finger
-  down (no joystick already active) becomes the joystick — origin = where it touched
-  down, direction each frame = the dead-zone-filtered vector from origin to that
-  finger's current position, sampled on an interval (not every `pointermove`, to keep
-  the network send rate sane) and sent via the same `sendDirInput()` keyboard input
+  touch scheme): real multi-touch via Pointer Events keyed by `pointerId` — and doubles
+  as mouse control on desktop for free, since Pointer Events unify mouse and touch.
+  First finger/left-click down (no joystick already active) becomes the joystick —
+  origin = where it went down, direction each frame = the dead-zone-filtered vector from
+  origin to the current position, sampled on an interval (not every `pointermove`, to
+  keep the network send rate sane) and sent via the same `sendDirInput()` keyboard input
   already used. A second finger held at the same time is tracked for *both* possible
   meanings, disambiguated by what it does next: lifted quickly with little movement →
   `triggerJump()`; inter-finger distance changes meaningfully → pinch-zoom (joystick
-  steering from finger 1 keeps working the whole time either way). Lifting the joystick
-  finger always stops movement immediately even if another finger is still down — no
-  automatic hand-off. Coordinates are pure screen-space CSS px throughout — since camera
-  position is never independently pannable (see above), no screen↔world conversion is
-  needed anywhere in the input path anymore (a nice side effect: no `toArenaCoords()`).
+  steering from finger 1 keeps working the whole time either way). Right-click is the
+  mouse equivalent of that second-finger tap (jump) — handled directly in `pointerdown`
+  on `e.button === 2`, doesn't touch joystick state at all, and `contextmenu` is
+  preventDefault'd on the canvas so the browser's menu doesn't pop up. Lifting the
+  joystick finger/button always stops movement immediately even if another finger is
+  still down — no automatic hand-off. Coordinates are pure screen-space CSS px
+  throughout — since camera position is never independently pannable (see above), no
+  screen↔world conversion is needed anywhere in the input path anymore (a nice side
+  effect: no `toArenaCoords()`). The joystick visual itself (`drawJoystick`) renders
+  whenever active regardless of `viewMode` — mouse-drag on desktop `'overview'` gets the
+  same visual feedback touch does — only the *idle* hint text is mode-specific
+  (`drawTouchHint` vs `drawDesktopHint`, since the wording differs by input device).
 - **CSS breakpoint** (`style.css`, `@media (max-width: 820px)`, matching `player.js`'s
   `MOBILE_BREAKPOINT`): scoped to `canvas#arena.arena-follow` (that class is only set in
   `player.html`, so `host.html` — always whole-map regardless of its own window size —
@@ -194,7 +207,27 @@ lobby → question → reveal → escape → fall_pause? → resolve → death_a
   target first, falling back to nearest overall so a dog is never idle while anyone's
   huntable) + `seek+avoid` steering around the 3 trapdoor rects (always avoided, solid
   or open) so they don't cut through cages/pits, plus a dog-dog separation pass so they
-  don't stack. Each dog's catch cap (`dog.capacity`) is computed once at release as
+  don't stack.
+  **Stuck-dog fixes** (`steer()`/`doDogChase()` in `rooms.js`): dogs used to be able to
+  get "confused and stuck" approaching a door dead-on (e.g. returning home from directly
+  behind it, or hunting a target on its far side) — `steer()`'s tangential-slide
+  direction is chosen by a dot-product sign that sits at ~0 in that exact dead-center
+  case, so floating-point noise flipped it tick to tick and the dog thrashed
+  left-right in place instead of committing to a side. Fixed with a stable per-dog
+  tie-break (`bias`, derived from `dog.id`, passed into `steer()`) so the sign never
+  flips mid-approach. `AVOID_RADIUS` was also tightened (`DOG_RADIUS + OBSTACLE_MARGIN`,
+  dropped an extra `+20`) since at the old value its influence zone from two neighboring
+  doors overlapped in the gap between them, which could also stall a dog trying to path
+  through. Belt-and-suspenders on top of both: a stuck-progress check
+  (`dog.stuckOrigin`/`stuckCheckAt`/`stuckStrikes`) samples whether a hunting/returning
+  dog has actually moved every `STUCK_CHECK_MS`; after `STUCK_STRIKES_TO_UNSTICK`
+  stalled samples in a row it enters `unstickUntil` mode for `UNSTICK_MS`, during which
+  it seeks a lateral "step aside" waypoint (`dog.x + bias*220`, same y — obstacle
+  avoidance stays *active*, this just removes the dead-ahead ambiguity that caused the
+  stall) instead of the real target. `DOG_PHASE_HARD_TIMEOUT_MS` (~30s) remains the
+  outermost safety net regardless — these fixes just mean it should essentially never be
+  the thing that actually saves a round in practice.
+  Each dog's catch cap (`dog.capacity`) is computed once at release as
   `max(DOG_CATCH_CAPACITY_MIN, round(huntPoolSize * DOG_CATCH_CAPACITY_PCT))` — scales
   with the crowd instead of a flat number. On a catch, a dog pauses in a `'eating'`
   state for `DOG_EAT_MS` (~2.5s, holds position) before resuming the hunt or heading
@@ -269,6 +302,13 @@ The door no longer carries text captions at all (`LOCKED`/`SAFE ✓`/etc. are go
 letter is now stenciled directly onto the floor of the cage itself (only while the panel
 with it painted on is still there — it "leaves" once the door pops open), and the
 situational text moved to a **per-player** prompt instead (next section), which reads
+far better than a caption pinned to a fixed spot near the bottom of a portrait canvas.
+The pit underneath the door (`drawPitDepth`, always drawn, only actually visible once
+the panel's gone) got a depth treatment so an open door reads as a hole rather than a
+flat black square: a vertical gradient (lit rim fading to black, like light falling into
+a shaft), a darker inset "floor" rect offset toward the bottom-right (implies looking
+down at an angle), and a beveled rim (light on the top/left edge, shadow on the
+bottom/right).
 far better than a caption pinned to a fixed spot near the bottom of a portrait canvas.
 
 ### Per-player RUN!/SAFE! prompts
@@ -378,8 +418,11 @@ browsers in that case.
 `DOG_HOME_RADIUS=26`, `DOG_CATCH_CAPACITY_PCT=0.25`, `DOG_CATCH_CAPACITY_MIN=2`,
 `DOG_GIVEUP_MS=9000`, `DOG_EAT_MS=2500`, `DOG_PHASE_HARD_TIMEOUT_MS=30000`,
 `JUMP_MS=320`, `REVEAL_DELAY_MS=3000`, `ESCAPE_MS=2400`, `FALL_ANIM_HOLD_MS=1000`,
-`DEATH_ANIM_MS=1300`, `HOME_SETTLE_MS=500`, `OBSTACLE_MARGIN=18`,
-`TRAP_TRIGGER_RADIUS=20`, `TRAP_ROOT_MS=1800`, `TICK_MS=40`. Jump:
+`DEATH_ANIM_MS=1300`, `HOME_SETTLE_MS=500`, `OBSTACLE_MARGIN=14` (`AVOID_RADIUS =
+DOG_RADIUS + OBSTACLE_MARGIN`, tightened this round - see "Stuck-dog fixes"),
+`TRAP_TRIGGER_RADIUS=20`, `TRAP_ROOT_MS=1800`, `TICK_MS=40`. Stuck-dog fallback:
+`STUCK_CHECK_MS=700`, `STUCK_DIST_THRESHOLD=10`, `STUCK_STRIKES_TO_UNSTICK=2`,
+`UNSTICK_MS=900`. Jump:
 `JUMP_SPEED_MULT=1.55`, `JUMP_BASE_COOLDOWN_MS=300`, `JUMP_COOLDOWN_GROWTH=2`,
 `JUMP_MAX_COOLDOWN_MS=2000`, `JUMP_CHAIN_RESET_MS=2500`. Dog lunge (opt-in, `'low'`/
 `'high'`): `LUNGE_RANGE=140`, `LUNGE_WINDUP_MS=150`, `LUNGE_DURATION_MS=450`,
@@ -455,34 +498,49 @@ deployment target.
   would need a real nav-mesh/A* if the arena ever grows more complex obstacles.
 - No persistence layer — rooms/tokens are in-memory, wiped on restart or after 3hr/no-
   connection sweep (`GameManager.sweep()`).
-- Three question sources per room (`config.questionSet`): `default` (120 general-
-  knowledge entries), `webdev` (200 HTML/CSS/JS/React entries), or `custom` (one JSON
+- Four question sources per room (`config.questionSet`): `default` (120 general-
+  knowledge entries), `hard` (200 harder/trickier general-knowledge entries — see the
+  file map above), `webdev` (200 HTML/CSS/JS/React entries), or `custom` (one JSON
   upload, lives only on the `Room` object, gone when the room ends). `questionCount` can
-  go up to 200 to match the larger set. Every question's A/B/C letter assignment is
+  go up to 200 to match the larger sets. Every question's A/B/C letter assignment is
   reshuffled per-build (`shuffleOptionLetters` in `buildQuestionSet()`) regardless of
   source, so the same question won't always have its answer on the same letter across
   rounds/rematches.
 
 ## Feedback already implemented (most recent round)
 
-Real mobile device testing surfaced usability issues with the old fixed whole-map-
-always-visible canvas and hold-drag-toward-a-point touch control. This round replaced
-both with a proper camera system: `'follow'` mode (mobile) zooms the camera on the
-player with a genuinely edge-to-edge canvas for maximum visible space/control
-precision, `'overview'` mode (host always, desktop players) keeps the old whole-map
-view; both support wheel (desktop) / pinch (touch) zoom. Touch input became a real
-virtual joystick (arbitrary touch origin, drag-relative direction, second-finger tap to
-jump, disambiguated from pinch) instead of hold-drag-toward-an-absolute-point. The world
-was widened back out (`900×640`, was `400×720` portrait) now that mobile no longer needs
-the whole map to fit on a small screen. Off-screen trapdoor indicators (colored arrows +
-letter, screen-edge, self-limiting) point toward doors that fall outside the current
-view once zoomed in. **No server/wire-protocol changes** — see "Camera system, virtual
-joystick, zoom, off-screen indicators" and the updated "Arena geometry" above for the
-full breakdown; all of the above is a result of that round — if picking this back up,
-this is the most current ground truth, more current than anything a chat transcript
-would say.
+Four items this round, none touching the wire protocol: (1) mouse control on desktop —
+the virtual joystick already worked for mouse for free (Pointer Events unify mouse and
+touch), so this was mainly right-click-to-jump (`contextmenu` preventDefault'd, handled
+in `pointerdown` on `e.button === 2`) plus making the joystick visual/hint show for
+mouse-drag in `'overview'` mode too, not just touch in `'follow'` mode — see "Camera
+system" above. (2) A dog-pathing bug where dogs could get "confused and stuck" behind an
+open trapdoor, fixed at the root cause (a steering tie-break that sat at ~0 and flipped
+on floating-point noise in the dead-center-approach case, plus an `AVOID_RADIUS` tuned
+too large for the gap between doors) with a stuck-progress-detection fallback layered on
+top as defense in depth — see the "Stuck-dog fixes" paragraph in the state machine
+section above. (3) Open trapdoor pits got a depth treatment (gradient + inset floor +
+beveled rim) instead of a flat black square — see "Trapdoor animation timing" above.
+(4) A new `hard` question set (`questions-hard.json`, 200 harder/trickier general-
+knowledge entries) alongside `default`/`webdev`/`custom` — see "Deliberately simplified"
+above. If picking this back up, this is the most current ground truth, more current
+than anything a chat transcript would say.
 
-Prior round: mobile clipboard copy (secure-context fallback, see "App navigation and
+Prior round: real mobile device testing surfaced usability issues with the old fixed
+whole-map-always-visible canvas and hold-drag-toward-a-point touch control, replaced
+with a proper camera system: `'follow'` mode (mobile) zooms the camera on the player
+with a genuinely edge-to-edge canvas for maximum visible space/control precision,
+`'overview'` mode (host always, desktop players) keeps the old whole-map view; both
+support wheel (desktop) / pinch (touch) zoom. Touch input became a real virtual joystick
+(arbitrary touch origin, drag-relative direction, second-finger tap to jump,
+disambiguated from pinch) instead of hold-drag-toward-an-absolute-point. The world was
+widened back out (`900×640`, was `400×720` portrait) now that mobile no longer needs the
+whole map to fit on a small screen. Off-screen trapdoor indicators (colored arrows +
+letter, screen-edge, self-limiting) point toward doors that fall outside the current
+view once zoomed in — see "Camera system, virtual joystick, zoom, off-screen indicators"
+and the updated "Arena geometry" above for the full breakdown.
+
+Earlier round: mobile clipboard copy (secure-context fallback, see "App navigation and
 clipboard copy" above); config sliders now stack on their own line below ~520px
 (`.config-row`) instead of overlapping. Removed `config.durationSec`/`gameEndsAt`
 entirely (redundant overall-length cap, invisible to players anyway — see the state

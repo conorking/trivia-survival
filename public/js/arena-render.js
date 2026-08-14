@@ -261,6 +261,20 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
+  // Desktop equivalent of drawTouchHint - same idea, different device, shown in
+  // 'overview' mode instead (mouse click-drag is the joystick there too - Pointer
+  // Events don't distinguish mouse from touch for movement, just for the jump gesture).
+  function drawDesktopHint(ctx, viewW, viewH) {
+    ctx.save();
+    ctx.globalAlpha = 0.22;
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 13px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Click & drag to move (or WASD/arrows)', viewW / 2, viewH - 34);
+    ctx.fillText('Right-click or Space to jump', viewW / 2, viewH - 18);
+    ctx.restore();
+  }
+
   // The virtual joystick itself - screen-space, drawn right where the controlling
   // finger first touched down. `joystick` is {originX, originY, curX, curY}, all in CSS
   // px screen coordinates (not world coordinates - the knob's direction is all that
@@ -384,6 +398,47 @@ const ArenaRender = (() => {
     ctx.fillText('DOG PEN', DOG_PEN.x + DOG_PEN.w / 2, DOG_PEN.y + DOG_PEN.h + 14);
   }
 
+  // The pit under a trapdoor - drawn underneath the door panel always, but only actually
+  // visible once the panel's gone (open door). A flat black rect used to read as a blank
+  // square; this gives it a sense of depth instead: a vertical gradient (lit rim fading
+  // to black, like light falling into a shaft), a darker inset "floor" offset toward the
+  // bottom-right (implies looking down at an angle rather than straight into a flat
+  // tile), and a beveled rim (light catching the top/left edge, shadow along the
+  // bottom/right) so the opening itself reads as a raised lip you could fall through.
+  function drawPitDepth(ctx, d) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(d.x, d.y, d.w, d.h);
+    ctx.clip();
+
+    const grad = ctx.createLinearGradient(d.x, d.y, d.x, d.y + d.h);
+    grad.addColorStop(0, '#2e2a26');
+    grad.addColorStop(0.22, '#151311');
+    grad.addColorStop(1, '#000000');
+    ctx.fillStyle = grad;
+    ctx.fillRect(d.x, d.y, d.w, d.h);
+
+    const inset = Math.min(d.w, d.h) * 0.24;
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(d.x + inset * 0.7, d.y + inset * 1.3, d.w - inset * 1.4, d.h - inset * 1.6);
+
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+    ctx.beginPath();
+    ctx.moveTo(d.x + 2, d.y + d.h - 2);
+    ctx.lineTo(d.x + 2, d.y + 2);
+    ctx.lineTo(d.x + d.w - 2, d.y + 2);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+    ctx.beginPath();
+    ctx.moveTo(d.x + d.w - 2, d.y + 2);
+    ctx.lineTo(d.x + d.w - 2, d.y + d.h - 2);
+    ctx.lineTo(d.x + 2, d.y + d.h - 2);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
   function drawTrapdoors(ctx) {
     const now = Date.now();
     for (const key of ['A', 'B', 'C']) {
@@ -407,8 +462,7 @@ const ArenaRender = (() => {
       }
 
       // Pit (always underneath)
-      ctx.fillStyle = '#0a0a0a';
-      ctx.fillRect(d.x, d.y, d.w, d.h);
+      drawPitDepth(ctx, d);
 
       // Wood/colored door - clipped to the hole's own footprint so a fast snap can never
       // visibly spill panels onto the surrounding floor.
@@ -863,9 +917,13 @@ const ArenaRender = (() => {
     ctx.restore(); // back to screen space for the UI below
 
     drawOffscreenIndicators(ctx, viewW, viewH);
-    if (viewMode === 'follow' && myId) {
+    if (myId) {
+      // The joystick itself works identically for mouse and touch (Pointer Events unify
+      // both), so it's shown for either regardless of viewMode - only the idle hint text
+      // differs, since "touch & drag"/right-click phrasing depends on the input device.
       if (joystick) drawJoystick(ctx, joystick);
-      else drawTouchHint(ctx, viewW, viewH);
+      else if (viewMode === 'follow') drawTouchHint(ctx, viewW, viewH);
+      else drawDesktopHint(ctx, viewW, viewH);
     }
   }
 

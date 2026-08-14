@@ -8,6 +8,9 @@ const DEFAULT_QUESTIONS = JSON.parse(
 const WEBDEV_QUESTIONS = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'questions-webdev.json'), 'utf8')
 );
+const HARD_QUESTIONS = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'questions-hard.json'), 'utf8')
+);
 
 // ---- Arena constants (logical units, client scales to fit canvas) ----
 // Landscape-leaning layout. The client now renders this through a camera (see
@@ -29,10 +32,21 @@ const DOG_CATCH_CAPACITY_MIN = 2; // ...but never less than this
 const DOG_GIVEUP_MS = 9000; // a dog heads home if it hasn't filled up by this long after release
 const DOG_EAT_MS = 2500; // a dog pauses to "eat" after a catch before resuming the hunt
 const DOG_PHASE_HARD_TIMEOUT_MS = 30000; // last-resort safety net only, never kills anyone
+// Stuck-dog fallback: if a hunting/returning dog makes negligible progress across a
+// couple of consecutive check windows (steering stuck in a local minimum - e.g. wedged
+// against a corner), it temporarily ignores obstacle avoidance (still hard-clipped so it
+// can never actually clip a trapdoor rect) until it breaks free. Belt-and-suspenders
+// alongside the tightened AVOID_RADIUS above - this is what guarantees no single dog can
+// indefinitely stall a round even if some geometry/config combination re-creates a tight
+// spot the avoidance tuning didn't anticipate.
+const STUCK_CHECK_MS = 700; // how often progress is sampled
+const STUCK_DIST_THRESHOLD = 10; // px moved per window below which counts as "no progress"
+const STUCK_STRIKES_TO_UNSTICK = 2; // consecutive stalled windows before intervening
+const UNSTICK_MS = 900; // how long obstacle-avoidance is suspended once triggered
 const DEATH_ANIM_MS = 1300; // grace hold after the last death so the fall/death animation can finish
 const HOME_SETTLE_MS = 500; // small buffer when the round ends via dogs-all-home w/ survivors
 const FALL_ANIM_HOLD_MS = 1000; // grace hold after escape-window stragglers fall, before dogs release
-const OBSTACLE_MARGIN = 18; // extra clearance dogs try to keep from trapdoor rects
+const OBSTACLE_MARGIN = 14; // extra clearance dogs try to keep from trapdoor rects
 const TRAP_TRIGGER_RADIUS = 20;
 const TRAP_ROOT_MS = 1800; // how long a bear trap roots whoever steps on it
 // Dog lunge (opt-in via config.dogLunge: 'off' | 'low' | 'high')
@@ -70,7 +84,12 @@ const TRAPDOORS = {
   C: { x: 625, y: 480, w: 150, h: 120 }
 };
 const DOG_PEN = { x: 350, y: 20, w: 200, h: 70 };
-const AVOID_RADIUS = DOG_RADIUS + OBSTACLE_MARGIN + 20; // steering influence range around obstacles
+// Steering influence range around obstacles. Kept deliberately tight relative to the gap
+// between neighboring trapdoors (100px at base width) - if two doors' avoidance zones
+// overlap in the gap between them, a dog trying to path through gets conflicting push
+// vectors from both sides at once and can stall there indefinitely (this is what caused
+// dogs to get "confused and stuck" behind open doors) rather than just hugging one side.
+const AVOID_RADIUS = DOG_RADIUS + OBSTACLE_MARGIN;
 
 function clamp(v, min, max) {
   return Math.max(min, Math.min(max, v));
@@ -140,7 +159,14 @@ function normalize(dx, dy) {
 // Steering for dogs: blend a seek-the-target vector with avoidance of inflated obstacle rects,
 // sliding tangentially around whichever edge keeps them closest to their original heading
 // instead of stalling head-on. Local steering, not pathfinding - fine for 3 static rects.
-function steer(x, y, tx, ty, obstacles) {
+// `bias` (+1/-1) breaks the tangential-slide tie when a dog approaches an obstacle
+// dead-on (e.g. target directly on the far side of a door, straight-line seek passing
+// through its exact center) - without it, the "which way do I slide" sign is decided by
+// a dot product sitting right at ~0, and tiny floating-point noise flips it tick to tick,
+// so the dog thrashes left-right in place instead of committing to a side (this was the
+// dogs-get-stuck-behind-open-doors bug). Callers pass a value stable for the whole
+// approach (e.g. derived from the dog's id) so the tie always breaks the same way.
+function steer(x, y, tx, ty, obstacles, bias = 1) {
   const seek = normalize(tx - x, ty - y);
   let avoidX = 0, avoidY = 0;
   for (const rect of obstacles) {
@@ -163,9 +189,11 @@ function steer(x, y, tx, ty, obstacles) {
     const nx = dx / dist, ny = dy / dist;
     avoidX += nx * strength;
     avoidY += ny * strength;
-    // Tangential slide - pick whichever rotation keeps us pointed more toward the target.
+    // Tangential slide - pick whichever rotation keeps us pointed more toward the target,
+    // falling back to the caller's stable bias when that's too close to call.
     const tanX = -ny, tanY = nx;
-    const sign = (tanX * seek.x + tanY * seek.y) >= 0 ? 1 : -1;
+    const dot = tanX * seek.x + tanY * seek.y;
+    const sign = Math.abs(dot) < 0.05 ? (bias >= 0 ? 1 : -1) : (dot >= 0 ? 1 : -1);
     avoidX += tanX * sign * strength * 0.6;
     avoidY += tanY * sign * strength * 0.6;
   }
@@ -247,7 +275,11 @@ function createPennedDogs() {
     lungePhase: 'idle', // idle | windup | lunging
     lungePhaseEndsAt: 0,
     lungeReadyAt: 0,
-    nextLungeCheckAt: 0
+    nextLungeCheckAt: 0,
+    stuckOrigin: null, // {x,y} snapshot for the stuck-detection progress check
+    stuckCheckAt: 0,
+    stuckStrikes: 0,
+    unstickUntil: 0 // while now < this, obstacle avoidance is suspended (see STUCK_* above)
   }));
 }
 
@@ -260,7 +292,7 @@ class Room {
     this.config = {
       answerTimeSec: 15,
       questionCount: 10,
-      questionSet: 'default', // 'default' | 'custom' | 'webdev'
+      questionSet: 'default', // 'default' | 'custom' | 'webdev' | 'hard'
       bearTraps: false, // opt-in escape-phase hazard
       dogLunge: 'off', // 'off' | 'low' | 'high'
       dynamicCellScaling: false // opt-in shrinking cages round over round
@@ -338,6 +370,7 @@ class Room {
     let source;
     if (this.config.questionSet === 'custom' && this.customQuestions) source = this.customQuestions;
     else if (this.config.questionSet === 'webdev') source = WEBDEV_QUESTIONS;
+    else if (this.config.questionSet === 'hard') source = HARD_QUESTIONS;
     else source = DEFAULT_QUESTIONS;
     // shuffle copy, then reshuffle each question's own A/B/C letter assignment
     const arr = [...source].sort(() => Math.random() - 0.5);
@@ -688,6 +721,10 @@ class Room {
       dog.lungePhase = 'idle';
       dog.lungeReadyAt = 0;
       dog.nextLungeCheckAt = 0;
+      dog.stuckOrigin = null;
+      dog.stuckCheckAt = 0;
+      dog.stuckStrikes = 0;
+      dog.unstickUntil = 0;
       // x/y/angle stay as-is - they're already sitting at their pen slot.
     }
     this.hardTimeoutAt = now + DOG_PHASE_HARD_TIMEOUT_MS;
@@ -780,7 +817,43 @@ class Room {
         if (target) { tx = target.x; ty = target.y; }
       }
 
-      const dir = steer(dog.x, dog.y, tx, ty, dogObstacles);
+      // Stuck-progress check: only meaningful while actually trying to go somewhere.
+      if (dog.state === 'hunting' || dog.state === 'returning') {
+        if (!dog.stuckOrigin) {
+          dog.stuckOrigin = { x: dog.x, y: dog.y };
+          dog.stuckCheckAt = now + STUCK_CHECK_MS;
+        } else if (now >= dog.stuckCheckAt) {
+          const moved = Math.hypot(dog.x - dog.stuckOrigin.x, dog.y - dog.stuckOrigin.y);
+          if (moved < STUCK_DIST_THRESHOLD) {
+            dog.stuckStrikes += 1;
+            if (dog.stuckStrikes >= STUCK_STRIKES_TO_UNSTICK) {
+              dog.unstickUntil = now + UNSTICK_MS;
+              dog.stuckStrikes = 0;
+            }
+          } else {
+            dog.stuckStrikes = 0;
+          }
+          dog.stuckOrigin = { x: dog.x, y: dog.y };
+          dog.stuckCheckAt = now + STUCK_CHECK_MS;
+        }
+      } else {
+        dog.stuckOrigin = null;
+        dog.stuckStrikes = 0;
+      }
+      // Stable per-dog tie-break for steer()'s tangential slide (see steer()'s comment) -
+      // also doubles as the escape direction below, so a dog that needed unsticking
+      // commits to the same side it was already (probably) leaning toward.
+      const bias = dog.id % 2 === 0 ? 1 : -1;
+      // While unstuck-mode is active, aim sideways (same obstacle avoidance still
+      // active) instead of straight at the real target - this is what actually breaks a
+      // dead-center standoff (e.g. target directly on the far side of a door dead
+      // ahead): a lateral goal removes the ambiguity that caused the stall in the first
+      // place, and resolveCircleRect below still guarantees it can never clip a trapdoor
+      // rect regardless.
+      const unstucking = dog.unstickUntil && now < dog.unstickUntil;
+      const seekTx = unstucking ? clamp(dog.x + bias * 220, DOG_RADIUS, ARENA_W - DOG_RADIUS) : tx;
+      const seekTy = unstucking ? dog.y : ty;
+      const dir = steer(dog.x, dog.y, seekTx, seekTy, dogObstacles, bias);
       if ((dir.x !== 0 || dir.y !== 0) && lungeSpeedMult > 0) {
         const nx = dog.x + dir.x * DOG_SPEED * lungeSpeedMult * dt;
         const ny = dog.y + dir.y * DOG_SPEED * lungeSpeedMult * dt;

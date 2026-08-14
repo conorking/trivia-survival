@@ -444,15 +444,17 @@ window.addEventListener('blur', () => {
 });
 
 // ---- Virtual joystick + pinch-zoom + wheel-zoom ----
-// Multi-touch, keyed by pointerId. First finger down (with no joystick already active)
-// becomes the joystick: origin = where it touched down, direction each frame = the
-// dead-zone-filtered vector from origin to the finger's current position - sent to the
-// server the same way keyboard input already is. A second finger held down at the same
-// time is tracked for both possible meanings, disambiguated by what it does next: lifted
-// quickly with little movement -> jump; distance to the joystick finger changes
-// meaningfully -> pinch-zoom (joystick steering keeps working the whole time either way).
-// Lifting the joystick finger always stops movement immediately, even if another finger
-// is still down - no automatic hand-off.
+// Multi-touch, keyed by pointerId - and doubles as mouse control on desktop, since
+// Pointer Events unify both. First finger/left-click down (with no joystick already
+// active) becomes the joystick: origin = where it touched down, direction each frame =
+// the dead-zone-filtered vector from origin to the current position - sent to the server
+// the same way keyboard input already is. A second finger held down at the same time is
+// tracked for both possible meanings, disambiguated by what it does next: lifted quickly
+// with little movement -> jump; distance to the joystick finger changes meaningfully ->
+// pinch-zoom (joystick steering keeps working the whole time either way). Right-click is
+// the mouse equivalent of the second-finger tap - jump, doesn't touch the joystick at
+// all. Lifting the joystick finger always stops movement immediately, even if another
+// finger is still down - no automatic hand-off.
 const TAP_MAX_MS = 220;
 const TAP_MAX_MOVE = 12; // CSS px
 const JOYSTICK_DEADZONE = 6; // CSS px - below this, treat the drag as centered (no input)
@@ -480,8 +482,18 @@ function setupPointerControls() {
   const canvas = document.getElementById('arena');
   if (!canvas) return;
 
+  // Suppress the browser's right-click menu on the canvas - right-click is a game
+  // control (jump), not a place to open a context menu.
+  canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
   canvas.addEventListener('pointerdown', (e) => {
     if (document.getElementById('gameView').style.display === 'none') return;
+
+    if (e.pointerType === 'mouse') {
+      if (e.button === 2) { triggerJump(); e.preventDefault(); return; } // right-click = jump
+      if (e.button !== 0) return; // ignore middle-click/other buttons entirely
+    }
+
     const pt = getCanvasPoint(canvas, e);
     activePointers.set(e.pointerId, { x: pt.x, y: pt.y, startX: pt.x, startY: pt.y, startT: Date.now() });
     if (canvas.setPointerCapture) {
