@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN } = require('./rooms');
 
 const app = express();
+app.set('trust proxy', true); // correct req.ip/protocol when run behind Caddy/nginx/etc.
 const server = http.createServer(app);
 const io = new Server(server, {
   maxHttpBufferSize: 2e6, // allow custom question JSON uploads up to ~2MB
@@ -251,6 +252,38 @@ function getLanIPs() {
 
 app.get('/api/lan-info', (req, res) => {
   res.json({ ips: getLanIPs(), port: PORT });
+});
+
+// Ad-hoc internet exposure (see README "Playing over the internet"): when the host runs
+// `npm run tunnel:ngrok` alongside this server, ngrok exposes its own local admin API on
+// 127.0.0.1:4040 listing the public URL it assigned. Polling that here (server-side, so
+// it's a plain localhost-to-localhost request with no CORS/mixed-content concerns) lets
+// the host page auto-swap the join link/QR to the real public tunnel URL instead of
+// requiring the host to notice and manually copy it from ngrok's own console output.
+// Resolves to null (fast) if ngrok isn't running - this is a best-effort convenience,
+// not something callers should treat as authoritative.
+function getNgrokPublicUrl() {
+  return new Promise((resolve) => {
+    const req = http.get({ host: '127.0.0.1', port: 4040, path: '/api/tunnels', timeout: 800 }, (res) => {
+      let body = '';
+      res.on('data', (chunk) => { body += chunk; });
+      res.on('end', () => {
+        try {
+          const tunnels = JSON.parse(body).tunnels || [];
+          const best = tunnels.find(t => t.proto === 'https') || tunnels[0];
+          resolve(best ? best.public_url : null);
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    });
+    req.on('timeout', () => { req.destroy(); resolve(null); });
+    req.on('error', () => resolve(null));
+  });
+}
+
+app.get('/api/tunnel-info', async (req, res) => {
+  res.json({ url: await getNgrokPublicUrl() });
 });
 
 const PORT = process.env.PORT || 3000;

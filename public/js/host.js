@@ -175,7 +175,7 @@ function showRoomInfo(code) {
   document.getElementById('roomInfoCard').style.display = 'block';
   document.getElementById('roomCode').textContent = code;
   renderJoinUrl(code);
-  maybeUseLanOrigin(code);
+  refreshPublicOrigin(code);
 }
 
 function renderJoinUrl(code, originOverride) {
@@ -186,21 +186,42 @@ function renderJoinUrl(code, originOverride) {
   new QRCode(document.getElementById('qrcode-box'), { text: url, width: 120, height: 120 });
 }
 
-// If the host opened this page via localhost/127.0.0.1, that address is meaningless to
-// any other device scanning the QR code - swap in the host machine's actual LAN IP
-// (reported by the server) so phones on the same wifi can actually reach it.
-let lanOriginPromise = null;
-function maybeUseLanOrigin(code) {
-  const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
-  if (!isLoopback) return;
-  if (!lanOriginPromise) {
-    lanOriginPromise = fetch('/api/lan-info')
-      .then(r => r.json())
-      .then(data => (data.ips && data.ips[0]) ? `http://${data.ips[0]}:${data.port}` : null)
-      .catch(() => null);
+// Best-effort upgrade of the join link/QR to whatever address actually reaches this
+// server from outside this one machine, checked in priority order:
+//   1. An ad-hoc tunnel (npm run tunnel:ngrok) - if ngrok is running, its local admin
+//      API (queried server-side via /api/tunnel-info) reports the public URL it
+//      assigned, so this works from anywhere on the internet with zero manual steps.
+//      (Cloudflare's quick tunnel has no equivalent local API to query, so that path
+//      still means reading the URL cloudflared prints to its own terminal.)
+//   2. If neither a tunnel is running nor the host is off localhost, the origin the
+//      browser is already on works as-is (e.g. already opened via a LAN IP, a real
+//      domain, or an Oracle/VPS deployment) - nothing to do.
+//   3. Otherwise, if the host opened this page via localhost/127.0.0.1 (meaningless to
+//      any other device), fall back to the machine's detected LAN address so at least
+//      same-wifi devices can join.
+let publicOriginPromise = null;
+function refreshPublicOrigin(code) {
+  if (!publicOriginPromise) {
+    const tunnelCheck = fetch('/api/tunnel-info')
+      .then(r => r.json()).then(d => d.url || null).catch(() => null);
+    const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+    const lanCheck = isLoopback
+      ? fetch('/api/lan-info')
+          .then(r => r.json())
+          .then(d => (d.ips && d.ips[0]) ? `http://${d.ips[0]}:${d.port}` : null)
+          .catch(() => null)
+      : Promise.resolve(null);
+    publicOriginPromise = Promise.all([tunnelCheck, lanCheck])
+      .then(([tunnelOrigin, lanOrigin]) => ({ tunnelOrigin, lanOrigin }));
   }
-  lanOriginPromise.then(origin => {
-    if (origin && roomCode === code) renderJoinUrl(code, origin);
+  publicOriginPromise.then(({ tunnelOrigin, lanOrigin }) => {
+    if (roomCode !== code) return;
+    if (tunnelOrigin) {
+      renderJoinUrl(code, tunnelOrigin);
+      showToast('Tunnel detected - join link is now public!');
+    } else if (lanOrigin) {
+      renderJoinUrl(code, lanOrigin);
+    }
   });
 }
 

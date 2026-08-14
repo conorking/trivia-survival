@@ -338,14 +338,25 @@ host token if this were ever exposed to hostile users.
 ## Network access (LAN + internet without hosting)
 
 `server.js` exposes `GET /api/lan-info` (uses `os.networkInterfaces()` to find non-
-internal IPv4 addresses) so the host page can detect when it's been opened via
-`localhost`/`127.0.0.1` (meaningless to any *other* device) and swap in the machine's
-real LAN address for the join link/QR code — see `maybeUseLanOrigin()` in `host.js`.
-Getting the join link right always comes down to "what origin is the browser actually
-on" — the same reasoning is why a tunnel (documented in README's "Playing over the
-internet" section — `npm run tunnel:ngrok` / `tunnel:cloudflared`) needs no server code
-changes at all: the join link is built from `window.location.origin`, which is correctly
-the tunnel's public URL once the host opens *that* URL instead of `localhost`.
+internal IPv4 addresses) and `GET /api/tunnel-info` (server-side-only GET to ngrok's own
+local admin API at `127.0.0.1:4040/api/tunnels`, fails fast to `{url: null}` if ngrok
+isn't running) so the host page can upgrade the join link/QR code from a useless
+`localhost` origin to something reachable by other devices, without the host having to
+notice and manually copy anything. `host.js`'s `refreshPublicOrigin()` checks both
+(tunnel takes priority over LAN — if you bothered starting a tunnel you want the public
+URL, not just LAN reach) and re-renders the join link/QR via `renderJoinUrl()` if either
+resolved to something better than the origin already in use. Cloudflare's quick tunnel
+(`tunnel:cloudflared`) has no equivalent queryable local API, so that path still just
+relies on the existing fallback: `window.location.origin` is correct automatically once
+the host opens the tunnel's printed URL themselves instead of `localhost`.
+
+For a persistent always-on public deployment (not just a per-session tunnel), see
+`docs/deploy-oracle-free-tier.md` + the `deploy/` folder (`trivia-survival.service`,
+`Caddyfile`) — as of 2026 Oracle Cloud's Always Free VM tier is the option that's still
+genuinely free forever for an app like this (Render/Fly.io/Railway free tiers are all
+effectively gone). `server.js` sets `app.set('trust proxy', true)` for correctness when
+run behind that kind of reverse proxy; otherwise no app code differs from any other
+deployment target.
 
 ## Deliberately simplified for now (see README "Current scope")
 

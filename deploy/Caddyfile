@@ -1,0 +1,16 @@
+# Caddy automatically gets (and renews) a free HTTPS certificate for whatever hostname
+# you put on the line below, and Caddy's reverse_proxy handles WebSocket upgrades
+# (needed for Socket.io) with zero extra config - unlike nginx, which needs explicit
+# Upgrade/Connection header passthrough.
+#
+# Replace the placeholder with:
+#   - your own domain, if you have one (point an A record at this VM's public IP first), or
+#   - the free sslip.io trick if you don't own a domain: take this VM's public IP
+#     (e.g. 203.0.113.5), replace the dots with dashes, and append .sslip.io
+#     -> 203-0-113-5.sslip.io resolves to that IP automatically, no signup or DNS
+#     setup required, and it's a real hostname so Let's Encrypt will issue a
+#     certificate for it just fine.
+
+your-address-here.sslip.io {
+	reverse_proxy localhost:3000
+}

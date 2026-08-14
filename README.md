@@ -39,29 +39,44 @@ router, a tunnel exposes your local `npm start` process at a temporary public UR
 - **ngrok**: `npm run tunnel:ngrok` (or `npx ngrok http 3000`). Free tier requires a
   quick account + authtoken setup at [ngrok.com](https://ngrok.com) the first time; after
   that it prints a public `https://*.ngrok-free.app` URL that proxies straight to your
-  local server, WebSockets included.
+  local server, WebSockets included. **Run this in a second terminal alongside
+  `npm start`, then just open the host page as normal (`localhost:3000`)** — the host
+  page automatically detects the running tunnel (by asking the server to check ngrok's
+  own local API) and swaps the join link/QR code to the public URL for you, no copying
+  required. A toast confirms when it kicks in.
 - **Cloudflare Tunnel**: `npm run tunnel:cloudflared` (requires installing the
   [`cloudflared`](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
   CLI first). No account needed for a quick anonymous tunnel — prints a public
-  `https://*.trycloudflare.com` URL.
+  `https://*.trycloudflare.com` URL. Cloudflare's quick tunnels don't expose an
+  equivalent local API to auto-detect, so for this one you'll need to open *that*
+  printed URL yourself on the host machine instead of `localhost` (the join link/QR is
+  built from whatever URL the browser is actually on, so it'll pick it up correctly
+  once you do).
 
-Either way, open the *tunnel's* URL (not `localhost`) on the host machine — the join
-link/QR code is built from whatever URL the browser is actually on
-(`window.location.origin`), so it'll automatically be the public tunnel address once you
-do. Keep the room code private if you don't want strangers finding it; anyone with the
-tunnel URL and a valid room code can join like any other player.
+Either way, keep the room code private if you don't want strangers finding it — anyone
+with the tunnel URL and a valid room code can join like any other player.
 
-## Deploying for a real session
+## Deploying for a persistent public URL
 
-This needs a **persistent Node.js process** (not a static host) because it uses WebSockets
-(Socket.io) for real-time gameplay. Good free/cheap options:
+This needs a **persistent Node.js process** (not a static host, and not most serverless
+platforms) because it uses WebSockets (Socket.io) for real-time gameplay.
 
-- **Railway** / **Render** / **Fly.io** — connect the repo, they auto-detect `npm start`.
-- Any VPS — `npm install && npm start`, put it behind a reverse proxy (nginx/Caddy) with
-  HTTPS so the QR code and join links work cleanly over the internet.
+As of 2026, the once-popular free PaaS tiers have largely gone away for this kind of
+always-on app — Render's free tier ended in March 2026, Fly.io's free tier is gone for
+new accounts, and Railway has no meaningful free plan either (~$1-5/mo minimum). If
+you're fine paying a few dollars a month, any of them still works fine (`npm start` is
+auto-detected) and is less setup than self-hosting.
 
-Once deployed, the join URL/QR code the host sees will automatically use that deployment's
-domain (it's built client-side from `window.location.origin`), so no config changes needed.
+For an actually-free always-on option, see
+**[docs/deploy-oracle-free-tier.md](docs/deploy-oracle-free-tier.md)** — a full
+walkthrough for Oracle Cloud's genuinely-free-forever VM tier, with the `systemd`
+service file and Caddy config (free automatic HTTPS, WebSocket-safe by default) already
+written for you in `deploy/`. The same approach works on any VPS you already have:
+`npm install && npm start` behind a reverse proxy (nginx/Caddy) with HTTPS.
+
+Whichever route you take, the join URL/QR code the host sees will automatically use
+that deployment's domain (it's built client-side from `window.location.origin`), so no
+app config changes are needed either way.
 
 ## How it works (architecture)
 

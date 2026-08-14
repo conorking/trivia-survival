@@ -1,0 +1,25 @@
+[Unit]
+Description=Trivia Survival game server
+After=network.target
+
+[Service]
+Type=simple
+# Runs as a dedicated non-root user - see docs/deploy-oracle-free-tier.md for how to
+# create it. Never run this as root.
+User=trivia
+Group=trivia
+WorkingDirectory=/opt/trivia-survival
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/node server/server.js
+Restart=on-failure
+RestartSec=5
+
+# Light sandboxing - harmless for this app (no /tmp usage, no privilege needs).
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
