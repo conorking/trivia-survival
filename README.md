@@ -87,10 +87,13 @@ app config changes are needed either way.
 - **Client** (`public/`):
   - `index.html` — landing (host or join)
   - `host.html` / `js/host.js` — room creation, config, lobby, live spectator view
-  - `player.html` / `js/player.js` — join/avatar picker, keyboard + hold-drag/tap touch
-    input, gameplay view
+    (always the whole map, scroll-wheel zoom)
+  - `player.html` / `js/player.js` — join/avatar picker, keyboard + virtual-joystick/
+    pinch-zoom touch input, gameplay view. On phones the camera follows the player
+    zoomed in with an edge-to-edge canvas; on desktop it shows the whole map like host
   - `js/arena-render.js` — shared canvas renderer (floor, trapdoors, cages, dogs, players,
-    ghosts) used by both host and player views. Both client files render via a
+    ghosts) used by both host and player views, plus the camera/zoom system and
+    off-screen trapdoor indicators. Both client files render via a
     `requestAnimationFrame` loop that interpolates between the last couple of server
     snapshots, decoupling visual smoothness from the server's 25Hz tick rate and network
     jitter.

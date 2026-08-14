@@ -3,9 +3,20 @@ let myId = null;
 let myToken = null;
 let myRoomCode = null;
 let ready = false;
-let latestPlayers = []; // raw (non-interpolated) - used for pointer-control targeting and status text
+let latestPlayers = []; // raw (non-interpolated) - used for status text
 let myAliveGhostState = { alive: true, isGhost: false };
 let myLocalJumpUntil = 0;
+
+// 'follow' (camera zoomed on the player, edge-to-edge canvas, virtual joystick) below
+// the breakpoint; 'overview' (whole map, same as host) above it - matches style.css's
+// canvas#arena.arena-follow breakpoint so the CSS layout and the camera mode always
+// agree on which experience is active.
+const MOBILE_BREAKPOINT = 820;
+let viewMode = 'overview';
+function computeViewMode() {
+  viewMode = window.innerWidth <= MOBILE_BREAKPOINT ? 'follow' : 'overview';
+}
+computeViewMode();
 
 const AVATAR_COLORS = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
 let selectedColor = AVATAR_COLORS[0];
@@ -249,9 +260,24 @@ function showGameView() {
   document.getElementById('joinView').style.display = 'none';
   document.getElementById('lobbyView').style.display = 'none';
   document.getElementById('gameView').style.display = 'flex';
+  computeViewMode();
   const canvas = document.getElementById('arena');
   ArenaRender.fitCanvas(canvas);
 }
+
+// Resize/orientation changes can flip which side of the mobile breakpoint we're on
+// (rotating a phone, or just resizing a desktop browser window) and always change the
+// canvas's actual CSS size either way - both need to be kept current for the camera math.
+window.addEventListener('resize', () => {
+  computeViewMode();
+  const canvas = document.getElementById('arena');
+  if (canvas) ArenaRender.fitCanvas(canvas);
+});
+window.addEventListener('orientationchange', () => {
+  computeViewMode();
+  const canvas = document.getElementById('arena');
+  if (canvas) ArenaRender.fitCanvas(canvas);
+});
 
 // ---- Rendering: a requestAnimationFrame loop decoupled from network tick arrival ----
 // The server only broadcasts state at 25Hz and network delivery is jittery on top of
@@ -324,7 +350,10 @@ function drawFrame() {
       return serverJump >= myLocalJumpUntil ? p : { ...p, jumpUntil: myLocalJumpUntil };
     });
   }
-  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId });
+  const joystick = (joystickPointerId !== null && joystickOrigin && joystickCurrent)
+    ? { originX: joystickOrigin.x, originY: joystickOrigin.y, curX: joystickCurrent.x, curY: joystickCurrent.y }
+    : null;
+  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick });
 }
 
 (function renderLoop() {
@@ -414,20 +443,37 @@ window.addEventListener('blur', () => {
   updateKeyboardInput();
 });
 
-// ---- Pointer/touch: hold-drag to walk toward the point, quick tap to jump ----
+// ---- Virtual joystick + pinch-zoom + wheel-zoom ----
+// Multi-touch, keyed by pointerId. First finger down (with no joystick already active)
+// becomes the joystick: origin = where it touched down, direction each frame = the
+// dead-zone-filtered vector from origin to the finger's current position - sent to the
+// server the same way keyboard input already is. A second finger held down at the same
+// time is tracked for both possible meanings, disambiguated by what it does next: lifted
+// quickly with little movement -> jump; distance to the joystick finger changes
+// meaningfully -> pinch-zoom (joystick steering keeps working the whole time either way).
+// Lifting the joystick finger always stops movement immediately, even if another finger
+// is still down - no automatic hand-off.
 const TAP_MAX_MS = 220;
-const TAP_MAX_MOVE = 12; // arena px
+const TAP_MAX_MOVE = 12; // CSS px
+const JOYSTICK_DEADZONE = 6; // CSS px - below this, treat the drag as centered (no input)
+const PINCH_MOVE_THRESHOLD = 6; // CSS px of inter-finger distance change before wheel-equivalent zoom kicks in
 
-let pointerActive = false;
-let pointerDownAt = 0;
-let pointerDownPos = null;
-let pointerCurrentPos = null;
+let activePointers = new Map(); // pointerId -> {x, y, startX, startY, startT}
+let joystickPointerId = null;
+let joystickOrigin = null; // {x,y} screen coords
+let joystickCurrent = null;
+let pinchPointerIds = null; // [idA, idB] once a second finger joins while the joystick is held
+let pinchLastDist = null;
 
-function toArenaCoords(canvas, clientX, clientY) {
+function getCanvasPoint(canvas, e) {
   const rect = canvas.getBoundingClientRect();
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
-  return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function pointerDist(ids) {
+  const a = activePointers.get(ids[0]), b = activePointers.get(ids[1]);
+  if (!a || !b) return null;
+  return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
 function setupPointerControls() {
@@ -436,47 +482,84 @@ function setupPointerControls() {
 
   canvas.addEventListener('pointerdown', (e) => {
     if (document.getElementById('gameView').style.display === 'none') return;
-    pointerActive = true;
-    pointerDownAt = Date.now();
-    pointerDownPos = toArenaCoords(canvas, e.clientX, e.clientY);
-    pointerCurrentPos = pointerDownPos;
+    const pt = getCanvasPoint(canvas, e);
+    activePointers.set(e.pointerId, { x: pt.x, y: pt.y, startX: pt.x, startY: pt.y, startT: Date.now() });
     if (canvas.setPointerCapture) {
       try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    }
+
+    if (joystickPointerId === null) {
+      joystickPointerId = e.pointerId;
+      joystickOrigin = { x: pt.x, y: pt.y };
+      joystickCurrent = { x: pt.x, y: pt.y };
+    } else if (activePointers.size === 2 && !pinchPointerIds) {
+      pinchPointerIds = [...activePointers.keys()];
+      pinchLastDist = pointerDist(pinchPointerIds);
     }
     e.preventDefault();
   });
 
   canvas.addEventListener('pointermove', (e) => {
-    if (!pointerActive) return;
-    pointerCurrentPos = toArenaCoords(canvas, e.clientX, e.clientY);
+    const rec = activePointers.get(e.pointerId);
+    if (!rec) return;
+    const pt = getCanvasPoint(canvas, e);
+    rec.x = pt.x; rec.y = pt.y;
+
+    if (e.pointerId === joystickPointerId) {
+      joystickCurrent = { x: pt.x, y: pt.y };
+    }
+    if (pinchPointerIds && pinchPointerIds.includes(e.pointerId)) {
+      const dist = pointerDist(pinchPointerIds);
+      if (dist != null && pinchLastDist != null && Math.abs(dist - pinchLastDist) > PINCH_MOVE_THRESHOLD) {
+        ArenaRender.adjustZoom(dist / pinchLastDist, viewMode, canvas);
+        pinchLastDist = dist;
+      }
+    }
   });
 
   function endPointer(e) {
-    if (!pointerActive) return;
-    const heldMs = Date.now() - pointerDownAt;
-    const endPos = pointerCurrentPos || pointerDownPos;
-    const moved = Math.hypot(endPos.x - pointerDownPos.x, endPos.y - pointerDownPos.y);
-    pointerActive = false;
-    pointerCurrentPos = null;
-    sendDirInput(0, 0);
-    if (heldMs <= TAP_MAX_MS && moved <= TAP_MAX_MOVE) {
-      triggerJump();
+    const rec = activePointers.get(e.pointerId);
+    activePointers.delete(e.pointerId);
+
+    if (e.pointerId === joystickPointerId) {
+      joystickPointerId = null;
+      joystickOrigin = null;
+      joystickCurrent = null;
+      sendDirInput(0, 0);
+    } else if (pinchPointerIds && pinchPointerIds.includes(e.pointerId)) {
+      // Never diverged enough to register as a pinch, and lifted quickly -> a tap-jump.
+      if (rec) {
+        const heldMs = Date.now() - rec.startT;
+        const moved = Math.hypot(rec.x - rec.startX, rec.y - rec.startY);
+        if (heldMs <= TAP_MAX_MS && moved <= TAP_MAX_MOVE) triggerJump();
+      }
+      pinchPointerIds = null;
+      pinchLastDist = null;
+    } else if (rec) {
+      // A stray tap with no joystick active yet (rare - the joystick claims the first
+      // finger down) - still honor it as a jump.
+      const heldMs = Date.now() - rec.startT;
+      const moved = Math.hypot(rec.x - rec.startX, rec.y - rec.startY);
+      if (heldMs <= TAP_MAX_MS && moved <= TAP_MAX_MOVE) triggerJump();
     }
   }
   canvas.addEventListener('pointerup', endPointer);
   canvas.addEventListener('pointercancel', endPointer);
+
+  // Desktop scroll-to-zoom (mirrors pinch on touch).
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    ArenaRender.adjustZoom(e.deltaY < 0 ? 1.08 : 1 / 1.08, viewMode, canvas);
+  }, { passive: false });
 }
 setupPointerControls();
 
-// While held, continuously steer toward the current touch/cursor point - runs on an
-// interval (rather than only on pointermove) so the direction keeps updating as the
-// player's own position moves closer to a finger held still.
+// While the joystick finger is held, continuously steer in the drag direction - runs on
+// an interval (rather than only on pointermove) so it keeps sending even if the finger
+// is held perfectly still, and to keep the network send rate sane.
 setInterval(() => {
-  if (!pointerActive || !pointerCurrentPos) return;
-  const me = latestPlayers.find(p => p.id === myId);
-  const originX = me ? me.x : pointerCurrentPos.x;
-  const originY = me ? me.y : pointerCurrentPos.y;
-  const dx = pointerCurrentPos.x - originX, dy = pointerCurrentPos.y - originY;
-  const len = Math.hypot(dx, dy);
-  sendDirInput(len < 4 ? 0 : dx / len, len < 4 ? 0 : dy / len);
+  if (joystickPointerId === null || !joystickOrigin || !joystickCurrent) return;
+  const dx = joystickCurrent.x - joystickOrigin.x, dy = joystickCurrent.y - joystickOrigin.y;
+  const dist = Math.hypot(dx, dy);
+  sendDirInput(dist < JOYSTICK_DEADZONE ? 0 : dx / dist, dist < JOYSTICK_DEADZONE ? 0 : dy / dist);
 }, 50);

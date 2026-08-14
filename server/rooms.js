@@ -10,9 +10,12 @@ const WEBDEV_QUESTIONS = JSON.parse(
 );
 
 // ---- Arena constants (logical units, client scales to fit canvas) ----
-// Portrait orientation, sized for a typical phone screen.
-const ARENA_W = 400;
-const ARENA_H = 720;
+// Landscape-leaning layout. The client now renders this through a camera (see
+// arena-render.js) rather than fitting the whole world onto a fixed-aspect canvas, so
+// this no longer needs to match a phone's screen shape - it's sized for gameplay
+// (room to maneuver, spaced-out trapdoors) instead.
+const ARENA_W = 900;
+const ARENA_H = 640;
 const PLAYER_RADIUS = 14;
 const PLAYER_SPEED = 235; // px/sec
 const DOG_SPEED = 185; // px/sec
@@ -62,11 +65,11 @@ const TICK_MS = 40; // 25Hz
 // Base/default cage layout - the fixed sizes dynamic cell scaling scales from, and the
 // starting point clients render before any round-specific data arrives.
 const TRAPDOORS = {
-  A: { x: 32, y: 605, w: 95, h: 85 },
-  B: { x: 152, y: 605, w: 95, h: 85 },
-  C: { x: 272, y: 605, w: 95, h: 85 }
+  A: { x: 125, y: 480, w: 150, h: 120 },
+  B: { x: 375, y: 480, w: 150, h: 120 },
+  C: { x: 625, y: 480, w: 150, h: 120 }
 };
-const DOG_PEN = { x: 130, y: 20, w: 140, h: 60 };
+const DOG_PEN = { x: 350, y: 20, w: 200, h: 70 };
 const AVOID_RADIUS = DOG_RADIUS + OBSTACLE_MARGIN + 20; // steering influence range around obstacles
 
 function clamp(v, min, max) {
@@ -171,9 +174,10 @@ function steer(x, y, tx, ty, obstacles) {
 }
 
 function randomSpawn() {
-  // Spawn in the open area, avoiding the trapdoor row and dog pen
-  const x = 30 + Math.random() * (ARENA_W - 60);
-  const y = 100 + Math.random() * (ARENA_H - 100 - 200);
+  // Spawn in the open area, avoiding the trapdoor row (top edge y=480) and dog pen
+  // (bottom edge y=90).
+  const x = 60 + Math.random() * (ARENA_W - 120);
+  const y = 110 + Math.random() * 350; // 110 to 460
   return { x, y };
 }
 
@@ -221,9 +225,9 @@ function shuffleOptionLetters(q) {
 }
 
 const DOG_PEN_SLOTS = [
-  { x: DOG_PEN.x + 20, y: DOG_PEN.y + 30 },
-  { x: DOG_PEN.x + 70, y: DOG_PEN.y + 30 },
-  { x: DOG_PEN.x + 120, y: DOG_PEN.y + 30 }
+  { x: DOG_PEN.x + 30, y: DOG_PEN.y + 35 },
+  { x: DOG_PEN.x + 100, y: DOG_PEN.y + 35 },
+  { x: DOG_PEN.x + 170, y: DOG_PEN.y + 35 }
 ];
 const DOG_HOME_ANGLE = Math.PI / 2; // facing south, out into the arena
 

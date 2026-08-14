@@ -35,23 +35,100 @@ snapshot.
   JavaScript, React, general tooling).
 - `public/index.html` — landing (host or join).
 - `public/host.html` + `public/js/host.js` — room creation, config form, lobby, live
-  spectator view, end screen + rematch.
-- `public/player.html` + `public/js/player.js` — join/avatar picker, keyboard + touch/
-  pointer input capture, gameplay view.
+  spectator view (always the `'overview'` camera — whole map, scroll-wheel zoom), end
+  screen + rematch.
+- `public/player.html` + `public/js/player.js` — join/avatar picker, keyboard + virtual-
+  joystick/pinch-zoom touch input, gameplay view. Picks `'follow'` vs `'overview'`
+  camera mode from a viewport-width breakpoint — see "Camera system" below.
 - `public/js/arena-render.js` — the only place canvas drawing happens. Shared by host
   and player. Owns its own animation state (door-opening, fall/respawn, cage pulses,
   death/blood-puddle, per-player RUN!/SAFE! prompts, pen gate) via `onLockIn/onReveal/
   onDropped/onCaught/onDogsReleased/onRoundComplete/onNewQuestion` — callers just tell
   it what happened, it handles timing/interpolation internally using `Date.now()`. Also
-  home to the optional sprite-loading plumbing (see `public/sprites/README.md`) and
+  home to the optional sprite-loading plumbing (see `public/sprites/README.md`),
   `setArena`/`setTrapdoors` (arena geometry can change per-room per-round now — see
-  dynamic cell scaling below).
+  dynamic cell scaling below), and the camera/zoom system, joystick rendering, and
+  off-screen trapdoor indicators — see "Camera system" below.
 - `public/css/style.css` — GBA/retro pixel styling, single stylesheet, no preprocessor.
+
+## Camera system, virtual joystick, zoom, off-screen indicators (client-side only)
+
+Added when real mobile testing showed the old "whole map always visible, narrow
+portrait canvas" approach didn't give players enough room to see or control precisely.
+**No server/wire-protocol changes were needed for any of this** — the server still just
+receives the same `{dx,dy}` input it always has; camera/zoom/joystick are purely
+client-side rendering + input concerns.
+
+- **Two view modes**, chosen per `render()` call via `viewMode: 'follow' | 'overview'`:
+  `'overview'` (host always; player above the mobile breakpoint) centers the camera on
+  the world center with no panning, zoom-only, default zoom = whole world fits the
+  canvas. `'follow'` (player below the breakpoint) centers on the player's own
+  interpolated position instead, clamped (`updateCamera` in `arena-render.js`) so the
+  viewport never shows past the world edges — if half the viewport in world units would
+  exceed the world size on an axis, it just centers on that axis instead of clamping.
+  `player.js` decides the mode from `window.innerWidth <= MOBILE_BREAKPOINT` (820px,
+  matching style.css's breakpoint below), rechecked on `resize`/`orientationchange`;
+  `host.js` always passes `'overview'`.
+- **Camera state** (`{x, y, zoom}`) is owned by `arena-render.js`, recomputed every
+  `render()` call by `updateCamera()`. Zoom range is always `[wholeWorldFits, ...]` —
+  you can never zoom out past seeing the entire map — with a mode-specific max
+  (`OVERVIEW_ZOOM_MAX_MULT`/`FOLLOW_ZOOM_MAX_MULT`, relative to that mode's default
+  zoom). Resets to the mode's default zoom on a mode switch; otherwise just clamps into
+  range each frame, so wheel/pinch-set zoom persists frame to frame and survives resize.
+  Camera position is never independently pannable — it's always fully derived from
+  either the world center or the player's own position — so there's deliberately no
+  anchor-preserving pan math on zoom, just a value change via `adjustZoom(factor,
+  viewMode, canvas)`, called from wheel (desktop, both `host.js` and `player.js`) and
+  pinch (`player.js` only) handlers.
+- **Rendering**: `render()` wraps the *entire pre-existing* world-space draw sequence
+  (`drawFloor`/`drawDogPen`/`drawTrapdoors`/players/dogs/etc. — none of them changed
+  internally) in one `ctx.translate → ctx.scale(camera.zoom) → ctx.translate(-camera.x,
+  -camera.y)` transform, then `ctx.restore()`s back to screen space to draw UI that
+  isn't part of the world: the joystick (`drawJoystick`, only while `joystick` is passed
+  in), an idle touch hint (`drawTouchHint`, replaces the old world-space "Hold & drag..."
+  watermark), and off-screen trapdoor indicators (`drawOffscreenIndicators` — always
+  runs; self-limiting, since a door that's actually in view is a no-op, so it does
+  nothing in default `'overview'` zoom and only matters once zoomed in enough — mobile
+  `'follow'` mode or a zoomed-in desktop `'overview'` — that a door falls outside the
+  visible (margin-inset) viewport, in which case it clamps to the inset edge along the
+  ray from screen-center and draws a colored arrow + letter there).
+- **Canvas sizing** (`fitCanvas`, in `arena-render.js`): sizes the backing buffer to the
+  canvas's actual *displayed* CSS size × `devicePixelRatio` (crisp on high-DPI screens),
+  independent of the world's aspect ratio now that the camera handles world→screen
+  mapping — `ctx.setTransform(dpr,0,0,dpr,0,0)` (not `ctx.scale`, so repeated calls never
+  compound). Called on load *and* on `resize`/`orientationchange` in both `host.js` and
+  `player.js` (previously only once, when showing the game view).
+- **Virtual joystick** (`player.js`, replaces the old hold-drag-toward-absolute-point
+  touch scheme): real multi-touch via Pointer Events keyed by `pointerId`. First finger
+  down (no joystick already active) becomes the joystick — origin = where it touched
+  down, direction each frame = the dead-zone-filtered vector from origin to that
+  finger's current position, sampled on an interval (not every `pointermove`, to keep
+  the network send rate sane) and sent via the same `sendDirInput()` keyboard input
+  already used. A second finger held at the same time is tracked for *both* possible
+  meanings, disambiguated by what it does next: lifted quickly with little movement →
+  `triggerJump()`; inter-finger distance changes meaningfully → pinch-zoom (joystick
+  steering from finger 1 keeps working the whole time either way). Lifting the joystick
+  finger always stops movement immediately even if another finger is still down — no
+  automatic hand-off. Coordinates are pure screen-space CSS px throughout — since camera
+  position is never independently pannable (see above), no screen↔world conversion is
+  needed anywhere in the input path anymore (a nice side effect: no `toArenaCoords()`).
+- **CSS breakpoint** (`style.css`, `@media (max-width: 820px)`, matching `player.js`'s
+  `MOBILE_BREAKPOINT`): scoped to `canvas#arena.arena-follow` (that class is only set in
+  `player.html`, so `host.html` — always whole-map regardless of its own window size —
+  is never affected). Drops the desktop `aspect-ratio`/`max-width`/`max-height` box and
+  goes genuinely edge-to-edge via the `margin: 6px calc(50% - 50vw); width: 100vw;`
+  breakout trick, which reaches past `.container`'s padding/max-width without having to
+  touch `#gameView` or its other (HUD) children — those stay exactly as contained/
+  centered as they are on desktop, only the canvas itself goes full-bleed.
 
 ## Arena geometry (server/rooms.js)
 
-Portrait orientation, `ARENA_W=400`/`ARENA_H=720` (phone-friendly). Dog pen top-center,
-trapdoor row along the bottom, open field between. `TRAPDOORS` (module constant) is the
+Widened back out to `ARENA_W=900`/`ARENA_H=640` (landscape-leaning) now that mobile no
+longer needs the *entire* map to fit on a small screen — the camera/follow-mode system
+above means a player only ever sees a zoomed-in portion of it anyway, so world size is
+now purely a gameplay/spacing concern again, not a phone-screen-shape concern. (Was
+`400×720` portrait, phone-friendly, before the camera system existed.) Dog pen top-
+center, trapdoor row along the bottom, open field between. `TRAPDOORS` (module constant) is the
 *base* layout; each `Room` also has its own `this.trapdoors`, recomputed by
 `computeTrapdoorsForRound()`, which layers two independent adjustments on top of the
 base width/height:
@@ -222,10 +299,12 @@ and the on-canvas "dogs give up in Xs" badge (`drawChaseCountdown`, removed from
 instead of four booleans — `server.js`'s handler clamps and stores it as-is, and
 `tick()`'s movement step just normalizes whatever's there. Keyboard input
 (`public/js/player.js`) still computes one of 8 discrete directions from WASD/arrows,
-just converts to a vector before sending; touch/mouse (Pointer Events on `#arena`) holds
-down and drags to continuously steer toward the current pointer position (recomputed on
-an interval so it keeps tracking as you approach), or a quick tap (short duration, tiny
-movement) triggers a jump instead of a move. Both sources feed the same `sendDirInput()`.
+just converts to a vector before sending; touch (Pointer Events on `#arena`) drives the
+virtual joystick — direction = the dead-zone-filtered vector from where the controlling
+finger first touched down to its current position, recomputed on an interval — with a
+second finger's quick tap triggering a jump instead (see "Camera system" above for the
+full multi-touch/pinch-zoom disambiguation). Both sources feed the same
+`sendDirInput()`.
 
 ### End-of-game overlay
 
@@ -261,20 +340,23 @@ a deliberately-delayed render-only view.
 (`calc(100dvh - 76px)`, `vh` fallback first for older browsers — the 76px reserves room
 for `.container`'s own padding plus the persistent `.top-nav` above it) — every child
 except `canvas#arena` is `flex: 0 0 auto` (sized to its own content), and the canvas is
-the one `flex: 1 1 auto` element that absorbs whatever vertical space is left, with
-`aspect-ratio: 400/720` deriving its width from that resolved height (capped by
-`max-width`/`max-height` so it doesn't get silly on a huge monitor). This one mechanism
-handles both ends: on a short phone viewport the canvas shrinks to guarantee everything
-(HUD + canvas) fits without scrolling; on a tall/large display there's a lot of leftover
-height, so the canvas — and therefore the whole game — renders correspondingly bigger.
-A `@media (max-height: 700px)` pass further trims HUD padding/margins (not font sizes —
-readability took priority over a few extra px of canvas after a previous pass shrank
-text too aggressively) on very short screens. Because CSS now controls `#gameView`'s
-`display` value (`flex`, not `block`), `showGameView()` in both client files must set
-`style.display = 'flex'` — setting `'block'` there would silently break this layout
-(inline styles beat the stylesheet). The touch-control reminder used to be a `<p>` below
-the canvas costing its own line of vertical space; it's now drawn as a faint watermark
-inside the canvas itself (`drawControlsHint()` in `arena-render.js`, player view only).
+the one `flex: 1 1 auto` element that absorbs whatever vertical space is left. Above the
+mobile breakpoint (and on `host.html` always), `aspect-ratio: 900/640` derives the
+canvas's width from that resolved height (capped by `max-width`/`max-height` so it
+doesn't get silly on a huge monitor) — this one mechanism handles both ends: on a short
+viewport the canvas shrinks to guarantee everything (HUD + canvas) fits without
+scrolling, on a tall/large display it renders correspondingly bigger. Below the
+breakpoint, `canvas#arena.arena-follow`'s own rule (see "Camera system" above) drops the
+`aspect-ratio` cap entirely and goes edge-to-edge instead — the camera's follow-mode
+zoom is what keeps gameplay visible/controllable at that size now, not a shrunk whole-
+map view. A `@media (max-height: 700px)` pass further trims HUD padding/margins (not
+font sizes — readability took priority over a few extra px of canvas after a previous
+pass shrank text too aggressively) on very short screens. Because CSS now controls
+`#gameView`'s `display` value (`flex`, not `block`), `showGameView()` in both client
+files must set `style.display = 'flex'` — setting `'block'` there would silently break
+this layout (inline styles beat the stylesheet). The touch-control reminder is a faint
+screen-space watermark drawn by `drawTouchHint()` in `arena-render.js` (`'follow'` mode
+only, replaced by the joystick itself the moment a touch is active).
 
 ### App navigation and clipboard copy
 
@@ -383,7 +465,24 @@ deployment target.
 
 ## Feedback already implemented (most recent round)
 
-Bug fixes: mobile clipboard copy (secure-context fallback, see "App navigation and
+Real mobile device testing surfaced usability issues with the old fixed whole-map-
+always-visible canvas and hold-drag-toward-a-point touch control. This round replaced
+both with a proper camera system: `'follow'` mode (mobile) zooms the camera on the
+player with a genuinely edge-to-edge canvas for maximum visible space/control
+precision, `'overview'` mode (host always, desktop players) keeps the old whole-map
+view; both support wheel (desktop) / pinch (touch) zoom. Touch input became a real
+virtual joystick (arbitrary touch origin, drag-relative direction, second-finger tap to
+jump, disambiguated from pinch) instead of hold-drag-toward-an-absolute-point. The world
+was widened back out (`900×640`, was `400×720` portrait) now that mobile no longer needs
+the whole map to fit on a small screen. Off-screen trapdoor indicators (colored arrows +
+letter, screen-edge, self-limiting) point toward doors that fall outside the current
+view once zoomed in. **No server/wire-protocol changes** — see "Camera system, virtual
+joystick, zoom, off-screen indicators" and the updated "Arena geometry" above for the
+full breakdown; all of the above is a result of that round — if picking this back up,
+this is the most current ground truth, more current than anything a chat transcript
+would say.
+
+Prior round: mobile clipboard copy (secure-context fallback, see "App navigation and
 clipboard copy" above); config sliders now stack on their own line below ~520px
 (`.config-row`) instead of overlapping. Removed `config.durationSec`/`gameEndsAt`
 entirely (redundant overall-length cap, invisible to players anyway — see the state
@@ -392,14 +491,11 @@ machine section above). Dog lunge went from a flat boolean to `'off'/'low'/'high
 taller (never shrink) with the room's player count, independent of dynamic cell scaling
 — see "Arena geometry" above. Text sizes bumped up (and the short-viewport media query
 stopped shrinking fonts, only padding) for small-screen readability. Added a persistent
-top-nav (logo → home) on every view, and moved the touch-controls reminder off its own
-`<p>` line into a faint canvas watermark — see "App navigation" and "Responsive layout"
-above. New `questions-webdev.json` (200 entries) alongside the default set, selectable
-per room, plus `questionCount` cap raised to 200 to match. Jump is no longer purely
-cosmetic: it's now a brief directional speed burst with exponential-backoff cooldown —
-see "Directional jump + exponential cooldown backoff" above. All of the above is a
-result of that round — if picking this back up, this is the most current ground truth,
-more current than anything a chat transcript would say.
+top-nav (logo → home) on every view. New `questions-webdev.json` (200 entries) alongside
+the default set, selectable per room, plus `questionCount` cap raised to 200 to match.
+Jump is no longer purely cosmetic: it's now a brief directional speed burst with
+exponential-backoff cooldown — see "Directional jump + exponential cooldown backoff"
+above.
 
 ## If extending this
 

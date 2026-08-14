@@ -6,13 +6,13 @@
 const ArenaRender = (() => {
   // Fallback defaults, overwritten by setArena()/setTrapdoors() once real data arrives
   // from the server - kept in sync with server/rooms.js's constants as a sane baseline.
-  let ARENA_W = 400, ARENA_H = 720;
+  let ARENA_W = 900, ARENA_H = 640;
   let TRAPDOORS = {
-    A: { x: 32, y: 605, w: 95, h: 85 },
-    B: { x: 152, y: 605, w: 95, h: 85 },
-    C: { x: 272, y: 605, w: 95, h: 85 }
+    A: { x: 125, y: 480, w: 150, h: 120 },
+    B: { x: 375, y: 480, w: 150, h: 120 },
+    C: { x: 625, y: 480, w: 150, h: 120 }
   };
-  let DOG_PEN = { x: 130, y: 20, w: 140, h: 60 };
+  let DOG_PEN = { x: 350, y: 20, w: 200, h: 70 };
 
   const DOOR_COLORS = { A: '#ef8f4f', B: '#4fb8ef', C: '#b84fef' };
   const BAR_FADE_MS = 250; // cage bars vanish fast right when a wrong door's occupant is freed
@@ -22,6 +22,80 @@ const ArenaRender = (() => {
   const DEATH_ANIM_DUR = 1200; // roughly matches server DEATH_ANIM_MS
   const GATE_ANIM_MS = 450;
   const GATE_W = 46;
+
+  // ---- Camera system ----
+  // Everything below draws in world coordinates (unchanged); render() wraps that
+  // existing draw sequence in a single camera transform (translate to screen center,
+  // scale by zoom, translate by -camera.x/-camera.y) so 'overview' (whole map, host +
+  // desktop players) and 'follow' (zoomed on the player, mobile) are just two different
+  // camera targets/zoom levels through the same rendering path.
+  let camera = { x: ARENA_W / 2, y: ARENA_H / 2, zoom: 0 };
+  let cameraMode = null; // tracks the last viewMode render() was called with
+  let lastFollowX = null, lastFollowY = null; // last known follow target, for gaps in player data
+  const OVERVIEW_ZOOM_MAX_MULT = 2.5; // how far 'overview' can zoom in past whole-map-fit
+  const FOLLOW_DEFAULT_ZOOM = 1.7; // 'follow' mode's default zoom (world px -> CSS px)
+  const FOLLOW_ZOOM_MAX_MULT = 1.7; // how far 'follow' can zoom in past its own default
+  const OFFSCREEN_MARGIN = 26; // screen-space inset the off-screen door arrows clamp to
+  const JOYSTICK_RADIUS = 52;
+  const JOYSTICK_KNOB_RADIUS = 22;
+
+  function clampNum(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  // Zoom that exactly contains the whole world in the given (CSS-pixel) viewport -
+  // the shared floor for both modes' minimum zoom ("can't zoom out past the whole map").
+  function fitZoom(viewW, viewH) {
+    return Math.min(viewW / ARENA_W, viewH / ARENA_H) * 0.96; // slight padding so the border isn't clipped
+  }
+
+  function getZoomRange(mode, viewW, viewH) {
+    const fit = fitZoom(viewW, viewH);
+    if (mode === 'follow') {
+      const def = Math.max(fit, FOLLOW_DEFAULT_ZOOM);
+      return { min: fit, max: Math.max(def * FOLLOW_ZOOM_MAX_MULT, fit), default: def };
+    }
+    return { min: fit, max: fit * OVERVIEW_ZOOM_MAX_MULT, default: fit };
+  }
+
+  // Recomputes camera.zoom (clamped into range, reset to the mode's default on a mode
+  // switch) and camera.x/y (world center for 'overview'; the player's own position for
+  // 'follow', clamped so the viewport never shows past the world edges) every frame.
+  function updateCamera(mode, players, myId, viewW, viewH) {
+    const range = getZoomRange(mode, viewW, viewH);
+    if (cameraMode !== mode || !camera.zoom) {
+      camera.zoom = range.default;
+    } else {
+      camera.zoom = clampNum(camera.zoom, range.min, range.max);
+    }
+    cameraMode = mode;
+
+    let targetX = ARENA_W / 2, targetY = ARENA_H / 2;
+    if (mode === 'follow') {
+      const me = myId != null && players ? players.find(p => p.id === myId) : null;
+      if (me) { targetX = me.x; targetY = me.y; lastFollowX = me.x; lastFollowY = me.y; }
+      else if (lastFollowX != null) { targetX = lastFollowX; targetY = lastFollowY; }
+    }
+
+    const halfW = viewW / (2 * camera.zoom);
+    const halfH = viewH / (2 * camera.zoom);
+    camera.x = (halfW * 2 >= ARENA_W) ? ARENA_W / 2 : clampNum(targetX, halfW, ARENA_W - halfW);
+    camera.y = (halfH * 2 >= ARENA_H) ? ARENA_H / 2 : clampNum(targetY, halfH, ARENA_H - halfH);
+  }
+
+  // Called from wheel (desktop) / pinch (touch) handlers in player.js/host.js. Multiplies
+  // the current zoom by `factor` and clamps into the current mode's range - camera
+  // position isn't independently pannable (it's always derived from world-center or the
+  // player's own position, see updateCamera), so there's no anchor-point math needed:
+  // the next render() call recomputes x/y from that same formula regardless.
+  function adjustZoom(factor, viewMode, canvas) {
+    if (!canvas || !factor) return;
+    const dpr = window.devicePixelRatio || 1;
+    const viewW = canvas.clientWidth || (canvas.width / dpr);
+    const viewH = canvas.clientHeight || (canvas.height / dpr);
+    const range = getZoomRange(viewMode, viewW, viewH);
+    const base = camera.zoom || range.default;
+    camera.zoom = clampNum(base * factor, range.min, range.max);
+    cameraMode = viewMode; // so the next render() clamps instead of resetting to default
+  }
 
   // ---- optional sprite support ----
   // No art assets ship with the project yet - this just wires up the loading/fallback
@@ -64,9 +138,20 @@ const ArenaRender = (() => {
     TRAPDOORS = trapdoors;
   }
 
+  // Sizes the canvas backing buffer to its actual displayed CSS size x devicePixelRatio
+  // (for crispness on high-DPI screens), independent of the world's aspect ratio now
+  // that the camera transform handles world->screen mapping rather than a fixed-aspect
+  // canvas. Called on load AND on resize/orientation-change (previously only once).
   function fitCanvas(canvas) {
-    canvas.width = ARENA_W;
-    canvas.height = ARENA_H;
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = Math.max(1, canvas.clientWidth || ARENA_W);
+    const cssH = Math.max(1, canvas.clientHeight || ARENA_H);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    const ctx = canvas.getContext('2d');
+    // setTransform (not scale) so repeated calls never compound - every subsequent
+    // coordinate (camera transform, screen-space UI, pointer events) works in CSS px.
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   function onNewQuestion() {
@@ -161,18 +246,104 @@ const ArenaRender = (() => {
     ctx.strokeRect(4, 4, ARENA_W - 8, ARENA_H - 8);
   }
 
-  // Faint watermark-style controls reminder, drawn into the open field instead of
-  // taking up its own line of page layout below the canvas. Player view only (host is
-  // just spectating, doesn't need it) - low-opacity so it never competes with gameplay.
-  function drawControlsHint(ctx) {
+  // Faint screen-space watermark reminding mobile players how the joystick works -
+  // shown only while no touch is currently active, so it never competes with the
+  // joystick itself. Drawn after the camera transform is undone (fixed screen position,
+  // not tied to any world location) - see drawJoystick for the touch-active version.
+  function drawTouchHint(ctx, viewW, viewH) {
     ctx.save();
     ctx.globalAlpha = 0.22;
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 12px monospace';
+    ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Hold & drag to move', ARENA_W / 2, DOG_PEN.y + DOG_PEN.h + 26);
-    ctx.fillText('Tap to jump', ARENA_W / 2, DOG_PEN.y + DOG_PEN.h + 42);
+    ctx.fillText('Touch & drag anywhere to move', viewW / 2, viewH - 34);
+    ctx.fillText('Second finger tap = jump', viewW / 2, viewH - 18);
     ctx.restore();
+  }
+
+  // The virtual joystick itself - screen-space, drawn right where the controlling
+  // finger first touched down. `joystick` is {originX, originY, curX, curY}, all in CSS
+  // px screen coordinates (not world coordinates - the knob's direction is all that
+  // matters, so no screen->world conversion is needed here).
+  function drawJoystick(ctx, joystick) {
+    const { originX, originY, curX, curY } = joystick;
+    const dx = curX - originX, dy = curY - originY;
+    const dist = Math.hypot(dx, dy);
+    const clampedDist = Math.min(dist, JOYSTICK_RADIUS);
+    const angle = Math.atan2(dy, dx);
+    const knobX = dist > 0.01 ? originX + Math.cos(angle) * clampedDist : originX;
+    const knobY = dist > 0.01 ? originY + Math.sin(angle) * clampedDist : originY;
+
+    ctx.save();
+    ctx.fillStyle = '#10102a';
+    ctx.globalAlpha = 0.32;
+    ctx.beginPath();
+    ctx.arc(originX, originY, JOYSTICK_RADIUS, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#f4f1de';
+    ctx.lineWidth = 3;
+    ctx.globalAlpha = 0.5;
+    ctx.stroke();
+
+    ctx.globalAlpha = 0.8;
+    ctx.fillStyle = '#ffd23f';
+    ctx.beginPath();
+    ctx.arc(knobX, knobY, JOYSTICK_KNOB_RADIUS, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#10102a';
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 1;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Off-screen trapdoor indicators: project each door's world center through the current
+  // camera transform, and if it falls outside the visible (margin-inset) viewport, clamp
+  // it to the inset edge along the ray from screen-center and draw a colored arrow +
+  // letter there. Self-limiting - a no-op for any door that's actually in view, so it
+  // naturally does nothing in 'overview' mode at its default zoom (whole world visible).
+  function drawOffscreenIndicators(ctx, viewW, viewH) {
+    const cx = viewW / 2, cy = viewH / 2;
+    const insetHalfW = viewW / 2 - OFFSCREEN_MARGIN;
+    const insetHalfH = viewH / 2 - OFFSCREEN_MARGIN;
+    if (insetHalfW <= 0 || insetHalfH <= 0) return;
+
+    for (const key of ['A', 'B', 'C']) {
+      const d = TRAPDOORS[key];
+      if (!d) continue;
+      const wx = d.x + d.w / 2, wy = d.y + d.h / 2;
+      const sx = (wx - camera.x) * camera.zoom + cx;
+      const sy = (wy - camera.y) * camera.zoom + cy;
+      const dx = sx - cx, dy = sy - cy;
+      if (Math.abs(dx) <= insetHalfW && Math.abs(dy) <= insetHalfH) continue; // already visible
+
+      const scaleX = dx !== 0 ? insetHalfW / Math.abs(dx) : Infinity;
+      const scaleY = dy !== 0 ? insetHalfH / Math.abs(dy) : Infinity;
+      const scale = Math.min(scaleX, scaleY);
+      const ax = cx + dx * scale, ay = cy + dy * scale;
+      const angle = Math.atan2(dy, dx);
+
+      ctx.save();
+      ctx.translate(ax, ay);
+      ctx.rotate(angle);
+      ctx.fillStyle = DOOR_COLORS[key];
+      ctx.strokeStyle = '#10102a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(12, 0);
+      ctx.lineTo(-8, -8);
+      ctx.lineTo(-8, 8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.rotate(-angle);
+      ctx.fillStyle = '#10102a';
+      ctx.font = 'bold 11px monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(key, 0, -18);
+      ctx.restore();
+    }
   }
 
   function drawDogPen(ctx) {
@@ -634,12 +805,33 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
-  function render(ctx, { players, dogs, traps, myId }) {
-    ctx.clearRect(0, 0, ARENA_W, ARENA_H);
+  // `viewMode`: 'overview' (whole map, host + desktop players) or 'follow' (zoomed on
+  // the player, mobile). `joystick`, if present ({originX,originY,curX,curY} in CSS px),
+  // is drawn in follow mode in place of the idle touch hint. All the draw calls between
+  // the camera translate and ctx.restore() below are unchanged from before this system
+  // existed - they just draw in world coordinates same as always.
+  function render(ctx, { players, dogs, traps, myId, viewMode = 'overview', joystick } = {}) {
+    const canvas = ctx.canvas;
+    const dpr = window.devicePixelRatio || 1;
+    const viewW = canvas.clientWidth || (canvas.width / dpr);
+    const viewH = canvas.clientHeight || (canvas.height / dpr);
+
+    updateCamera(viewMode, players, myId, viewW, viewH);
+
+    ctx.save();
+    // Opaque fill of the whole viewport first - doubles as the clear, and covers any
+    // letterbox margin outside the world (e.g. a viewport aspect ratio that doesn't
+    // exactly match the world's, or overview zoomed in past whole-map-fit).
+    ctx.fillStyle = '#111120';
+    ctx.fillRect(0, 0, viewW, viewH);
+
+    ctx.translate(viewW / 2, viewH / 2);
+    ctx.scale(camera.zoom, camera.zoom);
+    ctx.translate(-camera.x, -camera.y);
+
     drawFloor(ctx);
     drawDogPen(ctx);
     drawTrapdoors(ctx);
-    if (myId) drawControlsHint(ctx);
     for (const trap of (traps || [])) drawBearTrap(ctx, trap);
 
     const now = Date.now();
@@ -650,7 +842,7 @@ const ArenaRender = (() => {
       if (now - anim.start > DEATH_ANIM_DUR) deathAnims.delete(id);
     }
 
-    const sorted = [...players].sort((a, b) => a.y - b.y);
+    const sorted = [...(players || [])].sort((a, b) => a.y - b.y);
     for (const p of sorted) {
       const deathAnim = deathAnims.get(p.id);
       const dropAnim = dropAnims.get(p.id);
@@ -667,10 +859,18 @@ const ArenaRender = (() => {
       }
     }
     for (const d of (dogs || [])) drawDog(ctx, d);
+
+    ctx.restore(); // back to screen space for the UI below
+
+    drawOffscreenIndicators(ctx, viewW, viewH);
+    if (viewMode === 'follow' && myId) {
+      if (joystick) drawJoystick(ctx, joystick);
+      else drawTouchHint(ctx, viewW, viewH);
+    }
   }
 
   return {
-    setArena, setTrapdoors, fitCanvas, render,
+    setArena, setTrapdoors, fitCanvas, render, adjustZoom,
     onNewQuestion, onLockIn, onReveal, onDropped, onRoundComplete,
     onCaught, onDogsReleased,
     get ARENA_W() { return ARENA_W; }, get ARENA_H() { return ARENA_H; }

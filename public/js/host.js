@@ -373,6 +373,23 @@ function showGameView() {
   ArenaRender.fitCanvas(canvas);
 }
 
+// The host always sees the whole map (no follow mode, no joystick) regardless of window
+// size - just needs to stay correctly sized/zoomable as the window resizes.
+window.addEventListener('resize', () => {
+  const canvas = document.getElementById('arena');
+  if (canvas) ArenaRender.fitCanvas(canvas);
+});
+
+function setupZoomControls() {
+  const canvas = document.getElementById('arena');
+  if (!canvas) return;
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    ArenaRender.adjustZoom(e.deltaY < 0 ? 1.08 : 1 / 1.08, 'overview', canvas);
+  }, { passive: false });
+}
+setupZoomControls();
+
 function updateCounts(players) {
   const alive = players.filter(p => p.alive && !p.isGhost).length;
   const ghosts = players.filter(p => p.isGhost).length;
@@ -443,7 +460,7 @@ function drawFrame() {
   if (!canvas || canvas.offsetParent === null) return;
   const ctx = canvas.getContext('2d');
   const snap = getRenderSnapshot();
-  ArenaRender.render(ctx, { players: snap.players, dogs: snap.dogs, traps: snap.traps, myId: null });
+  ArenaRender.render(ctx, { players: snap.players, dogs: snap.dogs, traps: snap.traps, myId: null, viewMode: 'overview' });
 }
 
 (function renderLoop() {
