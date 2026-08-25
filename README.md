@@ -36,14 +36,18 @@ open `http://YOUR_LOCAL_IP:3000/index.html` on the host machine instead of `loca
 For a one-off session where you don't want to deploy anywhere or open a port on your
 router, a tunnel exposes your local `npm start` process at a temporary public URL:
 
-- **ngrok**: `npm run tunnel:ngrok` (or `npx ngrok http 3000`). Free tier requires a
-  quick account + authtoken setup at [ngrok.com](https://ngrok.com) the first time; after
-  that it prints a public `https://*.ngrok-free.app` URL that proxies straight to your
-  local server, WebSockets included. **Run this in a second terminal alongside
-  `npm start`, then just open the host page as normal (`localhost:3000`)** — the host
-  page automatically detects the running tunnel (by asking the server to check ngrok's
-  own local API) and swaps the join link/QR code to the public URL for you, no copying
-  required. A toast confirms when it kicks in.
+- **ngrok**: requires the real [ngrok CLI](https://ngrok.com/download) installed and on
+  your `PATH` first (`npx ngrok ...` resolves to the separate `ngrok` npm wrapper
+  package instead, whose Windows postinstall shim is currently broken — it silently
+  drops all CLI args, so it just prints the help screen and exits instead of opening a
+  tunnel). Free tier also requires a quick account + authtoken setup at
+  [ngrok.com](https://ngrok.com) the first time; after that, `npm run tunnel:ngrok`
+  (or `ngrok http 3000` directly) prints a public `https://*.ngrok-free.app` URL that
+  proxies straight to your local server, WebSockets included. **Run this in a second
+  terminal alongside `npm start`, then just open the host page as normal
+  (`localhost:3000`)** — the host page automatically detects the running tunnel (by
+  asking the server to check ngrok's own local API) and swaps the join link/QR code to
+  the public URL for you, no copying required. A toast confirms when it kicks in.
 - **Cloudflare Tunnel**: `npm run tunnel:cloudflared` (requires installing the
   [`cloudflared`](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
   CLI first). No account needed for a quick anonymous tunnel — prints a public
