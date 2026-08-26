@@ -19,6 +19,8 @@ socket.on('host:roomCreated', ({ code, config }) => {
   roomCode = code;
   currentConfig = config;
   sessionStorage.setItem('trivia_host_room', code);
+  document.getElementById('cfgError').textContent = '';
+  document.getElementById('startError').textContent = '';
   showRoomInfo(code);
   populateConfigForm(config);
 });
@@ -45,6 +47,16 @@ socket.on('host:roomState', (state) => {
 socket.on('host:error', ({ message }) => {
   document.getElementById('cfgError').textContent = message;
   document.getElementById('startError').textContent = message;
+  // If this fired in response to our initial host:rejoin attempt (roomCode never got
+  // set), the stored room code is stale - most commonly because the server process
+  // restarted since we last hosted (e.g. relaunching the ngrok tunnel) and its in-memory
+  // rooms were wiped. Previously this left the host stuck on a dead error with no room
+  // until they closed the tab (sessionStorage is per-tab, so a fresh tab skipped the
+  // rejoin entirely) - fall back to creating a new room automatically instead.
+  if (existingCode && !roomCode && message === 'Room not found.') {
+    sessionStorage.removeItem('trivia_host_room');
+    socket.emit('host:createRoom', {});
+  }
 });
 
 socket.on('host:questionsUploaded', ({ count }) => {

@@ -48,6 +48,14 @@ router, a tunnel exposes your local `npm start` process at a temporary public UR
   (`localhost:3000`)** — the host page automatically detects the running tunnel (by
   asking the server to check ngrok's own local API) and swaps the join link/QR code to
   the public URL for you, no copying required. A toast confirms when it kicks in.
+  - Don't want two terminals? `npm run start:tunnel` runs the server and ngrok together
+    from one script (`scripts/start-with-tunnel.js`) and auto-restarts just ngrok if its
+    agent process dies while the server keeps running (a free-tier tunnel isn't
+    guaranteed to survive many unattended hours — a network blip is enough to kill the
+    agent). A restart without a reserved domain gets a new random URL, so reload the
+    host page if it was already open; pass `--domain=your-name.ngrok-free.app` (set one
+    up free at [dashboard.ngrok.com/domains](https://dashboard.ngrok.com/domains)) to
+    keep the same URL across restarts instead.
 - **Cloudflare Tunnel**: `npm run tunnel:cloudflared` (requires installing the
   [`cloudflared`](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
   CLI first). No account needed for a quick anonymous tunnel — prints a public
