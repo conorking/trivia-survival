@@ -6,7 +6,8 @@
       "B": "Home Tool Markup Language",
       "C": "HyperText Modern Layout"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which tag is used to create a hyperlink?",
@@ -15,7 +16,8 @@
       "B": "<a>",
       "C": "<href>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which HTML tag creates an unordered (bulleted) list?",
@@ -24,7 +26,8 @@
       "B": "<list>",
       "C": "<ul>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which attribute specifies alternate text for an image?",
@@ -33,7 +36,8 @@
       "B": "title",
       "C": "src"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which HTML tag represents the largest heading?",
@@ -42,7 +46,8 @@
       "B": "<h1>",
       "C": "<h6>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which tag is used to embed JavaScript in an HTML document?",
@@ -51,7 +56,8 @@
       "B": "<script>",
       "C": "<code>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "What does the br tag insert?",
@@ -60,7 +66,8 @@
       "B": "Bold text",
       "C": "A border"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "What is the correct doctype declaration for HTML5?",
@@ -69,7 +76,8 @@
       "B": "<!DOCTYPE HTML PUBLIC>",
       "C": "<!DOCTYPE html>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which tag defines a table row?",
@@ -78,7 +86,8 @@
       "B": "<row>",
       "C": "<td>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which tag defines a standard table data cell?",
@@ -87,7 +96,8 @@
       "B": "<td>",
       "C": "<cell>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which attribute makes an input field mandatory before submitting a form?",
@@ -96,7 +106,8 @@
       "B": "validate",
       "C": "required"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which HTML element represents the main content of a document body?",
@@ -105,7 +116,8 @@
       "B": "<body>",
       "C": "<content>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which input type creates a checkbox?",
@@ -114,7 +126,8 @@
       "B": "type=\"checkbox\"",
       "C": "type=\"check\""
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which tag embeds an image in an HTML page?",
@@ -123,7 +136,8 @@
       "B": "<pic>",
       "C": "<img>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "What does the href attribute specify on an anchor tag?",
@@ -132,7 +146,8 @@
       "B": "The link's display color",
       "C": "The link's font size"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which HTML element is intended for site navigation links?",
@@ -141,7 +156,8 @@
       "B": "<nav>",
       "C": "<menu>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which tag defines a footer for a document or section?",
@@ -150,7 +166,8 @@
       "B": "<bottom>",
       "C": "<end>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What is the correct syntax for an HTML comment?",
@@ -159,7 +176,8 @@
       "B": "<!-- comment -->",
       "C": "/* comment */"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which attribute uniquely identifies a single HTML element on a page?",
@@ -168,7 +186,8 @@
       "B": "name",
       "C": "id"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which tag creates a dropdown selection list?",
@@ -177,7 +196,8 @@
       "B": "<dropdown>",
       "C": "<list>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which HTML5 element embeds a video file?",
@@ -186,7 +206,8 @@
       "B": "<film>",
       "C": "<video>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "What does the meta charset tag specify?",
@@ -195,7 +216,8 @@
       "B": "The page's title",
       "C": "The page's author"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which tag represents a self-contained piece of content, like a blog post?",
@@ -204,7 +226,8 @@
       "B": "<section>",
       "C": "<post>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which tag groups related form controls together, often with a caption?",
@@ -213,7 +236,8 @@
       "B": "<fieldset>",
       "C": "<formgroup>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What does the src attribute specify on an img or script tag?",
@@ -222,7 +246,8 @@
       "B": "The source file path",
       "C": "The element's size"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which tag creates a numbered (ordered) list?",
@@ -231,7 +256,8 @@
       "B": "<numbered>",
       "C": "<ol>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "What does DOM stand for?",
@@ -240,7 +266,8 @@
       "B": "Data Object Management",
       "C": "Document Order Map"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which HTML tag semantically marks text as important (bold)?",
@@ -249,7 +276,8 @@
       "B": "<strong>",
       "C": "<important>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which HTML tag semantically marks emphasized (italic) text?",
@@ -258,7 +286,8 @@
       "B": "<italic>",
       "C": "<em>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which attribute disables a form input field?",
@@ -267,7 +296,8 @@
       "B": "disabled",
       "C": "locked"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which tag creates a table header cell?",
@@ -276,7 +306,8 @@
       "B": "<head>",
       "C": "<td>"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which HTML element represents a thematic break, drawn as a horizontal line?",
@@ -285,7 +316,8 @@
       "B": "<break>",
       "C": "<hr>"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which tag embeds an audio file?",
@@ -294,7 +326,8 @@
       "B": "<audio>",
       "C": "<media>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which attribute makes a checkbox checked by default?",
@@ -303,7 +336,8 @@
       "B": "selected",
       "C": "active"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which tag represents content set aside from the main content, like a sidebar?",
@@ -312,7 +346,8 @@
       "B": "<aside>",
       "C": "<extra>"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What does CSS stand for?",
@@ -321,7 +356,8 @@
       "B": "Creative Style System",
       "C": "Computer Styled Sheets"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which property changes the text color of an element?",
@@ -330,7 +366,8 @@
       "B": "font-color",
       "C": "color"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which property sets an element's background color?",
@@ -339,7 +376,8 @@
       "B": "bg-color",
       "C": "color-background"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which CSS property controls space between an element's border and its content?",
@@ -348,7 +386,8 @@
       "B": "padding",
       "C": "spacing"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which CSS property controls space outside an element's border?",
@@ -357,7 +396,8 @@
       "B": "gap",
       "C": "margin"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "What is the default value of the CSS position property?",
@@ -366,7 +406,8 @@
       "B": "static",
       "C": "fixed"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which CSS selector targets elements with a specific class?",
@@ -375,7 +416,8 @@
       "B": ".classname",
       "C": "@classname"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which CSS selector targets an element with a specific id?",
@@ -384,7 +426,8 @@
       "B": "%idname",
       "C": "#idname"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "What does flex-direction: column do in a flex container?",
@@ -393,7 +436,8 @@
       "B": "Stacks items horizontally",
       "C": "Reverses item order"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which CSS unit is relative to the root element's font size?",
@@ -402,7 +446,8 @@
       "B": "rem",
       "C": "vh"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which CSS property makes text bold?",
@@ -411,7 +456,8 @@
       "B": "text-weight",
       "C": "font-style"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does display: none do to an element?",
@@ -420,7 +466,8 @@
       "B": "Hides it and removes it from layout entirely",
       "C": "Shrinks it to zero size but keeps its space"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which property gives an element rounded corners?",
@@ -429,7 +476,8 @@
       "B": "round-corners",
       "C": "border-radius"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which CSS layout system uses grid-template-columns?",
@@ -438,7 +486,8 @@
       "B": "Flexbox",
       "C": "Floats"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does the z-index property control?",
@@ -447,7 +496,8 @@
       "B": "Stacking order along the depth axis",
       "C": "Text zoom level"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which pseudo-class applies styles when the mouse is over an element?",
@@ -456,7 +506,8 @@
       "B": ":hover",
       "C": ":focus"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which display value turns an element into a flex container?",
@@ -465,7 +516,8 @@
       "B": "flexbox",
       "C": "flex-container"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "With box-sizing: border-box, what's included in an element's declared width?",
@@ -474,7 +526,8 @@
       "B": "Content and padding only",
       "C": "Content, padding, and border"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 4
   },
   {
     "q": "Which CSS unit is relative to the viewport's width?",
@@ -483,7 +536,8 @@
       "B": "vh",
       "C": "rem"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which property adds space between flex or grid items?",
@@ -492,7 +546,8 @@
       "B": "gap",
       "C": "spacing"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What is the correct CSS selector to select all paragraph elements?",
@@ -501,7 +556,8 @@
       "B": "*p",
       "C": "p"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which property controls an element's transparency?",
@@ -510,7 +566,8 @@
       "B": "visibility",
       "C": "transparency"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which CSS at-rule enables responsive breakpoints?",
@@ -519,7 +576,8 @@
       "B": "@media",
       "C": "@breakpoint"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does overflow: hidden do to an element's content?",
@@ -528,7 +586,8 @@
       "B": "Clips content that overflows the box",
       "C": "Wraps content to fit"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which flexbox property aligns items along the main axis?",
@@ -537,7 +596,8 @@
       "B": "justify-content",
       "C": "align-content"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which flexbox property aligns items along the cross axis?",
@@ -546,7 +606,8 @@
       "B": "justify-content",
       "C": "flex-align"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "In the CSS box model, moving outward from the content, what comes next?",
@@ -555,7 +616,8 @@
       "B": "Padding, then border, then margin",
       "C": "Border, then padding, then margin"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which selector targets the first child element of its parent?",
@@ -564,7 +626,8 @@
       "B": ":first-child",
       "C": ":nth-child(0)"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "An absolutely positioned element is positioned relative to what?",
@@ -573,7 +636,8 @@
       "B": "Its nearest positioned ancestor",
       "C": "The browser window always"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 4
   },
   {
     "q": "Which property sets the font used for text?",
@@ -582,7 +646,8 @@
       "B": "text-font",
       "C": "font-type"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "What does text-align: center do?",
@@ -591,7 +656,8 @@
       "B": "Centers text horizontally",
       "C": "Justifies text on both edges"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which property adds a shadow effect around an element's box?",
@@ -600,7 +666,8 @@
       "B": "drop-shadow",
       "C": "box-shadow"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which position value pins an element relative to the viewport, ignoring scroll?",
@@ -609,7 +676,8 @@
       "B": "fixed",
       "C": "absolute"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "How is a custom CSS variable declared?",
@@ -618,7 +686,8 @@
       "B": "@main-color",
       "C": "--main-color"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 3
   },
   {
     "q": "Which property controls whether flex items wrap onto multiple lines?",
@@ -627,7 +696,8 @@
       "B": "flex-flow",
       "C": "flex-multi"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which keyword declares a block-scoped variable that can be reassigned?",
@@ -636,7 +706,8 @@
       "B": "let",
       "C": "const"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which keyword declares a block-scoped constant?",
@@ -645,7 +716,8 @@
       "B": "final",
       "C": "const"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which array method adds an element to the end of an array?",
@@ -654,7 +726,8 @@
       "B": "append",
       "C": "add"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which array method removes and returns the last element of an array?",
@@ -663,7 +736,8 @@
       "B": "pop",
       "C": "remove"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Compared to ==, what does the === operator also check?",
@@ -672,7 +746,8 @@
       "B": "Only reference equality",
       "C": "Nothing extra, they're identical"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which method converts a JSON string into a JavaScript object?",
@@ -681,7 +756,8 @@
       "B": "JSON.toObject",
       "C": "JSON.decode"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which method converts a JavaScript value into a JSON string?",
@@ -690,7 +766,8 @@
       "B": "JSON.stringify",
       "C": "JSON.toString"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does typeof null return in JavaScript?",
@@ -699,7 +776,8 @@
       "B": "\"undefined\"",
       "C": "\"object\""
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 4
   },
   {
     "q": "Which array method returns a new array with only the elements that pass a test?",
@@ -708,7 +786,8 @@
       "B": "filter",
       "C": "find"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which array method transforms every element and returns a new array of the results?",
@@ -717,7 +796,8 @@
       "B": "forEach",
       "C": "reduce"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which array method reduces an array down to a single accumulated value?",
@@ -726,7 +806,8 @@
       "B": "flat",
       "C": "reduce"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 3
   },
   {
     "q": "What does NaN represent in JavaScript?",
@@ -735,7 +816,8 @@
       "B": "Null and None",
       "C": "New Array Node"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which keyword is used to define a function?",
@@ -744,7 +826,8 @@
       "B": "def",
       "C": "function"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "What is a closure in JavaScript?",
@@ -753,7 +836,8 @@
       "B": "A way to close a browser tab",
       "C": "A loop that never terminates"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which method selects an HTML element by its id?",
@@ -762,7 +846,8 @@
       "B": "document.getElementById",
       "C": "document.selectById"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does adding async before a function declaration do?",
@@ -771,7 +856,8 @@
       "B": "Makes the function always return a Promise",
       "C": "Prevents the function from throwing errors"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which keyword pauses execution inside an async function until a Promise settles?",
@@ -780,7 +866,8 @@
       "B": "pause",
       "C": "yield"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "How is an arrow function written?",
@@ -789,7 +876,8 @@
       "B": "() => {}",
       "C": "=> function() {}"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which method attaches an event handler to an element?",
@@ -798,7 +886,8 @@
       "B": "onEvent",
       "C": "attachEvent"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does 1 + \"1\" evaluate to in JavaScript?",
@@ -807,7 +896,8 @@
       "B": "\"11\"",
       "C": "NaN"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which value represents an intentional absence of any object value?",
@@ -816,7 +906,8 @@
       "B": "NaN",
       "C": "null"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "What value does a declared but unassigned variable have by default?",
@@ -825,7 +916,8 @@
       "B": "0",
       "C": "undefined"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which operator is used to spread the elements of an array or object?",
@@ -834,7 +926,8 @@
       "B": "&&",
       "C": "..."
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which array method returns true if at least one element passes a test?",
@@ -843,7 +936,8 @@
       "B": "every",
       "C": "includes"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which array method returns true only if all elements pass a test?",
@@ -852,7 +946,8 @@
       "B": "every",
       "C": "all"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Inside a regular function called as obj.method(), what does this refer to?",
@@ -861,7 +956,8 @@
       "B": "The object the method was called on",
       "C": "undefined always"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which built-in JavaScript object represents dates and times?",
@@ -870,7 +966,8 @@
       "B": "Date",
       "C": "Calendar"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "What is the purpose of a try...catch block?",
@@ -879,7 +976,8 @@
       "B": "Declaring variables",
       "C": "Looping over arrays"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which loop is best suited to iterate over an object's enumerable property names?",
@@ -888,7 +986,8 @@
       "B": "for...in",
       "C": "while"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which loop is best suited to iterate over the values of an iterable like an array?",
@@ -897,7 +996,8 @@
       "B": "for...of",
       "C": "do...while"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which method checks whether a value is an array?",
@@ -906,7 +1006,8 @@
       "B": "value.isArray()",
       "C": "typeof value === \"array\""
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which array method returns the first element that matches a condition?",
@@ -915,7 +1016,8 @@
       "B": "find",
       "C": "indexOf"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What syntax embeds an expression inside a JavaScript template literal?",
@@ -924,7 +1026,8 @@
       "B": "%expression%",
       "C": "${expression}"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "Which keyword creates a new object instance from a constructor function or class?",
@@ -933,7 +1036,8 @@
       "B": "create",
       "C": "make"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which array method removes and returns the first element of an array?",
@@ -942,7 +1046,8 @@
       "B": "shift",
       "C": "splice"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which array method adds one or more elements to the start of an array?",
@@ -951,7 +1056,8 @@
       "B": "prepend",
       "C": "push"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does the exponentiation assignment x **= 2 do when x is 5?",
@@ -960,7 +1066,8 @@
       "B": "Sets x to 25",
       "C": "Sets x to 7"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which global function parses a string and returns an integer?",
@@ -969,7 +1076,8 @@
       "B": "Number.int",
       "C": "parseInt"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "What does a JavaScript Promise represent?",
@@ -978,7 +1086,8 @@
       "B": "The eventual result of an asynchronous operation",
       "C": "A type of loop"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which array method combines two or more arrays into a new one?",
@@ -987,7 +1096,8 @@
       "B": "merge",
       "C": "join"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does typeof return when applied to a function?",
@@ -996,7 +1106,8 @@
       "B": "\"function\"",
       "C": "\"method\""
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which keyword prevents a variable binding from being reassigned?",
@@ -1005,7 +1116,8 @@
       "B": "const",
       "C": "static"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What is event bubbling?",
@@ -1014,7 +1126,8 @@
       "B": "Events firing in a random order",
       "C": "Multiple events merging into one"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which method stops an event from propagating further up the DOM?",
@@ -1023,7 +1136,8 @@
       "B": "stopPropagation",
       "C": "cancelBubble()"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which method prevents an event's default browser action?",
@@ -1032,7 +1146,8 @@
       "B": "preventDefault",
       "C": "cancelEvent"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What is the correct syntax for a single-line comment in JavaScript?",
@@ -1041,7 +1156,8 @@
       "B": "# comment",
       "C": "// comment"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which operator returns the right-hand value only when the left-hand value is null or undefined?",
@@ -1050,7 +1166,8 @@
       "B": "??",
       "C": "&&"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which operator safely accesses a nested property that might not exist?",
@@ -1059,7 +1176,8 @@
       "B": "!.",
       "C": "::"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does Array.prototype.slice() do?",
@@ -1068,7 +1186,8 @@
       "B": "Returns a shallow copy of a portion of an array",
       "C": "Sorts the array in place"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What does Array.prototype.splice() do?",
@@ -1077,7 +1196,8 @@
       "B": "Adds or removes elements in place, modifying the original",
       "C": "Joins array elements into a string"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 4
   },
   {
     "q": "Which JavaScript primitive type represents a guaranteed unique value?",
@@ -1086,7 +1206,8 @@
       "B": "BigInt",
       "C": "Unique"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 4
   },
   {
     "q": "Compared to var, how is let scoped?",
@@ -1095,7 +1216,8 @@
       "B": "Block-scoped",
       "C": "Module-scoped only"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which built-in method converts most values to a string?",
@@ -1104,7 +1226,8 @@
       "B": "asString()",
       "C": "stringify()"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What is hoisting in JavaScript?",
@@ -1113,7 +1236,8 @@
       "B": "Deleting unused variables automatically",
       "C": "Converting var to let automatically"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 4
   },
   {
     "q": "Which array method joins all elements of an array into a single string?",
@@ -1122,7 +1246,8 @@
       "B": "concat",
       "C": "toString only"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does typeof undefined evaluate to?",
@@ -1131,7 +1256,8 @@
       "B": "\"undefined\"",
       "C": "\"object\""
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which keyword exports a value from a JavaScript module?",
@@ -1140,7 +1266,8 @@
       "B": "module",
       "C": "public"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which keyword imports a value into a JavaScript module?",
@@ -1149,7 +1276,8 @@
       "B": "import",
       "C": "include"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does Object.keys() return for an object?",
@@ -1158,7 +1286,8 @@
       "B": "An array of its property names",
       "C": "A count of its properties"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does Object.values() return for an object?",
@@ -1167,7 +1296,8 @@
       "B": "An array of its property values",
       "C": "The object's prototype"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which method converts an iterable or array-like object into a real array?",
@@ -1176,7 +1306,8 @@
       "B": "Array.of",
       "C": "Array.convert"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does setTimeout do?",
@@ -1185,7 +1316,8 @@
       "B": "Runs a function once after a specified delay",
       "C": "Pauses the entire script for a delay"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which method repeatedly runs a function at a fixed time interval?",
@@ -1194,7 +1326,8 @@
       "B": "setInterval",
       "C": "setRepeat"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which comparison operator only checks value, allowing type coercion?",
@@ -1203,7 +1336,8 @@
       "B": "==",
       "C": "!=="
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does the logical AND (&&) operator return if the first operand is falsy?",
@@ -1212,7 +1346,8 @@
       "B": "true",
       "C": "The second operand"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does the logical OR (||) operator return if the first operand is truthy?",
@@ -1221,7 +1356,8 @@
       "B": "false",
       "C": "The first operand"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 3
   },
   {
     "q": "What does JSX stand for?",
@@ -1230,7 +1366,8 @@
       "B": "Java Syntax Extension",
       "C": "JSON Extended"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which React hook adds state to a function component?",
@@ -1239,7 +1376,8 @@
       "B": "useState",
       "C": "useContext"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which React hook performs side effects in a function component?",
@@ -1248,7 +1386,8 @@
       "B": "useState",
       "C": "useMemo"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What is the virtual DOM in React?",
@@ -1257,7 +1396,8 @@
       "B": "A browser extension for debugging",
       "C": "A server-side rendering engine"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "In React 18, which API is used to render a root React element into the DOM?",
@@ -1266,7 +1406,8 @@
       "B": "createRoot().render()",
       "C": "React.mount()"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What are props in React?",
@@ -1275,7 +1416,8 @@
       "B": "Data passed from a parent component to a child",
       "C": "CSS properties applied to a component"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which hook lets a function component read a value from React Context?",
@@ -1284,7 +1426,8 @@
       "B": "useState",
       "C": "useRef"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is the key prop used for when rendering a list in React?",
@@ -1293,7 +1436,8 @@
       "B": "Helping React efficiently identify which items changed",
       "C": "Setting the list's sort order"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which hook memoizes the result of an expensive calculation?",
@@ -1302,7 +1446,8 @@
       "B": "useCallback",
       "C": "useEffect"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which hook memoizes a function so it isn't recreated on every render?",
@@ -1311,7 +1456,8 @@
       "B": "useCallback",
       "C": "useState"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "Which hook provides a mutable value that persists across renders without causing a re-render when changed?",
@@ -1320,7 +1466,8 @@
       "B": "useState",
       "C": "useMemo"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "How does state differ from props in React?",
@@ -1329,7 +1476,8 @@
       "B": "State is internal and mutable; props are external and read-only",
       "C": "There is no difference"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What must a React component function return?",
@@ -1338,7 +1486,8 @@
       "B": "An array of strings only",
       "C": "Nothing - it must use console.log"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is a React Fragment used for?",
@@ -1347,7 +1496,8 @@
       "B": "Splitting a component into multiple files",
       "C": "Creating a portal to another part of the DOM"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which company originally created React?",
@@ -1356,7 +1506,8 @@
       "B": "Facebook (Meta)",
       "C": "Microsoft"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "What is the recommended way to update state based on its previous value?",
@@ -1365,7 +1516,8 @@
       "B": "Pass an updater function to the setter, e.g. setCount(c => c + 1)",
       "C": "Mutate the state object directly"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 3
   },
   {
     "q": "What primarily triggers a React component to re-render?",
@@ -1374,7 +1526,8 @@
       "B": "The browser window resizing",
       "C": "A page reload only"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does \"lifting state up\" mean in React?",
@@ -1383,7 +1536,8 @@
       "B": "Using global variables instead of state",
       "C": "Moving state into a separate microservice"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What controls when a useEffect callback re-runs?",
@@ -1392,7 +1546,8 @@
       "B": "The component's file name",
       "C": "The order hooks are called in"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is \"prop drilling\"?",
@@ -1401,7 +1556,8 @@
       "B": "Deleting unused props automatically",
       "C": "A build-time optimization for props"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "In React forms, what makes an input a \"controlled component\"?",
@@ -1410,7 +1566,8 @@
       "B": "It has no event handlers",
       "C": "It can only be edited by the browser, not React"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which file extension is commonly used for TypeScript React components with JSX?",
@@ -1419,7 +1576,8 @@
       "B": ".tsx",
       "C": ".jsts"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What is the shorthand JSX syntax for React.Fragment?",
@@ -1428,7 +1586,8 @@
       "B": "[[ ]]",
       "C": "{{ }}"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What is React.StrictMode primarily used for?",
@@ -1437,7 +1596,8 @@
       "B": "Enforcing TypeScript types at runtime",
       "C": "Minifying the production bundle"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which hook is most commonly used to directly access a DOM node imperatively?",
@@ -1446,7 +1606,8 @@
       "B": "useContext",
       "C": "useReducer"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is a Higher-Order Component (HOC) in React?",
@@ -1455,7 +1616,8 @@
       "B": "A component rendered at the top of the page",
       "C": "A component written in a higher-level language"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 4
   },
   {
     "q": "What does the special children prop represent?",
@@ -1464,7 +1626,8 @@
       "B": "The component's child components in a folder structure",
       "C": "A list of a component's own state variables"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which library is most commonly used for client-side routing in React apps?",
@@ -1473,7 +1636,8 @@
       "B": "Express Router",
       "C": "React Navigate"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does \"conditional rendering\" mean in React?",
@@ -1482,7 +1646,8 @@
       "B": "Rendering a component only once",
       "C": "Rendering components in a random order"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What naming convention must custom React component functions follow?",
@@ -1491,7 +1656,8 @@
       "B": "Start with a capital letter",
       "C": "Contain the word Component"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does it mean when a React component \"unmounts\"?",
@@ -1500,7 +1666,8 @@
       "B": "It is minified for production",
       "C": "It loses its props but keeps its state"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "How do you run cleanup logic before a component unmounts or before an effect re-runs?",
@@ -1509,7 +1676,8 @@
       "B": "Call useCleanup()",
       "C": "Add an onUnmount prop"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is useReducer primarily used for?",
@@ -1518,7 +1686,8 @@
       "B": "Reducing the size of the production bundle",
       "C": "Combining multiple components into one"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does wrapping a component in React.memo do?",
@@ -1527,7 +1696,8 @@
       "B": "Deletes it after first render",
       "C": "Forces it to re-render on every parent update"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "How do you embed a JavaScript expression inside JSX markup?",
@@ -1536,7 +1706,8 @@
       "B": "Wrap it in curly braces {}",
       "C": "Wrap it in square brackets []"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which attribute is used instead of class to apply a CSS class in JSX?",
@@ -1545,7 +1716,8 @@
       "B": "styleName",
       "C": "className"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which modern build tool is commonly used to quickly scaffold a new React app?",
@@ -1554,7 +1726,8 @@
       "B": "Photoshop",
       "C": "Postman"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What determines a useState hook's initial state value?",
@@ -1563,7 +1736,8 @@
       "B": "The component's props automatically",
       "C": "The previous component's state"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does it mean for React to be \"declarative\"?",
@@ -1572,7 +1746,8 @@
       "B": "You must manually update the DOM",
       "C": "Components must be declared with the keyword declare"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is the requirement for the key prop among sibling elements in a list?",
@@ -1581,7 +1756,8 @@
       "B": "It must be globally unique across the whole app",
       "C": "It must always be a number"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does \"one-way data binding\" mean in React?",
@@ -1590,7 +1766,8 @@
       "B": "Data automatically syncs both ways between components",
       "C": "Only one component can hold data at a time"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which hook is the general replacement for most class component lifecycle logic?",
@@ -1599,7 +1776,8 @@
       "B": "useClass",
       "C": "useLifecycle"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is typically returned by calling the useState hook?",
@@ -1608,7 +1786,8 @@
       "B": "A pair: the current state and a setter function",
       "C": "An object with a render method"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What is the purpose of a \"context provider\" in React?",
@@ -1617,7 +1796,8 @@
       "B": "Providing internet connectivity to the app",
       "C": "Wrapping the app for server-side rendering only"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does HTTP stand for?",
@@ -1626,7 +1806,8 @@
       "B": "High Transfer Text Program",
       "C": "HyperText Type Process"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which HTTP status code means \"Not Found\"?",
@@ -1635,7 +1816,8 @@
       "B": "404",
       "C": "500"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "Which HTTP status code indicates a successful request?",
@@ -1644,7 +1826,8 @@
       "B": "301",
       "C": "200"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 1
   },
   {
     "q": "Which HTTP method is typically used to retrieve data without side effects?",
@@ -1653,7 +1836,8 @@
       "B": "POST",
       "C": "DELETE"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "Which HTTP method is typically used to submit new data to a server?",
@@ -1662,7 +1846,8 @@
       "B": "POST",
       "C": "HEAD"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 1
   },
   {
     "q": "What does REST stand for in web APIs?",
@@ -1671,7 +1856,8 @@
       "B": "Remote Endpoint Service Type",
       "C": "Reactive State Transition"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does API stand for?",
@@ -1680,7 +1866,8 @@
       "B": "Advanced Program Integration",
       "C": "Automated Process Instruction"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "What does CORS stand for?",
@@ -1689,7 +1876,8 @@
       "B": "Client Origin Request System",
       "C": "Cross-Object Reference Standard"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which Git command creates a new, empty repository?",
@@ -1698,7 +1886,8 @@
       "B": "git start",
       "C": "git new"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which Git command stages changes for the next commit?",
@@ -1707,7 +1896,8 @@
       "B": "git add",
       "C": "git stage"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "Which Git command records staged changes as a new commit?",
@@ -1716,7 +1906,8 @@
       "B": "git push",
       "C": "git commit"
     },
-    "correct": "C"
+    "correct": "C",
+    "difficulty": 2
   },
   {
     "q": "What is npm short for?",
@@ -1725,7 +1916,8 @@
       "B": "New Program Module",
       "C": "Network Protocol Manager"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "Which file lists a Node.js project's dependencies and scripts?",
@@ -1734,7 +1926,8 @@
       "B": "package.json",
       "C": "dependencies.json"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does XSS stand for in web security?",
@@ -1743,7 +1936,8 @@
       "B": "External Server Script",
       "C": "Extended Style Sheet"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What does a SQL injection attack typically target?",
@@ -1752,7 +1946,8 @@
       "B": "A user's local filesystem only",
       "C": "The browser's rendering engine"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "What is a \"bundler\" used for in modern web development?",
@@ -1761,7 +1956,8 @@
       "B": "Compressing images only",
       "C": "Hosting a website"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
   },
   {
     "q": "Which fast build tool/dev server is widely used with modern React projects?",
@@ -1770,7 +1966,8 @@
       "B": "Photoshop",
       "C": "Docker Compose"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 2
   },
   {
     "q": "What does HTTPS add on top of HTTP?",
@@ -1779,7 +1976,8 @@
       "B": "Encryption via TLS/SSL",
       "C": "Automatic caching"
     },
-    "correct": "B"
+    "correct": "B",
+    "difficulty": 2
   },
   {
     "q": "What does \"responsive design\" mean for a website?",
@@ -1788,7 +1986,8 @@
       "B": "The server responds within one second",
       "C": "The site uses only fixed pixel widths"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 1
   },
   {
     "q": "In semantic versioning (major.minor.patch), what does incrementing the major number typically signal?",
@@ -1797,6 +1996,2007 @@
       "B": "A bug fix only",
       "C": "A documentation update only"
     },
-    "correct": "A"
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which tag defines the title shown in a browser tab?",
+    "options": {
+      "A": "<title>",
+      "B": "<head>",
+      "C": "<caption>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag is the root element of every HTML document?",
+    "options": {
+      "A": "<html>",
+      "B": "<root>",
+      "C": "<doc>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag contains metadata about an HTML document, like its title and character set?",
+    "options": {
+      "A": "<head>",
+      "B": "<meta>",
+      "C": "<info>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag defines a paragraph of text?",
+    "options": {
+      "A": "<p>",
+      "B": "<para>",
+      "C": "<text>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which attribute on a form specifies where its submitted data is sent?",
+    "options": {
+      "A": "action",
+      "B": "target",
+      "C": "method"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What does URL stand for?",
+    "options": {
+      "A": "Uniform Resource Locator",
+      "B": "Universal Reference Link",
+      "C": "United Resource Locator"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which keyboard shortcut commonly opens a browser's developer tools on Windows?",
+    "options": {
+      "A": "F12",
+      "B": "F5",
+      "C": "Ctrl+P"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which CSS color format uses a code like #ff0000?",
+    "options": {
+      "A": "Hexadecimal",
+      "B": "Binary",
+      "C": "Octal"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which CSS property changes the mouse cursor icon when hovering over an element?",
+    "options": {
+      "A": "cursor",
+      "B": "pointer",
+      "C": "mouse"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML tag is a generic inline container with no default meaning?",
+    "options": {
+      "A": "<span>",
+      "B": "<div>",
+      "C": "<inline>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML tag is a generic block-level container with no default meaning?",
+    "options": {
+      "A": "<div>",
+      "B": "<span>",
+      "C": "<block>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What does WWW stand for?",
+    "options": {
+      "A": "World Wide Web",
+      "B": "World Wide Website",
+      "C": "Wide World Web"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the standard file extension for a JavaScript file?",
+    "options": {
+      "A": ".js",
+      "B": ".jvs",
+      "C": ".java"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the standard file extension for a CSS stylesheet?",
+    "options": {
+      "A": ".css",
+      "B": ".style",
+      "C": ".scss only"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag links an external stylesheet into an HTML page?",
+    "options": {
+      "A": "<link>",
+      "B": "<style>",
+      "C": "<css>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which console method is most commonly used to print debug output in a browser's dev tools?",
+    "options": {
+      "A": "console.log()",
+      "B": "console.print()",
+      "C": "debug.log()"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML tag renders text as superscript?",
+    "options": {
+      "A": "<sup>",
+      "B": "<sub>",
+      "C": "<top>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML tag renders text as subscript?",
+    "options": {
+      "A": "<sub>",
+      "B": "<sup>",
+      "C": "<low>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "In CSS, what does the unit \"px\" stand for?",
+    "options": {
+      "A": "Pixels",
+      "B": "Points",
+      "C": "Percent"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which attribute adds a small tooltip that appears when hovering over most HTML elements?",
+    "options": {
+      "A": "title",
+      "B": "alt",
+      "C": "tooltip"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which company created the Chrome web browser?",
+    "options": {
+      "A": "Google",
+      "B": "Microsoft",
+      "C": "Apple"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which organization develops the Firefox web browser?",
+    "options": {
+      "A": "Mozilla",
+      "B": "Google",
+      "C": "Adobe"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "In a URL like https://www.example.com/page, what is \"example.com\" called?",
+    "options": {
+      "A": "The domain name",
+      "B": "The protocol",
+      "C": "The query string"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which attribute on an <a> tag specifies where the linked document should open?",
+    "options": {
+      "A": "target",
+      "B": "rel",
+      "C": "open"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which value of the target attribute opens a link in a new browser tab?",
+    "options": {
+      "A": "_blank",
+      "B": "_new",
+      "C": "_top"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which npm command installs all dependencies listed in package.json?",
+    "options": {
+      "A": "npm install",
+      "B": "npm build",
+      "C": "npm start"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which key is most commonly used to submit a form when focus is inside a text input?",
+    "options": {
+      "A": "Enter",
+      "B": "Tab",
+      "C": "Spacebar"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTTP status code means \"Internal Server Error\"?",
+    "options": {
+      "A": "500",
+      "B": "404",
+      "C": "200"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which protocol prefix indicates an encrypted connection to a website?",
+    "options": {
+      "A": "https://",
+      "B": "http://",
+      "C": "www://"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which is the correct syntax for a comment in a CSS file?",
+    "options": {
+      "A": "/* comment */",
+      "B": "// comment",
+      "C": "<!-- comment -->"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which CSS unit represents a percentage of a reference value, such as a parent element's width?",
+    "options": {
+      "A": "%",
+      "B": "em",
+      "C": "px"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag defines a single item within an ordered or unordered list?",
+    "options": {
+      "A": "<li>",
+      "B": "<item>",
+      "C": "<list>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML tag defines a clickable button?",
+    "options": {
+      "A": "<button>",
+      "B": "<click>",
+      "C": "<press>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which HTML input type masks the characters a user types, for entering a password?",
+    "options": {
+      "A": "password",
+      "B": "text",
+      "C": "hidden"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which tag is used to define a webpage's favicon in the document head?",
+    "options": {
+      "A": "<link rel=\"icon\">",
+      "B": "<img>",
+      "C": "<favicon>"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which CSS property sets the thickness of an element's border line?",
+    "options": {
+      "A": "border-width",
+      "B": "border-size",
+      "C": "line-width"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which HTML attribute applies inline CSS styles directly to a single element?",
+    "options": {
+      "A": "style",
+      "B": "css",
+      "C": "design"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which property returns the number of elements in a JavaScript array?",
+    "options": {
+      "A": "length",
+      "B": "size",
+      "C": "count"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which CSS property controls the vertical space between lines of text within an element?",
+    "options": {
+      "A": "line-height",
+      "B": "letter-spacing",
+      "C": "word-spacing"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which HTTP method is conventionally used to remove a resource on the server?",
+    "options": {
+      "A": "DELETE",
+      "B": "REMOVE",
+      "C": "GET"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Git command shows the current state of the working directory and staging area?",
+    "options": {
+      "A": "git status",
+      "B": "git show",
+      "C": "git log"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Git command displays the project's commit history?",
+    "options": {
+      "A": "git log",
+      "B": "git history",
+      "C": "git show"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which CSS property controls the spacing between individual letters in a block of text?",
+    "options": {
+      "A": "letter-spacing",
+      "B": "line-height",
+      "C": "word-spacing"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which array method checks whether an array contains a certain value, returning true or false?",
+    "options": {
+      "A": "includes",
+      "B": "contains",
+      "C": "has"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which string method returns a portion of a string given start and end indices, without modifying the original?",
+    "options": {
+      "A": "slice",
+      "B": "cut",
+      "C": "chop"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which string method removes whitespace from both the start and end of a string?",
+    "options": {
+      "A": "trim",
+      "B": "strip",
+      "C": "clean"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which CSS property sets the maximum width an element is allowed to grow to?",
+    "options": {
+      "A": "max-width",
+      "B": "width-limit",
+      "C": "cap-width"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which CSS property changes the size of text?",
+    "options": {
+      "A": "font-size",
+      "B": "text-size",
+      "C": "size"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In npm, which command runs the \"start\" script defined in package.json?",
+    "options": {
+      "A": "npm start",
+      "B": "npm run-start",
+      "C": "npm exec start"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which array method returns the index of the first occurrence of a given value, or -1 if it isn't present?",
+    "options": {
+      "A": "indexOf",
+      "B": "find",
+      "C": "filter"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which CSS pseudo-class matches a form field that currently fails its validation constraints?",
+    "options": {
+      "A": ":invalid",
+      "B": ":empty",
+      "C": ":required"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the main difference between localStorage and sessionStorage in a browser?",
+    "options": {
+      "A": "sessionStorage clears when the tab/session closes, while localStorage persists across sessions",
+      "B": "They are functionally identical in every way",
+      "C": "localStorage is only accessible to inline scripts"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does adding the defer attribute to a <script> tag do?",
+    "options": {
+      "A": "Delays executing the script until after the HTML has been parsed, while preserving execution order",
+      "B": "Runs the script immediately, blocking HTML parsing",
+      "C": "Prevents the script from ever executing"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does it mean for an HTTP method like PUT or DELETE to be \"idempotent\"?",
+    "options": {
+      "A": "Calling it multiple times has the same effect as calling it once",
+      "B": "It can only ever be called a single time",
+      "C": "It always returns an identical response body"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In CSS specificity, which generally wins: a single ID selector, or three class selectors combined?",
+    "options": {
+      "A": "The single ID selector",
+      "B": "The three class selectors",
+      "C": "They always result in a tie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the CSS :not() pseudo-class do?",
+    "options": {
+      "A": "Selects elements that do NOT match the selector given as its argument",
+      "B": "Negates the value of a CSS property",
+      "C": "Selects only the last element that matches"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In web development, what is \"debouncing\" a function typically used for?",
+    "options": {
+      "A": "Delaying execution until a burst of rapid calls has stopped",
+      "B": "Running a function twice for redundancy",
+      "C": "Converting a synchronous function into an async one"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the acronym SPA stand for in web development?",
+    "options": {
+      "A": "Single Page Application",
+      "B": "Server Page Architecture",
+      "C": "Static Page Asset"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the purpose of a .gitignore file in a repository?",
+    "options": {
+      "A": "Listing files and folders that Git should not track",
+      "B": "Listing files that Git must always commit automatically",
+      "C": "Storing a template for commit messages"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does \"tree shaking\" refer to in JavaScript bundling?",
+    "options": {
+      "A": "Eliminating unused code from the final bundle",
+      "B": "Randomizing the order modules are loaded in",
+      "C": "Compressing image assets in a project"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the purpose of source maps generated alongside a minified production JavaScript build?",
+    "options": {
+      "A": "Mapping the minified code back to the original source for easier debugging",
+      "B": "Mapping URLs to server-side routes",
+      "C": "Embedding a geolocation map widget"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the rel=\"noopener\" attribute help prevent on a link with target=\"_blank\"?",
+    "options": {
+      "A": "The newly opened page from accessing the original page via window.opener",
+      "B": "The link from opening in a new tab at all",
+      "C": "Search engines from following the link"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which CSS property is shorthand for flex-grow, flex-shrink, and flex-basis together?",
+    "options": {
+      "A": "flex",
+      "B": "flex-flow",
+      "C": "flex-wrap"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does HTTP status code 401 specifically indicate, as distinct from 403?",
+    "options": {
+      "A": "The request lacks valid authentication credentials",
+      "B": "The server refuses the request regardless of credentials",
+      "C": "The requested resource doesn't exist"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which HTTP status code indicates that a resource has permanently moved to a new URL?",
+    "options": {
+      "A": "301",
+      "B": "302",
+      "C": "304"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a \"polyfill\" in web development?",
+    "options": {
+      "A": "Code that implements a feature on browsers that don't natively support it",
+      "B": "A CSS technique for filling gaps in a grid layout",
+      "C": "A build tool that strips unused CSS"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does WCAG stand for in the context of web accessibility?",
+    "options": {
+      "A": "Web Content Accessibility Guidelines",
+      "B": "World Consortium for Accessible Growth",
+      "C": "Web Compliance and Governance"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which ARIA attribute is used to give an element an accessible name for screen readers when there's no visible text label?",
+    "options": {
+      "A": "aria-label",
+      "B": "aria-hidden",
+      "C": "aria-text"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the CSS object-fit: cover value do to an image inside a sized container?",
+    "options": {
+      "A": "Scales the image to fill the box while preserving aspect ratio, cropping if needed",
+      "B": "Stretches the image to fill the box, ignoring its aspect ratio",
+      "C": "Shrinks the image so it fits entirely inside the box without cropping"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is \"hydration\" in the context of server-side-rendered JavaScript frameworks?",
+    "options": {
+      "A": "Attaching JavaScript event handlers and interactivity to already-rendered server HTML",
+      "B": "Compressing HTML for faster network transfer",
+      "C": "Automatically refreshing a page's cached data"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In React, what is the purpose of an error boundary?",
+    "options": {
+      "A": "Catching JavaScript errors in child components and rendering fallback UI instead of crashing",
+      "B": "Preventing any component from ever throwing an error",
+      "C": "Validating prop types before the app compiles"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the CSS currentColor keyword refer to when used as a property value?",
+    "options": {
+      "A": "The element's own computed color value",
+      "B": "The last color used anywhere else on the page",
+      "C": "The user's operating system accent color"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the main purpose of a package-lock.json file in a Node.js project?",
+    "options": {
+      "A": "Pinning exact dependency versions so installs are reproducible across machines",
+      "B": "Providing a human-editable list of npm scripts",
+      "C": "Caching downloaded image assets"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the main purpose of a Content Delivery Network (CDN)?",
+    "options": {
+      "A": "Serving content from servers geographically closer to users to improve speed",
+      "B": "Encrypting all traffic sent to a website",
+      "C": "Hosting a website's version control repository"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the HTML <picture> element let a browser do?",
+    "options": {
+      "A": "Choose among multiple image sources based on conditions like screen size or format support",
+      "B": "Automatically compress an image file",
+      "C": "Render an image only as a CSS background"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which HTML attribute tells the browser to delay loading an off-screen image until it's about to scroll into view?",
+    "options": {
+      "A": "loading=\"lazy\"",
+      "B": "defer",
+      "C": "async"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the sandbox attribute on an <iframe> do?",
+    "options": {
+      "A": "Restricts the iframe's capabilities, such as running scripts or submitting forms, unless explicitly re-enabled",
+      "B": "Adds a visible decorative border around the iframe",
+      "C": "Forces the iframe's content to load only over HTTPS"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which HTML element provides a native, JavaScript-free toggle disclosure widget for showing and hiding content?",
+    "options": {
+      "A": "<details>",
+      "B": "<toggle>",
+      "C": "<collapse>"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the purpose of the srcset attribute on an <img> tag?",
+    "options": {
+      "A": "Offering multiple image resolutions so the browser can pick the most appropriate one",
+      "B": "Setting a fallback image to show if the main src fails to load",
+      "C": "Defining a sprite sheet containing multiple images"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the integrity attribute on a <script> or <link> tag enable?",
+    "options": {
+      "A": "Subresource Integrity — verifying the fetched file matches an expected hash and hasn't been tampered with",
+      "B": "Requiring the resource to finish loading before the rest of the page renders",
+      "C": "Enabling cross-origin credentials to be sent with the request"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which HTML element defines a reusable chunk of markup that is inert and not rendered until activated by JavaScript?",
+    "options": {
+      "A": "<template>",
+      "B": "<script type=\"text/plain\">",
+      "C": "<noscript>"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What effect does the contenteditable attribute have on an HTML element?",
+    "options": {
+      "A": "It makes the element's content directly editable by the user in the browser",
+      "B": "It marks the element as permanently read-only",
+      "C": "It enables spellcheck only, without allowing edits"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the download attribute on an <a> tag do?",
+    "options": {
+      "A": "Prompts the browser to download the linked resource instead of navigating to it",
+      "B": "Shows a native download progress bar automatically",
+      "C": "Only functions when the link points to an image file"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the purpose of the HTML <base> element?",
+    "options": {
+      "A": "Setting a base URL that all relative URLs on the page resolve against",
+      "B": "Defining the base font size for the entire document",
+      "C": "Marking the root element inside an embedded SVG"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which HTML input type provides a native color-picker UI?",
+    "options": {
+      "A": "color",
+      "B": "picker",
+      "C": "swatch"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In CSS specificity, does the universal selector (*) add any weight?",
+    "options": {
+      "A": "No, it has zero specificity",
+      "B": "Yes, the same weight as a class selector",
+      "C": "Yes, the same weight as an ID selector"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What specificity does the CSS :where() pseudo-class selector always contribute, regardless of what's inside it?",
+    "options": {
+      "A": "Zero",
+      "B": "The specificity of its most specific argument",
+      "C": "Always higher than a single class selector"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which CSS unit is defined as the width of the \"0\" (zero) character in the current font?",
+    "options": {
+      "A": "ch",
+      "B": "em",
+      "C": "ex"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In CSS Grid, what does the fr unit represent?",
+    "options": {
+      "A": "A fraction of the remaining available space in the grid container",
+      "B": "A fixed number of pixels",
+      "C": "A percentage of the viewport width"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the CSS contain property primarily help the browser do?",
+    "options": {
+      "A": "Isolate an element's layout, paint, or style so its changes don't affect the rest of the page, improving performance",
+      "B": "Truncate overflowing text with an ellipsis",
+      "C": "Restrict how many children an element may have"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is required for a CSS ::before or ::after pseudo-element to actually be rendered?",
+    "options": {
+      "A": "A content property must be set on it, even if the value is an empty string",
+      "B": "Its parent element must have position: relative set",
+      "C": "Nothing extra — pseudo-elements render by default"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which CSS keyword resets a property to the value it would have from the browser's or user's stylesheet, rather than the CSS specification's default?",
+    "options": {
+      "A": "revert",
+      "B": "unset",
+      "C": "initial"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does aspect-ratio: 16 / 9 do when applied to an element that only has a defined width?",
+    "options": {
+      "A": "Automatically computes the height to maintain that width-to-height ratio",
+      "B": "Crops the element's content to fit a 16:9 area",
+      "C": "Has no visible effect unless a height is also explicitly set"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which CSS feature lets you write styles that apply based on the size of an ancestor container, rather than the viewport?",
+    "options": {
+      "A": "Container queries (@container)",
+      "B": "Media queries (@media)",
+      "C": "Feature queries (@supports)"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the CSS @layer at-rule let you control?",
+    "options": {
+      "A": "The priority order of groups of styles, independent of selector specificity",
+      "B": "The z-index stacking order of individual elements",
+      "C": "Which external stylesheet is downloaded first"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Is CSS line-height inherited by children as a fixed computed pixel value, or as the raw unitless ratio?",
+    "options": {
+      "A": "As the raw unitless ratio, recalculated against each child's own font size",
+      "B": "As a fixed computed pixel value taken from the parent",
+      "C": "line-height is never inherited by children"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the default value of flex-shrink on a flex item?",
+    "options": {
+      "A": "1",
+      "B": "0",
+      "C": "auto"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When you write flex: 1 as shorthand, what flex-basis value does it expand to?",
+    "options": {
+      "A": "0%",
+      "B": "auto",
+      "C": "100%"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which CSS pseudo-class matches an element that has no children at all, including no text nodes?",
+    "options": {
+      "A": ":empty",
+      "B": ":blank",
+      "C": ":only-child"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the CSS shorthand all: unset do?",
+    "options": {
+      "A": "Resets every CSS property on the element to inherited or initial, as appropriate for each",
+      "B": "Removes the element from the page entirely",
+      "C": "Resets only a custom property literally named --all"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does typeof NaN return in JavaScript?",
+    "options": {
+      "A": "\"number\"",
+      "B": "\"NaN\"",
+      "C": "\"undefined\""
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the expression NaN === NaN evaluate to in JavaScript?",
+    "options": {
+      "A": "false",
+      "B": "true",
+      "C": "It throws an error"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which method correctly and reliably tests whether a value is NaN?",
+    "options": {
+      "A": "Number.isNaN()",
+      "B": "NaN.equals()",
+      "C": "value == NaN"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does 0.1 + 0.2 === 0.3 evaluate to in JavaScript?",
+    "options": {
+      "A": "false, due to floating-point precision",
+      "B": "true",
+      "C": "It throws a TypeError"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does typeof [] return in JavaScript?",
+    "options": {
+      "A": "\"object\"",
+      "B": "\"array\"",
+      "C": "\"undefined\""
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Does Object.freeze() also freeze an object's nested objects?",
+    "options": {
+      "A": "No, it only freezes the top-level properties (a shallow freeze)",
+      "B": "Yes, it recursively freezes every nested object too",
+      "C": "No, it silently converts nested objects into strings"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the classic snippet `for (var i = 0; i < 3; i++) { setTimeout(() => console.log(i), 0); }`, what gets logged?",
+    "options": {
+      "A": "3, 3, 3",
+      "B": "0, 1, 2",
+      "C": "0, 0, 0"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Why does replacing var with let in that same loop fix it to log 0, 1, 2?",
+    "options": {
+      "A": "Each iteration gets its own binding of i, so the closures each capture a different value",
+      "B": "let makes setTimeout execute synchronously instead of asynchronously",
+      "C": "It has no actual effect on the logged output"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the JavaScript event loop, which generally run first once the current synchronous code finishes: microtasks (like Promise callbacks) or macrotasks (like setTimeout callbacks)?",
+    "options": {
+      "A": "Microtasks",
+      "B": "Macrotasks",
+      "C": "They always run in the exact order they were originally scheduled, regardless of type"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does Function.prototype.bind() return?",
+    "options": {
+      "A": "A new function with `this` permanently bound to the given value",
+      "B": "The immediate result of calling the function",
+      "C": "A string copy of the function's source code"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a JavaScript generator function (function*) primarily used for?",
+    "options": {
+      "A": "Lazily producing a sequence of values via yield, pausing and resuming execution",
+      "B": "Automatically generating API documentation",
+      "C": "Creating multiple deep copies of an object"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the JavaScript Proxy object let you do?",
+    "options": {
+      "A": "Intercept and customize fundamental operations on an object, like property access or assignment",
+      "B": "Make cross-origin network requests that bypass CORS",
+      "C": "Create an automatically read-only clone of an object"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the \"Temporal Dead Zone\" in JavaScript?",
+    "options": {
+      "A": "The span between entering a scope and a let/const variable's actual declaration, where accessing it throws an error",
+      "B": "A deprecated part of the old DOM Level 0 API",
+      "C": "A grace period before an unused variable gets garbage collected"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When are default parameter values, like in `function f(x = compute())`, evaluated?",
+    "options": {
+      "A": "Each time the function is called, but only if no argument is supplied for that parameter",
+      "B": "Exactly once, when the function is first defined",
+      "C": "Only if the function is called with zero total arguments"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Does Array.prototype.forEach skip empty slots (\"holes\") in a sparse array?",
+    "options": {
+      "A": "Yes, it skips holes entirely without calling the callback for them",
+      "B": "No, it calls the callback with undefined for every hole",
+      "C": "It throws an error the moment it encounters a hole"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does Object.is(NaN, NaN) return, unlike the === comparison?",
+    "options": {
+      "A": "true",
+      "B": "false",
+      "C": "It throws an error"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does Object.is(0, -0) return?",
+    "options": {
+      "A": "false",
+      "B": "true",
+      "C": "It throws an error"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the result of evaluating [] + [] in JavaScript?",
+    "options": {
+      "A": "\"\" (an empty string)",
+      "B": "0",
+      "C": "[] (an empty array)"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the result of evaluating [] + {} in JavaScript?",
+    "options": {
+      "A": "\"[object Object]\"",
+      "B": "0",
+      "C": "NaN"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the JavaScript `in` operator check, as in `'a' in obj`?",
+    "options": {
+      "A": "Whether the object has that property key, including inherited ones",
+      "B": "Whether the object's value strictly equals the string 'a'",
+      "C": "Whether 'a' is a syntactically valid variable name"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How does React's useLayoutEffect differ from useEffect in terms of timing?",
+    "options": {
+      "A": "It fires synchronously after DOM mutations but before the browser paints",
+      "B": "It fires before the component has even rendered for the first time",
+      "C": "It only ever runs once, on mount, unlike useEffect"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In React 18+, what does \"automatic batching\" mean?",
+    "options": {
+      "A": "Multiple state updates are grouped into a single re-render, even inside promises, timeouts, and native event handlers",
+      "B": "React automatically groups multiple network requests into one",
+      "C": "Components are automatically split into smaller bundles for code-splitting"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the purpose of React's forwardRef?",
+    "options": {
+      "A": "Letting a component pass a ref through to an underlying DOM node or child component",
+      "B": "Automatically forwarding all props without having to list them",
+      "C": "Redirecting a component's rendered output into a portal"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does combining React.lazy() with <Suspense> enable?",
+    "options": {
+      "A": "Code-splitting a component so it loads on demand, showing a fallback while it loads",
+      "B": "Making a component render exclusively on the server",
+      "C": "Delaying a component's state updates until the browser is idle"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Why does React's Strict Mode intentionally invoke some functions, like component bodies, twice in development?",
+    "options": {
+      "A": "To help surface side effects and bugs caused by impure rendering",
+      "B": "To improve production runtime performance",
+      "C": "It is an unintentional bug expected to be fixed later"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What's the risk of using an array index as the key prop for a list that can be reordered or filtered?",
+    "options": {
+      "A": "React can misidentify which item changed, causing incorrect UI or state to be associated with the wrong item",
+      "B": "It causes an immediate runtime TypeError",
+      "C": "There is no risk — it's the officially recommended approach"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does useImperativeHandle do when paired with forwardRef?",
+    "options": {
+      "A": "Customizes what value a parent receives when it accesses the ref, instead of the raw DOM node",
+      "B": "Forces the component to re-render imperatively on demand",
+      "C": "Handles imperative navigation between routes"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Historically, does React guarantee that a useMemo-wrapped calculation is never recomputed unless its dependencies change?",
+    "options": {
+      "A": "No — React's docs describe it only as a performance hint, not a strict correctness guarantee",
+      "B": "Yes, it is always strictly guaranteed",
+      "C": "No — useMemo actually guarantees the calculation reruns on every render"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a React Portal used for?",
+    "options": {
+      "A": "Rendering a child into a DOM node that lives outside its parent's DOM hierarchy",
+      "B": "Passing data directly between two unrelated components",
+      "C": "Creating a shortcut link between two routes"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which class component API is required to build an error boundary, since there is no direct hook equivalent?",
+    "options": {
+      "A": "static getDerivedStateFromError() and/or componentDidCatch()",
+      "B": "componentDidMount()",
+      "C": "shouldComponentUpdate()"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the HTTP Cache-Control: no-cache directive actually mean?",
+    "options": {
+      "A": "The response may be cached, but must be revalidated with the server before each use",
+      "B": "The response must never be cached under any circumstances",
+      "C": "The response should be cached indefinitely without ever checking again"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which cookie attribute prevents client-side JavaScript from reading the cookie's value?",
+    "options": {
+      "A": "HttpOnly",
+      "B": "Secure",
+      "C": "SameSite"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the main purpose of a service worker in a Progressive Web App?",
+    "options": {
+      "A": "Running a background script that can intercept network requests, enabling offline support and caching",
+      "B": "Compiling JavaScript into WebAssembly",
+      "C": "Managing a website's database schema"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does HTTP/2 primarily improve over HTTP/1.1 when loading many resources?",
+    "options": {
+      "A": "Multiplexing many requests over a single connection instead of needing several parallel connections",
+      "B": "It removes the need for TLS/encryption entirely",
+      "C": "It replaces TCP with UDP as the transport protocol"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which standard HTTP method is considered both idempotent and \"safe\" (has no side effects on the server)?",
+    "options": {
+      "A": "GET",
+      "B": "POST",
+      "C": "PATCH"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the formal HTML5 spec term for elements like <img>, <br>, and <input> that cannot have children and never need a closing tag?",
+    "options": {
+      "A": "Void elements",
+      "B": "Empty elements",
+      "C": "Leaf elements"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for the encapsulated, hidden DOM tree a Web Component can attach to itself, isolating its internal markup and styles from the rest of the page?",
+    "options": {
+      "A": "Shadow DOM",
+      "B": "Virtual DOM",
+      "C": "Light DOM"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the <slot> element do inside a Web Component's shadow DOM?",
+    "options": {
+      "A": "Acts as a placeholder where the component's light-DOM children get projected and rendered",
+      "B": "Creates an empty time delay before the component renders",
+      "C": "Defines a named CSS animation keyframe"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Per the HTML parsing spec, what happens when a browser encounters a <tr> that isn't wrapped in <thead>, <tbody>, or <tfoot>?",
+    "options": {
+      "A": "The browser automatically infers and inserts an implicit <tbody> around it",
+      "B": "The row is silently dropped from the rendered table",
+      "C": "The entire table fails to render"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the effect of the boolean inert attribute on an HTML element?",
+    "options": {
+      "A": "It makes the element and its descendants non-interactive and excludes them from focus and the accessibility tree",
+      "B": "It freezes any CSS animations currently running on the element",
+      "C": "It disables only click event listeners, leaving keyboard interaction intact"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In the HTML spec, what distinguishes a \"replaced element\" like <img> or <video> from other elements?",
+    "options": {
+      "A": "Its appearance and intrinsic dimensions come from an external resource rather than CSS-generated content",
+      "B": "It can never be styled with CSS at all",
+      "C": "It is required to always be an inline-level element"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "According to the HTML living standard, in which rendering mode does a browser operate when a page's DOCTYPE is missing or malformed?",
+    "options": {
+      "A": "Quirks mode",
+      "B": "Standards mode",
+      "C": "Strict mode"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does setting decoding=\"async\" on an <img> tag hint to the browser?",
+    "options": {
+      "A": "The image may be decoded off the main thread, without delaying other content from being displayed",
+      "B": "The image should be downloaded using an async/await function",
+      "C": "The image itself will play as an animation asynchronously"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which HTML attribute tells the browser it may use previously entered values to autofill a field, and can be explicitly disabled with a value of \"off\"?",
+    "options": {
+      "A": "autocomplete",
+      "B": "autofill",
+      "C": "cache"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the newer HTML popover attribute let an element do?",
+    "options": {
+      "A": "Be shown and hidden as a top-layer overlay without custom JavaScript positioning logic",
+      "B": "Display a native browser tooltip automatically on hover",
+      "C": "Register itself as a service worker"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In CSS specificity calculation, does the :not() pseudo-class itself add any specificity weight on top of its argument?",
+    "options": {
+      "A": "No, but whatever selector is passed inside it does count toward specificity",
+      "B": "Yes, :not() always adds one full class-level of specificity on top of its argument",
+      "C": "No, and its argument's specificity is ignored entirely"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which generally wins: a property set with !important in a stylesheet, or a normal (non-!important) inline style attribute?",
+    "options": {
+      "A": "The !important stylesheet declaration beats a normal inline style",
+      "B": "The inline style always wins no matter what",
+      "C": "They are always exactly equal in every browser"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In relation to CSS cascade layers, what does the revert-layer keyword value do?",
+    "options": {
+      "A": "Rolls a property back to the value it had before the current cascade layer applied",
+      "B": "Deletes the current cascade layer entirely from the page",
+      "C": "Reverts every layer back to the browser's default stylesheet"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In CSS Grid, what does grid-auto-flow: dense do?",
+    "options": {
+      "A": "Attempts to backfill earlier empty grid cells with later items, which can change their visual order",
+      "B": "Forces every item into a single, dense column",
+      "C": "Prevents any implicit grid tracks from ever being created"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is CSS Grid's \"subgrid\" feature used for?",
+    "options": {
+      "A": "Letting a nested grid item align its own rows or columns to its parent grid's tracks",
+      "B": "Creating a grid with more than 100 tracks",
+      "C": "A shorthand for nesting flexbox containers"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How does the default line-height: normal computed value generally relate to a font's own metrics?",
+    "options": {
+      "A": "It's derived from the specific font's own metrics, varying by typeface but typically around 1.0–1.2x the font size",
+      "B": "It's always exactly 1.15 regardless of the font used",
+      "C": "It's always identical to the font-size value, in pixels"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the CSS will-change property do?",
+    "options": {
+      "A": "Hints to the browser that a property is about to change, letting it optimize ahead of time (e.g. promoting the element to its own layer)",
+      "B": "Immediately changes the property to a new value",
+      "C": "Prevents the listed property from ever being animated"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What's the key difference between the CSS initial and revert keyword values for a property?",
+    "options": {
+      "A": "initial resets to the CSS specification's default; revert resets to what the browser or user stylesheet would set, ignoring only author styles",
+      "B": "They are exact synonyms in every browser",
+      "C": "revert only has an effect inside @media blocks"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the CSS :has() pseudo-class allow that was previously impossible using CSS alone?",
+    "options": {
+      "A": "Selecting a parent or preceding element based on its descendants or siblings matching a condition",
+      "B": "Selecting the most recently added element in the DOM at runtime",
+      "C": "Applying styles conditionally based on a JavaScript variable's value"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In a CSS @keyframes animation, if a percentage step doesn't declare a given property, where does the browser get the value to interpolate at that step?",
+    "options": {
+      "A": "It interpolates between the nearest surrounding keyframes that do declare that property",
+      "B": "It resets the property to its initial value at that exact step",
+      "C": "The entire animation fails to run"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the CSS mix-blend-mode property control?",
+    "options": {
+      "A": "How an element's rendered content blends with the content behind it, similar to Photoshop blend modes",
+      "B": "How two background images on the same element blend with each other",
+      "C": "The visual blend between two consecutive CSS animations"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In a standard left-to-right, top-to-bottom document, which CSS logical property is equivalent to margin-left?",
+    "options": {
+      "A": "margin-inline-start",
+      "B": "margin-block-start",
+      "C": "margin-before"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does overscroll-behavior: contain do on a scrollable element?",
+    "options": {
+      "A": "Prevents scroll chaining to the parent or page once this element's own scroll bounds are reached",
+      "B": "Disables scrolling on the element entirely",
+      "C": "Forces the element to always scroll with smooth animation"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a CSS \"stacking context\", as distinct from just comparing raw z-index values?",
+    "options": {
+      "A": "A self-contained layer of the render tree where descendant z-index values are only compared against each other, not the whole page",
+      "B": "A deprecated pre-CSS3 layout mode",
+      "C": "Another name for the DOM tree itself"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which CSS position value combines relative and fixed positioning, so an element scrolls normally until it crosses a threshold, then sticks in place?",
+    "options": {
+      "A": "sticky",
+      "B": "fixed",
+      "C": "anchored"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the enumeration order of Object.keys() when an object has both integer-like keys and regular string keys?",
+    "options": {
+      "A": "Integer-like keys first in ascending numeric order, then string keys in insertion order",
+      "B": "Always strict alphabetical order across all keys",
+      "C": "Always the exact insertion order, integer-like keys included"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does a JavaScript WeakMap allow, regarding garbage collection, that a regular Map does not?",
+    "options": {
+      "A": "Its keys, which must be objects, can be garbage collected once nothing else references them, without leaking memory",
+      "B": "It can store primitive values as keys, unlike Map",
+      "C": "It automatically clears all of its entries every few seconds"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does defining Symbol.iterator on an object control?",
+    "options": {
+      "A": "How the object behaves when iterated with for...of or the spread operator",
+      "B": "A unique ID shown for the object in browser dev tools",
+      "C": "The object's default toString() output"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a \"tagged template literal\" in JavaScript?",
+    "options": {
+      "A": "A template literal preceded by a function name that processes its strings and interpolated values",
+      "B": "A template literal wrapped in single quotes instead of backticks for compatibility",
+      "C": "A template literal that can only contain HTML markup"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In a JavaScript module script (type=\"module\"), what does top-level `this` refer to, unlike in a classic non-module script?",
+    "options": {
+      "A": "undefined",
+      "B": "The global window object",
+      "C": "The module's own exports object"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the JavaScript Reflect global object primarily provide?",
+    "options": {
+      "A": "Methods mirroring the internal operations that Proxy traps intercept, like Reflect.get and Reflect.set",
+      "B": "A way to render a mirrored copy of the current page in another browser tab",
+      "C": "Java/C#-style reflection for inspecting a class's full type metadata"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Why does [10, 1, 2].sort() (with no compare function) produce [1, 10, 2] instead of numeric order?",
+    "options": {
+      "A": "The default sort converts elements to strings and compares them lexicographically",
+      "B": "Array.prototype.sort() sorts numbers in descending order by default",
+      "C": "It's a browser bug that doesn't occur in the JavaScript specification"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does \"currying\" a function mean in JavaScript functional programming?",
+    "options": {
+      "A": "Transforming a function that takes multiple arguments into a sequence of functions that each take one argument",
+      "B": "Caching a function's previously computed results",
+      "C": "Converting a regular function into an async generator"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What can structuredClone() correctly handle that JSON.parse(JSON.stringify(obj)) cannot?",
+    "options": {
+      "A": "Values like Dates, Maps, Sets, and objects with circular references",
+      "B": "Cloning functions and live DOM nodes perfectly",
+      "C": "It can only do a shallow copy, unlike the JSON round-trip"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a JavaScript WeakRef used for?",
+    "options": {
+      "A": "Holding a reference to an object without preventing that object from being garbage collected",
+      "B": "Creating a reference that automatically becomes a strong reference after first use",
+      "C": "Referencing a variable declared in a different browser tab"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does JavaScript's \"optional catch binding\" (writing try { } catch { }) allow?",
+    "options": {
+      "A": "Omitting the parameter naming the caught error entirely when it isn't needed",
+      "B": "Catching multiple distinct error types by name in one catch clause",
+      "C": "Making catch blocks mandatory for any code that could theoretically throw"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does Array.prototype.at(-1) return on a non-empty array?",
+    "options": {
+      "A": "The last element of the array",
+      "B": "undefined, since negative indices are invalid",
+      "C": "The first element of the array"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How do null == undefined and null === undefined compare in JavaScript?",
+    "options": {
+      "A": "== is true, === is false",
+      "B": "Both are true",
+      "C": "Both are false"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does defining Symbol.toPrimitive on an object let you customize?",
+    "options": {
+      "A": "How the object converts itself to a primitive value in contexts like string or number coercion",
+      "B": "The object's default behavior when iterated with for...of",
+      "C": "Whether the object is allowed to be used as a Map key"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the name of the JavaScript mechanism that silently inserts a statement-ending semicolon at certain line breaks, occasionally causing subtle bugs?",
+    "options": {
+      "A": "Automatic Semicolon Insertion (ASI)",
+      "B": "Statement Hoisting",
+      "C": "Line Folding"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Why does writing `return` on one line followed by an object literal on the next line NOT return that object as most people expect?",
+    "options": {
+      "A": "Automatic Semicolon Insertion inserts a semicolon right after return, so undefined is returned instead",
+      "B": "JavaScript doesn't allow object literals to follow a return statement at all",
+      "C": "It's a syntax error rather than a silent runtime bug"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the main difference between Promise.allSettled() and Promise.all()?",
+    "options": {
+      "A": "allSettled waits for every promise and never short-circuits on a rejection, reporting each individual outcome",
+      "B": "allSettled resolves as soon as the very first promise settles",
+      "C": "They behave identically aside from their names"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How does Promise.any() behave differently from Promise.race()?",
+    "options": {
+      "A": "any resolves with the first FULFILLED promise, ignoring rejections unless every promise rejects",
+      "B": "any rejects as soon as any single promise in the group rejects",
+      "C": "any only works correctly with exactly two promises"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In a for...of loop over a Map, what is each iterated value?",
+    "options": {
+      "A": "A [key, value] pair",
+      "B": "Just the key",
+      "C": "Just the value"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the JavaScript comma operator do in an expression like (a, b, c)?",
+    "options": {
+      "A": "Evaluates each operand left to right and returns the value of the last one",
+      "B": "Creates a new array [a, b, c]",
+      "C": "Is only legal syntax inside a function call's argument list"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the JavaScript void operator do, as in void 0?",
+    "options": {
+      "A": "Evaluates its operand and always returns undefined",
+      "B": "Immediately frees the operand's memory",
+      "C": "Suppresses any error thrown while evaluating the operand"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How does String.raw differ from a normal template literal?",
+    "options": {
+      "A": "It returns the string with escape sequences like \\n left unprocessed, as literal characters",
+      "B": "It strips all whitespace out of the resulting string",
+      "C": "It converts the resulting string to uppercase"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Why can iterating a JavaScript string one UTF-16 code unit at a time sometimes split a single visible character, like certain emoji, in two?",
+    "options": {
+      "A": "Characters outside the Basic Multilingual Plane are stored as surrogate pairs of two UTF-16 code units",
+      "B": "JavaScript strings are actually stored as UTF-8 internally, not UTF-16",
+      "C": "It never happens — JavaScript strings always use exactly one code unit per visible character"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How does Array.prototype.reduceRight() differ from Array.prototype.reduce()?",
+    "options": {
+      "A": "It processes the array from the last element toward the first",
+      "B": "It returns a new array instead of a single accumulated value",
+      "C": "It requires an initial value, while reduce does not"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does Object.create(null) produce?",
+    "options": {
+      "A": "An object with no prototype at all, inheriting nothing from Object.prototype",
+      "B": "A frozen, permanently immutable empty object",
+      "C": "A regular object identical in every way to {}"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the name of the reconciliation engine that powers React's rendering and scheduling, introduced in React 16?",
+    "options": {
+      "A": "Fiber",
+      "B": "Concurrent Core",
+      "C": "React Native Bridge"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does wrapping a state update in React's startTransition API mark it as?",
+    "options": {
+      "A": "Non-urgent, so React can interrupt it to keep the UI responsive to more urgent updates",
+      "B": "Guaranteed to run before the next paint, like useLayoutEffect",
+      "C": "Permanently deferred until the component unmounts"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What problem does React's useDeferredValue hook help solve?",
+    "options": {
+      "A": "Letting an expensive re-render lag slightly behind a fast-changing value, without blocking urgent updates",
+      "B": "Delaying a component's initial mount until its data has fully loaded",
+      "C": "Preventing a given value from ever updating again"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In React Server Components, where does a Server Component's own code actually execute?",
+    "options": {
+      "A": "Only on the server — its code and dependencies are never sent to the client bundle",
+      "B": "On the client, but strictly before hydration begins",
+      "C": "Inside a web worker running on the client"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the purpose of React's useSyncExternalStore hook?",
+    "options": {
+      "A": "Safely subscribing a component to a mutable external data source outside React, correctly under concurrent rendering",
+      "B": "Automatically synchronizing state between two unrelated components",
+      "C": "Automatically persisting a component's state to localStorage"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "During reconciliation, what does React do when two elements at the same tree position change type (e.g. a <div> becomes a <span>)?",
+    "options": {
+      "A": "It tears down the old subtree entirely and builds a brand-new one, rather than diffing their children",
+      "B": "It automatically morphs one element into the other in place, without unmounting",
+      "C": "It throws a runtime error, since changing an element's type isn't allowed"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the optional second argument to React.memo(Component, areEqual) let you customize?",
+    "options": {
+      "A": "A custom comparison function deciding whether props are equal, controlling when the component skips re-rendering",
+      "B": "Whether the wrapped component uses class or function syntax internally",
+      "C": "The initial state value used by the memoized component"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Why does React's Strict Mode intentionally invoke reducer and lazy-initializer functions used with useState/useReducer twice in development?",
+    "options": {
+      "A": "To help surface accidental side effects in functions that are supposed to be pure",
+      "B": "To measure performance for the React DevTools profiler",
+      "C": "Because the JavaScript spec requires those functions to be idempotent"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "When an expensive computation is used as useState's initial value, what's the behavioral difference between passing a function (a \"lazy initializer\") versus a plain computed value?",
+    "options": {
+      "A": "The function form is only invoked once, on the initial render; a plain value is recomputed on every render even though only the first result is used",
+      "B": "There is no difference in when either form executes",
+      "C": "Passing a plain computed value throws a TypeError — only functions are allowed"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does the legacy class component lifecycle method getDerivedStateFromProps allow that constructor-based initialization does not?",
+    "options": {
+      "A": "Updating state in response to prop changes on every render, not just when the component is first created",
+      "B": "Directly mutating the incoming props object",
+      "C": "Skipping the render phase entirely for that update"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the key structural difference between HTTP/3 and HTTP/2 at the transport layer?",
+    "options": {
+      "A": "HTTP/3 runs over QUIC on top of UDP, instead of TCP",
+      "B": "HTTP/3 removes the encryption requirement that HTTP/2 had",
+      "C": "HTTP/3 uses a completely different addressing system instead of IP"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What are the three steps of the classic TCP three-way handshake, in order?",
+    "options": {
+      "A": "SYN, SYN-ACK, ACK",
+      "B": "ACK, SYN, FIN",
+      "C": "SYN, FIN, ACK"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the essential difference between a CSRF attack and an XSS attack?",
+    "options": {
+      "A": "CSRF tricks a victim's authenticated browser into making unwanted requests; XSS injects and runs attacker-controlled script in the victim's browser",
+      "B": "They are simply two different names for the exact same attack",
+      "C": "CSRF can only target mobile apps, never websites"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "As of modern browser defaults, what value does a cookie's SameSite attribute effectively get if it isn't explicitly set?",
+    "options": {
+      "A": "Lax",
+      "B": "Strict",
+      "C": "None"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Git command lets you interactively find which past commit introduced a bug by automatically bisecting the commit history?",
+    "options": {
+      "A": "git bisect",
+      "B": "git blame",
+      "C": "git reflog"
+    },
+    "correct": "A",
+    "difficulty": 5
   }
 ]

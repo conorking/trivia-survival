@@ -219,6 +219,7 @@ socket.on('game:end', ({ reason, winners }) => {
   document.getElementById('endTitle').textContent = iWon ? '🏆 YOU SURVIVED!' : 'GAME OVER';
   const reasonText = {
     all_eliminated: 'Everyone was eliminated!',
+    last_survivor: 'Last one standing!',
     questions_complete: 'All questions answered!',
     host_ended: 'Game ended by host.'
   }[reason] || '';
@@ -353,7 +354,7 @@ function drawFrame() {
   const joystick = (joystickPointerId !== null && joystickOrigin && joystickCurrent)
     ? { originX: joystickOrigin.x, originY: joystickOrigin.y, curX: joystickCurrent.x, curY: joystickCurrent.y }
     : null;
-  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick });
+  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick, mouseActive: mouseFollowActive });
 }
 
 (function renderLoop() {
@@ -441,31 +442,40 @@ window.addEventListener('keyup', (e) => {
 window.addEventListener('blur', () => {
   keyState.up = keyState.down = keyState.left = keyState.right = false;
   updateKeyboardInput();
+  mouseFollowActive = false;
+  mouseFollowTarget = null;
 });
 
-// ---- Virtual joystick + pinch-zoom + wheel-zoom ----
-// Multi-touch, keyed by pointerId - and doubles as mouse control on desktop, since
-// Pointer Events unify both. First finger/left-click down (with no joystick already
-// active) becomes the joystick: origin = where it touched down, direction each frame =
-// the dead-zone-filtered vector from origin to the current position - sent to the server
+// ---- Input: touch virtual joystick + pinch-zoom, mouse click-to-walk + wheel-zoom ----
+// Touch (multi-touch, keyed by pointerId): first finger down (with no joystick already
+// active) becomes the joystick - origin = where it touched down, direction each frame =
+// the dead-zone-filtered vector from origin to the current position, sent to the server
 // the same way keyboard input already is. A second finger held down at the same time is
 // tracked for both possible meanings, disambiguated by what it does next: lifted quickly
 // with little movement -> jump; distance to the joystick finger changes meaningfully ->
-// pinch-zoom (joystick steering keeps working the whole time either way). Right-click is
-// the mouse equivalent of the second-finger tap - jump, doesn't touch the joystick at
-// all. Lifting the joystick finger always stops movement immediately, even if another
-// finger is still down - no automatic hand-off.
+// pinch-zoom (joystick steering keeps working the whole time either way). Lifting the
+// joystick finger always stops movement immediately, even if another finger is still
+// down - no automatic hand-off.
+// Mouse (desktop): deliberately NOT the joystick - click-and-hold walks directly toward
+// that point in the world (converted via ArenaRender.screenToWorld, since the camera can
+// be zoomed/panned), continuously retargeted while dragging, released to stop. This is
+// the pre-camera-system control scheme, kept only for mouse now that touch has its own
+// joystick; right-click is still the mouse equivalent of the second-finger jump tap and
+// doesn't touch this at all.
 const TAP_MAX_MS = 220;
 const TAP_MAX_MOVE = 12; // CSS px
 const JOYSTICK_DEADZONE = 6; // CSS px - below this, treat the drag as centered (no input)
 const PINCH_MOVE_THRESHOLD = 6; // CSS px of inter-finger distance change before wheel-equivalent zoom kicks in
+const MOUSE_ARRIVE_DIST = 4; // world px - closer than this to the target counts as "arrived"
 
-let activePointers = new Map(); // pointerId -> {x, y, startX, startY, startT}
+let activePointers = new Map(); // pointerId -> {x, y, startX, startY, startT} - touch only
 let joystickPointerId = null;
 let joystickOrigin = null; // {x,y} screen coords
 let joystickCurrent = null;
 let pinchPointerIds = null; // [idA, idB] once a second finger joins while the joystick is held
 let pinchLastDist = null;
+let mouseFollowActive = false;
+let mouseFollowTarget = null; // {x,y} world coords
 
 function getCanvasPoint(canvas, e) {
   const rect = canvas.getBoundingClientRect();
@@ -492,6 +502,14 @@ function setupPointerControls() {
     if (e.pointerType === 'mouse') {
       if (e.button === 2) { triggerJump(); e.preventDefault(); return; } // right-click = jump
       if (e.button !== 0) return; // ignore middle-click/other buttons entirely
+      const pt = getCanvasPoint(canvas, e);
+      mouseFollowActive = true;
+      mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
+      if (canvas.setPointerCapture) {
+        try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      }
+      e.preventDefault();
+      return;
     }
 
     const pt = getCanvasPoint(canvas, e);
@@ -512,6 +530,13 @@ function setupPointerControls() {
   });
 
   canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'mouse') {
+      if (!mouseFollowActive) return;
+      const pt = getCanvasPoint(canvas, e);
+      mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
+      return;
+    }
+
     const rec = activePointers.get(e.pointerId);
     if (!rec) return;
     const pt = getCanvasPoint(canvas, e);
@@ -530,6 +555,14 @@ function setupPointerControls() {
   });
 
   function endPointer(e) {
+    if (e.pointerType === 'mouse') {
+      if (!mouseFollowActive) return;
+      mouseFollowActive = false;
+      mouseFollowTarget = null;
+      sendDirInput(0, 0);
+      return;
+    }
+
     const rec = activePointers.get(e.pointerId);
     activePointers.delete(e.pointerId);
 
@@ -566,12 +599,24 @@ function setupPointerControls() {
 }
 setupPointerControls();
 
-// While the joystick finger is held, continuously steer in the drag direction - runs on
-// an interval (rather than only on pointermove) so it keeps sending even if the finger
-// is held perfectly still, and to keep the network send rate sane.
+// While the joystick finger is held, continuously steer in the drag direction; while a
+// mouse click-hold is active, continuously steer toward the (fixed-until-dragged) world
+// target instead. Runs on an interval (rather than only on pointermove) so steering keeps
+// updating even when the input itself is held perfectly still - the joystick needs that
+// for a finger held steady off-center, and mouse-follow needs it so the direction keeps
+// converging as the player's own position approaches the target - and to keep the network
+// send rate sane either way.
 setInterval(() => {
-  if (joystickPointerId === null || !joystickOrigin || !joystickCurrent) return;
-  const dx = joystickCurrent.x - joystickOrigin.x, dy = joystickCurrent.y - joystickOrigin.y;
-  const dist = Math.hypot(dx, dy);
-  sendDirInput(dist < JOYSTICK_DEADZONE ? 0 : dx / dist, dist < JOYSTICK_DEADZONE ? 0 : dy / dist);
+  if (joystickPointerId !== null && joystickOrigin && joystickCurrent) {
+    const dx = joystickCurrent.x - joystickOrigin.x, dy = joystickCurrent.y - joystickOrigin.y;
+    const dist = Math.hypot(dx, dy);
+    sendDirInput(dist < JOYSTICK_DEADZONE ? 0 : dx / dist, dist < JOYSTICK_DEADZONE ? 0 : dy / dist);
+  } else if (mouseFollowActive && mouseFollowTarget) {
+    const me = latestPlayers.find(p => p.id === myId);
+    const originX = me ? me.x : mouseFollowTarget.x;
+    const originY = me ? me.y : mouseFollowTarget.y;
+    const dx = mouseFollowTarget.x - originX, dy = mouseFollowTarget.y - originY;
+    const len = Math.hypot(dx, dy);
+    sendDirInput(len < MOUSE_ARRIVE_DIST ? 0 : dx / len, len < MOUSE_ARRIVE_DIST ? 0 : dy / len);
+  }
 }, 50);

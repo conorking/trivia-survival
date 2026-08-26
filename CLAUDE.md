@@ -30,14 +30,18 @@ snapshot.
   token lookup (`tokenIndex` Map: token → {roomCode, playerId}).
 - `server/rooms.js` — the actual game: `Room` class with the full state machine, arena
   constants, tick loop. `GameManager` just tracks rooms by code.
-- `server/questions-default.json` — built-in general-knowledge question set (120 entries).
-- `server/questions-webdev.json` — built-in web-dev question set (200 entries: HTML, CSS,
+- `server/questions-default.json` — built-in general-knowledge question set (400
+  entries: everyday trivia — geography, history, science, pop culture, food, animals,
+  sports, art, language, etc.).
+- `server/questions-webdev.json` — built-in web-dev question set (400 entries: HTML, CSS,
   JavaScript, React, general tooling).
-- `server/questions-hard.json` — built-in "Hard Mode" question set (200 entries): harder/
+- `server/questions-hard.json` — built-in "Hard Mode" question set (400 entries): harder/
   trickier general-knowledge questions across geography, history, science, literature,
   mythology, math/logic, sports, etymology, and astronomy — many deliberately built
   around common misconceptions (e.g. "which gas do humans exhale most?" → nitrogen, not
   CO₂) rather than just obscure facts.
+  Each entry in all three files carries a `"difficulty"` field (1-5) used by
+  `config.difficultyRamp` — see "Difficulty ramp" further down.
 - `public/index.html` — landing (host or join).
 - `public/host.html` + `public/js/host.js` — room creation, config form, lobby, live
   spectator view (always the `'overview'` camera — whole map, scroll-wheel zoom), end
@@ -103,28 +107,35 @@ client-side rendering + input concerns.
   mapping — `ctx.setTransform(dpr,0,0,dpr,0,0)` (not `ctx.scale`, so repeated calls never
   compound). Called on load *and* on `resize`/`orientationchange` in both `host.js` and
   `player.js` (previously only once, when showing the game view).
-- **Virtual joystick** (`player.js`, replaces the old hold-drag-toward-absolute-point
-  touch scheme): real multi-touch via Pointer Events keyed by `pointerId` — and doubles
-  as mouse control on desktop for free, since Pointer Events unify mouse and touch.
-  First finger/left-click down (no joystick already active) becomes the joystick —
-  origin = where it went down, direction each frame = the dead-zone-filtered vector from
-  origin to the current position, sampled on an interval (not every `pointermove`, to
-  keep the network send rate sane) and sent via the same `sendDirInput()` keyboard input
-  already used. A second finger held at the same time is tracked for *both* possible
-  meanings, disambiguated by what it does next: lifted quickly with little movement →
+- **Virtual joystick, touch only** (`player.js`): real multi-touch via Pointer Events
+  keyed by `pointerId`. First finger down (no joystick already active, and
+  `e.pointerType !== 'mouse'`) becomes the joystick — origin = where it touched down,
+  direction each frame = the dead-zone-filtered vector from origin to the current
+  position, sampled on an interval (not every `pointermove`, to keep the network send
+  rate sane) and sent via the same `sendDirInput()` keyboard input already used. A
+  second finger held at the same time is tracked for *both* possible meanings,
+  disambiguated by what it does next: lifted quickly with little movement →
   `triggerJump()`; inter-finger distance changes meaningfully → pinch-zoom (joystick
-  steering from finger 1 keeps working the whole time either way). Right-click is the
-  mouse equivalent of that second-finger tap (jump) — handled directly in `pointerdown`
-  on `e.button === 2`, doesn't touch joystick state at all, and `contextmenu` is
-  preventDefault'd on the canvas so the browser's menu doesn't pop up. Lifting the
-  joystick finger/button always stops movement immediately even if another finger is
-  still down — no automatic hand-off. Coordinates are pure screen-space CSS px
-  throughout — since camera position is never independently pannable (see above), no
-  screen↔world conversion is needed anywhere in the input path anymore (a nice side
-  effect: no `toArenaCoords()`). The joystick visual itself (`drawJoystick`) renders
-  whenever active regardless of `viewMode` — mouse-drag on desktop `'overview'` gets the
-  same visual feedback touch does — only the *idle* hint text is mode-specific
-  (`drawTouchHint` vs `drawDesktopHint`, since the wording differs by input device).
+  steering from finger 1 keeps working the whole time either way). Lifting the joystick
+  finger always stops movement immediately even if another finger is still down — no
+  automatic hand-off. The joystick visual itself (`drawJoystick`) renders whenever
+  active; the idle hint (`drawTouchHint`) shows otherwise, in `'follow'` mode.
+- **Mouse control, desktop: direct click-to-walk, not the joystick** (reverted back to
+  this from a brief stint sharing the joystick with touch — a relative-direction
+  joystick didn't feel as natural with a mouse as click-and-hold-toward-a-point does).
+  Left-click-and-hold walks straight toward that point in the world; holding the mouse
+  still after the click keeps walking there until arrival, dragging continuously
+  retargets. Unlike the joystick (screen-space direction only, no conversion needed),
+  this genuinely needs the click point in *world* coordinates so the target doesn't
+  drift as the camera does — `ArenaRender.screenToWorld(canvas, cssX, cssY)` inverts
+  `render()`'s camera transform for this (the one reintroduced piece of screen↔world
+  conversion; touch still needs none). Steered toward on the same interval as the
+  joystick, using the live `latestPlayers` position each tick so the direction converges
+  as you approach. Right-click is still jump (`e.button === 2` in `pointerdown`, checked
+  before the click-to-walk branch, doesn't touch it at all) and `contextmenu` is still
+  preventDefault'd on the canvas. No screen-space visual is drawn for this (unlike the
+  joystick) — `render()`'s `mouseActive` flag just suppresses the idle desktop hint
+  (`drawDesktopHint`) while a click-hold is in progress.
 - **CSS breakpoint** (`style.css`, `@media (max-width: 820px)`, matching `player.js`'s
   `MOBILE_BREAKPOINT`): scoped to `canvas#arena.arena-follow` (that class is only set in
   `player.html`, so `host.html` — always whole-map regardless of its own window size —
@@ -252,9 +263,14 @@ lobby → question → reveal → escape → fall_pause? → resolve → death_a
   animation (`player:caught` → `ArenaRender.onCaught`) has time to play. If it ended via
   dogs-all-home with survivors, it's just a small (`HOME_SETTLE_MS`) buffer.
   `finishRound()` then frees the safe cage (`cagedAt=null`, `cageSolid[correct]=false`)
-  and calls `advanceRound()` (reasons: `all_eliminated`, `questions_complete`,
-  `host_ended` — there's no overall game-duration cap anymore, see below). Dogs are *not*
-  cleared here — they're already parked at home.
+  and calls `advanceRound()` (reasons: `all_eliminated`, `last_survivor`,
+  `questions_complete`, `host_ended` — there's no overall game-duration cap anymore, see
+  below). Dogs are *not* cleared here — they're already parked at home.
+  `advanceRound()` checks `aliveCount === 1` *before* checking whether the question set
+  is exhausted — last player standing wins outright and ends the game right there
+  (reason `last_survivor`) rather than playing out the remaining questions against
+  nobody; that check runs ahead of the exhausted-questions check so a survivor who
+  happens to also be on the final question still gets the more specific reason.
 - **ended → lobby**: `host:rematch` calls `Room.resetForRematch()` — same room/code/
   players, resets alive/ghost/cagedAt/ready/hazards, does NOT require players to rejoin.
 
@@ -343,7 +359,10 @@ just converts to a vector before sending; touch (Pointer Events on `#arena`) dri
 virtual joystick — direction = the dead-zone-filtered vector from where the controlling
 finger first touched down to its current position, recomputed on an interval — with a
 second finger's quick tap triggering a jump instead (see "Camera system" above for the
-full multi-touch/pinch-zoom disambiguation). Both sources feed the same
+full multi-touch/pinch-zoom disambiguation). Mouse is its own third source, sharing none
+of the joystick's state: direction = vector from the player's own current position to
+the click-and-held world point (`ArenaRender.screenToWorld`), also recomputed on the
+same interval so it re-converges as the player moves. All three feed the same
 `sendDirInput()`.
 
 ### End-of-game overlay
@@ -498,24 +517,53 @@ deployment target.
   would need a real nav-mesh/A* if the arena ever grows more complex obstacles.
 - No persistence layer — rooms/tokens are in-memory, wiped on restart or after 3hr/no-
   connection sweep (`GameManager.sweep()`).
-- Four question sources per room (`config.questionSet`): `default` (120 general-
-  knowledge entries), `hard` (200 harder/trickier general-knowledge entries — see the
-  file map above), `webdev` (200 HTML/CSS/JS/React entries), or `custom` (one JSON
-  upload, lives only on the `Room` object, gone when the room ends). `questionCount` can
-  go up to 200 to match the larger sets. Every question's A/B/C letter assignment is
-  reshuffled per-build (`shuffleOptionLetters` in `buildQuestionSet()`) regardless of
-  source, so the same question won't always have its answer on the same letter across
-  rounds/rematches.
+- Four question sources per room (`config.questionSet`): `default`, `hard` (see the
+  file map above for what distinguishes it), `webdev` (HTML/CSS/JS/React), or `custom`
+  (one JSON upload, lives only on the `Room` object, gone when the room ends). All three
+  built-in sets are 400 entries each; `questionCount` can go up to 400 to match. Every
+  question's A/B/C letter assignment is reshuffled per-build (`shuffleOptionLetters` in
+  `buildQuestionSet()`) regardless of source, so the same question won't always have its
+  answer on the same letter across rounds/rematches.
+- **Difficulty ramp** (`config.difficultyRamp`, opt-in checkbox next to the question-set
+  picker): every entry in the three built-in JSON files carries a `"difficulty"` field
+  (integer 1-5, hand-tagged relative to that file's own theme — see each file's own
+  round-out-the-curve description in the file map). When enabled, `buildQuestionSet()`
+  calls `buildRampedOrder()` instead of a plain shuffle: groups the source pool by tier
+  (untagged/out-of-range questions land in tier 3, so a source without full tagging
+  degrades gracefully rather than erroring), shuffles within each tier, then spreads
+  `questionCount` picks across the 5 tiers as evenly as possible via
+  `distributeWithCapacity()` — a thin tier's shortfall rolls over to its neighbors so a
+  sparse difficulty doesn't shrink the total question count — and concatenates low→high.
+  `buildRampedOrder()` returns `null` if *nothing* in the source has a valid difficulty
+  (e.g. a `custom` upload that didn't tag its questions), and `buildQuestionSet()` falls
+  back to the normal shuffle in that case — a `custom` set only ramps if the uploaded
+  JSON includes its own per-question `"difficulty"` field, nothing else is required to
+  make that work. `difficulty` itself never reaches the client — `shuffleOptionLetters`
+  (which every question passes through regardless of ramp) only carries `q`/`options`/
+  `correct` forward.
 
 ## Feedback already implemented (most recent round)
 
-Four items this round, none touching the wire protocol: (1) mouse control on desktop —
-the virtual joystick already worked for mouse for free (Pointer Events unify mouse and
-touch), so this was mainly right-click-to-jump (`contextmenu` preventDefault'd, handled
-in `pointerdown` on `e.button === 2`) plus making the joystick visual/hint show for
-mouse-drag in `'overview'` mode too, not just touch in `'follow'` mode — see "Camera
-system" above. (2) A dog-pathing bug where dogs could get "confused and stuck" behind an
-open trapdoor, fixed at the root cause (a steering tie-break that sat at ~0 and flipped
+Three items this round: (1) Mouse control reverted from the shared joystick back to
+direct click-and-hold-to-walk-toward-a-point — touch keeps the joystick unchanged; see
+"Camera system" above for the split and why mouse needed `screenToWorld` reintroduced
+while touch still doesn't. (2) Last player standing now wins outright
+(`advanceRound()`'s `aliveCount === 1` check, reason `last_survivor`) instead of playing
+out the rest of the question set with only one survivor left — see the state machine
+section above. (3) Difficulty ramp mode (`config.difficultyRamp`): all three built-in
+question sets got a hand-tagged `"difficulty"` field (1-5) added to every existing
+entry and were expanded from 120/200/200 to 400 entries each (filling out thin tiers so
+the ramp has real depth at every difficulty and repeat games have enough headroom before
+questions recur) — see "Difficulty ramp" above for the selection algorithm. None of
+these three touch the wire protocol.
+
+Prior round: four items, none touching the wire protocol either: (1) mouse control on
+desktop — the virtual joystick already worked for mouse for free (Pointer Events unify
+mouse and touch), so this was mainly right-click-to-jump (`contextmenu` preventDefault'd,
+handled in `pointerdown` on `e.button === 2`) plus making the joystick visual/hint show
+for mouse-drag in `'overview'` mode too, not just touch in `'follow'` mode (superseded by
+this round's revert above). (2) A dog-pathing bug where dogs could get "confused and
+stuck" behind an open trapdoor, fixed at the root cause (a steering tie-break that sat at ~0 and flipped
 on floating-point noise in the dead-center-approach case, plus an `AVOID_RADIUS` tuned
 too large for the gap between doors) with a stuck-progress-detection fallback layered on
 top as defense in depth — see the "Stuck-dog fixes" paragraph in the state machine

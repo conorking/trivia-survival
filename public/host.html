@@ -42,8 +42,8 @@
         <div>
           <label>Number of questions</label>
           <div class="slider-row">
-            <input type="range" id="cfgQuestionCountRange" min="1" max="200" step="1" value="10">
-            <input type="number" id="cfgQuestionCount" value="10" min="1" max="200">
+            <input type="range" id="cfgQuestionCountRange" min="1" max="400" step="1" value="10">
+            <input type="number" id="cfgQuestionCount" value="10" min="1" max="400">
           </div>
         </div>
       </div>
@@ -54,6 +54,10 @@
         <option value="webdev">Web Dev (HTML/CSS/JS/React)</option>
         <option value="custom">Custom Upload</option>
       </select>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgDifficultyRamp">
+        <span>📈 Ramp difficulty - questions start easy and get harder as the game goes on (built-in sets only; a custom upload needs its own per-question "difficulty": 1-5 field to ramp, otherwise this has no effect)</span>
+      </label>
       <div id="uploadRow" style="display:none; margin-top:10px;">
         <label>Upload questions (.json)</label>
         <input type="file" id="questionFile" accept="application/json">

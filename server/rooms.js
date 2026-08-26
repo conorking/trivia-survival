@@ -252,6 +252,60 @@ function shuffleOptionLetters(q) {
   return { q: q.q, options, correct };
 }
 
+// Fisher-Yates shuffle into a new array - doesn't mutate the input.
+function shuffleArray(arr) {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+// Spreads `n` picks across buckets with per-bucket capacities as evenly as possible,
+// carrying any shortfall (a bucket that runs out) over to the remaining buckets rather
+// than just leaving it unfilled - used so a thin difficulty tier doesn't shrink the
+// ramp's total question count, it just leans on neighboring tiers instead.
+function distributeWithCapacity(n, capacities) {
+  const alloc = new Array(capacities.length).fill(0);
+  let remaining = n;
+  let active = capacities.map((_, i) => i).filter(i => capacities[i] > 0);
+  while (remaining > 0 && active.length > 0) {
+    const share = Math.floor(remaining / active.length) || 1;
+    let progressed = false;
+    for (const i of active) {
+      if (remaining <= 0) break;
+      const room = capacities[i] - alloc[i];
+      const take = Math.min(share, room, remaining);
+      if (take > 0) { alloc[i] += take; remaining -= take; progressed = true; }
+    }
+    active = active.filter(i => alloc[i] < capacities[i]);
+    if (!progressed) break; // no bucket had room left - stop rather than loop forever
+  }
+  return alloc;
+}
+
+const DIFFICULTY_TIERS = [1, 2, 3, 4, 5];
+
+// Builds an easy->hard ordered question list for the "ramp difficulty" mode: groups the
+// source pool by its `difficulty` field (1-5; anything missing/out-of-range is treated as
+// a middling 3 so a source without full tagging still degrades gracefully rather than
+// erroring), shuffles within each tier so repeat games don't ramp through the exact same
+// sequence, then picks a roughly even spread across tiers (topped up from neighboring
+// tiers if one runs thin - see distributeWithCapacity) and concatenates low->high. Falls
+// back to null (caller then uses the normal shuffle) if nothing in the source is tagged
+// at all, since there's no curve to ramp through in that case.
+function buildRampedOrder(source, count) {
+  if (!source.some(q => Number.isInteger(q.difficulty))) return null;
+  const tiers = DIFFICULTY_TIERS.map(tier => shuffleArray(
+    source.filter(q => (Number.isInteger(q.difficulty) ? q.difficulty : 3) === tier)
+  ));
+  const total = tiers.reduce((sum, t) => sum + t.length, 0);
+  const n = Math.min(count, total);
+  const alloc = distributeWithCapacity(n, tiers.map(t => t.length));
+  return tiers.flatMap((t, i) => t.slice(0, alloc[i]));
+}
+
 const DOG_PEN_SLOTS = [
   { x: DOG_PEN.x + 30, y: DOG_PEN.y + 35 },
   { x: DOG_PEN.x + 100, y: DOG_PEN.y + 35 },
@@ -293,6 +347,7 @@ class Room {
       answerTimeSec: 15,
       questionCount: 10,
       questionSet: 'default', // 'default' | 'custom' | 'webdev' | 'hard'
+      difficultyRamp: false, // opt-in: order questions easy->hard instead of shuffling
       bearTraps: false, // opt-in escape-phase hazard
       dogLunge: 'off', // 'off' | 'low' | 'high'
       dynamicCellScaling: false // opt-in shrinking cages round over round
@@ -372,10 +427,13 @@ class Room {
     else if (this.config.questionSet === 'webdev') source = WEBDEV_QUESTIONS;
     else if (this.config.questionSet === 'hard') source = HARD_QUESTIONS;
     else source = DEFAULT_QUESTIONS;
-    // shuffle copy, then reshuffle each question's own A/B/C letter assignment
-    const arr = [...source].sort(() => Math.random() - 0.5);
-    const count = Math.min(this.config.questionCount, arr.length);
-    this.questions = arr.slice(0, count).map(shuffleOptionLetters);
+    // Ramp mode orders low->high difficulty instead of shuffling (falls back to the
+    // normal shuffle if the source has no difficulty tags to ramp through - e.g. a
+    // custom upload that didn't include them). Either way, each question's own A/B/C
+    // letter assignment is reshuffled afterward so it isn't a learnable fixed property.
+    const ramped = this.config.difficultyRamp ? buildRampedOrder(source, this.config.questionCount) : null;
+    const arr = ramped || shuffleArray(source).slice(0, Math.min(this.config.questionCount, source.length));
+    this.questions = arr.map(shuffleOptionLetters);
   }
 
   resetHazards() {
@@ -946,6 +1004,13 @@ class Room {
 
     if (aliveCount === 0) {
       this.endGame(io, 'all_eliminated');
+      return;
+    }
+    // Last player standing wins outright rather than playing out the rest of the
+    // question set against nobody - checked before outOfQuestions so a survivor who
+    // happens to also be on the final question still gets the more specific reason.
+    if (aliveCount === 1) {
+      this.endGame(io, 'last_survivor');
       return;
     }
     if (outOfQuestions) {

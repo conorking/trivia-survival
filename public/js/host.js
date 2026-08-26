@@ -162,6 +162,7 @@ socket.on('game:end', ({ reason, winners }) => {
   document.getElementById('endView').style.display = 'flex';
   const reasonText = {
     all_eliminated: 'Everyone was eliminated!',
+    last_survivor: 'Last one standing!',
     questions_complete: 'All questions answered!',
     host_ended: 'Game ended by host.'
   }[reason] || '';
@@ -243,6 +244,7 @@ function populateConfigForm(config) {
   document.getElementById('cfgQuestionCount').value = config.questionCount;
   document.getElementById('cfgQuestionCountRange').value = config.questionCount;
   document.getElementById('cfgQuestionSet').value = config.questionSet;
+  document.getElementById('cfgDifficultyRamp').checked = !!config.difficultyRamp;
   document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
   document.getElementById('cfgDogLunge').value = config.dogLunge || 'off';
   document.getElementById('cfgDynamicCellScaling').checked = !!config.dynamicCellScaling;
@@ -286,6 +288,7 @@ function collectConfig() {
     answerTimeSec: Number(document.getElementById('cfgAnswerTime').value),
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
     questionSet: document.getElementById('cfgQuestionSet').value,
+    difficultyRamp: document.getElementById('cfgDifficultyRamp').checked,
     bearTraps: document.getElementById('cfgBearTraps').checked,
     dogLunge: document.getElementById('cfgDogLunge').value,
     dynamicCellScaling: document.getElementById('cfgDynamicCellScaling').checked

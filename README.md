@@ -100,9 +100,11 @@ app config changes are needed either way.
   - `index.html` — landing (host or join)
   - `host.html` / `js/host.js` — room creation, config, lobby, live spectator view
     (always the whole map, scroll-wheel zoom)
-  - `player.html` / `js/player.js` — join/avatar picker, keyboard + virtual-joystick/
-    pinch-zoom touch input, gameplay view. On phones the camera follows the player
-    zoomed in with an edge-to-edge canvas; on desktop it shows the whole map like host
+  - `player.html` / `js/player.js` — join/avatar picker, gameplay view. Movement is
+    keyboard (WASD/arrows), a virtual joystick on touch, or click-and-hold-to-walk with
+    the mouse on desktop; pinch or scroll-wheel to zoom either way. On phones the camera
+    follows the player zoomed in with an edge-to-edge canvas; on desktop it shows the
+    whole map like host
   - `js/arena-render.js` — shared canvas renderer (floor, trapdoors, cages, dogs, players,
     ghosts) used by both host and player views, plus the camera/zoom system and
     off-screen trapdoor indicators. Both client files render via a
@@ -125,7 +127,9 @@ lethal (a shudder warns you right before it snaps open — get out before then, 
 "RUN!"/"SAFE!" prompt over your head tells you which applies) → dogs are released and
 hunt down anyone still exposed, each one capping out after eating a share of the group (or
 giving up after a while) and heading back to the pen — a round can end with survivors even
-if not everyone was caught → the safe door opens and the next question begins. A global
+if not everyone was caught → the safe door opens and the next question begins, unless
+that round leaves exactly one player alive, in which case the game ends immediately and
+they win outright rather than playing out the rest of the question set solo. A global
 timer bar with the current objective (e.g. "Survive the dogs for another Xs...") runs
 through every phase of this sequence.
 
@@ -142,10 +146,10 @@ opt-in toggles — and it all applies the moment **START GAME** is pressed (no s
 save step). Game length is simply answer-time × number of questions; there's no separate
 overall duration cap to set.
 - Answer time per question
-- Number of questions (up to 200)
-- Question set: the built-in 120-question general-knowledge set, a 200-question "Hard
+- Number of questions (up to 400)
+- Question set: the built-in 400-question general-knowledge set, a 400-question "Hard
   Mode" set (harder/trickier general knowledge, including plenty of common-misconception
-  gotchas), a 200-question web-dev set (HTML/CSS/JS/React/tooling), or a custom uploaded
+  gotchas), a 400-question web-dev set (HTML/CSS/JS/React/tooling), or a custom uploaded
   `.json` file in this shape:
 
 ```json
@@ -157,6 +161,11 @@ overall duration cap to set.
 ```
   (Each question's correct answer is reshuffled onto a random A/B/C slot every game, so
   it's never a fixed, learnable position.)
+- 📈 **Ramp difficulty** (opt-in): instead of a random shuffle, questions are ordered
+  easy → hard over the course of the game. Every built-in set has a hand-tagged 1-5
+  difficulty rating on each question already; a custom upload only ramps if its own
+  questions include that same `"difficulty": 1-5` field (otherwise this toggle has no
+  effect on it).
 - 🪤 **Bear traps** (opt-in): a couple of one-shot traps appear during the escape window
   and root anyone who steps on one for a couple seconds.
 - 🐕‍🦺 **Dog lunge** (off / low / high): hunting dogs occasionally telegraph and burst

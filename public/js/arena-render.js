@@ -97,6 +97,21 @@ const ArenaRender = (() => {
     cameraMode = viewMode; // so the next render() clamps instead of resetting to default
   }
 
+  // Inverse of render()'s camera transform - converts a canvas-relative CSS-px point
+  // (e.g. clientX/Y minus the canvas's getBoundingClientRect() offset) into world
+  // coordinates. Used by player.js's desktop mouse control (click-and-hold walks toward
+  // an absolute world point, unlike the touch joystick which only needs screen-space
+  // direction) - see drawJoystick's comment for why touch never needed this.
+  function screenToWorld(canvas, cssX, cssY) {
+    const dpr = window.devicePixelRatio || 1;
+    const viewW = canvas.clientWidth || (canvas.width / dpr);
+    const viewH = canvas.clientHeight || (canvas.height / dpr);
+    return {
+      x: camera.x + (cssX - viewW / 2) / camera.zoom,
+      y: camera.y + (cssY - viewH / 2) / camera.zoom
+    };
+  }
+
   // ---- optional sprite support ----
   // No art assets ship with the project yet - this just wires up the loading/fallback
   // plumbing so dropping real files into public/sprites/ (see its README) is picked up
@@ -261,16 +276,18 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
-  // Desktop equivalent of drawTouchHint - same idea, different device, shown in
-  // 'overview' mode instead (mouse click-drag is the joystick there too - Pointer
-  // Events don't distinguish mouse from touch for movement, just for the jump gesture).
+  // Desktop equivalent of drawTouchHint - same idea, different device. Unlike touch
+  // (a relative-direction joystick), mouse control is a direct walk-to-point: click and
+  // hold walks you toward that spot in the world, holding still after a click keeps
+  // walking there, dragging keeps retargeting. Suppressed via `mouseActive` in render()
+  // while a click-hold is in progress (see player.js).
   function drawDesktopHint(ctx, viewW, viewH) {
     ctx.save();
     ctx.globalAlpha = 0.22;
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Click & drag to move (or WASD/arrows)', viewW / 2, viewH - 34);
+    ctx.fillText('Click & hold to walk there (or WASD/arrows)', viewW / 2, viewH - 34);
     ctx.fillText('Right-click or Space to jump', viewW / 2, viewH - 18);
     ctx.restore();
   }
@@ -861,10 +878,13 @@ const ArenaRender = (() => {
 
   // `viewMode`: 'overview' (whole map, host + desktop players) or 'follow' (zoomed on
   // the player, mobile). `joystick`, if present ({originX,originY,curX,curY} in CSS px),
-  // is drawn in follow mode in place of the idle touch hint. All the draw calls between
-  // the camera translate and ctx.restore() below are unchanged from before this system
-  // existed - they just draw in world coordinates same as always.
-  function render(ctx, { players, dogs, traps, myId, viewMode = 'overview', joystick } = {}) {
+  // is the touch virtual joystick, drawn in place of the idle touch hint. `mouseActive`
+  // just suppresses the idle desktop hint while a click-and-hold move is in progress -
+  // desktop mouse control is a direct walk-to-point (see player.js), not a joystick, so
+  // there's nothing screen-space to draw for it. All the draw calls between the camera
+  // translate and ctx.restore() below are unchanged from before this system existed -
+  // they just draw in world coordinates same as always.
+  function render(ctx, { players, dogs, traps, myId, viewMode = 'overview', joystick, mouseActive } = {}) {
     const canvas = ctx.canvas;
     const dpr = window.devicePixelRatio || 1;
     const viewW = canvas.clientWidth || (canvas.width / dpr);
@@ -923,12 +943,12 @@ const ArenaRender = (() => {
       // differs, since "touch & drag"/right-click phrasing depends on the input device.
       if (joystick) drawJoystick(ctx, joystick);
       else if (viewMode === 'follow') drawTouchHint(ctx, viewW, viewH);
-      else drawDesktopHint(ctx, viewW, viewH);
+      else if (!mouseActive) drawDesktopHint(ctx, viewW, viewH);
     }
   }
 
   return {
-    setArena, setTrapdoors, fitCanvas, render, adjustZoom,
+    setArena, setTrapdoors, fitCanvas, render, adjustZoom, screenToWorld,
     onNewQuestion, onLockIn, onReveal, onDropped, onRoundComplete,
     onCaught, onDogsReleased,
     get ARENA_W() { return ARENA_W; }, get ARENA_H() { return ARENA_H; }

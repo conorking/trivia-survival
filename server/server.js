@@ -28,8 +28,9 @@ const tokenIndex = new Map();
 function sanitizeConfig(input, current) {
   const cfg = { ...current };
   if (input.answerTimeSec) cfg.answerTimeSec = Math.max(3, Math.min(120, Number(input.answerTimeSec)));
-  if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(200, Number(input.questionCount)));
+  if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(400, Number(input.questionCount)));
   if (['default', 'custom', 'webdev', 'hard'].includes(input.questionSet)) cfg.questionSet = input.questionSet;
+  if (typeof input.difficultyRamp === 'boolean') cfg.difficultyRamp = input.difficultyRamp;
   if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
   if (['off', 'low', 'high'].includes(input.dogLunge)) cfg.dogLunge = input.dogLunge;
   if (typeof input.dynamicCellScaling === 'boolean') cfg.dynamicCellScaling = input.dynamicCellScaling;
