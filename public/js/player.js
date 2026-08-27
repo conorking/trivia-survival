@@ -3,6 +3,7 @@ let myId = null;
 let myToken = null;
 let myRoomCode = null;
 let ready = false;
+let rematchCountdownEndsAt = null;
 let latestPlayers = []; // raw (non-interpolated) - used for status text
 let myAliveGhostState = { alive: true, isGhost: false };
 let myLocalJumpUntil = 0;
@@ -23,7 +24,24 @@ let selectedColor = AVATAR_COLORS[0];
 
 const params = new URLSearchParams(location.search);
 const codeFromUrl = params.get('code');
-if (codeFromUrl) document.getElementById('codeInput').value = codeFromUrl.toUpperCase();
+let selectedRoomCode = codeFromUrl ? codeFromUrl.toUpperCase() : '';
+if (selectedRoomCode) {
+  document.getElementById('codeInput').value = selectedRoomCode;
+  // Arrived via a QR code/shared link - we already know the code, so never show the raw
+  // "enter code" form at all (even briefly while waiting on the network round trip below).
+  hideAllTopViews();
+  document.getElementById('connectingView').style.display = 'block';
+  document.getElementById('connectingCode').textContent = selectedRoomCode;
+  socket.emit('player:roomInfo', { code: selectedRoomCode });
+}
+
+function hideAllTopViews() {
+  document.getElementById('joinView').style.display = 'none';
+  document.getElementById('connectingView').style.display = 'none';
+  document.getElementById('customizeView').style.display = 'none';
+  document.getElementById('lobbyView').style.display = 'none';
+  document.getElementById('gameView').style.display = 'none';
+}
 
 const grid = document.getElementById('avatarGrid');
 AVATAR_COLORS.forEach((color, i) => {
@@ -39,13 +57,28 @@ AVATAR_COLORS.forEach((color, i) => {
 });
 
 // Attempt auto-rejoin if we have a stored token for this code
-if (codeFromUrl) {
-  const storedToken = localStorage.getItem(`trivia_token_${codeFromUrl.toUpperCase()}`);
+if (selectedRoomCode) {
+  const storedToken = localStorage.getItem(`trivia_token_${selectedRoomCode}`);
   if (storedToken) {
     myToken = storedToken;
     socket.emit('player:rejoin', { token: storedToken });
   }
 }
+
+// Re-attach after a genuine reconnect (dropped socket, backgrounded tab, brief network
+// blip) - the server hands each new socket a blank slate, so without this the game keeps
+// running but every input silently no-ops until the page is manually reloaded. Fires only
+// on an actual reconnect, never the initial connect (which the code above already covers).
+socket.io.on('reconnect', () => {
+  if (myToken) {
+    socket.emit('player:rejoin', { token: myToken });
+  } else if (selectedRoomCode) {
+    socket.emit('player:roomInfo', { code: selectedRoomCode });
+  }
+});
+socket.on('disconnect', () => {
+  if (myId) showToast('Connection lost - reconnecting...');
+});
 
 // Explicitly tell the server we're leaving instead of waiting for the connection to
 // time out - a socket.disconnect() sends a clean disconnect packet immediately, so the
@@ -59,13 +92,49 @@ function backToMenu() {
 window.addEventListener('pagehide', () => { socket.disconnect(); });
 
 function joinGame() {
-  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  const code = selectedRoomCode;
   const name = document.getElementById('nameInput').value.trim();
   document.getElementById('joinError').textContent = '';
   if (!code) { document.getElementById('joinError').textContent = 'Enter a room code.'; return; }
   if (!name) { document.getElementById('joinError').textContent = 'Enter your name.'; return; }
   socket.emit('player:join', { code, name, color: selectedColor });
 }
+
+function findRoom() {
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  document.getElementById('joinError').textContent = '';
+  if (!code) { document.getElementById('joinError').textContent = 'Enter a room code.'; return; }
+  selectedRoomCode = code;
+  socket.emit('player:roomInfo', { code });
+}
+
+function changeRoom() {
+  hideAllTopViews();
+  document.getElementById('joinView').style.display = 'block';
+  document.getElementById('joinError').textContent = '';
+}
+
+function renderPreview(players) {
+  const list = document.getElementById('previewPlayerList');
+  document.getElementById('previewPlayerCount').textContent = players.length;
+  list.innerHTML = players.map(p => `<div class="player-chip"><span class="dot" style="background:${p.color}"></span>${p.name}</div>`).join('');
+  document.getElementById('roomPreviewCard').style.display = 'block';
+}
+
+socket.on('player:roomInfo', ({ code, state, players }) => {
+  if (state !== 'lobby') {
+    // Room exists but can't be joined (already started, etc.) - back to a real code-entry
+    // screen (with the error shown) rather than leaving the "Connecting..." screen hanging.
+    hideAllTopViews();
+    document.getElementById('joinView').style.display = 'block';
+    document.getElementById('joinError').textContent = 'This game has already started.';
+    return;
+  }
+  selectedRoomCode = code;
+  renderPreview(players);
+  hideAllTopViews();
+  document.getElementById('customizeView').style.display = 'block';
+});
 
 socket.on('player:joined', ({ code, playerId, token, arena }) => {
   myId = playerId; myToken = token; myRoomCode = code;
@@ -82,8 +151,7 @@ socket.on('player:rejoined', ({ code, playerId, token, state, config, you, curre
   if (state === 'lobby') {
     showLobby();
   } else if (state === 'ended') {
-    // nothing to resume into; go back to menu
-    backToMenu();
+    showEndView();
   } else {
     showGameView();
     if (currentQuestion) renderQuestion(currentQuestion);
@@ -91,6 +159,13 @@ socket.on('player:rejoined', ({ code, playerId, token, state, config, you, curre
 });
 
 socket.on('player:error', ({ message }) => {
+  if (!myId) {
+    // Failed before ever successfully joining/rejoining (bad code, expired session, etc.) -
+    // fall back to a real code-entry screen with the error visible, rather than leaving the
+    // player stranded on the "Connecting..." screen with the error hidden behind it.
+    hideAllTopViews();
+    document.getElementById('joinView').style.display = 'block';
+  }
   const errEl = document.getElementById('joinError');
   if (errEl) errEl.textContent = message;
 });
@@ -116,7 +191,23 @@ function toggleReady() {
   document.getElementById('readyBtn').textContent = ready ? 'READY ✔' : 'READY UP';
 }
 
-socket.on('game:started', () => { showGameView(); });
+// Mirrors updatePhaseTimer's polling approach for the "next round starting in Xs..."
+// banner that appears once enough players are ready in a post-rematch lobby.
+function updateRematchBanner() {
+  const el = document.getElementById('rematchBanner');
+  if (!el) return;
+  if (!rematchCountdownEndsAt) { el.style.display = 'none'; return; }
+  const s = Math.max(0, Math.ceil((rematchCountdownEndsAt - Date.now()) / 1000));
+  el.textContent = `Starting next round in ${s}s...`;
+  el.style.display = 'block';
+}
+setInterval(updateRematchBanner, 250);
+
+socket.on('game:started', () => {
+  rematchCountdownEndsAt = null;
+  updateRematchBanner();
+  showGameView();
+});
 
 function renderQuestion(data) {
   document.getElementById('qIndex').textContent = data.index + 1;
@@ -228,18 +319,44 @@ socket.on('game:end', ({ reason, winners }) => {
   list.innerHTML = winners.length
     ? winners.map(w => `<div class="winner" style="color:${w.color}">🏆 ${w.name}${w.id === myId ? ' (you)' : ''}</div>`).join('')
     : '<p class="muted">No survivors this time!</p>';
-  document.getElementById('rematchHint').style.display = 'block';
+  document.getElementById('rematchHint').style.display = 'none';
 });
 
-socket.on('game:rematch', () => {
-  ready = false;
+function showEndView() {
+  hideAllTopViews();
+  document.getElementById('endView').style.display = 'flex';
+  document.getElementById('endTitle').textContent = 'GAME OVER';
+  document.getElementById('endReason').textContent = 'Ready for another round?';
+  document.getElementById('winnersList').innerHTML = '';
+}
+
+function requestRematch() {
+  socket.emit('player:rematch');
+  document.getElementById('rematchHint').textContent = 'Waiting for more players to ready up...';
+  document.getElementById('rematchHint').style.display = 'block';
+}
+
+socket.on('game:rematch', ({ players } = {}) => {
   lastPhaseState = null;
+  rematchCountdownEndsAt = null;
   document.getElementById('endView').style.display = 'none';
-  document.getElementById('gameView').style.display = 'none';
+  // Sync local ready state from the server instead of assuming false - whoever's "Play
+  // Another Round" click triggered this is already marked ready server-side.
+  const me = (players || []).find(p => p.id === myId);
+  ready = !!(me && me.ready);
   const readyBtn = document.getElementById('readyBtn');
-  if (readyBtn) readyBtn.textContent = 'READY UP';
+  if (readyBtn) readyBtn.textContent = ready ? 'READY ✔' : 'READY UP';
   showLobby();
-  showToast('Host started a rematch — ready up!');
+  showToast('Rematch! Ready up to start the next round.');
+});
+
+socket.on('game:rematchCountdown', ({ endsAt }) => {
+  rematchCountdownEndsAt = endsAt;
+  updateRematchBanner();
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && !socket.connected) socket.connect();
 });
 
 let toastTimer = null;
@@ -253,13 +370,12 @@ function showToast(message) {
 }
 
 function showLobby() {
-  document.getElementById('joinView').style.display = 'none';
+  hideAllTopViews();
   document.getElementById('lobbyView').style.display = 'block';
 }
 
 function showGameView() {
-  document.getElementById('joinView').style.display = 'none';
-  document.getElementById('lobbyView').style.display = 'none';
+  hideAllTopViews();
   document.getElementById('gameView').style.display = 'flex';
   computeViewMode();
   const canvas = document.getElementById('arena');

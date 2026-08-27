@@ -544,7 +544,39 @@ deployment target.
 
 ## Feedback already implemented (most recent round)
 
-Three items this round: (1) Mouse control reverted from the shared joystick back to
+Four playtesting issues this round, all touching the wire protocol (new events noted):
+(1) **Reconnect resilience** — the real root cause of reported "desync switching tabs":
+neither client re-attached to the room after a socket reconnect (each server-side
+connection closure resets `playerId`/`isHost` to blank on every new socket), so after any
+drop (mobile backgrounding is especially prone to this) input/host-controls silently
+no-op'd until a manual reload. `player.js`/`host.js` now listen for `socket.io.on('reconnect',
+...)` (fires only on a genuine reconnect, never the initial connect) and re-emit
+`player:rejoin`/`host:rejoin`. `pingInterval`/`pingTimeout` also relaxed from `5000/5000`
+to `10000/20000` in `server.js` — real leaves are still instant via the existing explicit
+`socket.disconnect()` + `pagehide` calls, so this only stops a merely-backgrounded tab
+from being mistaken for dead. (2) **QR join flash** — arriving via `?code=` used to
+briefly flash the raw code-entry form before the existing skip-ahead logic kicked in;
+`player.html` now has a `#connectingView` shown synchronously instead, and every view
+transition in `player.js` routes through a new `hideAllTopViews()` helper. (3) **Phantom
+ghost players** — disconnected players were never removed, only marked offline, and
+`resetForRematch()` carried them into every future lobby forever. `Room.pruneOffline
+(graceMs)` (`server/rooms.js`) now drops them — but only in `lobby`/`ended` state, never
+mid-round, so disconnecting still can't be used to dodge elimination. A 10s
+`server.js` interval prunes with a 30s grace; `startRematch()` prunes immediately (0
+grace) since they had the whole prior round to reconnect. (4) **Self-serve rematch
+auto-start + host Play/Cast modes** — "Play Another Round" used to only reset the lobby,
+still leaving the host to press Start again; `room.awaitingRematchStart` + a 6s
+server-side countdown (`maybeStartRematchCountdown`, new `game:rematchCountdown` event)
+now auto-starts the next round once 2+ players are ready, while the host's own **START
+GAME** still preempts it instantly. The host's old "Play As Player" (a second browser
+tab — the actual cause of the desync players hit) is replaced by `host:joinAsPlayer`/
+`host:leavePlayer`, letting the host control their own avatar from the same tab/socket as
+the host console (reuses the same `playerId` closure the player handlers already keyed
+off, restored across a host reconnect via `room.hostPlayerId`); a separate client-only
+**Cast View** toggle (`body.cast-mode`, `.cast-hide` in `style.css`) hides the config/
+roster/controls for a clean screen-share view without touching Play mode at all.
+
+Prior round: (1) Mouse control reverted from the shared joystick back to
 direct click-and-hold-to-walk-toward-a-point — touch keeps the joystick unchanged; see
 "Camera system" above for the split and why mouse needed `screenToWorld` reintroduced
 while touch still doesn't. (2) Last player standing now wins outright

@@ -11,11 +11,12 @@
   <div class="top-nav">
     <a href="index.html" class="logo-link">🐾 TRIVIA SURVIVAL</a>
     <span class="nav-sub">HOST CONSOLE</span>
+    <button class="ghost-btn nav-btn" id="castToggleBtn" onclick="toggleCastMode()">CAST VIEW</button>
   </div>
 
   <!-- LOBBY VIEW -->
   <div id="lobbyView">
-    <div class="card center" id="roomInfoCard" style="display:none;">
+    <div class="card center cast-hide" id="roomInfoCard" style="display:none;">
       <h2>Room Code</h2>
       <div class="join-info">
         <div class="join-code" id="roomCode">-----</div>
@@ -26,9 +27,22 @@
         <input id="joinUrl" type="text" readonly>
         <button onclick="copyLink()">COPY LINK</button>
       </div>
+      <div class="row" style="margin-top:14px;">
+        <button class="primary" id="joinAsPlayerBtn" onclick="showJoinAsPlayerPicker()">JOIN AS PLAYER</button>
+        <button class="ghost-btn" id="leavePlayerBtn" style="display:none;" onclick="leavePlayer()">LEAVE PLAYER MODE</button>
+      </div>
+      <div class="card" id="hostPlayerPicker" style="display:none; margin-top:10px;">
+        <label>Your Name</label>
+        <input id="hostPlayerName" type="text" maxlength="16" placeholder="Host">
+        <label>Pick an Avatar Color</label>
+        <div class="avatar-grid" id="hostAvatarGrid"></div>
+        <button class="primary" style="margin-top:10px; width:100%;" onclick="confirmJoinAsPlayer()">JOIN</button>
+        <button class="ghost-btn" style="margin-top:8px; width:100%;" onclick="cancelJoinAsPlayer()">CANCEL</button>
+      </div>
+      <div class="rematch-banner" id="rematchBanner" style="display:none;"></div>
     </div>
 
-    <div class="card">
+    <div class="card cast-hide">
       <h2>Game Config</h2>
       <p class="muted">Settings apply when you hit START GAME below - no separate save step.</p>
       <div class="config-row">
@@ -80,7 +94,7 @@
       <div class="error-msg" id="cfgError"></div>
     </div>
 
-    <div class="card">
+    <div class="card cast-hide">
       <h2>Players (<span id="playerCount">0</span>)</h2>
       <div class="player-list" id="playerList"></div>
       <button class="primary" style="margin-top:16px;" id="startBtn" onclick="startGame()" disabled>START GAME</button>
@@ -90,13 +104,14 @@
 
   <!-- GAME VIEW -->
   <div id="gameView" style="display:none;">
-    <div class="status-strip">
+    <div class="status-strip cast-hide">
       <div class="code-badge">
         <span class="code-val" id="gameCodeVal">-----</span>
         <button class="copy-btn" onclick="copyCode()">Copy</button>
       </div>
       <span class="badge alive">Alive: <span id="aliveCount">0</span></span>
       <span class="badge ghost">Ghosts: <span id="ghostCount">0</span></span>
+      <button class="ghost-btn" id="leavePlayerBtnGame" style="display:none;" onclick="leavePlayer()">LEAVE PLAYER MODE</button>
       <button class="danger" onclick="endGameEarly()">END GAME</button>
     </div>
     <div class="q-indicator">

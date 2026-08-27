@@ -370,6 +370,9 @@ class Room {
     this.manualEnd = false;
     this.loop = null;
     this.createdAt = Date.now();
+    this.hostPlayerId = null; // set while the host is also playing (see host:joinAsPlayer)
+    this.awaitingRematchStart = false; // true once back in the lobby via a rematch (not a brand-new room)
+    this.rematchTimer = null;
   }
 
   addPlayer(name, avatarColor) {
@@ -392,12 +395,35 @@ class Room {
       alive: true,
       isGhost: false,
       connected: true,
+      disconnectedAt: 0,
       ready: false,
       cagedAt: null,
       socketId: null
     };
     this.players.set(id, player);
     return player;
+  }
+
+  // Drops anyone who's been disconnected for at least graceMs - only while there's no
+  // active round to be vulnerable during (lobby between games, or the post-game screen).
+  // Mid-round this always no-ops: a disconnected player must stay in place, still exposed
+  // to trapdoors/dogs, so leaving can never be used to dodge elimination.
+  pruneOffline(graceMs) {
+    if (this.state !== 'lobby' && this.state !== 'ended') return [];
+    const now = Date.now();
+    const removed = [];
+    for (const [id, p] of this.players) {
+      if (!p.connected && p.disconnectedAt && now - p.disconnectedAt >= graceMs) {
+        this.players.delete(id);
+        if (this.hostPlayerId === id) this.hostPlayerId = null;
+        removed.push(p);
+      }
+    }
+    return removed;
+  }
+
+  clearRematchTimer() {
+    if (this.rematchTimer) { clearTimeout(this.rematchTimer); this.rematchTimer = null; }
   }
 
   getPlayersPublic() {
@@ -472,6 +498,8 @@ class Room {
   }
 
   start(io) {
+    this.clearRematchTimer();
+    this.awaitingRematchStart = false;
     this.buildQuestionSet();
     this.state = 'question';
     this.currentQuestionIndex = 0;
@@ -1030,6 +1058,7 @@ class Room {
   resetForRematch() {
     this.stopLoop();
     this.state = 'lobby';
+    this.awaitingRematchStart = true;
     this.questions = [];
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;

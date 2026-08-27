@@ -2,14 +2,28 @@ const socket = io();
 let roomCode = null;
 let currentConfig = null;
 let uploadedQuestions = null;
+let myId = null; // set once the host has joined their own room as a player (Play mode)
+let myToken = null;
+let hostPlaying = false;
+let castMode = false;
+let latestPlayers = []; // raw (non-interpolated) - needed for mouse-follow steering in Play mode
+let rematchCountdownEndsAt = null;
 
 const existingCode = sessionStorage.getItem('trivia_host_room');
 
-if (existingCode) {
-  socket.emit('host:rejoin', { code: existingCode });
-} else {
-  socket.emit('host:createRoom', {});
+function attachToRoom() {
+  if (roomCode || existingCode) {
+    socket.emit('host:rejoin', { code: roomCode || existingCode });
+  } else {
+    socket.emit('host:createRoom', {});
+  }
 }
+attachToRoom();
+// Re-attach after a genuine reconnect (dropped socket, backgrounded tab, brief network
+// blip) - without this the host silently loses control (Start/End/Rematch all quietly
+// no-op) until the page is manually reloaded, since the server hands every new socket a
+// blank slate. Fires only on an actual reconnect, never the initial connect above.
+socket.io.on('reconnect', attachToRoom);
 
 // If the browser tab is closing/navigating away, disconnect immediately rather than
 // waiting for the transport to time out - keeps room presence data accurate promptly.
@@ -32,6 +46,16 @@ socket.on('host:roomState', (state) => {
   showRoomInfo(state.code);
   populateConfigForm(state.config);
   renderPlayerList(state.players);
+  // Restores Play mode across a reconnect - the server remembers who the host's own
+  // player entity is (room.hostPlayerId) even though this fresh connection doesn't.
+  if (state.hostPlayer) {
+    myId = state.hostPlayer.id;
+    myToken = state.hostPlayer.token;
+    hostPlaying = true;
+  } else {
+    myId = null; myToken = null; hostPlaying = false;
+  }
+  updatePlayModeUI();
   if (state.state === 'ended') {
     document.getElementById('lobbyView').style.display = 'none';
     document.getElementById('gameView').style.display = 'none';
@@ -69,7 +93,11 @@ socket.on('room:players', (players) => {
   renderPlayerList(players);
 });
 
-socket.on('game:started', () => { showGameView(); });
+socket.on('game:started', () => {
+  rematchCountdownEndsAt = null;
+  updateRematchBanner();
+  showGameView();
+});
 
 function renderQuestion(data) {
   document.getElementById('qIndex').textContent = data.index + 1;
@@ -151,6 +179,7 @@ socket.on('game:round_complete', () => {
 });
 
 socket.on('game:tick', (data) => {
+  latestPlayers = data.players;
   pushSnapshot(data.players, data.dogs, data.traps || []);
   updateCounts(data.players);
   updatePhaseTimer(data.state, data.phaseEndsAt);
@@ -176,13 +205,32 @@ socket.on('game:end', ({ reason, winners }) => {
 socket.on('game:rematch', ({ config, players }) => {
   currentConfig = config;
   lastPhaseState = null;
+  rematchCountdownEndsAt = null;
+  updateRematchBanner();
   document.getElementById('endView').style.display = 'none';
   document.getElementById('gameView').style.display = 'none';
   document.getElementById('lobbyView').style.display = 'block';
   populateConfigForm(config);
   renderPlayerList(players);
-  showToast('Rematch ready — configure and start when set!');
+  showToast('Rematch! Players can ready up to auto-start, or hit Start Game yourself.');
 });
+
+socket.on('game:rematchCountdown', ({ endsAt }) => {
+  rematchCountdownEndsAt = endsAt;
+  updateRematchBanner();
+});
+
+// Mirrors updatePhaseTimer's polling approach for the "next round starting in Xs..."
+// banner that appears once enough players are ready in a post-rematch lobby.
+function updateRematchBanner() {
+  const el = document.getElementById('rematchBanner');
+  if (!el) return;
+  if (!rematchCountdownEndsAt) { el.style.display = 'none'; return; }
+  const s = Math.max(0, Math.ceil((rematchCountdownEndsAt - Date.now()) / 1000));
+  el.textContent = `Starting next round in ${s}s...`;
+  el.style.display = 'block';
+}
+setInterval(updateRematchBanner, 250);
 
 function showRoomInfo(code) {
   document.getElementById('roomInfoCard').style.display = 'block';
@@ -361,6 +409,70 @@ function copyCode() {
   copyToClipboard(roomCode, 'Code copied!');
 }
 
+// ---- Play mode: the host joins their own room as a real player, in this same tab/socket
+// (replaces the old "open a second tab" playAsPlayer, which is exactly what caused the
+// desync players reported - two independent sockets/sessions instead of one).
+const HOST_AVATAR_COLORS = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
+let hostSelectedColor = HOST_AVATAR_COLORS[0];
+
+(function setupHostAvatarGrid() {
+  const grid = document.getElementById('hostAvatarGrid');
+  if (!grid) return;
+  HOST_AVATAR_COLORS.forEach((color, i) => {
+    const sw = document.createElement('div');
+    sw.className = 'avatar-swatch' + (i === 0 ? ' selected' : '');
+    sw.style.background = color;
+    sw.onclick = () => {
+      grid.querySelectorAll('.avatar-swatch').forEach(el => el.classList.remove('selected'));
+      sw.classList.add('selected');
+      hostSelectedColor = color;
+    };
+    grid.appendChild(sw);
+  });
+})();
+
+function showJoinAsPlayerPicker() {
+  document.getElementById('hostPlayerPicker').style.display = 'block';
+}
+function cancelJoinAsPlayer() {
+  document.getElementById('hostPlayerPicker').style.display = 'none';
+}
+function confirmJoinAsPlayer() {
+  const name = document.getElementById('hostPlayerName').value.trim() || 'Host';
+  socket.emit('host:joinAsPlayer', { name, color: hostSelectedColor });
+  document.getElementById('hostPlayerPicker').style.display = 'none';
+}
+function leavePlayer() {
+  socket.emit('host:leavePlayer');
+  myId = null; myToken = null; hostPlaying = false;
+  updatePlayModeUI();
+}
+
+socket.on('host:joinedAsPlayer', ({ playerId, token, arena }) => {
+  myId = playerId; myToken = token; hostPlaying = true;
+  ArenaRender.setArena(arena);
+  updatePlayModeUI();
+});
+
+function updatePlayModeUI() {
+  const joinBtn = document.getElementById('joinAsPlayerBtn');
+  const leaveBtn = document.getElementById('leavePlayerBtn');
+  const leaveBtnGame = document.getElementById('leavePlayerBtnGame');
+  if (joinBtn) joinBtn.style.display = hostPlaying ? 'none' : 'inline-block';
+  if (leaveBtn) leaveBtn.style.display = hostPlaying ? 'inline-block' : 'none';
+  if (leaveBtnGame) leaveBtnGame.style.display = hostPlaying ? 'inline-block' : 'none';
+}
+
+// ---- Cast mode: purely client-side, no server involvement - hides the config/roster/
+// controls for a clean full-screen view suited to projecting on a call, leaving just the
+// arena + question/timer visible. See body.cast-mode .cast-hide in style.css.
+function toggleCastMode() {
+  castMode = !castMode;
+  document.body.classList.toggle('cast-mode', castMode);
+  const btn = document.getElementById('castToggleBtn');
+  if (btn) btn.textContent = castMode ? 'EXIT CAST VIEW' : 'CAST VIEW';
+}
+
 function rematch() {
   socket.emit('host:rematch');
 }
@@ -388,6 +500,10 @@ function showGameView() {
   ArenaRender.fitCanvas(canvas);
 }
 
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && !socket.connected) socket.connect();
+});
+
 // The host always sees the whole map (no follow mode, no joystick) regardless of window
 // size - just needs to stay correctly sized/zoomable as the window resizes.
 window.addEventListener('resize', () => {
@@ -404,6 +520,140 @@ function setupZoomControls() {
   }, { passive: false });
 }
 setupZoomControls();
+
+// ---- Play mode input: desktop-only subset of player.js's controls (no touch/joystick -
+// this is a host console). Every handler is gated on hostPlaying so nothing fires (or
+// sends input) while just spectating.
+let lastSentDx = 0, lastSentDy = 0;
+function sendDirInput(dx, dy) {
+  if (!hostPlaying) return;
+  if (dx === lastSentDx && dy === lastSentDy) return;
+  lastSentDx = dx; lastSentDy = dy;
+  socket.emit('player:input', { dx, dy });
+}
+
+// Mirrors the server's exponential jump-cooldown formula (server/rooms.js attemptJump)
+// purely for local "instant feedback" animation prediction - see player.js's own copy.
+const JUMP_BASE_COOLDOWN_MS = 300;
+const JUMP_COOLDOWN_GROWTH = 2;
+const JUMP_MAX_COOLDOWN_MS = 2000;
+const JUMP_CHAIN_RESET_MS = 2500;
+let myJumpChain = 0, myJumpCooldownUntil = 0, myLastJumpAt = 0, myLocalJumpUntil = 0;
+
+function triggerJump() {
+  if (!hostPlaying) return;
+  const now = Date.now();
+  socket.emit('player:jump');
+  if (now < myJumpCooldownUntil) return;
+  if (now - myLastJumpAt > JUMP_CHAIN_RESET_MS) myJumpChain = 0;
+  const cooldown = Math.min(JUMP_MAX_COOLDOWN_MS, JUMP_BASE_COOLDOWN_MS * Math.pow(JUMP_COOLDOWN_GROWTH, myJumpChain));
+  myJumpChain += 1;
+  myLastJumpAt = now;
+  myJumpCooldownUntil = now + cooldown;
+  myLocalJumpUntil = now + 320;
+}
+
+const keyState = { up: false, down: false, left: false, right: false };
+function keyToDir(code) {
+  switch (code) {
+    case 'ArrowUp': case 'KeyW': return 'up';
+    case 'ArrowDown': case 'KeyS': return 'down';
+    case 'ArrowLeft': case 'KeyA': return 'left';
+    case 'ArrowRight': case 'KeyD': return 'right';
+    default: return null;
+  }
+}
+function updateKeyboardInput() {
+  let dx = 0, dy = 0;
+  if (keyState.up) dy -= 1;
+  if (keyState.down) dy += 1;
+  if (keyState.left) dx -= 1;
+  if (keyState.right) dx += 1;
+  const len = Math.hypot(dx, dy);
+  sendDirInput(len > 0 ? dx / len : 0, len > 0 ? dy / len : 0);
+}
+window.addEventListener('keydown', (e) => {
+  if (!hostPlaying) return;
+  if (document.getElementById('gameView').style.display === 'none') return;
+  const dir = keyToDir(e.code);
+  if (dir) {
+    e.preventDefault();
+    keyState[dir] = true;
+    updateKeyboardInput();
+  } else if (e.code === 'Space') {
+    e.preventDefault();
+    if (!e.repeat) triggerJump();
+  }
+});
+window.addEventListener('keyup', (e) => {
+  const dir = keyToDir(e.code);
+  if (dir) { keyState[dir] = false; updateKeyboardInput(); }
+});
+window.addEventListener('blur', () => {
+  keyState.up = keyState.down = keyState.left = keyState.right = false;
+  updateKeyboardInput();
+  mouseFollowActive = false;
+  mouseFollowTarget = null;
+});
+
+// Mouse: click-and-hold walks toward that world point (screenToWorld handles the camera
+// transform), right-click jumps - same scheme as player.js's desktop mouse control.
+let mouseFollowActive = false;
+let mouseFollowTarget = null; // {x,y} world coords
+const MOUSE_ARRIVE_DIST = 4; // world px - closer than this to the target counts as "arrived"
+
+function getCanvasPoint(canvas, e) {
+  const rect = canvas.getBoundingClientRect();
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function setupPlayModeControls() {
+  const canvas = document.getElementById('arena');
+  if (!canvas) return;
+  canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (!hostPlaying || e.pointerType !== 'mouse') return;
+    if (document.getElementById('gameView').style.display === 'none') return;
+    if (e.button === 2) { triggerJump(); e.preventDefault(); return; } // right-click = jump
+    if (e.button !== 0) return;
+    const pt = getCanvasPoint(canvas, e);
+    mouseFollowActive = true;
+    mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
+    if (canvas.setPointerCapture) {
+      try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    }
+    e.preventDefault();
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!hostPlaying || e.pointerType !== 'mouse' || !mouseFollowActive) return;
+    const pt = getCanvasPoint(canvas, e);
+    mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
+  });
+
+  function endPointer(e) {
+    if (e.pointerType !== 'mouse' || !mouseFollowActive) return;
+    mouseFollowActive = false;
+    mouseFollowTarget = null;
+    sendDirInput(0, 0);
+  }
+  canvas.addEventListener('pointerup', endPointer);
+  canvas.addEventListener('pointercancel', endPointer);
+}
+setupPlayModeControls();
+
+// Continuously steers toward the (fixed-until-dragged) mouse-follow target while active,
+// same cadence as player.js's equivalent loop.
+setInterval(() => {
+  if (!hostPlaying || !mouseFollowActive || !mouseFollowTarget) return;
+  const me = latestPlayers.find(p => p.id === myId);
+  const originX = me ? me.x : mouseFollowTarget.x;
+  const originY = me ? me.y : mouseFollowTarget.y;
+  const dx = mouseFollowTarget.x - originX, dy = mouseFollowTarget.y - originY;
+  const len = Math.hypot(dx, dy);
+  sendDirInput(len < MOUSE_ARRIVE_DIST ? 0 : dx / len, len < MOUSE_ARRIVE_DIST ? 0 : dy / len);
+}, 50);
 
 function updateCounts(players) {
   const alive = players.filter(p => p.alive && !p.isGhost).length;
@@ -475,7 +725,20 @@ function drawFrame() {
   if (!canvas || canvas.offsetParent === null) return;
   const ctx = canvas.getContext('2d');
   const snap = getRenderSnapshot();
-  ArenaRender.render(ctx, { players: snap.players, dogs: snap.dogs, traps: snap.traps, myId: null, viewMode: 'overview' });
+  let players = snap.players;
+  if (hostPlaying && myLocalJumpUntil > Date.now()) {
+    players = players.map(p => {
+      if (p.id !== myId) return p;
+      const serverJump = p.jumpUntil || 0;
+      return serverJump >= myLocalJumpUntil ? p : { ...p, jumpUntil: myLocalJumpUntil };
+    });
+  }
+  ArenaRender.render(ctx, {
+    players, dogs: snap.dogs, traps: snap.traps,
+    myId: hostPlaying ? myId : null,
+    viewMode: 'overview',
+    mouseActive: hostPlaying && mouseFollowActive
+  });
 }
 
 (function renderLoop() {

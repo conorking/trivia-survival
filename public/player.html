@@ -18,12 +18,34 @@
     <div class="card">
       <label>Room Code</label>
       <input id="codeInput" type="text" maxlength="5" style="text-transform:uppercase; text-align:center; letter-spacing:4px;">
+      <button class="primary" style="margin-top:14px;" onclick="findRoom()">CONTINUE</button>
+      <div class="error-msg" id="joinError"></div>
+    </div>
+  </div>
+
+  <!-- CONNECTING VIEW - shown instead of joinView when arriving via a QR code/shared link
+       that already carries a room code, so the raw code-entry form never flashes on screen. -->
+  <div id="connectingView" class="center" style="display:none;">
+    <h1 class="center">🐾 JOINING…</h1>
+    <div class="card center">
+      <p class="muted">Connecting to room <strong id="connectingCode">-----</strong>...</p>
+    </div>
+  </div>
+
+  <div id="customizeView" style="display:none;">
+    <h1 class="center">🐾 MAKE YOUR ENTRANCE</h1>
+    <div class="card">
       <label>Your Name</label>
       <input id="nameInput" type="text" maxlength="16" placeholder="Enter your name">
       <label>Pick an Avatar Color</label>
       <div class="avatar-grid" id="avatarGrid"></div>
       <button class="primary" style="margin-top:14px;" onclick="joinGame()">JOIN</button>
+      <button class="ghost-btn" style="margin-top:14px; width:100%;" onclick="changeRoom()">CHANGE ROOM</button>
       <div class="error-msg" id="joinError"></div>
+    </div>
+    <div class="card" id="roomPreviewCard" style="display:none;">
+      <h3>Already here (<span id="previewPlayerCount">0</span>)</h3>
+      <div class="player-list" id="previewPlayerList"></div>
     </div>
   </div>
 
@@ -33,6 +55,7 @@
     <div class="card center">
       <p class="muted">Waiting for host to start the game...</p>
       <button class="primary" id="readyBtn" onclick="toggleReady()">READY UP</button>
+      <div class="rematch-banner" id="rematchBanner" style="display:none;"></div>
       <h3 style="margin-top:20px;">Players (<span id="playerCount">0</span>)</h3>
       <div class="player-list" id="playerList"></div>
     </div>
@@ -63,7 +86,8 @@
       <p class="muted" id="endReason"></p>
       <div class="winners-list" id="winnersList"></div>
       <p class="muted" id="rematchHint" style="margin-top:14px; display:none;">Waiting for the host to start a rematch...</p>
-      <button class="primary" style="margin-top:16px;" onclick="backToMenu()">BACK TO MENU</button>
+      <button class="primary" style="margin-top:16px;" onclick="requestRematch()">PLAY ANOTHER ROUND</button>
+      <button class="ghost-btn" style="margin-top:12px; font-size:10px;" onclick="backToMenu()">BACK TO MENU</button>
     </div>
   </div>
 

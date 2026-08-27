@@ -10,17 +10,37 @@ app.set('trust proxy', true); // correct req.ip/protocol when run behind Caddy/n
 const server = http.createServer(app);
 const io = new Server(server, {
   maxHttpBufferSize: 2e6, // allow custom question JSON uploads up to ~2MB
-  // Ping frequently so a dropped/navigated-away client (e.g. a player who hit "back to
-  // menu") is detected within ~10s instead of the ~45s default - otherwise resetForRematch
-  // (and the "need 2 players" gate) can briefly treat a departed player as still present.
-  pingInterval: 5000,
-  pingTimeout: 5000
+  // A genuine, explicit leave ("back to menu", tab close) is detected instantly via the
+  // clients' own socket.disconnect() + pagehide calls below, so this timeout only needs to
+  // catch a socket that's actually gone dark - it doesn't need to be aggressive, and being
+  // too aggressive was actively harmful: a merely backgrounded/throttled mobile tab can miss
+  // a 5s ping window and get dropped even though the player never left, which read as
+  // "desync switching tabs" (see the reconnect re-attach handlers below - the other half of
+  // that fix).
+  pingInterval: 10000,
+  pingTimeout: 20000
 });
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 const manager = new GameManager(io);
-setInterval(() => manager.sweep(), 30000);
+const DISCONNECT_GRACE_MS = 30000; // lobby/ended only - see Room.pruneOffline
+const REMATCH_READY_MIN = 2;
+const REMATCH_COUNTDOWN_MS = 6000;
+
+// Periodically sweeps abandoned rooms, and (independently) drops any player who's been
+// disconnected for a while in a room that isn't mid-round - see Room.pruneOffline for why
+// this never touches an active round.
+setInterval(() => {
+  manager.sweep();
+  for (const room of manager.rooms.values()) {
+    const removed = room.pruneOffline(DISCONNECT_GRACE_MS);
+    if (removed.length) {
+      for (const p of removed) tokenIndex.delete(p.token);
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    }
+  }
+}, 10000);
 
 // Reconnect lookup: token -> {code, playerId}
 const tokenIndex = new Map();
@@ -86,6 +106,15 @@ io.on('connection', socket => {
     joinedRoomCode = room.code;
     isHost = true;
     socket.join(room.code);
+    // If the host was also playing (host:joinAsPlayer) before this reconnect, re-attach that
+    // player too - same idea as a normal player:rejoin, just keyed off the room instead of a
+    // client-supplied token.
+    if (room.hostPlayerId && room.players.has(room.hostPlayerId)) {
+      const hp = room.players.get(room.hostPlayerId);
+      hp.connected = true;
+      hp.socketId = socket.id;
+      playerId = hp.id;
+    }
     socket.emit('host:roomState', publicRoomState(room));
   });
 
@@ -112,11 +141,73 @@ io.on('connection', socket => {
   socket.on('host:rematch', () => {
     const room = manager.getRoom(joinedRoomCode);
     if (!room || !isHost || room.state !== 'ended') return;
-    room.resetForRematch();
-    io.to(room.code).emit('game:rematch', {
-      config: room.config,
-      players: room.getPlayersPublic()
+    startRematch(room);
+  });
+
+  socket.on('player:roomInfo', ({ code } = {}) => {
+    const room = manager.getRoom(code);
+    if (!room) { socket.emit('player:error', { message: 'Room not found.' }); return; }
+    socket.emit('player:roomInfo', {
+      code: room.code,
+      state: room.state,
+      players: room.getPlayersPublic().filter(p => p.connected)
     });
+  });
+
+  socket.on('player:rematch', () => {
+    const room = manager.getRoom(joinedRoomCode);
+    if (!room || !playerId) return;
+    if (room.state === 'ended') {
+      startRematch(room, playerId);
+    } else if (room.state === 'lobby' && room.awaitingRematchStart) {
+      // Someone else already triggered the reset - this just registers this player as ready
+      // for it too (e.g. a second person also hitting "Play Another Round" on their own
+      // end screen after the lobby's already showing).
+      const player = room.players.get(playerId);
+      if (player) player.ready = true;
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    } else {
+      return;
+    }
+    maybeStartRematchCountdown(room);
+  });
+
+  socket.on('host:joinAsPlayer', ({ name, color } = {}) => {
+    const room = manager.getRoom(joinedRoomCode);
+    if (!room || !isHost || room.state !== 'lobby') return;
+    if (playerId && room.players.has(playerId)) return; // already playing
+    const player = room.addPlayer(name || 'Host', color);
+    player.socketId = socket.id;
+    tokenIndex.set(player.token, { code: room.code, playerId: player.id });
+    room.hostPlayerId = player.id;
+    playerId = player.id;
+    socket.emit('host:joinedAsPlayer', {
+      playerId: player.id,
+      token: player.token,
+      arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN }
+    });
+    io.to(room.code).emit('room:players', room.getPlayersPublic());
+  });
+
+  socket.on('host:leavePlayer', () => {
+    const room = manager.getRoom(joinedRoomCode);
+    if (!room || !isHost || !playerId) return;
+    const player = room.players.get(playerId);
+    if (player) {
+      if (room.state === 'lobby') {
+        room.players.delete(playerId);
+        tokenIndex.delete(player.token);
+      } else {
+        // Mid-round: leave them exactly as a normal player who disconnected mid-round would
+        // be left - frozen in place, still vulnerable - rather than deleting them outright.
+        player.connected = false;
+        player.disconnectedAt = Date.now();
+        player.input = { dx: 0, dy: 0 };
+      }
+    }
+    if (room.hostPlayerId === playerId) room.hostPlayerId = null;
+    playerId = null;
+    io.to(room.code).emit('room:players', room.getPlayersPublic());
   });
 
   socket.on('player:join', ({ code, name, color } = {}) => {
@@ -146,6 +237,12 @@ io.on('connection', socket => {
     if (!room) { socket.emit('player:error', { message: 'Room no longer exists.' }); return; }
     const player = room.players.get(ref.playerId);
     if (!player) { socket.emit('player:error', { message: 'Player not found.' }); return; }
+    // A QR rejoin commonly creates a replacement tab before the old tab has closed.
+    // Detach the old socket, and make its disconnect handler harmless below.
+    if (player.socketId && player.socketId !== socket.id) {
+      const oldSocket = io.sockets.sockets.get(player.socketId);
+      if (oldSocket) oldSocket.disconnect(true);
+    }
     player.connected = true;
     player.socketId = socket.id;
     joinedRoomCode = room.code;
@@ -180,6 +277,7 @@ io.on('connection', socket => {
     if (!player) return;
     player.ready = !!readyState;
     io.to(room.code).emit('room:players', room.getPlayersPublic());
+    maybeStartRematchCountdown(room);
   });
 
   socket.on('player:input', (input = {}) => {
@@ -202,17 +300,61 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     const room = manager.getRoom(joinedRoomCode);
     if (!room) return;
-    if (isHost) {
-      room.hostConnected = false;
-    } else if (playerId) {
+    // isHost and playerId aren't mutually exclusive - a host who's also playing (see
+    // host:joinAsPlayer) needs both of these to run, not just one.
+    if (isHost) room.hostConnected = false;
+    if (playerId) {
       const player = room.players.get(playerId);
-      if (player) {
+      // Do not let an obsolete tab mark a replacement connection offline.
+      if (player && player.socketId === socket.id) {
         player.connected = false;
+        player.disconnectedAt = Date.now();
         player.input = { dx: 0, dy: 0 };
       }
       io.to(room.code).emit('room:players', room.getPlayersPublic());
+      maybeStartRematchCountdown(room);
     }
   });
+
+  // triggeringPlayerId (optional): the player whose "Play Another Round" click caused this,
+  // marked ready immediately so they don't also have to hit Ready in the lobby that follows.
+  function startRematch(room, triggeringPlayerId) {
+    room.resetForRematch();
+    const removed = room.pruneOffline(0); // they had the whole prior round to reconnect
+    for (const p of removed) tokenIndex.delete(p.token);
+    if (triggeringPlayerId) {
+      const p = room.players.get(triggeringPlayerId);
+      if (p) p.ready = true;
+    }
+    io.to(room.code).emit('game:rematch', {
+      config: room.config,
+      players: room.getPlayersPublic()
+    });
+  }
+
+  // Auto-starts the next round once enough players are ready in a post-rematch lobby -
+  // never in a brand-new room's first lobby (awaitingRematchStart guards that), since the
+  // host may still be actively configuring there.
+  function maybeStartRematchCountdown(room) {
+    if (!room.awaitingRematchStart || room.state !== 'lobby') return;
+    const readyCount = Array.from(room.players.values()).filter(p => p.connected && p.ready).length;
+    if (readyCount >= REMATCH_READY_MIN) {
+      if (room.rematchTimer) return; // already counting down
+      const endsAt = Date.now() + REMATCH_COUNTDOWN_MS;
+      io.to(room.code).emit('game:rematchCountdown', { endsAt });
+      room.rematchTimer = setTimeout(() => {
+        room.rematchTimer = null;
+        const stillReady = Array.from(room.players.values()).filter(p => p.connected && p.ready).length;
+        if (room.state === 'lobby' && room.awaitingRematchStart && stillReady >= REMATCH_READY_MIN) {
+          room.start(io);
+          io.to(room.code).emit('game:started', { config: room.config });
+        }
+      }, REMATCH_COUNTDOWN_MS);
+    } else if (room.rematchTimer) {
+      room.clearRematchTimer();
+      io.to(room.code).emit('game:rematchCountdown', { endsAt: null });
+    }
+  }
 });
 
 function publicRoomState(room) {
@@ -229,7 +371,10 @@ function publicRoomState(room) {
       options: room.currentQuestion.options,
       endsAt: room.phaseEndsAt,
       trapdoors: room.trapdoors
-    } : null
+    } : null,
+    hostPlayer: (room.hostPlayerId && room.players.has(room.hostPlayerId))
+      ? { id: room.hostPlayerId, token: room.players.get(room.hostPlayerId).token }
+      : null
   };
 }
 

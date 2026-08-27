@@ -17,6 +17,7 @@
     <label for="joinCode" style="text-align:left;">Have a code?</label>
     <input id="joinCode" type="text" maxlength="5" placeholder="ENTER CODE" style="text-align:center; text-transform:uppercase; letter-spacing:4px;">
     <button onclick="joinWithCode()">JOIN GAME</button>
+    <button id="rejoinLastRoom" class="ghost-btn" style="display:none;" onclick="rejoinLastRoom()">REJOIN LAST ROOM</button>
   </div>
 </div>
 <script>
@@ -27,6 +28,12 @@
   function joinWithCode() {
     const code = document.getElementById('joinCode').value.trim().toUpperCase();
     if (!code) return;
+    location.href = `player.html?code=${code}`;
+  }
+  const lastRoom = Object.keys(localStorage).find(key => key.startsWith('trivia_token_'));
+  if (lastRoom) document.getElementById('rejoinLastRoom').style.display = 'block';
+  function rejoinLastRoom() {
+    const code = lastRoom.slice('trivia_token_'.length);
     location.href = `player.html?code=${code}`;
   }
   document.getElementById('joinCode').addEventListener('keydown', e => {
