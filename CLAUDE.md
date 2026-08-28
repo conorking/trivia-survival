@@ -454,6 +454,54 @@ DOG_RADIUS + OBSTACLE_MARGIN`, tightened this round - see "Stuck-dog fixes"),
 mirrors the jump-cooldown constants for local animation prediction. If gameplay feels
 off, these are the first things to touch — tune before restructuring logic.
 
+**The 16 most-tuned scalars now live on a mutable `TUNING` object** (top of
+`rooms.js`), not `const`s — `PLAYER_SPEED`, `DOG_SPEED`, `DOG_CATCH_RADIUS`,
+`DOG_CATCH_CAPACITY_PCT/_MIN`, `DOG_GIVEUP_MS`, `DOG_EAT_MS`, `REVEAL_DELAY_MS`,
+`ESCAPE_MS`, `FALL_ANIM_HOLD_MS`, `DEATH_ANIM_MS`, `TRAP_ROOT_MS`,
+`LUNGE_SPEED_MULT`, `JUMP_SPEED_MULT`, `JUMP_BASE/MAX_COOLDOWN_MS`. Every use-site
+reads `TUNING.X`; `DEFAULT_TUNING` is the frozen baseline, `TUNING_BOUNDS` the
+clamp ranges, and `getTuning()/setTuning(patch)/resetTuning()` are the accessors
+(exported, used by debug mode). Editing the number in `DEFAULT_TUNING` still
+changes the real default. Everything else stays a plain `const`.
+
+## Debug / sandbox mode (`npm run debug`)
+
+Opt-in via `node server/server.js --debug` (or `TS_DEBUG=1`); a normal `npm start`
+leaves it fully off — the `debug:*` socket handlers aren't registered and the host
+UI stays hidden. `GET /api/debug-enabled` reports the flag; `host:roomCreated` /
+`host:roomState` also carry `debug`, `tuning`, `tuningMeta` when on.
+
+- **Bots** (`rooms.js`): `Room.addBot()` = an ordinary player with `isBot`, no
+  socket, no `tokenIndex` entry, `ready:true`. `Room.stepBots(now)` runs at the
+  top of `tick()` and writes each bot's `p.input` per phase — walk to a chosen
+  door in `question` (`room.botAccuracy` = P(correct), default 0.6), bolt off an
+  open pit in `escape`, flee the nearest hunting dog in `resolve`, else hold.
+  Everything downstream (separation, cage occupancy, hunt pool, alive counts,
+  `last_survivor`) treats bots exactly like humans. `getPlayersPublic()` adds
+  `isBot`. `Room.removeBots(n)` (lobby/ended only).
+- **Debug socket events** (`server.js`, inside `if (DEBUG)`, all host-only):
+  `debug:addBots/removeBots/setBotAccuracy`, `debug:sandboxStart {count, config,
+  joinAsPlayer}` (adds bots + optionally joins the host as a player + `room.start`,
+  **no 2-player check**), `debug:startGame`, `debug:skipPhase` (sets
+  `phaseEndsAt`/`hardTimeoutAt` to now — ends whatever the current phase waits
+  on, and forces the dog chase to wrap), `debug:replayQuestion` /
+  `debug:gotoQuestion {index}` (both → `Room.debugReplayRound(io, i)`, a
+  start()-style reset that keeps or sets the question index),
+  `debug:killMe/reviveMe/reviveAll`, `debug:endGame`, `debug:setTuning {patch}` /
+  `debug:resetTuning` (broadcast `debug:tuning` with the new values — tuning is
+  process-global, not per-room).
+- **Host UI** (`host.html` / `host.js`, gated by `body.debug-enabled`): a
+  "🧪 Sandbox / Debug" card in the lobby (bot buttons, accuracy slider,
+  "control an avatar" checkbox, **SANDBOX START**) and a fixed `#debugDock`
+  overlay during a game (Skip Phase, Replay Q, Prev/Next/Goto Q, Kill/Revive Me,
+  Revive All, End Game, and a collapsible Tuning list built from
+  `DEBUG_TUNABLES`). Both are `cast-hide`. `initDebug()` wires it only when the
+  server says debug is on; `DEBUG_TUNABLES` in `host.js` is the display list, the
+  server re-clamps every value.
+- No `arena-render.js` / `player.js` changes — bots render as normal players
+  (roster shows 🤖), and the avatar-control path reuses the existing
+  `host:joinAsPlayer` flow.
+
 ## Reconnect model
 
 Player gets a random `token` on join, stored client-side in `localStorage` keyed by room

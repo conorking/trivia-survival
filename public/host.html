@@ -100,6 +100,27 @@
       <button class="primary" style="margin-top:16px;" id="startBtn" onclick="startGame()" disabled>START GAME</button>
       <div class="error-msg" id="startError"></div>
     </div>
+
+    <div class="card debug-card cast-hide">
+      <h2>🧪 Sandbox / Debug</h2>
+      <p class="muted">Solo testing: fill the room with AI bots and start without waiting for real players.</p>
+      <div class="row">
+        <button class="ghost-btn" onclick="debugAddBots(1)">+1 BOT</button>
+        <button class="ghost-btn" onclick="debugAddBots(5)">+5 BOTS</button>
+        <button class="ghost-btn" onclick="debugAddBots(15)">+15 BOTS</button>
+        <button class="ghost-btn" onclick="debugClearBots()">CLEAR BOTS</button>
+      </div>
+      <label>Bot answer accuracy: <span id="botAccVal">60</span>%</label>
+      <div class="slider-row">
+        <input type="range" id="botAccRange" min="0" max="100" step="5" value="60"
+               oninput="debugSetBotAccuracy(this.value)">
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="dbgControlAvatar" checked>
+        <span>Control an avatar (join myself as a player on start)</span>
+      </label>
+      <button class="primary" style="margin-top:12px; width:100%;" onclick="debugSandboxStart()">🧪 SANDBOX START</button>
+    </div>
   </div>
 
   <!-- GAME VIEW -->
@@ -140,6 +161,37 @@
   </div>
 
   <div id="toast" class="toast"></div>
+
+  <!-- DEBUG DOCK - fixed overlay, only shown during a game when the server is in --debug mode -->
+  <div id="debugDock" class="debug-dock cast-hide">
+    <div class="debug-dock-head">
+      <strong>🧪 DEBUG</strong>
+      <button class="debug-mini" onclick="document.getElementById('debugDock').classList.toggle('collapsed')">▾</button>
+    </div>
+    <div class="debug-dock-body">
+      <div class="debug-sec">
+        <button class="debug-mini" onclick="debugEmit('debug:skipPhase')">SKIP PHASE ⏭</button>
+        <button class="debug-mini" onclick="debugEmit('debug:replayQuestion')">REPLAY Q ↻</button>
+      </div>
+      <div class="debug-sec">
+        <button class="debug-mini" onclick="debugGoto(-1)">◀ PREV Q</button>
+        <button class="debug-mini" onclick="debugGoto(1)">NEXT Q ▶</button>
+        <span>go to Q<input type="number" id="dbgGotoQ" min="1" style="width:56px;"> <button class="debug-mini" onclick="debugGotoExact()">GO</button></span>
+      </div>
+      <div class="debug-sec">
+        <button class="debug-mini" onclick="debugEmit('debug:killMe')">KILL ME 💀</button>
+        <button class="debug-mini" onclick="debugEmit('debug:reviveMe')">REVIVE ME</button>
+        <button class="debug-mini" onclick="debugEmit('debug:reviveAll')">REVIVE ALL</button>
+        <button class="debug-mini" onclick="debugEmit('debug:endGame')">END GAME</button>
+      </div>
+      <div class="debug-sec debug-tuning-head">
+        <strong>Tuning</strong>
+        <button class="debug-mini" onclick="debugEmit('debug:resetTuning')">RESET DEFAULTS</button>
+        <button class="debug-mini" onclick="document.getElementById('debugTuning').classList.toggle('hidden')">▾</button>
+      </div>
+      <div id="debugTuning" class="debug-tuning hidden"></div>
+    </div>
+  </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

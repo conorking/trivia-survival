@@ -29,7 +29,7 @@ socket.io.on('reconnect', attachToRoom);
 // waiting for the transport to time out - keeps room presence data accurate promptly.
 window.addEventListener('pagehide', () => { socket.disconnect(); });
 
-socket.on('host:roomCreated', ({ code, config }) => {
+socket.on('host:roomCreated', ({ code, config, debug, tuning, tuningMeta }) => {
   roomCode = code;
   currentConfig = config;
   sessionStorage.setItem('trivia_host_room', code);
@@ -37,6 +37,7 @@ socket.on('host:roomCreated', ({ code, config }) => {
   document.getElementById('startError').textContent = '';
   showRoomInfo(code);
   populateConfigForm(config);
+  initDebug(debug, tuning, tuningMeta);
 });
 
 socket.on('host:roomState', (state) => {
@@ -46,6 +47,8 @@ socket.on('host:roomState', (state) => {
   showRoomInfo(state.code);
   populateConfigForm(state.config);
   renderPlayerList(state.players);
+  initDebug(state.debug, state.tuning, state.tuningMeta);
+  setDebugDockVisible(state.state !== 'lobby' && state.state !== 'ended');
   // Restores Play mode across a reconnect - the server remembers who the host's own
   // player entity is (room.hostPlayerId) even though this fresh connection doesn't.
   if (state.hostPlayer) {
@@ -114,6 +117,8 @@ function renderQuestion(data) {
   }
   if (data.trapdoors) ArenaRender.setTrapdoors(data.trapdoors);
   ArenaRender.onNewQuestion();
+  currentQIndex = data.index;
+  currentQTotal = data.total;
 }
 
 socket.on('game:question', renderQuestion);
@@ -212,6 +217,7 @@ socket.on('game:rematch', ({ config, players }) => {
   document.getElementById('lobbyView').style.display = 'block';
   populateConfigForm(config);
   renderPlayerList(players);
+  setDebugDockVisible(false);
   showToast('Rematch! Players can ready up to auto-start, or hit Start Game yourself.');
 });
 
@@ -349,7 +355,7 @@ function renderPlayerList(players) {
   list.innerHTML = players.map(p => `
     <div class="player-chip ${p.ready ? 'ready' : 'not-ready'} ${!p.connected ? 'dead' : ''}">
       <span class="dot" style="background:${p.color}"></span>
-      ${p.name} ${p.connected ? '' : '(offline)'}
+      ${p.name}${p.isBot ? ' 🤖' : ''} ${p.connected || p.isBot ? '' : '(offline)'}
       ${p.ready ? '<span class="ready-tick">✔</span>' : ''}
     </div>
   `).join('');
@@ -498,6 +504,7 @@ function showGameView() {
   document.getElementById('gameCodeVal').textContent = roomCode || '-----';
   const canvas = document.getElementById('arena');
   ArenaRender.fitCanvas(canvas);
+  setDebugDockVisible(true);
 }
 
 document.addEventListener('visibilitychange', () => {
@@ -745,3 +752,112 @@ function drawFrame() {
   drawFrame();
   requestAnimationFrame(renderLoop);
 })();
+
+// ---- Debug / sandbox mode (host side) ----
+// Everything here is inert unless the server was launched with --debug: initDebug()
+// only wires up when told the server is in debug mode, and the DOM it controls is
+// hidden by CSS until body.debug-enabled is set.
+let debugEnabled = false;
+let debugTuningMeta = null;
+let currentQIndex = 0, currentQTotal = 0;
+
+// The curated knobs the panel exposes, in display order. Ranges are UI hints only -
+// the server re-clamps everything in setTuning().
+const DEBUG_TUNABLES = [
+  { key: 'PLAYER_SPEED', label: 'Player speed', min: 40, max: 600, step: 5 },
+  { key: 'DOG_SPEED', label: 'Dog speed', min: 40, max: 600, step: 5 },
+  { key: 'DOG_CATCH_RADIUS', label: 'Dog catch radius', min: 6, max: 120, step: 1 },
+  { key: 'DOG_CATCH_CAPACITY_PCT', label: 'Dog catch cap (% of pool)', min: 0, max: 1, step: 0.01 },
+  { key: 'DOG_CATCH_CAPACITY_MIN', label: 'Dog catch cap (min)', min: 0, max: 20, step: 1 },
+  { key: 'DOG_GIVEUP_MS', label: 'Dog give-up (ms)', min: 1000, max: 40000, step: 250 },
+  { key: 'DOG_EAT_MS', label: 'Dog eat pause (ms)', min: 0, max: 8000, step: 100 },
+  { key: 'LUNGE_SPEED_MULT', label: 'Lunge speed x', min: 1, max: 5, step: 0.1 },
+  { key: 'REVEAL_DELAY_MS', label: 'Reveal delay (ms)', min: 0, max: 10000, step: 100 },
+  { key: 'ESCAPE_MS', label: 'Escape window (ms)', min: 400, max: 12000, step: 100 },
+  { key: 'FALL_ANIM_HOLD_MS', label: 'Fall hold (ms)', min: 0, max: 5000, step: 100 },
+  { key: 'DEATH_ANIM_MS', label: 'Death hold (ms)', min: 0, max: 5000, step: 100 },
+  { key: 'TRAP_ROOT_MS', label: 'Bear-trap root (ms)', min: 0, max: 8000, step: 100 },
+  { key: 'JUMP_SPEED_MULT', label: 'Jump speed x', min: 1, max: 3, step: 0.05 },
+  { key: 'JUMP_BASE_COOLDOWN_MS', label: 'Jump base cooldown (ms)', min: 0, max: 3000, step: 50 },
+  { key: 'JUMP_MAX_COOLDOWN_MS', label: 'Jump max cooldown (ms)', min: 0, max: 8000, step: 100 }
+];
+
+function initDebug(enabled, tuning, tuningMeta) {
+  if (!enabled) return;
+  debugEnabled = true;
+  debugTuningMeta = tuningMeta || debugTuningMeta;
+  document.body.classList.add('debug-enabled');
+  if (!document.getElementById('debugTuning').dataset.built) buildTuningRows();
+  if (tuning) populateTuning(tuning);
+}
+
+function setDebugDockVisible(show) {
+  const dock = document.getElementById('debugDock');
+  if (dock) dock.style.display = (debugEnabled && show) ? 'block' : 'none';
+}
+
+function buildTuningRows() {
+  const wrap = document.getElementById('debugTuning');
+  wrap.dataset.built = '1';
+  wrap.innerHTML = DEBUG_TUNABLES.map(t => `
+    <div class="debug-tune-row">
+      <label for="tune_${t.key}">${t.label}</label>
+      <input type="range" id="tune_${t.key}" min="${t.min}" max="${t.max}" step="${t.step}">
+      <input type="number" id="tunen_${t.key}" min="${t.min}" max="${t.max}" step="${t.step}">
+    </div>
+  `).join('');
+  for (const t of DEBUG_TUNABLES) {
+    const range = document.getElementById(`tune_${t.key}`);
+    const num = document.getElementById(`tunen_${t.key}`);
+    const send = debounce(() => socket.emit('debug:setTuning', { patch: { [t.key]: Number(num.value) } }), 150);
+    range.addEventListener('input', () => { num.value = range.value; send(); });
+    num.addEventListener('input', () => { range.value = num.value; send(); });
+  }
+}
+
+function populateTuning(vals) {
+  for (const t of DEBUG_TUNABLES) {
+    if (vals[t.key] == null) continue;
+    const range = document.getElementById(`tune_${t.key}`);
+    const num = document.getElementById(`tunen_${t.key}`);
+    if (range) range.value = vals[t.key];
+    if (num) num.value = vals[t.key];
+  }
+}
+
+function debounce(fn, ms) {
+  let h = null;
+  return (...a) => { clearTimeout(h); h = setTimeout(() => fn(...a), ms); };
+}
+
+socket.on('debug:tuning', (vals) => populateTuning(vals));
+
+function debugEmit(evt) { socket.emit(evt); }
+
+function debugAddBots(n) { socket.emit('debug:addBots', { count: n }); }
+function debugClearBots() { socket.emit('debug:removeBots', {}); }
+function debugSetBotAccuracy(pct) {
+  document.getElementById('botAccVal').textContent = pct;
+  socket.emit('debug:setBotAccuracy', { value: Number(pct) / 100 });
+}
+
+function debugSandboxStart() {
+  socket.emit('debug:sandboxStart', {
+    count: 5,
+    config: collectConfig(),
+    joinAsPlayer: document.getElementById('dbgControlAvatar').checked,
+    name: 'Host',
+    color: hostSelectedColor
+  });
+}
+
+function debugGoto(delta) {
+  const target = currentQIndex + delta;
+  if (target < 0 || target >= currentQTotal) return;
+  socket.emit('debug:gotoQuestion', { index: target });
+}
+function debugGotoExact() {
+  const v = Number(document.getElementById('dbgGotoQ').value);
+  if (!v) return;
+  socket.emit('debug:gotoQuestion', { index: v - 1 }); // UI is 1-based
+}

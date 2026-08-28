@@ -3,7 +3,15 @@ const http = require('http');
 const os = require('os');
 const path = require('path');
 const { Server } = require('socket.io');
-const { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN } = require('./rooms');
+const {
+  GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN,
+  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning
+} = require('./rooms');
+
+// Debug/sandbox mode (npm run debug, or TS_DEBUG=1). Off for a normal `npm start`:
+// the debug socket handlers below aren't registered and the host UI stays hidden.
+const DEBUG = process.argv.includes('--debug') || process.env.TS_DEBUG === '1';
+if (DEBUG) console.log('[debug] sandbox mode ENABLED - bots, solo start, phase/tuning controls available on the host page');
 
 const app = express();
 app.set('trust proxy', true); // correct req.ip/protocol when run behind Caddy/nginx/etc.
@@ -70,7 +78,10 @@ io.on('connection', socket => {
     socket.join(room.code);
     socket.emit('host:roomCreated', {
       code: room.code,
-      config: room.config
+      config: room.config,
+      debug: DEBUG,
+      tuning: DEBUG ? getTuning() : null,
+      tuningMeta: DEBUG ? { defaults: DEFAULT_TUNING, bounds: TUNING_BOUNDS } : null
     });
   });
 
@@ -143,6 +154,139 @@ io.on('connection', socket => {
     if (!room || !isHost || room.state !== 'ended') return;
     startRematch(room);
   });
+
+  // ---- Debug / sandbox handlers (only registered when the server runs with --debug) ----
+  if (DEBUG) {
+    const debugRoom = () => {
+      const room = manager.getRoom(joinedRoomCode);
+      return (room && isHost) ? room : null;
+    };
+
+    // Joins the current socket to the room as a player (same as host:joinAsPlayer) - used
+    // by debug:sandboxStart's "control an avatar" option. No-ops if already playing.
+    const joinHostAsPlayer = (room, name, color) => {
+      if (playerId && room.players.has(playerId)) return;
+      const player = room.addPlayer(name || 'Host', color);
+      player.socketId = socket.id;
+      tokenIndex.set(player.token, { code: room.code, playerId: player.id });
+      room.hostPlayerId = player.id;
+      playerId = player.id;
+      socket.emit('host:joinedAsPlayer', {
+        playerId: player.id,
+        token: player.token,
+        arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN }
+      });
+    };
+
+    socket.on('debug:addBots', ({ count = 1 } = {}) => {
+      const room = debugRoom();
+      if (!room || room.state !== 'lobby') return;
+      const n = Math.max(1, Math.min(50, Number(count) || 1));
+      for (let i = 0; i < n; i++) room.addBot();
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    });
+
+    socket.on('debug:removeBots', ({ count } = {}) => {
+      const room = debugRoom();
+      if (!room) return;
+      room.removeBots(count == null ? Infinity : Math.max(1, Number(count) || 1));
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    });
+
+    socket.on('debug:setBotAccuracy', ({ value } = {}) => {
+      const room = debugRoom();
+      if (!room) return;
+      room.botAccuracy = Math.max(0, Math.min(1, Number(value)));
+    });
+
+    socket.on('debug:sandboxStart', ({ count = 5, config, joinAsPlayer, name, color } = {}) => {
+      const room = debugRoom();
+      if (!room || room.state !== 'lobby') return;
+      if (config) room.config = sanitizeConfig(config, room.config);
+      const want = Math.max(0, Math.min(50, Number(count) || 0));
+      const have = Array.from(room.players.values()).filter(p => p.isBot).length;
+      for (let i = have; i < want; i++) room.addBot();
+      if (joinAsPlayer) joinHostAsPlayer(room, name, color);
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+      room.start(io);
+      io.to(room.code).emit('game:started', { config: room.config });
+    });
+
+    socket.on('debug:startGame', ({ config } = {}) => {
+      const room = debugRoom();
+      if (!room || room.state !== 'lobby') return;
+      if (config) room.config = sanitizeConfig(config, room.config);
+      room.start(io);
+      io.to(room.code).emit('game:started', { config: room.config });
+    });
+
+    // Ends the current phase immediately. Setting phaseEndsAt/hardTimeoutAt to now makes
+    // the next tick fire whichever transition that phase is waiting on (and forces the
+    // dog chase to wrap, since 'resolve' has no phaseEndsAt-gated exit of its own).
+    socket.on('debug:skipPhase', () => {
+      const room = debugRoom();
+      if (!room || room.state === 'lobby' || room.state === 'ended') return;
+      room.phaseEndsAt = Date.now();
+      room.hardTimeoutAt = Date.now();
+    });
+
+    socket.on('debug:replayQuestion', () => {
+      const room = debugRoom();
+      if (!room || room.state === 'lobby') return;
+      room.debugReplayRound(io);
+    });
+
+    socket.on('debug:gotoQuestion', ({ index = 0 } = {}) => {
+      const room = debugRoom();
+      if (!room || room.state === 'lobby') return;
+      room.debugReplayRound(io, Number(index) || 0);
+    });
+
+    socket.on('debug:endGame', () => {
+      const room = debugRoom();
+      if (!room || room.state === 'lobby') return;
+      room.manualEnd = true;
+    });
+
+    socket.on('debug:killMe', () => {
+      const room = debugRoom();
+      if (!room || !playerId) return;
+      const p = room.players.get(playerId);
+      if (!p) return;
+      p.alive = false; p.isGhost = true; p.cagedAt = null;
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    });
+
+    socket.on('debug:reviveMe', () => {
+      const room = debugRoom();
+      if (!room || !playerId) return;
+      const p = room.players.get(playerId);
+      if (!p) return;
+      p.alive = true; p.isGhost = false; p.cagedAt = null;
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    });
+
+    socket.on('debug:reviveAll', () => {
+      const room = debugRoom();
+      if (!room) return;
+      for (const p of room.players.values()) {
+        p.alive = true; p.isGhost = false; p.cagedAt = null;
+        if (p.botState) p.botState.decidedForIndex = -1;
+      }
+      io.to(room.code).emit('room:players', room.getPlayersPublic());
+    });
+
+    socket.on('debug:setTuning', ({ patch } = {}) => {
+      if (!isHost || !patch) return;
+      const vals = setTuning(patch);
+      io.emit('debug:tuning', vals); // global - every debug host page stays in sync
+    });
+
+    socket.on('debug:resetTuning', () => {
+      if (!isHost) return;
+      io.emit('debug:tuning', resetTuning());
+    });
+  }
 
   socket.on('player:roomInfo', ({ code } = {}) => {
     const room = manager.getRoom(code);
@@ -374,12 +518,19 @@ function publicRoomState(room) {
     } : null,
     hostPlayer: (room.hostPlayerId && room.players.has(room.hostPlayerId))
       ? { id: room.hostPlayerId, token: room.players.get(room.hostPlayerId).token }
-      : null
+      : null,
+    debug: DEBUG,
+    tuning: DEBUG ? getTuning() : null,
+    tuningMeta: DEBUG ? { defaults: DEFAULT_TUNING, bounds: TUNING_BOUNDS } : null
   };
 }
 
 app.get('/api/arena', (req, res) => {
   res.json({ w: ARENA_W, h: ARENA_H, trapdoors: TRAPDOORS, dogPen: DOG_PEN });
+});
+
+app.get('/api/debug-enabled', (req, res) => {
+  res.json({ enabled: DEBUG });
 });
 
 // Lets the host page swap a localhost/127.0.0.1 origin for a real LAN address, so the

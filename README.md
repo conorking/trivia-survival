@@ -20,6 +20,17 @@ Then open:
 To test multiplayer locally, open the host in one tab and a few player tabs (or your phone
 on the same wifi network, using your computer's local IP instead of `localhost`).
 
+### Solo testing (debug / sandbox mode)
+
+`npm run debug` starts the server with a sandbox mode for iterating on gameplay alone.
+The host page then shows a **🧪 Sandbox / Debug** panel: spawn AI bots, tick "control an
+avatar", and hit **SANDBOX START** to launch a game immediately (no 2-player minimum).
+During a game a debug dock gives you Skip Phase / Replay Question / jump-to-question /
+kill-or-revive controls plus live sliders for the main tuning constants (dog speed,
+phase timings, jump, escape window, …) that apply without a restart — hit **Reset
+defaults** to restore them. A normal `npm start` has none of this; the debug handlers
+aren't even registered.
+
 ## Playing over WiFi (same network, no deploy needed)
 
 Other devices on the same network (phones, laptops) can join without any deployment —

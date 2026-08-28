@@ -20,18 +20,57 @@ const HARD_QUESTIONS = JSON.parse(
 const ARENA_W = 900;
 const ARENA_H = 640;
 const PLAYER_RADIUS = 14;
-const PLAYER_SPEED = 235; // px/sec
-const DOG_SPEED = 185; // px/sec
 const DOG_RADIUS = 13;
 const DOG_HOME_RADIUS = 26; // how close to its pen slot counts as "home"
-const DOG_CATCH_RADIUS = 24;
-const REVEAL_DELAY_MS = 3000;
-const ESCAPE_MS = 2400; // window to flee a just-opened wrong door before it becomes lethal
-const DOG_CATCH_CAPACITY_PCT = 0.25; // each dog's catch cap = this fraction of that round's hunt pool
-const DOG_CATCH_CAPACITY_MIN = 2; // ...but never less than this
-const DOG_GIVEUP_MS = 9000; // a dog heads home if it hasn't filled up by this long after release
-const DOG_EAT_MS = 2500; // a dog pauses to "eat" after a catch before resuming the hunt
 const DOG_PHASE_HARD_TIMEOUT_MS = 30000; // last-resort safety net only, never kills anyone
+
+// ---- Live-tunable constants (see debug mode) ----
+// These are the knobs the debug panel can change at runtime. They're a single mutable
+// object (process-global - fine for a single-dev sandbox) rather than `const`s so
+// `setTuning()` can patch them without a server restart; every use-site reads `TUNING.X`.
+// `DEFAULT_TUNING` is the frozen baseline "Reset defaults" restores. Non-tunable
+// constants (radii, arena geometry, TICK_MS, stuck-dog params, cell scaling, lunge
+// timing) stay as plain `const`s below.
+const DEFAULT_TUNING = Object.freeze({
+  PLAYER_SPEED: 235,          // px/sec
+  DOG_SPEED: 185,             // px/sec
+  DOG_CATCH_RADIUS: 24,
+  REVEAL_DELAY_MS: 3000,
+  ESCAPE_MS: 2400,            // window to flee a just-opened wrong door before it becomes lethal
+  FALL_ANIM_HOLD_MS: 1000,    // grace hold after escape-window stragglers fall, before dogs release
+  DEATH_ANIM_MS: 1300,        // grace hold after the last death so the fall/death animation can finish
+  DOG_CATCH_CAPACITY_PCT: 0.25, // each dog's catch cap = this fraction of that round's hunt pool
+  DOG_CATCH_CAPACITY_MIN: 2,  // ...but never less than this
+  DOG_GIVEUP_MS: 9000,        // a dog heads home if it hasn't filled up by this long after release
+  DOG_EAT_MS: 2500,           // a dog pauses to "eat" after a catch before resuming the hunt
+  TRAP_ROOT_MS: 1800,         // how long a bear trap roots whoever steps on it
+  LUNGE_SPEED_MULT: 2.1,
+  JUMP_SPEED_MULT: 1.55,      // speed multiplier while airborne & moving
+  JUMP_BASE_COOLDOWN_MS: 300, // cooldown after the first jump in a fresh chain
+  JUMP_MAX_COOLDOWN_MS: 2000  // cooldown cap - "a couple of seconds"
+});
+const TUNING = { ...DEFAULT_TUNING };
+// Sane [min, max] guards so a fat-fingered debug value can't wedge the state machine.
+const TUNING_BOUNDS = {
+  PLAYER_SPEED: [20, 1200], DOG_SPEED: [20, 1200], DOG_CATCH_RADIUS: [4, 200],
+  REVEAL_DELAY_MS: [0, 20000], ESCAPE_MS: [200, 30000], FALL_ANIM_HOLD_MS: [0, 10000],
+  DEATH_ANIM_MS: [0, 10000], DOG_CATCH_CAPACITY_PCT: [0, 1], DOG_CATCH_CAPACITY_MIN: [0, 100],
+  DOG_GIVEUP_MS: [1000, 120000], DOG_EAT_MS: [0, 20000], TRAP_ROOT_MS: [0, 20000],
+  LUNGE_SPEED_MULT: [1, 6], JUMP_SPEED_MULT: [1, 4], JUMP_BASE_COOLDOWN_MS: [0, 5000],
+  JUMP_MAX_COOLDOWN_MS: [0, 20000]
+};
+function setTuning(patch = {}) {
+  for (const [k, raw] of Object.entries(patch)) {
+    const bounds = TUNING_BOUNDS[k];
+    if (!bounds) continue;
+    const v = Number(raw);
+    if (!Number.isFinite(v)) continue;
+    TUNING[k] = Math.max(bounds[0], Math.min(bounds[1], v));
+  }
+  return { ...TUNING };
+}
+function getTuning() { return { ...TUNING }; }
+function resetTuning() { Object.assign(TUNING, DEFAULT_TUNING); return { ...TUNING }; }
 // Stuck-dog fallback: if a hunting/returning dog makes negligible progress across a
 // couple of consecutive check windows (steering stuck in a local minimum - e.g. wedged
 // against a corner), it temporarily ignores obstacle avoidance (still hard-clipped so it
@@ -43,17 +82,13 @@ const STUCK_CHECK_MS = 700; // how often progress is sampled
 const STUCK_DIST_THRESHOLD = 10; // px moved per window below which counts as "no progress"
 const STUCK_STRIKES_TO_UNSTICK = 2; // consecutive stalled windows before intervening
 const UNSTICK_MS = 900; // how long obstacle-avoidance is suspended once triggered
-const DEATH_ANIM_MS = 1300; // grace hold after the last death so the fall/death animation can finish
 const HOME_SETTLE_MS = 500; // small buffer when the round ends via dogs-all-home w/ survivors
-const FALL_ANIM_HOLD_MS = 1000; // grace hold after escape-window stragglers fall, before dogs release
 const OBSTACLE_MARGIN = 14; // extra clearance dogs try to keep from trapdoor rects
 const TRAP_TRIGGER_RADIUS = 20;
-const TRAP_ROOT_MS = 1800; // how long a bear trap roots whoever steps on it
 // Dog lunge (opt-in via config.dogLunge: 'off' | 'low' | 'high')
 const LUNGE_RANGE = 140;
 const LUNGE_WINDUP_MS = 150; // brief telegraph pause before the burst
 const LUNGE_DURATION_MS = 450;
-const LUNGE_SPEED_MULT = 2.1;
 const LUNGE_PRESETS = {
   // chance is rolled at most once per checkIntervalMs, only while in range & off cooldown
   low: { chance: 0.05, checkIntervalMs: 800, cooldownMs: 7000 },
@@ -69,10 +104,7 @@ const PLAYER_COUNT_HEIGHT_THRESHOLD = 20; // no boost below this many players
 const PLAYER_COUNT_HEIGHT_PER_PLAYER = 1.4;
 const PLAYER_COUNT_HEIGHT_MAX_BOOST = 90;
 const JUMP_MS = 320;
-const JUMP_SPEED_MULT = 1.55; // move faster than usual while airborne, in whatever direction you're pressing
-const JUMP_BASE_COOLDOWN_MS = 300; // cooldown after the first jump in a fresh chain
 const JUMP_COOLDOWN_GROWTH = 2; // cooldown doubles each consecutive jump
-const JUMP_MAX_COOLDOWN_MS = 2000; // cap - "a couple of seconds"
 const JUMP_CHAIN_RESET_MS = 2500; // this long without jumping resets the chain back to fresh
 const TICK_MS = 40; // 25Hz
 
@@ -321,7 +353,7 @@ function createPennedDogs() {
     angle: DOG_HOME_ANGLE,
     targetId: null,
     catches: 0,
-    capacity: DOG_CATCH_CAPACITY_MIN,
+    capacity: TUNING.DOG_CATCH_CAPACITY_MIN,
     state: 'home', // home | hunting | eating | returning
     giveUpAt: 0,
     eatUntil: 0,
@@ -373,6 +405,129 @@ class Room {
     this.hostPlayerId = null; // set while the host is also playing (see host:joinAsPlayer)
     this.awaitingRematchStart = false; // true once back in the lobby via a rematch (not a brand-new room)
     this.rematchTimer = null;
+    this.botSeq = 0; // running counter for bot names (debug mode)
+    this.botAccuracy = 0.6; // P(a bot picks the correct door) in the question phase
+  }
+
+  // ---- Debug-mode bots ----
+  // A bot is an ordinary player with `isBot` set and no socket/token - it counts toward
+  // the roster, the hunt pool, cage occupancy and alive counts exactly like a human, but
+  // its input each tick is computed by stepBots() instead of arriving over the wire.
+  addBot() {
+    const colors = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
+    const player = this.addPlayer('Bot ' + (++this.botSeq), colors[this.botSeq % colors.length]);
+    player.isBot = true;
+    player.ready = true;
+    player.botState = { decidedForIndex: -1, doorTarget: null, jx: 0, jy: 0 };
+    return player;
+  }
+
+  removeBots(n = Infinity) {
+    if (this.state !== 'lobby' && this.state !== 'ended') return 0;
+    let removed = 0;
+    for (const [id, p] of [...this.players]) {
+      if (removed >= n) break;
+      if (!p.isBot) continue;
+      this.players.delete(id);
+      if (this.hostPlayerId === id) this.hostPlayerId = null;
+      removed++;
+    }
+    if (this.players.size === 0) this.botSeq = 0;
+    return removed;
+  }
+
+  // Computes {dx,dy} input for every bot for this tick, based on the current phase.
+  // Called at the top of tick() before the shared movement/containment loop.
+  stepBots(now) {
+    const bots = Array.from(this.players.values()).filter(p => p.isBot);
+    if (!bots.length) return;
+    const doorCenter = (key) => {
+      const r = this.trapdoors[key];
+      return { x: r.x + r.w / 2, y: r.y + r.h / 2 };
+    };
+    const toward = (p, tx, ty, arriveDist = 6) => {
+      const dx = tx - p.x, dy = ty - p.y;
+      const len = Math.hypot(dx, dy);
+      if (len < arriveDist) return { dx: 0, dy: 0 };
+      return { dx: dx / len, dy: dy / len };
+    };
+    for (const p of bots) {
+      if (!p.alive || p.isGhost) { p.input = { dx: 0, dy: 0 }; continue; }
+      const bs = p.botState || (p.botState = { decidedForIndex: -1, doorTarget: null, jx: 0, jy: 0 });
+
+      if (this.state === 'question') {
+        if (bs.decidedForIndex !== this.currentQuestionIndex) {
+          bs.decidedForIndex = this.currentQuestionIndex;
+          const correct = this.currentQuestion ? this.currentQuestion.correct : 'A';
+          const keys = ['A', 'B', 'C'];
+          bs.doorTarget = Math.random() < this.botAccuracy
+            ? correct
+            : keys[Math.floor(Math.random() * 3)];
+          bs.jx = (Math.random() - 0.5) * 40;
+          bs.jy = (Math.random() - 0.5) * 30;
+        }
+        const c = doorCenter(bs.doorTarget || 'A');
+        p.input = toward(p, c.x + bs.jx, c.y + bs.jy);
+      } else if (this.state === 'escape') {
+        // Standing on an open pit? Bolt for open field. Otherwise hold position.
+        let onPit = null;
+        for (const key of ['A', 'B', 'C']) {
+          if (this.pitOpen[key] && !p.cagedAt && rectContains(this.trapdoors[key], p.x, p.y)) { onPit = key; break; }
+        }
+        p.input = onPit ? toward(p, ARENA_W / 2 + bs.jx, ARENA_H * 0.45 + bs.jy, 4) : { dx: 0, dy: 0 };
+      } else if (this.state === 'resolve') {
+        // Flee the nearest hunting dog; hug away from walls so we don't self-corner.
+        let nearest = null, nd = Infinity;
+        for (const d of this.dogs) {
+          if (d.state !== 'hunting' && d.state !== 'eating') continue;
+          const dist = Math.hypot(d.x - p.x, d.y - p.y);
+          if (dist < nd) { nd = dist; nearest = d; }
+        }
+        if (!nearest) { p.input = { dx: 0, dy: 0 }; continue; }
+        let dx = p.x - nearest.x, dy = p.y - nearest.y;
+        const len = Math.hypot(dx, dy) || 1;
+        dx /= len; dy /= len;
+        const M = 60;
+        if (p.x < M) dx += 1; else if (p.x > ARENA_W - M) dx -= 1;
+        if (p.y < M + 90) dy += 1; else if (p.y > ARENA_H - M) dy -= 1;
+        const l2 = Math.hypot(dx, dy) || 1;
+        p.input = { dx: dx / l2, dy: dy / l2 };
+      } else {
+        p.input = { dx: 0, dy: 0 };
+      }
+    }
+  }
+
+  // Re-run the current question from the top (debug). Resets players/dogs/hazards the
+  // same way start() does, but keeps currentQuestionIndex where it is.
+  debugReplayRound(io, index = this.currentQuestionIndex) {
+    if (!this.questions.length) return;
+    const i = clamp(Math.round(index), 0, this.questions.length - 1);
+    this.currentQuestionIndex = i;
+    this.currentQuestion = this.questions[i];
+    this.dogs = createPennedDogs();
+    this.traps = [];
+    this.cages = { A: [], B: [], C: [] };
+    this.exposed = [];
+    this.resetHazards();
+    this.lastDeathAt = 0;
+    this.hardTimeoutAt = 0;
+    this.manualEnd = false;
+    for (const p of this.players.values()) {
+      p.alive = true;
+      p.isGhost = false;
+      p.cagedAt = null;
+      p.rootedUntil = 0;
+      p.input = { dx: 0, dy: 0 };
+      if (p.botState) p.botState.decidedForIndex = -1;
+      const spawn = randomSpawn();
+      p.x = spawn.x; p.y = spawn.y;
+    }
+    this.computeTrapdoorsForRound();
+    this.state = 'question';
+    this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
+    if (!this.loop) this.startLoop(io);
+    this.emitQuestion(io);
   }
 
   addPlayer(name, avatarColor) {
@@ -439,7 +594,8 @@ class Room {
       ready: p.ready,
       caged: !!p.cagedAt,
       jumpUntil: p.jumpUntil,
-      rootedUntil: p.rootedUntil || 0
+      rootedUntil: p.rootedUntil || 0,
+      isBot: !!p.isBot
     }));
   }
 
@@ -516,6 +672,8 @@ class Room {
       p.jumpChain = 0;
       p.jumpCooldownUntil = 0;
       p.lastJumpAt = 0;
+      p.input = { dx: 0, dy: 0 };
+      if (p.botState) p.botState.decidedForIndex = -1;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;
@@ -564,8 +722,8 @@ class Room {
     if (now < player.jumpCooldownUntil) return false;
     if (now - player.lastJumpAt > JUMP_CHAIN_RESET_MS) player.jumpChain = 0;
     const cooldown = Math.min(
-      JUMP_MAX_COOLDOWN_MS,
-      JUMP_BASE_COOLDOWN_MS * Math.pow(JUMP_COOLDOWN_GROWTH, player.jumpChain)
+      TUNING.JUMP_MAX_COOLDOWN_MS,
+      TUNING.JUMP_BASE_COOLDOWN_MS * Math.pow(JUMP_COOLDOWN_GROWTH, player.jumpChain)
     );
     player.jumpChain += 1;
     player.lastJumpAt = now;
@@ -578,6 +736,8 @@ class Room {
     const now = Date.now();
     const dt = TICK_MS / 1000;
 
+    this.stepBots(now); // debug bots set their own p.input before the movement loop
+
     // 1. Input-driven movement for everyone, then per-state containment rules.
     for (const p of this.players.values()) {
       const rooted = p.rootedUntil && now < p.rootedUntil;
@@ -589,7 +749,7 @@ class Room {
       const len = Math.sqrt(dx * dx + dy * dy);
       if (len > 1e-4) {
         // Jumping while moving gives a brief speed boost in that same direction.
-        const speed = (p.jumpUntil && now < p.jumpUntil) ? PLAYER_SPEED * JUMP_SPEED_MULT : PLAYER_SPEED;
+        const speed = (p.jumpUntil && now < p.jumpUntil) ? TUNING.PLAYER_SPEED * TUNING.JUMP_SPEED_MULT : TUNING.PLAYER_SPEED;
         p.x += (dx / len) * speed * dt;
         p.y += (dy / len) * speed * dt;
       }
@@ -647,7 +807,7 @@ class Room {
           if (trap.sprung) continue;
           if (Math.hypot(p.x - trap.x, p.y - trap.y) < TRAP_TRIGGER_RADIUS) {
             trap.sprung = true;
-            p.rootedUntil = now + TRAP_ROOT_MS;
+            p.rootedUntil = now + TUNING.TRAP_ROOT_MS;
             break;
           }
         }
@@ -735,7 +895,7 @@ class Room {
     }
     this.cageSolid = { A: true, B: true, C: true };
     this.state = 'reveal';
-    this.phaseEndsAt = now + REVEAL_DELAY_MS;
+    this.phaseEndsAt = now + TUNING.REVEAL_DELAY_MS;
     io.to(this.code).emit('game:lockin', {
       cages: this.cages,
       exposed: this.exposed
@@ -744,7 +904,7 @@ class Room {
 
   doReveal(io, now) {
     const correct = this.currentQuestion.correct;
-    const escapeEndsAt = now + ESCAPE_MS;
+    const escapeEndsAt = now + TUNING.ESCAPE_MS;
     io.to(this.code).emit('game:reveal', { correct, escapeEndsAt });
 
     // Wrong doors swing open and their occupants are freed - but not killed yet.
@@ -783,7 +943,7 @@ class Room {
       io.to(this.code).emit('game:dropped', { drops });
       // Give the fall animation time to play before the chase visibly kicks off.
       this.state = 'fall_pause';
-      this.phaseEndsAt = now + FALL_ANIM_HOLD_MS;
+      this.phaseEndsAt = now + TUNING.FALL_ANIM_HOLD_MS;
     } else {
       this.releaseDogs(io, now);
     }
@@ -793,10 +953,10 @@ class Room {
     const huntPool = Array.from(this.players.values())
       .filter(p => p.alive && !p.isGhost && !p.cagedAt);
     const capacity = Math.max(
-      DOG_CATCH_CAPACITY_MIN,
-      Math.round(huntPool.length * DOG_CATCH_CAPACITY_PCT)
+      TUNING.DOG_CATCH_CAPACITY_MIN,
+      Math.round(huntPool.length * TUNING.DOG_CATCH_CAPACITY_PCT)
     );
-    const giveUpAt = now + DOG_GIVEUP_MS;
+    const giveUpAt = now + TUNING.DOG_GIVEUP_MS;
     for (const dog of this.dogs) {
       dog.state = 'hunting';
       dog.catches = 0;
@@ -889,7 +1049,7 @@ class Room {
             }
           }
         }
-        if (dog.lungePhase === 'lunging') lungeSpeedMult = LUNGE_SPEED_MULT;
+        if (dog.lungePhase === 'lunging') lungeSpeedMult = TUNING.LUNGE_SPEED_MULT;
         else if (dog.lungePhase === 'windup') lungeSpeedMult = 0;
       } else {
         dog.lungePhase = 'idle';
@@ -941,8 +1101,8 @@ class Room {
       const seekTy = unstucking ? dog.y : ty;
       const dir = steer(dog.x, dog.y, seekTx, seekTy, dogObstacles, bias);
       if ((dir.x !== 0 || dir.y !== 0) && lungeSpeedMult > 0) {
-        const nx = dog.x + dir.x * DOG_SPEED * lungeSpeedMult * dt;
-        const ny = dog.y + dir.y * DOG_SPEED * lungeSpeedMult * dt;
+        const nx = dog.x + dir.x * TUNING.DOG_SPEED * lungeSpeedMult * dt;
+        const ny = dog.y + dir.y * TUNING.DOG_SPEED * lungeSpeedMult * dt;
         if (nx !== dog.x || ny !== dog.y) dog.angle = Math.atan2(ny - dog.y, nx - dog.x);
         dog.x = nx; dog.y = ny;
       } else if (dir.x !== 0 || dir.y !== 0) {
@@ -975,13 +1135,13 @@ class Room {
       if (dog.state !== 'hunting' || !dog.targetId) continue;
       const target = this.players.get(dog.targetId);
       if (!target || !target.alive || target.isGhost) { dog.targetId = null; continue; }
-      if (Math.hypot(target.x - dog.x, target.y - dog.y) < DOG_CATCH_RADIUS) {
+      if (Math.hypot(target.x - dog.x, target.y - dog.y) < TUNING.DOG_CATCH_RADIUS) {
         target.alive = false;
         target.isGhost = true;
         dog.catches += 1;
         dog.targetId = null;
         dog.state = 'eating';
-        dog.eatUntil = now + DOG_EAT_MS;
+        dog.eatUntil = now + TUNING.DOG_EAT_MS;
         dog.lungePhase = 'idle';
         this.lastDeathAt = now;
         io.to(this.code).emit('player:caught', {
@@ -1008,7 +1168,7 @@ class Room {
       }
       this.state = 'death_anim';
       this.phaseEndsAt = allDead
-        ? Math.max(now, (this.lastDeathAt || now) + DEATH_ANIM_MS)
+        ? Math.max(now, (this.lastDeathAt || now) + TUNING.DEATH_ANIM_MS)
         : now + HOME_SETTLE_MS;
     }
   }
@@ -1081,6 +1241,8 @@ class Room {
       p.jumpChain = 0;
       p.jumpCooldownUntil = 0;
       p.lastJumpAt = 0;
+      p.input = { dx: 0, dy: 0 };
+      if (p.botState) p.botState.decidedForIndex = -1;
       const spawn = randomSpawn();
       p.x = spawn.x;
       p.y = spawn.y;
@@ -1126,4 +1288,7 @@ class GameManager {
   }
 }
 
-module.exports = { GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, PLAYER_RADIUS, JUMP_MS };
+module.exports = {
+  GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, PLAYER_RADIUS, JUMP_MS,
+  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning
+};

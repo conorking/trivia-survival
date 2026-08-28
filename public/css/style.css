@@ -434,3 +434,48 @@ body.cast-mode .cast-hide { display: none !important; }
   transform: scale(1.08);
 }
 .option-pill.wrong { opacity: 0.35; filter: grayscale(60%); }
+
+/* ---- Debug / sandbox mode ---- */
+/* All debug chrome ships in the HTML always; it only appears once host.js confirms the
+   server is in --debug mode and adds body.debug-enabled. */
+.debug-card, .debug-dock { display: none; }
+body.debug-enabled .debug-card { display: block; }
+.debug-card { border-color: var(--accent); box-shadow: 0 6px 0 var(--accent); }
+.debug-card .row { display: flex; flex-wrap: wrap; gap: 8px; }
+.debug-card button.ghost-btn { padding: 8px 12px; font-size: 10px; }
+
+.debug-dock {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 300px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: rgba(16, 16, 42, 0.96);
+  border: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 10px 10px;
+  z-index: 900;
+  font-size: 13px;
+}
+.debug-dock.collapsed .debug-dock-body { display: none; }
+.debug-dock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.debug-dock-head strong { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--accent); }
+.debug-sec { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 6px; }
+.debug-sec span { display: inline-flex; align-items: center; gap: 4px; }
+.debug-tuning-head { border-top: 2px solid #33335a; padding-top: 6px; }
+.debug-tuning-head strong { font-family: 'Press Start 2P', monospace; font-size: 9px; }
+button.debug-mini {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  padding: 5px 8px;
+  box-shadow: none;
+  border-width: 2px;
+  background: var(--accent2);
+}
+.debug-tuning.hidden { display: none; }
+.debug-tune-row { display: grid; grid-template-columns: 1fr; gap: 2px; margin-bottom: 8px; }
+.debug-tune-row label { margin: 0; font-size: 13px; color: #cfcfe8; }
+.debug-tune-row input[type=range] { width: 100%; }
+.debug-tune-row input[type=number] { font-size: 14px; padding: 3px 6px; width: 90px; }
+body.cast-mode .debug-dock, body.cast-mode .debug-card { display: none !important; }
