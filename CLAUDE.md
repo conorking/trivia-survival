@@ -196,17 +196,25 @@ lobby → intro → question → reveal → escape → fall_pause? → resolve �
 ```
 
 - **intro**: the full-screen "read the question" phase, *before* the answer timer.
-  Duration = `introMsFor(question)` = `INTRO_BASE_MS + wordCount(q + all options) *
-  INTRO_MS_PER_WORD`, capped at `INTRO_MAX_MS` (all three in `TUNING`). `emitQuestion()`
-  fires at the start of this phase (payload carries `phase:'intro'` + `introEndsAt`);
-  the client shows `#introOverlay` (big question + 3 door-coloured option cards +
-  countdown), and the host page reads it aloud (Web Speech API, `speakQuestion()` in
-  `host.js`, 🔊 toggle in the HUD, `localStorage` `trivia_host_speak`). Players can move
-  during `intro` server-side, but the overlay covers the canvas so in practice nobody
-  moves until answering opens. Ends either when `introEndsAt` passes or when the host
-  hits **START ANSWERING** (`host:startAnswering` → `Room.beginAnswering()`), which sets
-  `state='question'` + the real answer deadline and emits **`game:answering {endsAt}`**
-  so clients dismiss the overlay / start the timer bar on the exact instant.
+  `emitQuestion()` fires at the start of this phase (payload carries `phase:'intro'` +
+  `introEndsAt`); the client shows `#introOverlay` (big question + 3 door-coloured option
+  cards + countdown bar). Players can move during `intro` server-side, but the overlay
+  covers the canvas so in practice nobody moves until answering opens.
+  **The host client drives the end of this phase, not a fixed timer** — it reads the
+  question + each option aloud (Web Speech API, chunked utterances, `speakQuestion()` in
+  `host.js`, 🔊 toggle, `localStorage` `trivia_host_speak`) and emits `host:startAnswering`
+  a short beat *after the reading actually finishes* (the `onend` of the last utterance),
+  so a long question is never cut off. Fallbacks, all in `host.js`: read-aloud off, or
+  `speechAvailable()` false, or the engine reports voices but never fires `onstart`/`onend`
+  → a word-scaled timed pause (`introMsFor` estimate) instead; a per-read hard timeout;
+  and **START ANSWERING** for a manual skip. The server's own intro timer is now just
+  `INTRO_HARD_CAP_MS` (90 s) — a safety net for a disconnected host, checked against
+  `this.introHardCapAt` in `tick()`, not `phaseEndsAt`. `phaseEndsAt`/`introEndsAt` during
+  intro is the word-scaled estimate (`introMsFor` = `INTRO_BASE_MS + words * INTRO_MS_PER_WORD`,
+  cap `INTRO_MAX_MS`, all in `TUNING`) and only drives the countdown bar + the no-audio
+  pause. `Room.beginAnswering()` (from `host:startAnswering` or the cap) sets
+  `state='question'` + the real answer deadline and emits **`game:answering {endsAt}`** so
+  every client dismisses the overlay / starts the timer bar on the same instant.
 - **question**: answer timer running, players move freely.
 - **reveal**: (3s, `REVEAL_DELAY_MS`) cages already risen on all 3 doors (visual only —
   `doLockIn` computed real occupancy into `this.cages`/`this.exposed` right before this,
@@ -490,8 +498,10 @@ DOG_RADIUS + OBSTACLE_MARGIN`, tightened this round - see "Stuck-dog fixes"),
 mirrors the jump-cooldown constants for local animation prediction. If gameplay feels
 off, these are the first things to touch — tune before restructuring logic.
 
-Question intro phase: `INTRO_BASE_MS=3000`, `INTRO_MS_PER_WORD=190`, `INTRO_MAX_MS=13000`
-(all in `TUNING`).
+Question intro phase: `INTRO_BASE_MS=3000`, `INTRO_MS_PER_WORD=320`, `INTRO_MAX_MS=24000`
+(in `TUNING`; these drive the countdown bar + the no-read-aloud pause only), plus a fixed
+`INTRO_HARD_CAP_MS=90000` auto-advance safety net (the host client normally ends the
+intro when its read-aloud finishes — see the `intro` phase above).
 
 **The most-tuned scalars now live on a mutable `TUNING` object** (top of
 `rooms.js`), not `const`s — `PLAYER_SPEED`, `DOG_SPEED`, `DOG_CATCH_RADIUS`,
@@ -644,9 +654,11 @@ now sets `display:block` not `flex`, and `drawFrame()`'s hidden-check is
 `clientWidth === 0` (fixed elements have `offsetParent === null` even when visible).
 (2) **Full-screen question intro** — new server `intro` phase before the answer timer:
 `#introOverlay` shows the question big + 3 door-coloured option cards + a countdown, the
-host page reads it aloud (`speechSynthesis`, 🔊 toggle), and the host can cut it short
-with **START ANSWERING** (`host:startAnswering` → `game:answering`). Auto-advances after
-`introMsFor(question)` (word-count-scaled, in `TUNING`).
+host page reads it aloud (`speechSynthesis`, chunked per option, 🔊 toggle) and ends the
+phase (`host:startAnswering` → `game:answering`) the instant the reading finishes — not a
+fixed timer, so long questions/options aren't cut off — with a manual **START ANSWERING**
+skip, a no-audio timed-pause fallback, and a 90 s server hard cap. See the `intro` phase
+in "Game state machine".
 (3) **Camera panning** — `overview` mode gained `panX/panY` (drag to pan when zoomed in,
 clamped at the world edges; double-click = `resetView()`). Host: left-drag spectating,
 middle/shift-drag while playing. Desktop player: right-button drag (right-*click* still

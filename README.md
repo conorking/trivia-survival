@@ -133,8 +133,9 @@ app config changes are needed either way.
 ## Round sequence
 
 Each question opens with a **full-screen intro**: the question and its three answers
-shown large while everyone reads (the host screen also reads it aloud, and can hit
-"Start Answering" to skip ahead). Then the answer timer starts and players run for a
+shown large while everyone reads. The host screen reads it aloud and the answer timer
+starts as soon as the reading finishes (however long that takes — long questions aren't
+cut off); the host can also hit "Start Answering" to skip ahead. Then players run for a
 trapdoor.
 
 After the answer timer ends: cages rise on **all three** trapdoors (even empty ones) →
@@ -161,10 +162,8 @@ rejoin, they're already there and just need to ready up again.
 
 The host sets everything on the lobby screen — sliders/number boxes and a couple of
 opt-in toggles — and it all applies the moment **START GAME** is pressed (no separate
-save step). Game length is simply answer-time × number of questions; there's no separate
-overall duration cap to set. (Each question also gets a short full-screen intro before
-its timer — read aloud on the host screen, skippable with a button, length scales with
-the question.)
+save step). Game length is roughly answer-time × number of questions, plus each
+question's read-aloud intro (see "Round sequence").
 - Answer time per question
 - Number of questions (up to 400)
 - Question set: the built-in 400-question general-knowledge set, a 400-question "Hard

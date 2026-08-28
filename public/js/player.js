@@ -257,9 +257,10 @@ function showIntro(data) {
     opts.appendChild(el);
   }
   const btn = document.getElementById('introStartBtn');
-  if (btn) btn.style.display = INTRO_IS_HOST ? 'inline-block' : 'none';
+  if (btn) btn.style.display = 'none';
+  const hint = document.getElementById('introHint');
+  if (hint) hint.textContent = 'Read the question — answering opens when the host is ready…';
   document.getElementById('introOverlay').classList.add('show');
-  if (INTRO_IS_HOST && typeof speakQuestion === 'function') speakQuestion(data);
   updateIntroCountdown();
 }
 
@@ -267,7 +268,6 @@ function hideIntro() {
   if (!introActive) return;
   introActive = false;
   document.getElementById('introOverlay').classList.remove('show');
-  if (INTRO_IS_HOST && window.speechSynthesis) window.speechSynthesis.cancel();
 }
 
 function updateIntroCountdown() {

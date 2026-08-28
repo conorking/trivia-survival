@@ -128,16 +128,19 @@ socket.on('game:question', renderQuestion);
 socket.on('game:answering', () => hideIntro());
 
 // ---- Full-screen question intro overlay (state 'intro', before the answer timer) ----
-// Duplicated in player.js; here INTRO_IS_HOST is on, so the START ANSWERING button
-// shows and speakQuestion() reads it aloud.
+// Duplicated in player.js; here INTRO_IS_HOST is on, so the host shows START ANSWERING,
+// reads the question aloud, and drives the transition to the answer phase off the exact
+// moment the reading finishes (host:startAnswering) rather than a fixed timer - the
+// server's own intro timer is now just a long safety cap. See speakQuestion().
 const INTRO_IS_HOST = true;
 let introActive = false;
 let introStartAt = 0, introEndsAt = 0;
+let introAdvanceTimer = null;
 
 function showIntro(data) {
   introActive = true;
   introStartAt = Date.now();
-  introEndsAt = data.introEndsAt || (introStartAt + 4000);
+  introEndsAt = data.introEndsAt || (introStartAt + 6000);
   document.getElementById('introQNum').textContent = data.index + 1;
   document.getElementById('introQTotal').textContent = data.total;
   document.getElementById('introQ').textContent = data.q;
@@ -152,17 +155,46 @@ function showIntro(data) {
     opts.appendChild(el);
   }
   const btn = document.getElementById('introStartBtn');
-  if (btn) btn.style.display = INTRO_IS_HOST ? 'inline-block' : 'none';
+  if (btn) btn.style.display = 'inline-block';
   document.getElementById('introOverlay').classList.add('show');
-  if (INTRO_IS_HOST) speakQuestion(data);
+
+  clearTimeout(introAdvanceTimer);
+  const scheduleAdvance = (ms) => {
+    clearTimeout(introAdvanceTimer);
+    introAdvanceTimer = setTimeout(() => { if (introActive) socket.emit('host:startAnswering'); }, Math.max(0, ms));
+  };
+  const timedPause = () => scheduleAdvance(Math.max(1500, introEndsAt - Date.now()) || 5000);
+  if (speakEnabled && speechAvailable()) {
+    setIntroHint('🔊 Reading aloud — press Start Answering to skip');
+    speakQuestion(data, (didSpeak) => {
+      if (didSpeak) {
+        // Advance a short beat after the reading actually ends (min ~2s intro total).
+        scheduleAdvance(Math.max(650, 2000 - (Date.now() - introStartAt)));
+      } else {
+        // Engine reported voices but never spoke - fall back to the timed reading pause.
+        setIntroHint('Read the question — answering opens in a moment…');
+        timedPause();
+      }
+    });
+  } else {
+    // No read-aloud: give players the server's word-scaled reading pause.
+    setIntroHint('Read the question — answering opens in a moment…');
+    timedPause();
+  }
   updateIntroCountdown();
 }
 
 function hideIntro() {
   if (!introActive) return;
   introActive = false;
+  clearTimeout(introAdvanceTimer);
+  stopSpeak();
   document.getElementById('introOverlay').classList.remove('show');
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function setIntroHint(text) {
+  const el = document.getElementById('introHint');
+  if (el) el.textContent = text;
 }
 
 function updateIntroCountdown() {
@@ -175,10 +207,35 @@ function updateIntroCountdown() {
 }
 setInterval(updateIntroCountdown, 150);
 
-function startAnswering() { socket.emit('host:startAnswering'); }
+function startAnswering() {
+  clearTimeout(introAdvanceTimer);
+  stopSpeak();
+  socket.emit('host:startAnswering');
+}
 
-// ---- Read-aloud (host only): speaks the question + options via the Web Speech API ----
+// ---- Read-aloud (host only): speaks the question + each option as its own utterance
+// (natural pauses, and short chunks dodge Chrome's ~15s single-utterance cutoff), then
+// calls onDone when the last one finishes so the round proceeds the instant the reading
+// is actually done. A hard timeout also fires onDone if speech synthesis is silently
+// broken (headless / no voices / some Linux) so the intro can never hang on it. ----
 let speakEnabled = localStorage.getItem('trivia_host_speak') !== '0';
+let speakKeepAlive = null;
+let speakTimeout = null;
+let speakDoneCb = null;
+let speakStarted = false; // did the engine actually begin speaking this question?
+
+// Warm the voice list (getVoices() is often empty on first call).
+if (window.speechSynthesis) {
+  try { window.speechSynthesis.getVoices(); } catch (e) { /* ignore */ }
+  window.speechSynthesis.onvoiceschanged = () => { try { window.speechSynthesis.getVoices(); } catch (e) {} };
+}
+function speechAvailable() {
+  try {
+    return !!(window.speechSynthesis && window.SpeechSynthesisUtterance &&
+      window.speechSynthesis.getVoices && window.speechSynthesis.getVoices().length > 0);
+  } catch (e) { return false; }
+}
+
 function syncSpeakToggle() {
   const b = document.getElementById('speakToggle');
   if (b) b.textContent = speakEnabled ? '🔊 READ' : '🔇 MUTED';
@@ -187,18 +244,70 @@ function toggleSpeak() {
   speakEnabled = !speakEnabled;
   localStorage.setItem('trivia_host_speak', speakEnabled ? '1' : '0');
   syncSpeakToggle();
-  if (!speakEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
-}
-function speakQuestion(data) {
-  if (!speakEnabled || !window.speechSynthesis) return;
-  const parts = [data.q];
-  for (const key of ['A', 'B', 'C']) {
-    if (data.options[key]) parts.push(`Option ${key}: ${data.options[key]}`);
+  if (!speakEnabled && introActive) {
+    // Muted mid-intro: fall back to the timed reading pause so the round still advances.
+    stopSpeak();
+    setIntroHint('Read the question — answering opens in a moment…');
+    clearTimeout(introAdvanceTimer);
+    introAdvanceTimer = setTimeout(() => { if (introActive) socket.emit('host:startAnswering'); },
+      Math.max(1500, (introEndsAt - Date.now()) || 4000));
   }
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(parts.join('. '));
-  u.rate = 0.98;
-  window.speechSynthesis.speak(u);
+}
+
+function finishSpeak() {
+  if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+  if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
+  const cb = speakDoneCb;
+  speakDoneCb = null;
+  if (cb) cb(speakStarted); // true = the reading really happened; false = engine never spoke
+}
+function stopSpeak() {
+  if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+  if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
+  speakDoneCb = null;
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+}
+function speakQuestion(data, onDone) {
+  stopSpeak();
+  if (!speakEnabled || !speechAvailable()) { if (onDone) onDone(); return; }
+  const chunks = [String(data.q)];
+  for (const key of ['A', 'B', 'C']) {
+    if (data.options[key]) chunks.push(`Option ${key}. ${data.options[key]}`);
+  }
+  speakDoneCb = onDone;
+  speakStarted = false;
+  const totalWords = chunks.reduce((n, c) => n + c.trim().split(/\s+/).length, 0);
+  // Insurance: onend/onerror should fire, but if the engine goes silent, don't hang.
+  // ~480ms/word is slower than any real TTS, so this never preempts a working read.
+  speakTimeout = setTimeout(finishSpeak, totalWords * 480 + 3500);
+
+  // Some environments report voices but never actually speak (headless, sandboxed) -
+  // if nothing has started ~1.2s in, treat speech as unavailable and bail (onDone gets
+  // false, so showIntro falls back to the timed reading pause).
+  setTimeout(() => { if (speakDoneCb !== null && !speakStarted) finishSpeak(); }, 1200);
+
+  let i = 0;
+  const next = () => {
+    if (speakDoneCb === null) return; // stopped/superseded/already finished
+    if (i >= chunks.length) { finishSpeak(); return; }
+    try {
+      const u = new SpeechSynthesisUtterance(chunks[i++]);
+      u.rate = 0.98;
+      u.onstart = () => { speakStarted = true; };
+      u.onend = next;
+      u.onerror = next;
+      window.speechSynthesis.speak(u);
+    } catch (e) { finishSpeak(); }
+  };
+  // Chrome silently pauses speechSynthesis after ~15s of continuous speech; a
+  // pause()/resume() nudge keeps a long read going.
+  speakKeepAlive = setInterval(() => {
+    try {
+      const s = window.speechSynthesis;
+      if (s && s.speaking && !s.paused) { s.pause(); s.resume(); }
+    } catch (e) { /* ignore */ }
+  }, 8000);
+  next();
 }
 syncSpeakToggle();
 

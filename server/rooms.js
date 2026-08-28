@@ -23,6 +23,7 @@ const PLAYER_RADIUS = 14;
 const DOG_RADIUS = 13;
 const DOG_HOME_RADIUS = 26; // how close to its pen slot counts as "home"
 const DOG_PHASE_HARD_TIMEOUT_MS = 30000; // last-resort safety net only, never kills anyone
+const INTRO_HARD_CAP_MS = 90000; // intro phase auto-advances after this even if the host never signals (disconnect / TTS hang)
 
 // ---- Live-tunable constants (see debug mode) ----
 // These are the knobs the debug panel can change at runtime. They're a single mutable
@@ -35,9 +36,13 @@ const DEFAULT_TUNING = Object.freeze({
   PLAYER_SPEED: 235,          // px/sec
   DOG_SPEED: 185,             // px/sec
   DOG_CATCH_RADIUS: 24,
-  INTRO_BASE_MS: 3000,        // full-screen "read the question" phase, before the answer timer
-  INTRO_MS_PER_WORD: 190,     // ...plus this much per word of question+options text
-  INTRO_MAX_MS: 13000,        // ...capped here (host can also skip early)
+  // Full-screen "read the question" phase, before the answer timer. This estimate only
+  // drives the intro overlay's countdown bar and the no-read-aloud reading pause - the
+  // host client normally ends the phase the instant its read-aloud finishes
+  // (host:startAnswering), and INTRO_HARD_CAP_MS is the real auto-advance safety net.
+  INTRO_BASE_MS: 3000,
+  INTRO_MS_PER_WORD: 320,     // ...per word of question + options text (roughly TTS pace)
+  INTRO_MAX_MS: 24000,
   REVEAL_DELAY_MS: 3000,
   ESCAPE_MS: 2400,            // window to flee a just-opened wrong door before it becomes lethal
   FALL_ANIM_HOLD_MS: 1000,    // grace hold after escape-window stragglers fall, before dogs release
@@ -416,6 +421,7 @@ class Room {
     this.pitOpen = { A: false, B: false, C: false }; // true while a sprung door is a fall hazard
     this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
+    this.introHardCapAt = 0; // intro auto-advances at this time if the host never signals
     this.manualEnd = false;
     this.loop = null;
     this.createdAt = Date.now();
@@ -529,6 +535,7 @@ class Room {
     this.resetHazards();
     this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
+    this.introHardCapAt = 0;
     this.manualEnd = false;
     for (const p of this.players.values()) {
       p.alive = true;
@@ -543,6 +550,7 @@ class Room {
     this.computeTrapdoorsForRound();
     this.state = 'intro';
     this.phaseEndsAt = Date.now() + introMsFor(this.currentQuestion);
+    this.introHardCapAt = Date.now() + INTRO_HARD_CAP_MS;
     if (!this.loop) this.startLoop(io);
     this.emitQuestion(io);
   }
@@ -678,6 +686,7 @@ class Room {
     this.currentQuestionIndex = 0;
     this.currentQuestion = this.questions[0];
     this.phaseEndsAt = Date.now() + introMsFor(this.currentQuestion);
+    this.introHardCapAt = Date.now() + INTRO_HARD_CAP_MS;
     this.dogs = createPennedDogs();
     this.traps = [];
     this.resetHazards();
@@ -866,8 +875,8 @@ class Room {
       return;
     }
 
-    if (this.state === 'intro' && now >= this.phaseEndsAt) {
-      this.beginAnswering(io, now);
+    if (this.state === 'intro' && now >= this.introHardCapAt) {
+      this.beginAnswering(io, now); // safety net; the host client normally ends the intro first
     } else if (this.state === 'question' && now >= this.phaseEndsAt) {
       this.doLockIn(io, now);
     } else if (this.state === 'reveal' && now >= this.phaseEndsAt) {
@@ -1244,6 +1253,7 @@ class Room {
     this.computeTrapdoorsForRound();
     this.state = 'intro';
     this.phaseEndsAt = now + introMsFor(this.currentQuestion);
+    this.introHardCapAt = now + INTRO_HARD_CAP_MS;
     this.emitQuestion(io);
   }
 
@@ -1263,6 +1273,7 @@ class Room {
     this.resetHazards();
     this.lastDeathAt = 0;
     this.hardTimeoutAt = 0;
+    this.introHardCapAt = 0;
     this.manualEnd = false;
     for (const p of this.players.values()) {
       p.alive = true;

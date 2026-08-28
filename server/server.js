@@ -235,6 +235,7 @@ io.on('connection', socket => {
       if (!room || room.state === 'lobby' || room.state === 'ended') return;
       room.phaseEndsAt = Date.now();
       room.hardTimeoutAt = Date.now();
+      room.introHardCapAt = Date.now();
     });
 
     socket.on('debug:replayQuestion', () => {
