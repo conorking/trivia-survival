@@ -29,7 +29,7 @@ const ArenaRender = (() => {
   // scale by zoom, translate by -camera.x/-camera.y) so 'overview' (whole map, host +
   // desktop players) and 'follow' (zoomed on the player, mobile) are just two different
   // camera targets/zoom levels through the same rendering path.
-  let camera = { x: ARENA_W / 2, y: ARENA_H / 2, zoom: 0 };
+  let camera = { x: ARENA_W / 2, y: ARENA_H / 2, zoom: 0, panX: 0, panY: 0 };
   let cameraMode = null; // tracks the last viewMode render() was called with
   let lastFollowX = null, lastFollowY = null; // last known follow target, for gaps in player data
   const OVERVIEW_ZOOM_MAX_MULT = 2.5; // how far 'overview' can zoom in past whole-map-fit
@@ -57,12 +57,15 @@ const ArenaRender = (() => {
   }
 
   // Recomputes camera.zoom (clamped into range, reset to the mode's default on a mode
-  // switch) and camera.x/y (world center for 'overview'; the player's own position for
-  // 'follow', clamped so the viewport never shows past the world edges) every frame.
+  // switch) and camera.x/y every frame. 'follow' centers on the player (pan ignored -
+  // it always tracks you). 'overview' centers on the world, plus a user pan offset
+  // (panX/panY, set by panBy() from a drag) - re-clamped here so you can never drag the
+  // view past a world edge, and forced to 0 whenever the whole map already fits.
   function updateCamera(mode, players, myId, viewW, viewH) {
     const range = getZoomRange(mode, viewW, viewH);
     if (cameraMode !== mode || !camera.zoom) {
       camera.zoom = range.default;
+      camera.panX = 0; camera.panY = 0;
     } else {
       camera.zoom = clampNum(camera.zoom, range.min, range.max);
     }
@@ -73,12 +76,25 @@ const ArenaRender = (() => {
       const me = myId != null && players ? players.find(p => p.id === myId) : null;
       if (me) { targetX = me.x; targetY = me.y; lastFollowX = me.x; lastFollowY = me.y; }
       else if (lastFollowX != null) { targetX = lastFollowX; targetY = lastFollowY; }
+      camera.panX = 0; camera.panY = 0;
     }
 
     const halfW = viewW / (2 * camera.zoom);
     const halfH = viewH / (2 * camera.zoom);
-    camera.x = (halfW * 2 >= ARENA_W) ? ARENA_W / 2 : clampNum(targetX, halfW, ARENA_W - halfW);
-    camera.y = (halfH * 2 >= ARENA_H) ? ARENA_H / 2 : clampNum(targetY, halfH, ARENA_H - halfH);
+    const fitsW = halfW * 2 >= ARENA_W;
+    const fitsH = halfH * 2 >= ARENA_H;
+    if (mode !== 'follow' && (fitsW && fitsH)) { camera.panX = 0; camera.panY = 0; }
+    // Clamp the pan so target+pan stays within the world-edge bounds.
+    if (mode !== 'follow') {
+      if (!fitsW) camera.panX = clampNum(targetX + camera.panX, halfW, ARENA_W - halfW) - targetX;
+      else camera.panX = 0;
+      if (!fitsH) camera.panY = clampNum(targetY + camera.panY, halfH, ARENA_H - halfH) - targetY;
+      else camera.panY = 0;
+    }
+    const px = mode === 'follow' ? 0 : camera.panX;
+    const py = mode === 'follow' ? 0 : camera.panY;
+    camera.x = fitsW ? ARENA_W / 2 : clampNum(targetX + px, halfW, ARENA_W - halfW);
+    camera.y = fitsH ? ARENA_H / 2 : clampNum(targetY + py, halfH, ARENA_H - halfH);
   }
 
   // Called from wheel (desktop) / pinch (touch) handlers in player.js/host.js. Multiplies
@@ -95,7 +111,22 @@ const ArenaRender = (() => {
     const base = camera.zoom || range.default;
     camera.zoom = clampNum(base * factor, range.min, range.max);
     cameraMode = viewMode; // so the next render() clamps instead of resetting to default
+    if (camera.zoom <= fitZoom(viewW, viewH) + 1e-4) { camera.panX = 0; camera.panY = 0; }
   }
+
+  // Drag-to-pan the 'overview' camera (host + desktop players). dxCss/dyCss are the
+  // pointer's movement in CSS px this drag step; dividing by zoom converts to world
+  // units, negated so the content follows the cursor. updateCamera() re-clamps the
+  // result to the world edges and ignores it entirely in 'follow' mode.
+  function panBy(dxCss, dyCss) {
+    if (!camera.zoom) return;
+    camera.panX -= dxCss / camera.zoom;
+    camera.panY -= dyCss / camera.zoom;
+  }
+  function resetPan() { camera.panX = 0; camera.panY = 0; }
+  // Full "reset view": drop the pan and snap zoom back to the current mode's default
+  // (whole-map for overview, the follow default for follow) - used by double-click.
+  function resetView() { camera.zoom = 0; camera.panX = 0; camera.panY = 0; }
 
   // Inverse of render()'s camera transform - converts a canvas-relative CSS-px point
   // (e.g. clientX/Y minus the canvas's getBoundingClientRect() offset) into world
@@ -263,16 +294,15 @@ const ArenaRender = (() => {
 
   // Faint screen-space watermark reminding mobile players how the joystick works -
   // shown only while no touch is currently active, so it never competes with the
-  // joystick itself. Drawn after the camera transform is undone (fixed screen position,
-  // not tied to any world location) - see drawJoystick for the touch-active version.
+  // joystick itself. Drawn after the camera transform is undone (fixed screen position),
+  // near the top so it doesn't sit over the bottom question overlay or the trapdoor row.
   function drawTouchHint(ctx, viewW, viewH) {
     ctx.save();
     ctx.globalAlpha = 0.22;
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Touch & drag anywhere to move', viewW / 2, viewH - 34);
-    ctx.fillText('Second finger tap = jump', viewW / 2, viewH - 18);
+    ctx.fillText('Touch & drag anywhere to move · second finger tap = jump', viewW / 2, viewH * 0.14);
     ctx.restore();
   }
 
@@ -283,12 +313,11 @@ const ArenaRender = (() => {
   // while a click-hold is in progress (see player.js).
   function drawDesktopHint(ctx, viewW, viewH) {
     ctx.save();
-    ctx.globalAlpha = 0.22;
+    ctx.globalAlpha = 0.2;
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 13px monospace';
+    ctx.font = 'bold 12px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Click & hold to walk there (or WASD/arrows)', viewW / 2, viewH - 34);
-    ctx.fillText('Right-click or Space to jump', viewW / 2, viewH - 18);
+    ctx.fillText('Click & hold to walk (or WASD) · right-drag pan · scroll zoom · right-click / Space jump', viewW / 2, viewH * 0.14);
     ctx.restore();
   }
 
@@ -948,7 +977,7 @@ const ArenaRender = (() => {
   }
 
   return {
-    setArena, setTrapdoors, fitCanvas, render, adjustZoom, screenToWorld,
+    setArena, setTrapdoors, fitCanvas, render, adjustZoom, panBy, resetPan, resetView, screenToWorld,
     onNewQuestion, onLockIn, onReveal, onDropped, onRoundComplete,
     onCaught, onDogsReleased,
     get ARENA_W() { return ARENA_W; }, get ARENA_H() { return ARENA_H; }

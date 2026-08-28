@@ -78,17 +78,24 @@ client-side rendering + input concerns.
   `player.js` decides the mode from `window.innerWidth <= MOBILE_BREAKPOINT` (820px,
   matching style.css's breakpoint below), rechecked on `resize`/`orientationchange`;
   `host.js` always passes `'overview'`.
-- **Camera state** (`{x, y, zoom}`) is owned by `arena-render.js`, recomputed every
-  `render()` call by `updateCamera()`. Zoom range is always `[wholeWorldFits, ...]` —
-  you can never zoom out past seeing the entire map — with a mode-specific max
+- **Camera state** (`{x, y, zoom, panX, panY}`) is owned by `arena-render.js`, recomputed
+  every `render()` call by `updateCamera()`. Zoom range is always `[wholeWorldFits, ...]`
+  — you can never zoom out past seeing the entire map — with a mode-specific max
   (`OVERVIEW_ZOOM_MAX_MULT`/`FOLLOW_ZOOM_MAX_MULT`, relative to that mode's default
   zoom). Resets to the mode's default zoom on a mode switch; otherwise just clamps into
   range each frame, so wheel/pinch-set zoom persists frame to frame and survives resize.
-  Camera position is never independently pannable — it's always fully derived from
-  either the world center or the player's own position — so there's deliberately no
-  anchor-preserving pan math on zoom, just a value change via `adjustZoom(factor,
-  viewMode, canvas)`, called from wheel (desktop, both `host.js` and `player.js`) and
-  pinch (`player.js` only) handlers.
+  `adjustZoom(factor, viewMode, canvas)` is called from wheel (desktop) and pinch
+  (`player.js` only).
+- **Panning** (`overview` only — `follow` always tracks the player): `panX/panY` are a
+  world-unit offset on top of the derived world-centre, re-clamped to the world edges
+  each `updateCamera()` and forced to 0 whenever the whole map already fits (zoom ==
+  fit). `panBy(dxCss, dyCss)` (drag delta ÷ zoom), `resetPan()`, and `resetView()`
+  (pan 0 + zoom back to the mode default) are exported. Drag gestures: **host** —
+  left-drag while spectating, middle-drag or shift+left-drag while playing; **desktop
+  player** — right-button *drag* (a right-button *click* with no movement is still a
+  jump, disambiguated on `pointerup` by total movement). Double-click → `resetView()`.
+  `screenToWorld()` derives from `camera.x/y` (which now include pan) so click-to-walk
+  targeting stays correct with no extra math.
 - **Rendering**: `render()` wraps the *entire pre-existing* world-space draw sequence
   (`drawFloor`/`drawDogPen`/`drawTrapdoors`/players/dogs/etc. — none of them changed
   internally) in one `ctx.translate → ctx.scale(camera.zoom) → ctx.translate(-camera.x,
@@ -185,9 +192,21 @@ everything, unaffected.
 Per-room states, driven by a single tick loop (`TICK_MS`, currently 40ms / 25Hz):
 
 ```
-lobby → question → reveal → escape → fall_pause? → resolve → death_anim → (loop to question, or → ended)
+lobby → intro → question → reveal → escape → fall_pause? → resolve → death_anim → (loop to intro, or → ended)
 ```
 
+- **intro**: the full-screen "read the question" phase, *before* the answer timer.
+  Duration = `introMsFor(question)` = `INTRO_BASE_MS + wordCount(q + all options) *
+  INTRO_MS_PER_WORD`, capped at `INTRO_MAX_MS` (all three in `TUNING`). `emitQuestion()`
+  fires at the start of this phase (payload carries `phase:'intro'` + `introEndsAt`);
+  the client shows `#introOverlay` (big question + 3 door-coloured option cards +
+  countdown), and the host page reads it aloud (Web Speech API, `speakQuestion()` in
+  `host.js`, 🔊 toggle in the HUD, `localStorage` `trivia_host_speak`). Players can move
+  during `intro` server-side, but the overlay covers the canvas so in practice nobody
+  moves until answering opens. Ends either when `introEndsAt` passes or when the host
+  hits **START ANSWERING** (`host:startAnswering` → `Room.beginAnswering()`), which sets
+  `state='question'` + the real answer deadline and emits **`game:answering {endsAt}`**
+  so clients dismiss the overlay / start the timer bar on the exact instant.
 - **question**: answer timer running, players move freely.
 - **reveal**: (3s, `REVEAL_DELAY_MS`) cages already risen on all 3 doors (visual only —
   `doLockIn` computed real occupancy into `this.cages`/`this.exposed` right before this,
@@ -393,38 +412,55 @@ extrapolation/guessing). Players interpolate by `id`; dogs interpolate by array 
 targeting and status-text bookkeeping, which want the *actual* current server state, not
 a deliberately-delayed render-only view.
 
-### Responsive layout: fills the screen, fits without scrolling
+### In-game screen: full-viewport canvas + translucent overlay HUD
 
-`#gameView` is a flex column with its height bound to the viewport
-(`calc(100dvh - 76px)`, `vh` fallback first for older browsers — the 76px reserves room
-for `.container`'s own padding plus the persistent `.top-nav` above it) — every child
-except `canvas#arena` is `flex: 0 0 auto` (sized to its own content), and the canvas is
-the one `flex: 1 1 auto` element that absorbs whatever vertical space is left. Above the
-mobile breakpoint (and on `host.html` always), `aspect-ratio: 900/640` derives the
-canvas's width from that resolved height (capped by `max-width`/`max-height` so it
-doesn't get silly on a huge monitor) — this one mechanism handles both ends: on a short
-viewport the canvas shrinks to guarantee everything (HUD + canvas) fits without
-scrolling, on a tall/large display it renders correspondingly bigger. Below the
-breakpoint, `canvas#arena.arena-follow`'s own rule (see "Camera system" above) drops the
-`aspect-ratio` cap entirely and goes edge-to-edge instead — the camera's follow-mode
-zoom is what keeps gameplay visible/controllable at that size now, not a shrunk whole-
-map view. A `@media (max-height: 700px)` pass further trims HUD padding/margins (not
-font sizes — readability took priority over a few extra px of canvas after a previous
-pass shrank text too aggressively) on very short screens. Because CSS now controls
-`#gameView`'s `display` value (`flex`, not `block`), `showGameView()` in both client
-files must set `style.display = 'flex'` — setting `'block'` there would silently break
-this layout (inline styles beat the stylesheet). The touch-control reminder is a faint
-screen-space watermark drawn by `drawTouchHint()` in `arena-render.js` (`'follow'` mode
-only, replaced by the joystick itself the moment a touch is active).
+The whole game screen was rebuilt around an edge-to-edge canvas (`canvas#arena` is
+`position: fixed; inset: 0; width:100vw; height:100dvh; z-index:0`) with every HUD piece
+a `position: fixed` overlay on top of it (`.hud` — `z-index:10`, `pointer-events:none`,
+re-enabled per interactive child via `.hud button/a/input/.interactive`). Nothing in the
+game view is in normal document flow, so the page can't scroll (`body.in-game { overflow:
+hidden }`, class toggled by `showGameView()` / `hideAllTopViews()` / the lobby+rematch
+paths in both client files) and the arena is always centred and as large as the viewport.
+The old `#gameView` flex-column / `aspect-ratio` / `@media (max-width:820px) .arena-follow`
+breakout / `@media (max-height:700px)` machinery is **gone**. `showGameView()` now sets
+`display:block` (a passthrough — the fixed children are what render), *not* `flex`.
+
+**One gotcha:** `position:fixed` elements report `offsetParent === null` even when
+visible, so `drawFrame()`'s "is the canvas hidden?" guard is now
+`canvas.clientWidth === 0` (0 only when a `display:none` ancestor hides it), not
+`offsetParent === null`.
+
+Rationalised HUD, both host and player (`.hud-*` classes in `style.css`):
+- `.hud-topleft` — `Q n/N · X alive` (host also `· Y 👻`) + a small logo/leave link.
+  Replaces the old big `.q-indicator` box **and** the `.status-strip` badges.
+- `.hud-timer` — top-centre phase label + slim timer bar. Keeps the `#phaseLabel` /
+  `#timerBar` ids so `updatePhaseTimer()` is untouched; it also toggles a `.slim` class
+  on `.hud-question` (`#questionHud`) for `reveal`/`escape`/`fall_pause`/`resolve`/
+  `death_anim` so the question bar shrinks to one line after answering.
+- `.hud-question` — bottom-centre question text + A/B/C door-coloured pills
+  (`.option-pill.correct/.wrong` reveal styling unchanged).
+- `.hud-host` (host, `cast-hide`) — room code + copy, 🔊 read-aloud toggle, LEAVE PLAYER,
+  END GAME. `.hud-cast` (host, **not** `cast-hide`, `#castToggleBtnGame`) — bottom-left,
+  stays reachable to exit cast mode since `.top-nav` is behind the canvas in-game.
+- `.hud-out` (player) — "👻 YOU'RE OUT" shown only while the local player `isGhost`.
+- `#introOverlay` (`.intro-overlay`) — the full-screen question intro, `z-index:30`.
+- Small screens: `@media (max-width:640px)` drops the timer to a full-width strip at the
+  very top with the corner readout below it (they'd overlap side-by-side on a phone) and
+  shrinks the rest.
+
+The touch/desktop control hints (`drawTouchHint`/`drawDesktopHint` in `arena-render.js`)
+were nudged up to `viewH - 150/-134` so the bottom `.hud-question` overlay doesn't cover
+them.
 
 ### App navigation and clipboard copy
 
 A persistent `.top-nav` (logo + optional subtitle) sits outside every view div in both
-`host.html` and `player.html`, so there's always a one-tap way back to `index.html` —
-previously the only escape from a live game was closing the tab. On `player.html` the
-logo calls `backToMenu()` (the same explicit-disconnect function as the end screen's
-button, not a bare link) since leaving mid-game should register as leaving; on
-`host.html` it's a plain link (no equivalent "presence" concern for the host).
+`host.html` and `player.html` — the lobby / join / end screens' way back to
+`index.html`. **In-game it's hidden behind the fixed fullscreen canvas**, so the game
+view has its own overlay leave/exit link (`.hud-topleft`) and cast toggle (`.hud-cast`).
+On `player.html` the logo calls `backToMenu()` (the same explicit-disconnect function as
+the end screen's button, not a bare link) since leaving mid-game should register as
+leaving; on `host.html` it's a plain link (no equivalent "presence" concern for the host).
 `copyLink()`/`copyCode()` in `host.js` route through a shared `copyToClipboard()` that
 tries `navigator.clipboard` (requires a secure context — HTTPS/localhost) first and
 falls back to a hidden-textarea + `execCommand('copy')` otherwise, since a LAN-IP host
@@ -454,8 +490,12 @@ DOG_RADIUS + OBSTACLE_MARGIN`, tightened this round - see "Stuck-dog fixes"),
 mirrors the jump-cooldown constants for local animation prediction. If gameplay feels
 off, these are the first things to touch — tune before restructuring logic.
 
-**The 16 most-tuned scalars now live on a mutable `TUNING` object** (top of
+Question intro phase: `INTRO_BASE_MS=3000`, `INTRO_MS_PER_WORD=190`, `INTRO_MAX_MS=13000`
+(all in `TUNING`).
+
+**The most-tuned scalars now live on a mutable `TUNING` object** (top of
 `rooms.js`), not `const`s — `PLAYER_SPEED`, `DOG_SPEED`, `DOG_CATCH_RADIUS`,
+`INTRO_BASE_MS`, `INTRO_MS_PER_WORD`, `INTRO_MAX_MS`,
 `DOG_CATCH_CAPACITY_PCT/_MIN`, `DOG_GIVEUP_MS`, `DOG_EAT_MS`, `REVEAL_DELAY_MS`,
 `ESCAPE_MS`, `FALL_ANIM_HOLD_MS`, `DEATH_ANIM_MS`, `TRAP_ROOT_MS`,
 `LUNGE_SPEED_MULT`, `JUMP_SPEED_MULT`, `JUMP_BASE/MAX_COOLDOWN_MS`. Every use-site
@@ -592,7 +632,31 @@ deployment target.
 
 ## Feedback already implemented (most recent round)
 
-Four playtesting issues this round, all touching the wire protocol (new events noted):
+**Game-screen refactor** (touches the wire protocol — see the `intro` phase in "Game
+state machine" and "In-game screen" above for the details):
+(1) **Full-viewport canvas + overlay HUD** — the in-game screen was rebuilt so the
+canvas is `position:fixed inset:0` and all HUD is a translucent fixed overlay on top
+(`.hud-*` in `style.css`); the page never scrolls (`body.in-game`), the arena is always
+centred/edge-to-edge, and the HUD was rationalised down (corner `Q n/N · X alive`,
+top-centre timer, bottom question+options, host controls top-right). Removed the old
+`#gameView` flex-column / `aspect-ratio` / breakout `@media` machinery; `showGameView()`
+now sets `display:block` not `flex`, and `drawFrame()`'s hidden-check is
+`clientWidth === 0` (fixed elements have `offsetParent === null` even when visible).
+(2) **Full-screen question intro** — new server `intro` phase before the answer timer:
+`#introOverlay` shows the question big + 3 door-coloured option cards + a countdown, the
+host page reads it aloud (`speechSynthesis`, 🔊 toggle), and the host can cut it short
+with **START ANSWERING** (`host:startAnswering` → `game:answering`). Auto-advances after
+`introMsFor(question)` (word-count-scaled, in `TUNING`).
+(3) **Camera panning** — `overview` mode gained `panX/panY` (drag to pan when zoomed in,
+clamped at the world edges; double-click = `resetView()`). Host: left-drag spectating,
+middle/shift-drag while playing. Desktop player: right-button drag (right-*click* still
+jumps). `follow` mode still just tracks the player.
+
+Prior round — **debug / sandbox mode** (`npm run debug`): bots, one-click solo start
+bypassing the 2-player minimum, in-game phase/question jump controls, and a live tuning
+panel. Fully off for a normal `npm start`. See the "Debug / sandbox mode" section above.
+
+Earlier round — four playtesting issues, all touching the wire protocol (new events noted):
 (1) **Reconnect resilience** — the real root cause of reported "desync switching tabs":
 neither client re-attached to the room after a socket reconnect (each server-side
 connection closure resets `playerId`/`isHost` to blank on every new socket), so after any

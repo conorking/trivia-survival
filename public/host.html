@@ -123,28 +123,44 @@
     </div>
   </div>
 
-  <!-- GAME VIEW -->
+  <!-- GAME VIEW - full-viewport canvas with a translucent overlay HUD on top -->
   <div id="gameView" style="display:none;">
-    <div class="status-strip cast-hide">
-      <div class="code-badge">
-        <span class="code-val" id="gameCodeVal">-----</span>
-        <button class="copy-btn" onclick="copyCode()">Copy</button>
-      </div>
-      <span class="badge alive">Alive: <span id="aliveCount">0</span></span>
-      <span class="badge ghost">Ghosts: <span id="ghostCount">0</span></span>
-      <button class="ghost-btn" id="leavePlayerBtnGame" style="display:none;" onclick="leavePlayer()">LEAVE PLAYER MODE</button>
-      <button class="danger" onclick="endGameEarly()">END GAME</button>
+    <canvas id="arena"></canvas>
+
+    <div class="hud hud-topleft">
+      <a href="index.html" class="logo-link interactive">🐾 EXIT</a>
+      <div class="hud-stat">Q <span id="qIndex">1</span><span class="sep">/</span><span id="qTotal">10</span><span class="sep">·</span><span id="aliveCount">0</span> alive<span class="sep">·</span><span class="ghosts"><span id="ghostCount">0</span> 👻</span></div>
     </div>
-    <div class="q-indicator">
-      <div class="q-big">Q <span id="qIndex">1</span><span class="q-sep">/</span><span id="qTotal">10</span></div>
-    </div>
-    <div class="question-banner">
-      <h3 id="questionText">Waiting for question...</h3>
-      <div class="options-row" id="optionsRow"></div>
+
+    <div class="hud hud-timer">
       <div class="phase-label" id="phaseLabel"></div>
       <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
     </div>
-    <canvas id="arena"></canvas>
+
+    <div class="hud hud-host cast-hide">
+      <span class="code-pill" id="gameCodeVal">-----</span>
+      <button class="ghost-btn" onclick="copyCode()">COPY</button>
+      <button class="ghost-btn" id="speakToggle" onclick="toggleSpeak()">🔊 READ</button>
+      <button class="ghost-btn" id="leavePlayerBtnGame" style="display:none;" onclick="leavePlayer()">LEAVE PLAYER</button>
+      <button class="danger" onclick="endGameEarly()">END GAME</button>
+    </div>
+
+    <button class="hud hud-cast interactive ghost-btn" id="castToggleBtnGame" onclick="toggleCastMode()">CAST VIEW</button>
+
+    <div class="hud hud-question" id="questionHud">
+      <h3 id="questionText">Waiting for question…</h3>
+      <div class="options-row" id="optionsRow"></div>
+    </div>
+  </div>
+
+  <!-- FULL-SCREEN QUESTION INTRO - covers the canvas during the 'intro' phase -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="intro-qnum">QUESTION <span id="introQNum">1</span> / <span id="introQTotal">10</span></div>
+    <div class="intro-q" id="introQ">…</div>
+    <div class="intro-options" id="introOptions"></div>
+    <div class="intro-countdown-wrap"><div class="intro-countdown" id="introCountdown"></div></div>
+    <div class="intro-hint" id="introHint">Read the question aloud, then start answering.</div>
+    <button class="primary interactive" id="introStartBtn" style="display:none;" onclick="startAnswering()">▶ START ANSWERING</button>
   </div>
 
   <!-- END VIEW (overlay - drawn on top of the game view's last frame, not a replacement for it) -->

@@ -41,6 +41,7 @@ function hideAllTopViews() {
   document.getElementById('customizeView').style.display = 'none';
   document.getElementById('lobbyView').style.display = 'none';
   document.getElementById('gameView').style.display = 'none';
+  document.body.classList.remove('in-game');
 }
 
 const grid = document.getElementById('avatarGrid');
@@ -224,12 +225,66 @@ function renderQuestion(data) {
   }
   if (data.trapdoors) ArenaRender.setTrapdoors(data.trapdoors);
   ArenaRender.onNewQuestion();
+  if (data.phase === 'intro') showIntro(data);
+  else hideIntro();
 }
 
 socket.on('game:question', renderQuestion);
+socket.on('game:answering', () => hideIntro());
+
+// ---- Full-screen question intro overlay (state 'intro', before the answer timer) ----
+// Same block is duplicated in host.js (which flips INTRO_IS_HOST on to show the
+// START ANSWERING button + speak the question).
+const INTRO_IS_HOST = false;
+let introActive = false;
+let introStartAt = 0, introEndsAt = 0;
+
+function showIntro(data) {
+  introActive = true;
+  introStartAt = Date.now();
+  introEndsAt = data.introEndsAt || (introStartAt + 4000);
+  document.getElementById('introQNum').textContent = data.index + 1;
+  document.getElementById('introQTotal').textContent = data.total;
+  document.getElementById('introQ').textContent = data.q;
+  const opts = document.getElementById('introOptions');
+  opts.innerHTML = '';
+  for (const key of ['A', 'B', 'C']) {
+    if (!data.options[key]) continue;
+    const el = document.createElement('div');
+    el.className = `intro-opt ${key}`;
+    el.innerHTML = `<span class="k">${key}</span>`;
+    el.appendChild(document.createTextNode(data.options[key]));
+    opts.appendChild(el);
+  }
+  const btn = document.getElementById('introStartBtn');
+  if (btn) btn.style.display = INTRO_IS_HOST ? 'inline-block' : 'none';
+  document.getElementById('introOverlay').classList.add('show');
+  if (INTRO_IS_HOST && typeof speakQuestion === 'function') speakQuestion(data);
+  updateIntroCountdown();
+}
+
+function hideIntro() {
+  if (!introActive) return;
+  introActive = false;
+  document.getElementById('introOverlay').classList.remove('show');
+  if (INTRO_IS_HOST && window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function updateIntroCountdown() {
+  if (!introActive) return;
+  const now = Date.now();
+  const span = Math.max(1, introEndsAt - introStartAt);
+  const frac = Math.max(0, Math.min(1, (introEndsAt - now) / span));
+  const bar = document.getElementById('introCountdown');
+  if (bar) bar.style.width = (frac * 100) + '%';
+}
+setInterval(updateIntroCountdown, 150);
+
+function startAnswering() { socket.emit('host:startAnswering'); }
 
 // ---- Unified phase timer: one bar + label used across every round phase ----
 const PHASE_LABELS = {
+  intro: () => 'Get ready…',
   question: (s) => `Choose your answer! ${s}s`,
   reveal: (s) => `Revealing the answer... ${s}s`,
   escape: (s) => `Get off the wrong doors! ${s}s`,
@@ -237,6 +292,7 @@ const PHASE_LABELS = {
   resolve: (s) => `Survive the dogs for another ${s}s...`,
   death_anim: () => 'Round over...'
 };
+const SLIM_QUESTION_STATES = new Set(['reveal', 'escape', 'fall_pause', 'resolve', 'death_anim']);
 let lastPhaseState = null;
 
 function updatePhaseTimer(state, phaseEndsAt) {
@@ -251,6 +307,8 @@ function updatePhaseTimer(state, phaseEndsAt) {
 
   if (state !== lastPhaseState) {
     lastPhaseState = state;
+    const qhud = document.getElementById('questionHud');
+    if (qhud) qhud.classList.toggle('slim', SLIM_QUESTION_STATES.has(state));
     bar.style.transition = 'none';
     bar.style.width = '100%';
     requestAnimationFrame(() => {
@@ -294,15 +352,18 @@ socket.on('game:tick', (data) => {
   const me = data.players.find(p => p.id === myId);
   if (me) {
     myAliveGhostState = { alive: me.alive, isGhost: me.isGhost };
-    document.getElementById('youStatus').textContent = me.isGhost ? 'Status: 👻 Ghost' : 'Status: Alive';
+    document.getElementById('youStatus').style.display = me.isGhost ? 'block' : 'none';
   }
   const aliveCount = data.players.filter(p => p.alive && !p.isGhost).length;
   const aliveEl = document.getElementById('aliveCount');
   if (aliveEl) aliveEl.textContent = aliveCount;
+  // Safety net for a reconnect that landed after game:question/game:answering.
+  if (data.state !== 'intro' && introActive) hideIntro();
   updatePhaseTimer(data.state, data.phaseEndsAt);
 });
 
 socket.on('game:end', ({ reason, winners }) => {
+  hideIntro();
   // Leave gameView (and its last-rendered frame) visible behind the summary overlay,
   // instead of cutting away from the arena entirely.
   document.getElementById('endView').style.display = 'flex';
@@ -346,6 +407,7 @@ socket.on('game:rematch', ({ players } = {}) => {
   ready = !!(me && me.ready);
   const readyBtn = document.getElementById('readyBtn');
   if (readyBtn) readyBtn.textContent = ready ? 'READY ✔' : 'READY UP';
+  hideIntro();
   showLobby();
   showToast('Rematch! Ready up to start the next round.');
 });
@@ -376,7 +438,8 @@ function showLobby() {
 
 function showGameView() {
   hideAllTopViews();
-  document.getElementById('gameView').style.display = 'flex';
+  document.getElementById('gameView').style.display = 'block';
+  document.body.classList.add('in-game');
   computeViewMode();
   const canvas = document.getElementById('arena');
   ArenaRender.fitCanvas(canvas);
@@ -456,7 +519,7 @@ function getRenderSnapshot() {
 
 function drawFrame() {
   const canvas = document.getElementById('arena');
-  if (!canvas || canvas.offsetParent === null) return;
+  if (!canvas || canvas.clientWidth === 0) return; // hidden (fixed elements have null offsetParent even when visible)
   const ctx = canvas.getContext('2d');
   const snap = getRenderSnapshot();
   let players = snap.players;
@@ -470,7 +533,7 @@ function drawFrame() {
   const joystick = (joystickPointerId !== null && joystickOrigin && joystickCurrent)
     ? { originX: joystickOrigin.x, originY: joystickOrigin.y, curX: joystickCurrent.x, curY: joystickCurrent.y }
     : null;
-  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick, mouseActive: mouseFollowActive });
+  ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick, mouseActive: mouseFollowActive || mousePanActive });
 }
 
 (function renderLoop() {
@@ -535,6 +598,7 @@ function updateKeyboardInput() {
 
 window.addEventListener('keydown', (e) => {
   if (document.getElementById('gameView').style.display === 'none') return;
+  if (introActive) return; // reading the question, not moving yet
   const dir = keyToDir(e.code);
   if (dir) {
     e.preventDefault();
@@ -592,6 +656,9 @@ let pinchPointerIds = null; // [idA, idB] once a second finger joins while the j
 let pinchLastDist = null;
 let mouseFollowActive = false;
 let mouseFollowTarget = null; // {x,y} world coords
+let mousePanActive = false;   // right-button drag pans the overview camera
+let mousePanLast = null;      // {x,y} CSS px
+let mousePanMoved = 0;        // total CSS px moved this drag - < threshold on release => it was a right-click jump
 
 function getCanvasPoint(canvas, e) {
   const rect = canvas.getBoundingClientRect();
@@ -616,8 +683,18 @@ function setupPointerControls() {
     if (document.getElementById('gameView').style.display === 'none') return;
 
     if (e.pointerType === 'mouse') {
-      if (e.button === 2) { triggerJump(); e.preventDefault(); return; } // right-click = jump
+      if (e.button === 2) {
+        // Right button: start a potential pan. If it turns out to be a click (barely
+        // moved) it's treated as a jump on release instead - see endPointer.
+        mousePanActive = true;
+        mousePanLast = getCanvasPoint(canvas, e);
+        mousePanMoved = 0;
+        if (canvas.setPointerCapture) { try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ } }
+        e.preventDefault();
+        return;
+      }
       if (e.button !== 0) return; // ignore middle-click/other buttons entirely
+      if (introActive) return;
       const pt = getCanvasPoint(canvas, e);
       mouseFollowActive = true;
       mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
@@ -647,6 +724,14 @@ function setupPointerControls() {
 
   canvas.addEventListener('pointermove', (e) => {
     if (e.pointerType === 'mouse') {
+      if (mousePanActive) {
+        const pt = getCanvasPoint(canvas, e);
+        const dx = pt.x - mousePanLast.x, dy = pt.y - mousePanLast.y;
+        mousePanMoved += Math.hypot(dx, dy);
+        ArenaRender.panBy(dx, dy);
+        mousePanLast = pt;
+        return;
+      }
       if (!mouseFollowActive) return;
       const pt = getCanvasPoint(canvas, e);
       mouseFollowTarget = ArenaRender.screenToWorld(canvas, pt.x, pt.y);
@@ -672,6 +757,12 @@ function setupPointerControls() {
 
   function endPointer(e) {
     if (e.pointerType === 'mouse') {
+      if (mousePanActive) {
+        mousePanActive = false;
+        mousePanLast = null;
+        if (mousePanMoved < TAP_MAX_MOVE) triggerJump(); // right-click, not a drag
+        return;
+      }
       if (!mouseFollowActive) return;
       mouseFollowActive = false;
       mouseFollowTarget = null;
@@ -712,6 +803,9 @@ function setupPointerControls() {
     e.preventDefault();
     ArenaRender.adjustZoom(e.deltaY < 0 ? 1.08 : 1 / 1.08, viewMode, canvas);
   }, { passive: false });
+
+  // Double-click resets the view (drops pan, zoom back to default).
+  canvas.addEventListener('dblclick', (e) => { e.preventDefault(); ArenaRender.resetView(); });
 }
 setupPointerControls();
 

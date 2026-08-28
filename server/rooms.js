@@ -35,6 +35,9 @@ const DEFAULT_TUNING = Object.freeze({
   PLAYER_SPEED: 235,          // px/sec
   DOG_SPEED: 185,             // px/sec
   DOG_CATCH_RADIUS: 24,
+  INTRO_BASE_MS: 3000,        // full-screen "read the question" phase, before the answer timer
+  INTRO_MS_PER_WORD: 190,     // ...plus this much per word of question+options text
+  INTRO_MAX_MS: 13000,        // ...capped here (host can also skip early)
   REVEAL_DELAY_MS: 3000,
   ESCAPE_MS: 2400,            // window to flee a just-opened wrong door before it becomes lethal
   FALL_ANIM_HOLD_MS: 1000,    // grace hold after escape-window stragglers fall, before dogs release
@@ -53,6 +56,7 @@ const TUNING = { ...DEFAULT_TUNING };
 // Sane [min, max] guards so a fat-fingered debug value can't wedge the state machine.
 const TUNING_BOUNDS = {
   PLAYER_SPEED: [20, 1200], DOG_SPEED: [20, 1200], DOG_CATCH_RADIUS: [4, 200],
+  INTRO_BASE_MS: [0, 30000], INTRO_MS_PER_WORD: [0, 2000], INTRO_MAX_MS: [1000, 60000],
   REVEAL_DELAY_MS: [0, 20000], ESCAPE_MS: [200, 30000], FALL_ANIM_HOLD_MS: [0, 10000],
   DEATH_ANIM_MS: [0, 10000], DOG_CATCH_CAPACITY_PCT: [0, 1], DOG_CATCH_CAPACITY_MIN: [0, 100],
   DOG_GIVEUP_MS: [1000, 120000], DOG_EAT_MS: [0, 20000], TRAP_ROOT_MS: [0, 20000],
@@ -71,6 +75,19 @@ function setTuning(patch = {}) {
 }
 function getTuning() { return { ...TUNING }; }
 function resetTuning() { Object.assign(TUNING, DEFAULT_TUNING); return { ...TUNING }; }
+
+// How long the full-screen question intro (state 'intro') runs before the answer timer
+// starts - a base plus a per-word allowance for the question + all three options, capped.
+// The host can also cut it short with host:startAnswering.
+function introMsFor(question) {
+  if (!question) return TUNING.INTRO_BASE_MS;
+  const text = [question.q, ...Object.values(question.options || {})].join(' ');
+  const words = (text.trim().match(/\S+/g) || []).length;
+  return Math.max(
+    TUNING.INTRO_BASE_MS,
+    Math.min(TUNING.INTRO_MAX_MS, TUNING.INTRO_BASE_MS + words * TUNING.INTRO_MS_PER_WORD)
+  );
+}
 // Stuck-dog fallback: if a hunting/returning dog makes negligible progress across a
 // couple of consecutive check windows (steering stuck in a local minimum - e.g. wedged
 // against a corner), it temporarily ignores obstacle avoidance (still hard-clipped so it
@@ -385,7 +402,7 @@ class Room {
       dynamicCellScaling: false // opt-in shrinking cages round over round
     };
     this.customQuestions = null;
-    this.state = 'lobby'; // lobby | question | reveal | escape | fall_pause | resolve | death_anim | ended
+    this.state = 'lobby'; // lobby | intro | question | reveal | escape | fall_pause | resolve | death_anim | ended
     this.questions = [];
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
@@ -524,8 +541,8 @@ class Room {
       p.x = spawn.x; p.y = spawn.y;
     }
     this.computeTrapdoorsForRound();
-    this.state = 'question';
-    this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
+    this.state = 'intro';
+    this.phaseEndsAt = Date.now() + introMsFor(this.currentQuestion);
     if (!this.loop) this.startLoop(io);
     this.emitQuestion(io);
   }
@@ -657,10 +674,10 @@ class Room {
     this.clearRematchTimer();
     this.awaitingRematchStart = false;
     this.buildQuestionSet();
-    this.state = 'question';
+    this.state = 'intro';
     this.currentQuestionIndex = 0;
     this.currentQuestion = this.questions[0];
-    this.phaseEndsAt = Date.now() + this.config.answerTimeSec * 1000;
+    this.phaseEndsAt = Date.now() + introMsFor(this.currentQuestion);
     this.dogs = createPennedDogs();
     this.traps = [];
     this.resetHazards();
@@ -689,9 +706,22 @@ class Room {
       q: this.currentQuestion.q,
       options: this.currentQuestion.options,
       answerTimeMs: this.config.answerTimeSec * 1000,
+      phase: this.state, // 'intro' in the normal flow (the question shows before the timer)
+      introEndsAt: this.state === 'intro' ? this.phaseEndsAt : 0,
       endsAt: this.phaseEndsAt,
       trapdoors: this.trapdoors
     });
+  }
+
+  // intro -> question: the full-screen "read the question" phase is over, start the
+  // answer timer. Fired either by the tick when introEndsAt passes or early by the host
+  // (host:startAnswering). game:answering lets clients dismiss the intro overlay and
+  // kick off the timer bar on the exact instant rather than up to one tick later.
+  beginAnswering(io, now) {
+    if (this.state !== 'intro') return;
+    this.state = 'question';
+    this.phaseEndsAt = now + this.config.answerTimeSec * 1000;
+    io.to(this.code).emit('game:answering', { endsAt: this.phaseEndsAt });
   }
 
   startLoop(io) {
@@ -836,7 +866,9 @@ class Room {
       return;
     }
 
-    if (this.state === 'question' && now >= this.phaseEndsAt) {
+    if (this.state === 'intro' && now >= this.phaseEndsAt) {
+      this.beginAnswering(io, now);
+    } else if (this.state === 'question' && now >= this.phaseEndsAt) {
       this.doLockIn(io, now);
     } else if (this.state === 'reveal' && now >= this.phaseEndsAt) {
       this.doReveal(io, now);
@@ -1210,8 +1242,8 @@ class Room {
     this.currentQuestionIndex = nextIndex;
     this.currentQuestion = this.questions[nextIndex];
     this.computeTrapdoorsForRound();
-    this.state = 'question';
-    this.phaseEndsAt = now + this.config.answerTimeSec * 1000;
+    this.state = 'intro';
+    this.phaseEndsAt = now + introMsFor(this.currentQuestion);
     this.emitQuestion(io);
   }
 

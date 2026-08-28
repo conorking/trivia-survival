@@ -61,22 +61,36 @@
     </div>
   </div>
 
-  <!-- GAME VIEW -->
+  <!-- GAME VIEW - full-viewport canvas with a translucent overlay HUD on top -->
   <div id="gameView" style="display:none;">
-    <div class="status-strip">
-      <span class="badge" id="youStatus">Status: Alive</span>
-      <span class="badge alive">Alive: <span id="aliveCount">0</span></span>
+    <canvas id="arena" class="arena-follow"></canvas>
+
+    <div class="hud hud-topleft">
+      <a href="#" class="logo-link interactive" onclick="backToMenu(); return false;">🐾 LEAVE</a>
+      <div class="hud-stat">Q <span id="qIndex">1</span><span class="sep">/</span><span id="qTotal">10</span><span class="sep">·</span><span id="aliveCount">0</span> alive</div>
     </div>
-    <div class="q-indicator">
-      <div class="q-big">Q <span id="qIndex">1</span><span class="q-sep">/</span><span id="qTotal">10</span></div>
-    </div>
-    <div class="question-banner">
-      <h3 id="questionText">Get ready...</h3>
-      <div class="options-row" id="optionsRow"></div>
+
+    <div class="hud hud-timer">
       <div class="phase-label" id="phaseLabel"></div>
       <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
     </div>
-    <canvas id="arena" class="arena-follow"></canvas>
+
+    <div class="hud hud-out" id="youStatus" style="display:none;">👻 YOU'RE OUT — SPECTATING</div>
+
+    <div class="hud hud-question" id="questionHud">
+      <h3 id="questionText">Get ready…</h3>
+      <div class="options-row" id="optionsRow"></div>
+    </div>
+  </div>
+
+  <!-- FULL-SCREEN QUESTION INTRO - covers the canvas during the 'intro' phase -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="intro-qnum">QUESTION <span id="introQNum">1</span> / <span id="introQTotal">10</span></div>
+    <div class="intro-q" id="introQ">…</div>
+    <div class="intro-options" id="introOptions"></div>
+    <div class="intro-countdown-wrap"><div class="intro-countdown" id="introCountdown"></div></div>
+    <div class="intro-hint" id="introHint">Read the question — answering opens in a moment…</div>
+    <button class="primary interactive" id="introStartBtn" style="display:none;" onclick="startAnswering()">▶ START ANSWERING</button>
   </div>
 
   <!-- END VIEW (overlay - drawn on top of the game view's last frame, not a replacement for it) -->

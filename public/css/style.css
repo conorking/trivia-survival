@@ -195,92 +195,161 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 }
 .avatar-swatch.selected { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* Game view: a flex column bound to the viewport height so the whole screen (HUD +
-   canvas) fits without scrolling on a phone, while letting the canvas - the one
-   flexible element - grow to fill whatever's left over. On a tall/large display
-   that's a lot of room, so the arena naturally renders bigger there too. */
-#gameView {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  /* Reserves room for .container's padding + .top-nav above it, so the flex canvas
-     doesn't get sized against the wrong budget and force a scroll. */
-  height: calc(100vh - 76px);
-  height: calc(100dvh - 76px); /* dvh accounts for mobile browser chrome; vh above is the fallback */
-}
-#gameView > * { flex: 0 0 auto; }
+/* ===== In-game screen: full-viewport canvas + translucent overlay HUD =====
+   The canvas is fixed to the whole viewport; every HUD piece is a fixed-position
+   overlay on top of it (pointer-events:none so it never eats canvas gestures,
+   re-enabled per interactive child). Nothing here is in normal document flow, so
+   the page can't scroll and the arena is always edge-to-edge and centred. */
+#gameView { position: static; }
 
 canvas#arena {
-  image-rendering: pixelated;
-  background: #111120; /* camera letterbox color when the viewport aspect doesn't match the world's */
-  border: 4px solid var(--border);
-  border-radius: 8px;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 0;
   display: block;
-  margin: 6px auto;
-  touch-action: none; /* pointer/drag controls own gestures on the canvas - no scroll/zoom */
-  flex: 1 1 auto;
-  min-height: 0;
-  align-self: center;
-  aspect-ratio: 900 / 640; /* matches the world's own aspect ratio - the camera fits/zooms within this box */
-  max-width: min(95vw, 900px);
-  max-height: 800px;
+  image-rendering: pixelated;
+  background: #111120;
+  touch-action: none; /* pointer/drag controls own gestures on the canvas */
 }
+body.in-game { overflow: hidden; }
 
-/* Mobile: the camera follows the player zoomed in (see arena-render.js), so the canvas
-   no longer needs to show the whole world at once - it goes genuinely edge-to-edge
-   instead, maximizing visible space and touch-control precision. Scoped to
-   canvas#arena.arena-follow (only set in player.html) so host - which always shows the
-   whole map regardless of window size - is never affected by this breakpoint. The
-   `calc(50% - 50vw)` margin trick breaks the canvas out of .container's max-width/
-   padding without having to touch #gameView or its other (HUD) children, which stay
-   exactly as contained/centered as they are on desktop. */
-@media (max-width: 820px) {
-  canvas#arena.arena-follow {
-    aspect-ratio: unset;
-    max-width: none;
-    max-height: none;
-    width: 100vw;
-    margin: 6px calc(50% - 50vw);
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-  }
+.hud { position: fixed; z-index: 10; pointer-events: none; }
+.hud button, .hud a, .hud input, .hud .interactive, .hud.interactive { pointer-events: auto; }
+
+/* top-left: logo (back) + a compact Q / alive readout */
+.hud-topleft { top: 6px; left: 8px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.hud-topleft .logo-link {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px; color: var(--accent); text-decoration: none;
+  background: rgba(16,16,42,0.7); border-radius: 6px; padding: 6px 8px;
 }
+.hud-stat {
+  font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text);
+  background: rgba(16,16,42,0.7); border-radius: 6px; padding: 6px 8px;
+  display: flex; gap: 8px; align-items: center;
+}
+.hud-stat .sep { color: #6a6a90; }
+.hud-stat .ghosts { color: #9a9ac0; }
 
-.question-banner {
-  background: var(--bg-panel);
-  border: 4px solid var(--border);
-  border-radius: 8px;
-  padding: 14px 18px;
+/* top-centre: the one always-critical element - phase label + timer bar */
+.hud-timer {
+  top: 6px; left: 50%; transform: translateX(-50%);
+  width: min(420px, 74vw); text-align: center;
+}
+.phase-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px; color: var(--accent);
+  text-shadow: 2px 2px 0 var(--border);
+  min-height: 14px; margin-bottom: 4px;
+}
+.timer-bar-wrap { height: 10px; background: rgba(16,16,42,0.85); border-radius: 6px; overflow: hidden; border: 2px solid var(--border); }
+.timer-bar { height: 100%; background: var(--accent); width: 100%; transition: width 0.1s linear; }
+
+/* bottom-centre: question + option pills. Prominent while answering, slim afterwards. */
+.hud-question {
+  left: 50%; bottom: 10px; transform: translateX(-50%);
+  width: min(720px, 94vw);
+  background: rgba(16,16,42,0.82);
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
   text-align: center;
-  margin-bottom: 10px;
+  transition: padding 0.2s ease;
 }
-.question-banner h3 { margin: 0 0 8px; color: var(--accent); font-size: 15px; }
-.options-row { display: flex; gap: 14px; justify-content: center; margin-top: 8px; }
+.hud-question h3 {
+  margin: 0 0 8px; color: var(--accent); font-size: 14px; line-height: 1.4;
+}
+.hud-question.slim { padding: 6px 12px; }
+.hud-question.slim h3 {
+  font-size: 11px; margin-bottom: 5px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.options-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .option-pill {
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
-  padding: 8px 14px;
+  font-size: 11px;
+  padding: 8px 12px;
   border-radius: 6px;
   border: 2px solid var(--border);
 }
+.hud-question.slim .option-pill { font-size: 9px; padding: 5px 8px; }
 .option-pill.A { background: #ef8f4f; }
 .option-pill.B { background: #4fb8ef; }
 .option-pill.C { background: #b84fef; color: white; }
 
-.phase-label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
-  color: var(--accent);
-  text-align: center;
-  margin-top: 10px;
-  min-height: 16px;
+/* top-right: host-only controls (hidden in cast mode) */
+.hud-host {
+  top: 6px; right: 8px;
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end;
+  max-width: 60vw;
 }
-.timer-bar-wrap { height: 10px; background: #10102a; border-radius: 6px; overflow: hidden; margin-top: 6px; border: 2px solid var(--border); }
-.timer-bar { height: 100%; background: var(--accent); width: 100%; transition: width 0.1s linear; }
+.hud-host button {
+  font-family: 'VT323', monospace; font-size: 14px;
+  padding: 6px 10px; box-shadow: none; border-width: 2px;
+}
+.hud-host .code-pill {
+  font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--accent);
+  background: rgba(16,16,42,0.8); border: 2px solid var(--border);
+  border-radius: 6px; padding: 6px 8px; letter-spacing: 2px;
+}
+
+/* bottom-left: cast-mode toggle - never itself cast-hidden, so it stays reachable */
+.hud-cast {
+  bottom: 10px; left: 8px;
+  font-family: 'VT323', monospace; font-size: 13px;
+  padding: 6px 10px; box-shadow: none; border-width: 2px;
+}
+
+/* player-only: shown only while the local player is a ghost */
+.hud-out {
+  top: 92px; left: 50%; transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--danger);
+  background: rgba(16,16,42,0.8); border: 2px solid var(--danger);
+  border-radius: 6px; padding: 6px 10px;
+}
+
+/* Full-screen question intro - shown during the 'intro' phase, before the timer */
+.intro-overlay {
+  position: fixed; inset: 0; z-index: 30;
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; padding: 24px;
+  background: rgba(10,10,26,0.985);
+  text-align: center;
+}
+.intro-overlay.show { display: flex; }
+.intro-overlay .intro-qnum {
+  font-family: 'Press Start 2P', monospace; font-size: 12px; color: #9a9ac0;
+}
+.intro-overlay .intro-q {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(16px, 4.4vw, 34px);
+  line-height: 1.5; color: var(--accent);
+  text-shadow: 3px 3px 0 var(--border);
+  max-width: 900px;
+}
+.intro-overlay .intro-options {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; max-width: 980px; width: 100%;
+}
+.intro-overlay .intro-opt {
+  flex: 1 1 200px; min-width: 160px; max-width: 300px;
+  border: 3px solid var(--border); border-radius: 10px;
+  padding: 16px; font-size: clamp(14px, 2.4vw, 20px);
+}
+.intro-overlay .intro-opt .k { font-family: 'Press Start 2P', monospace; font-size: 14px; display: block; margin-bottom: 8px; }
+.intro-overlay .intro-opt.A { background: #ef8f4f; color: #10102a; }
+.intro-overlay .intro-opt.B { background: #4fb8ef; color: #10102a; }
+.intro-overlay .intro-opt.C { background: #b84fef; color: #fff; }
+.intro-overlay .intro-countdown-wrap {
+  width: min(420px, 80vw); height: 10px; background: #10102a;
+  border: 2px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.intro-overlay .intro-countdown { height: 100%; width: 100%; background: var(--safe); transition: width 0.15s linear; }
+.intro-overlay .intro-hint { font-family: 'VT323', monospace; font-size: 18px; color: #9a9ac0; }
+.intro-overlay #introStartBtn { margin-top: 4px; }
 
 /* End-of-game overlay - sits on top of the still-visible arena instead of replacing it */
 .end-overlay {
@@ -296,23 +365,20 @@ canvas#arena {
 }
 .end-overlay .card { max-width: 480px; width: 100%; margin: auto; }
 
-.status-strip { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-.badge { background: #10102a; border: 2px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 17px; }
-.badge.ghost { color: #9a9ac0; }
-.badge.alive { color: var(--safe); }
-
-/* Extra compaction on short viewports (small phones) so the HUD leaves more room for
-   the arena itself instead of squeezing it down to make space for its own padding.
-   Trims padding/margins, not text size - readability matters more than a few extra
-   pixels of canvas, and the flex canvas below already absorbs most of the pressure. */
-@media (max-height: 700px) {
-  .top-nav { padding: 4px 0 6px; }
-  .question-banner { padding: 8px 14px; margin-bottom: 4px; }
-  .question-banner h3 { margin-bottom: 4px; }
-  .q-indicator { margin-bottom: 4px; }
-  .q-indicator .q-big { padding: 6px 16px; }
-  .status-strip { margin-bottom: 4px; }
-  .phase-label { margin-top: 6px; }
+/* Small screens: the timer takes the whole top edge and the Q/alive readout drops
+   below it (they'd overlap side-by-side on a phone). Shrink the rest of the HUD so it
+   leaves the arena as much room as possible (the canvas is always full-viewport). */
+@media (max-width: 640px) {
+  .hud-timer { top: 3px; width: 97vw; }
+  .hud-topleft { top: 32px; }
+  .hud-topleft .logo-link, .hud-stat { font-size: 9px; padding: 5px 7px; }
+  .hud-out { top: 78px; }
+  .hud-question { width: 97vw; bottom: 6px; padding: 9px 11px; }
+  .hud-question h3 { font-size: 12px; }
+  .hud-question .option-pill { font-size: 9px; padding: 6px 9px; }
+  .hud-host { gap: 4px; }
+  .hud-host button { font-size: 12px; padding: 5px 8px; }
+  .intro-overlay .intro-opt { flex-basis: 100%; padding: 12px; }
 }
 
 .link-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 10px; }
@@ -372,24 +438,6 @@ body.cast-mode .cast-hide { display: none !important; }
   z-index: 999;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Prominent question indicator */
-.q-indicator {
-  text-align: center;
-  margin-bottom: 8px;
-}
-.q-indicator .q-big {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 22px;
-  color: var(--accent);
-  background: #10102a;
-  border: 3px solid var(--border);
-  border-radius: 8px;
-  display: inline-block;
-  padding: 10px 22px;
-  box-shadow: 0 4px 0 var(--border);
-}
-.q-indicator .q-big .q-sep { color: #7a7aa0; margin: 0 6px; font-size: 16px; }
 
 /* Copyable code badge */
 .code-badge {

@@ -142,6 +142,13 @@ io.on('connection', socket => {
     io.to(room.code).emit('game:started', { config: room.config });
   });
 
+  // Host cuts the full-screen question intro short (e.g. once they've read it aloud).
+  socket.on('host:startAnswering', () => {
+    const room = manager.getRoom(joinedRoomCode);
+    if (!room || !isHost || room.state !== 'intro') return;
+    room.beginAnswering(io, Date.now());
+  });
+
   socket.on('host:endGame', () => {
     const room = manager.getRoom(joinedRoomCode);
     if (!room || !isHost) return;
@@ -407,6 +414,8 @@ io.on('connection', socket => {
         total: room.questions.length,
         q: room.currentQuestion.q,
         options: room.currentQuestion.options,
+        phase: room.state,
+        introEndsAt: room.state === 'intro' ? room.phaseEndsAt : 0,
         endsAt: room.phaseEndsAt,
         trapdoors: room.trapdoors
       } : null
@@ -513,6 +522,8 @@ function publicRoomState(room) {
       total: room.questions.length,
       q: room.currentQuestion.q,
       options: room.currentQuestion.options,
+      phase: room.state,
+      introEndsAt: room.state === 'intro' ? room.phaseEndsAt : 0,
       endsAt: room.phaseEndsAt,
       trapdoors: room.trapdoors
     } : null,

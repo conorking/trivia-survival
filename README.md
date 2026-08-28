@@ -113,9 +113,11 @@ app config changes are needed either way.
     (always the whole map, scroll-wheel zoom)
   - `player.html` / `js/player.js` — join/avatar picker, gameplay view. Movement is
     keyboard (WASD/arrows), a virtual joystick on touch, or click-and-hold-to-walk with
-    the mouse on desktop; pinch or scroll-wheel to zoom either way. On phones the camera
-    follows the player zoomed in with an edge-to-edge canvas; on desktop it shows the
-    whole map like host
+    the mouse on desktop; pinch or scroll-wheel to zoom, drag to pan when zoomed in
+    (right-drag on a desktop player, so it doesn't conflict with click-to-walk). On
+    phones the camera follows the player zoomed in; on desktop it shows the whole map
+    like host. The canvas fills the screen with a translucent HUD (question, timer,
+    counts) drawn on top
   - `js/arena-render.js` — shared canvas renderer (floor, trapdoors, cages, dogs, players,
     ghosts) used by both host and player views, plus the camera/zoom system and
     off-screen trapdoor indicators. Both client files render via a
@@ -128,7 +130,12 @@ app config changes are needed either way.
 - **Session lifecycle**: a room is cleaned up once neither the host nor any player is
   connected (checked every 30s), or after a 3-hour hard cap.
 
-## Round reveal sequence
+## Round sequence
+
+Each question opens with a **full-screen intro**: the question and its three answers
+shown large while everyone reads (the host screen also reads it aloud, and can hit
+"Start Answering" to skip ahead). Then the answer timer starts and players run for a
+trapdoor.
 
 After the answer timer ends: cages rise on **all three** trapdoors (even empty ones) →
 after a 3s suspense delay the correct answer is highlighted, that door glows green and
@@ -155,7 +162,9 @@ rejoin, they're already there and just need to ready up again.
 The host sets everything on the lobby screen — sliders/number boxes and a couple of
 opt-in toggles — and it all applies the moment **START GAME** is pressed (no separate
 save step). Game length is simply answer-time × number of questions; there's no separate
-overall duration cap to set.
+overall duration cap to set. (Each question also gets a short full-screen intro before
+its timer — read aloud on the host screen, skippable with a button, length scales with
+the question.)
 - Answer time per question
 - Number of questions (up to 400)
 - Question set: the built-in 400-question general-knowledge set, a 400-question "Hard
