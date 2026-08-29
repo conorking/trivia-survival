@@ -1,4 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+/* Self-hosted (was a Google Fonts @import) so the page makes no external calls -
+   a locked-down corporate network can block/MITM that domain, which used to
+   silently drop these fonts (and, worse, made any *other* external call on the
+   page look suspect when diagnosing "why doesn't this work here"). Latin subset
+   only, matching the game's English-only question text. */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/press-start-2p-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/vt323-latin.woff2') format('woff2');
+}
 
 :root {
   --bg-dark: #1a1a2e;

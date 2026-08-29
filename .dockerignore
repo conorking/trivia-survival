@@ -1,0 +1,8 @@
+node_modules
+.git
+.claude
+docs
+deploy
+scripts
+README.md
+CLAUDE.md
