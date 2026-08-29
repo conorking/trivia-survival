@@ -308,6 +308,12 @@ function hideIntro() {
 let speakEnabled = localStorage.getItem('trivia_player_speak') === '1';
 let speakKeepAlive = null;
 let speakTimeout = null;
+let speakInsuranceMs = 0; // re-armed on resume (see toggleSpeak) - the hang-safety timeout in speakQuestion
+let speakSessionActive = false; // true once an utterance chain has actually begun for the
+                                 // current question - lets toggleSpeak() pause()/resume()
+                                 // in place ("tune in and out") instead of restarting.
+let speakGeneration = 0; // bumped by stopSpeak() - lets a stale chunk-chain notice it was
+                          // actually stopped (not just paused) instead of soldiering on
 
 if (window.speechSynthesis) {
   try { window.speechSynthesis.getVoices(); } catch (e) { /* ignore */ }
@@ -340,11 +346,29 @@ function toggleSpeak() {
   speakEnabled = !speakEnabled;
   localStorage.setItem('trivia_player_speak', speakEnabled ? '1' : '0');
   syncSpeakToggle();
-  if (!speakEnabled) stopSpeak();
-  else if (introActive) speakQuestion(lastIntroData);
+  if (!speakEnabled) {
+    // "Tune out": pause exactly where the reading is (if it's actually mid-read) rather
+    // than cancelling it outright - also pause the hang-safety timeout so a long mute
+    // doesn't get mistaken for a stuck engine.
+    if (speakSessionActive) {
+      if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+      try { window.speechSynthesis.pause(); } catch (e) { /* ignore */ }
+    }
+  } else if (speakSessionActive) {
+    // "Tune in": resume exactly where we paused.
+    try {
+      window.speechSynthesis.resume();
+      speakTimeout = setTimeout(stopSpeak, speakInsuranceMs);
+    } catch (e) { /* ignore */ }
+  } else if (introActive) {
+    // Nothing was playing yet for this question (started muted) - begin fresh.
+    speakQuestion(lastIntroData);
+  }
 }
 
 function stopSpeak() {
+  speakSessionActive = false;
+  speakGeneration++; // invalidate any in-flight chunk chain - see speakQuestion's next()
   if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
   if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
   try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
@@ -358,10 +382,14 @@ function speakQuestion(data) {
   for (const key of ['A', 'B', 'C']) {
     if (data.options[key]) chunks.push(`Option ${key}. ${data.options[key]}`);
   }
+  const myGeneration = speakGeneration; // captured post-bump (stopSpeak() above just advanced it)
+  speakSessionActive = true;
   const totalWords = chunks.reduce((n, c) => n + c.trim().split(/\s+/).length, 0);
-  speakTimeout = setTimeout(stopSpeak, totalWords * 480 + 3500); // insurance against a silently stuck engine
+  speakInsuranceMs = totalWords * 480 + 3500;
+  speakTimeout = setTimeout(stopSpeak, speakInsuranceMs); // insurance against a silently stuck engine
   let i = 0;
   const next = () => {
+    if (myGeneration !== speakGeneration) return; // stopped (not just paused) meanwhile
     if (i >= chunks.length) { stopSpeak(); return; }
     try {
       const u = new SpeechSynthesisUtterance(chunks[i++]);

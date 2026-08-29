@@ -487,6 +487,39 @@ class Room {
       if (len < arriveDist) return { dx: 0, dy: 0 };
       return { dx: dx / len, dy: dy / len };
     };
+    // Steers `dir` (a {dx,dy} unit vector) away from any currently-open pit within
+    // range - open doors stay lethal all the way through the dog chase (see tick()'s
+    // pit-fall check, gated on state==='resolve'), not just during the escape window,
+    // so a bot fleeing a dog needs this just as much as one fleeing the door it just
+    // opened - otherwise it'll happily run straight back through a hole it already
+    // escaped once. Same blended-repulsion idea as the dogs' own steer() below.
+    const AVOID_RANGE = PLAYER_RADIUS + 50;
+    const avoidOpenPits = (p, dir) => {
+      let dx = dir.dx, dy = dir.dy;
+      for (const key of ['A', 'B', 'C']) {
+        if (!this.pitOpen[key]) continue;
+        const rect = this.trapdoors[key];
+        const closestX = clamp(p.x, rect.x, rect.x + rect.w);
+        const closestY = clamp(p.y, rect.y, rect.y + rect.h);
+        const pdx = p.x - closestX, pdy = p.y - closestY;
+        const pdist = Math.hypot(pdx, pdy);
+        if (pdist >= AVOID_RANGE) continue;
+        if (pdist < 1e-4) {
+          // Standing right on/in it - push toward whichever edge is nearest, hard.
+          const left = p.x - rect.x, right = rect.x + rect.w - p.x;
+          const top = p.y - rect.y, bottom = rect.y + rect.h - p.y;
+          const min = Math.min(left, right, top, bottom);
+          if (min === left) dx -= 2; else if (min === right) dx += 2;
+          else if (min === top) dy -= 2; else dy += 2;
+        } else {
+          const strength = (AVOID_RANGE - pdist) / AVOID_RANGE;
+          dx += (pdx / pdist) * strength * 2.2;
+          dy += (pdy / pdist) * strength * 2.2;
+        }
+      }
+      const len = Math.hypot(dx, dy);
+      return len > 1e-4 ? { dx: dx / len, dy: dy / len } : { dx: 0, dy: 0 };
+    };
     for (const p of bots) {
       if (!p.alive || p.isGhost) { p.input = { dx: 0, dy: 0 }; continue; }
       const bs = p.botState || (p.botState = { decidedForIndex: -1, doorTarget: null, fleeX: ARENA_W / 2, fleeY: ARENA_H * 0.22 });
@@ -518,16 +551,18 @@ class Room {
         for (const key of ['A', 'B', 'C']) {
           if (this.pitOpen[key] && !p.cagedAt && rectContains(this.trapdoors[key], p.x, p.y)) { onPit = key; break; }
         }
-        p.input = onPit ? toward(p, bs.fleeX, bs.fleeY, 4) : { dx: 0, dy: 0 };
+        p.input = onPit ? avoidOpenPits(p, toward(p, bs.fleeX, bs.fleeY, 4)) : { dx: 0, dy: 0 };
       } else if (this.state === 'resolve') {
-        // Flee the nearest hunting dog; hug away from walls so we don't self-corner.
+        // Flee the nearest hunting dog; steer away from any still-open pit (they stay
+        // lethal for the whole chase, not just the escape window) and hug away from
+        // walls so we don't self-corner.
         let nearest = null, nd = Infinity;
         for (const d of this.dogs) {
           if (d.state !== 'hunting' && d.state !== 'eating') continue;
           const dist = Math.hypot(d.x - p.x, d.y - p.y);
           if (dist < nd) { nd = dist; nearest = d; }
         }
-        if (!nearest) { p.input = { dx: 0, dy: 0 }; continue; }
+        if (!nearest) { p.input = avoidOpenPits(p, { dx: 0, dy: 0 }); continue; }
         let dx = p.x - nearest.x, dy = p.y - nearest.y;
         const len = Math.hypot(dx, dy) || 1;
         dx /= len; dy /= len;
@@ -535,7 +570,7 @@ class Room {
         if (p.x < M) dx += 1; else if (p.x > ARENA_W - M) dx -= 1;
         if (p.y < M + 90) dy += 1; else if (p.y > ARENA_H - M) dy -= 1;
         const l2 = Math.hypot(dx, dy) || 1;
-        p.input = { dx: dx / l2, dy: dy / l2 };
+        p.input = avoidOpenPits(p, { dx: dx / l2, dy: dy / l2 });
       } else {
         p.input = { dx: 0, dy: 0 };
       }

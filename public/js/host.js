@@ -136,11 +136,13 @@ const INTRO_IS_HOST = true;
 let introActive = false;
 let introStartAt = 0, introEndsAt = 0;
 let introAdvanceTimer = null;
+let lastIntroData = null; // kept so toggling read-aloud back on (with nothing paused) can (re)start it
 
 function showIntro(data) {
   introActive = true;
   introStartAt = Date.now();
   introEndsAt = data.introEndsAt || (introStartAt + 6000);
+  lastIntroData = data;
   document.getElementById('introQNum').textContent = data.index + 1;
   document.getElementById('introQTotal').textContent = data.total;
   document.getElementById('introQ').textContent = data.q;
@@ -157,30 +159,7 @@ function showIntro(data) {
   const btn = document.getElementById('introStartBtn');
   if (btn) btn.style.display = 'inline-block';
   document.getElementById('introOverlay').classList.add('show');
-
-  clearTimeout(introAdvanceTimer);
-  const scheduleAdvance = (ms) => {
-    clearTimeout(introAdvanceTimer);
-    introAdvanceTimer = setTimeout(() => { if (introActive) socket.emit('host:startAnswering'); }, Math.max(0, ms));
-  };
-  const timedPause = () => scheduleAdvance(Math.max(1500, introEndsAt - Date.now()) || 5000);
-  if (speakEnabled && speechAvailable()) {
-    setIntroHint('🔊 Reading aloud — press Start Answering to skip');
-    speakQuestion(data, (didSpeak) => {
-      if (didSpeak) {
-        // Advance a short beat after the reading actually ends (min ~2s intro total).
-        scheduleAdvance(Math.max(650, 2000 - (Date.now() - introStartAt)));
-      } else {
-        // Engine reported voices but never spoke - fall back to the timed reading pause.
-        setIntroHint('Read the question — answering opens in a moment…');
-        timedPause();
-      }
-    });
-  } else {
-    // No read-aloud: give players the server's word-scaled reading pause.
-    setIntroHint('Read the question — answering opens in a moment…');
-    timedPause();
-  }
+  beginReading(data);
   updateIntroCountdown();
 }
 
@@ -192,9 +171,47 @@ function hideIntro() {
   document.getElementById('introOverlay').classList.remove('show');
 }
 
-function setIntroHint(text) {
+function scheduleAdvance(ms) {
+  clearTimeout(introAdvanceTimer);
+  introAdvanceTimer = setTimeout(() => { if (introActive) socket.emit('host:startAnswering'); }, Math.max(0, ms));
+}
+function timedPause() {
+  scheduleAdvance(Math.max(1500, introEndsAt - Date.now()) || 5000);
+}
+
+// Kicks off the "read it aloud, then advance" flow for the current question - split out
+// of showIntro() so toggleSpeak() can re-attempt the exact same thing when unmuting finds
+// nothing already paused to resume (started muted, or read-aloud wasn't available and
+// already fell back to the timed pause).
+function beginReading(data) {
+  updateIntroHint();
+  if (speakEnabled && speechAvailable()) {
+    speakQuestion(data, (didSpeak) => {
+      if (didSpeak) {
+        // Advance a short beat after the reading actually ends (min ~2s intro total).
+        scheduleAdvance(Math.max(650, 2000 - (Date.now() - introStartAt)));
+      } else {
+        // Engine reported voices but never spoke - fall back to the timed reading pause.
+        updateIntroHint('Read the question — answering opens in a moment…');
+        timedPause();
+      }
+    });
+  } else {
+    // No read-aloud: give players the server's word-scaled reading pause.
+    updateIntroHint('Read the question — answering opens in a moment…');
+    timedPause();
+  }
+}
+
+// The intro overlay's own hint doubles as the mute toggle right where the host is
+// looking while a question is actually being read - clicking it (see host.html) calls
+// toggleSpeak(). `overrideText`, when given, temporarily shows a different status
+// message instead (e.g. the no-read-aloud fallback) without touching the mute state.
+function updateIntroHint(overrideText) {
   const el = document.getElementById('introHint');
-  if (el) el.textContent = text;
+  if (!el) return;
+  el.textContent = overrideText || (speakEnabled ? '🔊 Reading Aloud' : '🔇 Reading Muted');
+  el.classList.toggle('active', speakEnabled && !overrideText);
 }
 
 function updateIntroCountdown() {
@@ -221,8 +238,12 @@ function startAnswering() {
 let speakEnabled = localStorage.getItem('trivia_host_speak') !== '0';
 let speakKeepAlive = null;
 let speakTimeout = null;
+let speakInsuranceMs = 0; // re-armed on resume (see toggleSpeak) - the hang-safety timeout in speakQuestion
 let speakDoneCb = null;
 let speakStarted = false; // did the engine actually begin speaking this question?
+let speakSessionActive = false; // true once an utterance chain has actually begun for the
+                                 // current question - lets toggleSpeak() pause()/resume()
+                                 // in place ("tune in and out") instead of restarting.
 
 // Warm the voice list (getVoices() is often empty on first call).
 if (window.speechSynthesis) {
@@ -238,23 +259,38 @@ function speechAvailable() {
 
 function syncSpeakToggle() {
   const b = document.getElementById('speakToggle');
-  if (b) b.textContent = speakEnabled ? '🔊 READ' : '🔇 MUTED';
+  if (b) { b.textContent = speakEnabled ? '🔊 READ' : '🔇 MUTED'; b.classList.toggle('active', speakEnabled); }
+  updateIntroHint();
 }
 function toggleSpeak() {
   speakEnabled = !speakEnabled;
   localStorage.setItem('trivia_host_speak', speakEnabled ? '1' : '0');
   syncSpeakToggle();
-  if (!speakEnabled && introActive) {
-    // Muted mid-intro: fall back to the timed reading pause so the round still advances.
-    stopSpeak();
-    setIntroHint('Read the question — answering opens in a moment…');
+  if (!speakEnabled) {
+    // "Tune out": pause exactly where the reading is (if it's actually mid-read) rather
+    // than cancelling it outright - also pause the hang-safety timeout so a long mute
+    // doesn't get mistaken for a stuck engine.
+    if (speakSessionActive) {
+      if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+      try { window.speechSynthesis.pause(); } catch (e) { /* ignore */ }
+    }
+  } else if (speakSessionActive) {
+    // "Tune in": resume exactly where we paused - the round still advances normally via
+    // the onDone callback already wired up for whenever the (resumed) reading finishes.
+    try {
+      window.speechSynthesis.resume();
+      speakTimeout = setTimeout(finishSpeak, speakInsuranceMs);
+    } catch (e) { /* ignore */ }
+  } else if (introActive) {
+    // Nothing was playing yet for this question (started muted, or read-aloud wasn't
+    // available and we'd already fallen back to the timed pause) - (re)attempt it fresh.
     clearTimeout(introAdvanceTimer);
-    introAdvanceTimer = setTimeout(() => { if (introActive) socket.emit('host:startAnswering'); },
-      Math.max(1500, (introEndsAt - Date.now()) || 4000));
+    beginReading(lastIntroData);
   }
 }
 
 function finishSpeak() {
+  speakSessionActive = false;
   if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
   if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
   const cb = speakDoneCb;
@@ -262,6 +298,7 @@ function finishSpeak() {
   if (cb) cb(speakStarted); // true = the reading really happened; false = engine never spoke
 }
 function stopSpeak() {
+  speakSessionActive = false;
   if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
   if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
   speakDoneCb = null;
@@ -276,10 +313,12 @@ function speakQuestion(data, onDone) {
   }
   speakDoneCb = onDone;
   speakStarted = false;
+  speakSessionActive = true;
   const totalWords = chunks.reduce((n, c) => n + c.trim().split(/\s+/).length, 0);
   // Insurance: onend/onerror should fire, but if the engine goes silent, don't hang.
   // ~480ms/word is slower than any real TTS, so this never preempts a working read.
-  speakTimeout = setTimeout(finishSpeak, totalWords * 480 + 3500);
+  speakInsuranceMs = totalWords * 480 + 3500;
+  speakTimeout = setTimeout(finishSpeak, speakInsuranceMs);
 
   // Some environments report voices but never actually speak (headless, sandboxed) -
   // if nothing has started ~1.2s in, treat speech as unavailable and bail (onDone gets
