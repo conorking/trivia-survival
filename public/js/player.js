@@ -22,6 +22,12 @@ computeViewMode();
 const AVATAR_COLORS = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
 let selectedColor = AVATAR_COLORS[0];
 
+// Remembers the name last used to join a room (shared with host.js's own "join as
+// player" name field) so it's prefilled next time instead of typing it fresh every game.
+const NAME_STORAGE_KEY = 'trivia_player_name';
+const savedName = localStorage.getItem(NAME_STORAGE_KEY);
+if (savedName) document.getElementById('nameInput').value = savedName;
+
 const params = new URLSearchParams(location.search);
 const codeFromUrl = params.get('code');
 let selectedRoomCode = codeFromUrl ? codeFromUrl.toUpperCase() : '';
@@ -107,6 +113,7 @@ function joinGame() {
   document.getElementById('joinError').textContent = '';
   if (!code) { document.getElementById('joinError').textContent = 'Enter a room code.'; return; }
   if (!name) { document.getElementById('joinError').textContent = 'Enter your name.'; return; }
+  localStorage.setItem(NAME_STORAGE_KEY, name);
   socket.emit('player:join', { code, name, color: selectedColor });
 }
 

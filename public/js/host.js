@@ -701,15 +701,23 @@ let hostSelectedColor = HOST_AVATAR_COLORS[0];
   });
 })();
 
+// Shared with player.js's own name field, so a name typed there (or here) is remembered
+// for next time either way.
+const NAME_STORAGE_KEY = 'trivia_player_name';
+
 function showJoinAsPlayerPicker() {
+  const input = document.getElementById('hostPlayerName');
+  const savedName = localStorage.getItem(NAME_STORAGE_KEY);
+  if (savedName && !input.value) input.value = savedName;
   document.getElementById('hostPlayerPicker').style.display = 'block';
 }
 function cancelJoinAsPlayer() {
   document.getElementById('hostPlayerPicker').style.display = 'none';
 }
 function confirmJoinAsPlayer() {
-  const name = document.getElementById('hostPlayerName').value.trim() || 'Host';
-  socket.emit('host:joinAsPlayer', { name, color: hostSelectedColor });
+  const rawName = document.getElementById('hostPlayerName').value.trim();
+  if (rawName) localStorage.setItem(NAME_STORAGE_KEY, rawName);
+  socket.emit('host:joinAsPlayer', { name: rawName || 'Host', color: hostSelectedColor });
   document.getElementById('hostPlayerPicker').style.display = 'none';
 }
 function leavePlayer() {
