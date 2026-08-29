@@ -200,6 +200,53 @@ const ArenaRender = (() => {
   let deathAnims = new Map(); // playerId -> {start, x, y, dogX, dogY}
   let releasedAt = 0; // when dogs were released - drives the pen gate animation
 
+  // ---- Ghost idle-fade (declutter) ----
+  // A ghost that stands still for a while gradually fades all the way to invisible
+  // (body + nametag both); moving again brings them back quickly. Purely cosmetic/
+  // client-side - the server has no notion of this, ghosts remain exactly as alive to
+  // game logic as ever (they already have no collision either way). Driven off each
+  // frame's real player positions (updateGhostFade, called from render()), not the
+  // server tick rate, so it's smooth regardless of network jitter.
+  const GHOST_FADE_DELAY_MS = 1200; // how long standing still before fading starts
+  const GHOST_FADE_OUT_MS = 3500;   // time constant for the fade-out once it begins
+  const GHOST_FADE_IN_MS = 250;     // time constant for snapping back visible on movement
+  const GHOST_MOVE_EPSILON = 1.5;   // world px of frame-to-frame movement that counts as "moved"
+  let ghostFade = new Map(); // playerId -> { x, y, lastMoveAt, alpha }
+  let lastGhostFadeAt = 0;
+
+  function updateGhostFade(players, now) {
+    const dt = lastGhostFadeAt ? Math.min(0.25, (now - lastGhostFadeAt) / 1000) : 0;
+    lastGhostFadeAt = now;
+    const seen = new Set();
+    for (const p of players || []) {
+      if (!p.isGhost) continue;
+      seen.add(p.id);
+      let gf = ghostFade.get(p.id);
+      if (!gf) {
+        gf = { x: p.x, y: p.y, lastMoveAt: now, alpha: 1 };
+        ghostFade.set(p.id, gf);
+      }
+      if (Math.hypot(p.x - gf.x, p.y - gf.y) > GHOST_MOVE_EPSILON) gf.lastMoveAt = now;
+      gf.x = p.x; gf.y = p.y;
+      const idleMs = now - gf.lastMoveAt;
+      const target = idleMs <= GHOST_FADE_DELAY_MS
+        ? 1
+        : Math.max(0, 1 - (idleMs - GHOST_FADE_DELAY_MS) / GHOST_FADE_OUT_MS);
+      const tau = ((target > gf.alpha ? GHOST_FADE_IN_MS : GHOST_FADE_OUT_MS) / 1000) || 1e-4;
+      const factor = dt > 0 ? 1 - Math.exp(-dt / tau) : 0;
+      gf.alpha += (target - gf.alpha) * factor;
+      if (Math.abs(target - gf.alpha) < 0.002) gf.alpha = target;
+    }
+    // Drop entries for ghosts no longer present (revived, disconnected, round reset).
+    for (const id of ghostFade.keys()) {
+      if (!seen.has(id)) ghostFade.delete(id);
+    }
+  }
+  function ghostAlpha(id) {
+    const gf = ghostFade.get(id);
+    return gf ? gf.alpha : 1;
+  }
+
   function setArena(arena) {
     if (!arena) return;
     ARENA_W = arena.w; ARENA_H = arena.h;
@@ -627,7 +674,14 @@ const ArenaRender = (() => {
     }
   }
 
-  function drawPlayerBody(ctx, x, y, color, isGhost, isMe, label, alpha, scale) {
+  // `labelAlpha`, when given, overrides the nametag's own alpha instead of deriving it
+  // from the body's (the default +0.4 boost keeps a name readable even when the body
+  // itself is drawn fairly translucent, e.g. a disconnected player) - used by the ghost
+  // idle-fade below, where the whole point is the nametag reaching true zero alongside
+  // the body instead of hanging around at a readable minimum.
+  function drawPlayerBody(ctx, x, y, color, isGhost, isMe, label, alpha, scale, labelAlpha) {
+    if (labelAlpha === undefined) labelAlpha = Math.min(1, alpha + 0.4);
+    if (alpha <= 0.01 && labelAlpha <= 0.01) return; // fully faded - nothing to draw
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.translate(x, y);
@@ -651,7 +705,7 @@ const ArenaRender = (() => {
       ctx.strokeRect(-8, -24, 16, 12);
     }
 
-    ctx.globalAlpha = Math.min(1, alpha + 0.4);
+    ctx.globalAlpha = labelAlpha;
     ctx.fillStyle = isMe ? '#ffd23f' : '#f4f1de';
     ctx.font = isMe ? 'bold 11px monospace' : '10px monospace';
     ctx.textAlign = 'center';
@@ -670,9 +724,13 @@ const ArenaRender = (() => {
       squashY = -Math.sin(t * Math.PI) * 10;
       scale = 1 + Math.sin(t * Math.PI) * 0.12;
     }
-    const alpha = p.isGhost ? 0.45 : (p.connected === false ? 0.6 : 1);
+    const fade = p.isGhost ? ghostAlpha(p.id) : 1;
+    const alpha = (p.isGhost ? 0.45 : (p.connected === false ? 0.6 : 1)) * fade;
+    // Ghosts: the nametag fades in lockstep with the body (no +0.4 readability floor) so
+    // an idle ghost actually disappears completely, not just dims to a faint label.
+    const labelAlpha = p.isGhost ? fade : undefined;
     const label = p.isGhost ? `👻 ${p.name}` : p.name;
-    drawPlayerBody(ctx, p.x, p.y + bob + squashY, p.color, p.isGhost, isMe, label, alpha, scale);
+    drawPlayerBody(ctx, p.x, p.y + bob + squashY, p.color, p.isGhost, isMe, label, alpha, scale, labelAlpha);
   }
 
   // "RUN!" / "SAFE!" prompt above a player who just found out which door they were in.
@@ -952,6 +1010,7 @@ const ArenaRender = (() => {
     const viewH = canvas.clientHeight || (canvas.height / dpr);
 
     updateCamera(viewMode, players, myId, viewW, viewH);
+    updateGhostFade(players, Date.now());
 
     ctx.save();
     // Opaque fill of the whole viewport first - doubles as the clear, and covers any
