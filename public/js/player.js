@@ -25,6 +25,10 @@ let selectedColor = AVATAR_COLORS[0];
 const params = new URLSearchParams(location.search);
 const codeFromUrl = params.get('code');
 let selectedRoomCode = codeFromUrl ? codeFromUrl.toUpperCase() : '';
+// True once we've asked the server to resume a stored session (vs. a fresh join) - lets
+// player:error tell "your old session is dead" apart from "that code doesn't exist" so
+// the two can be handled differently (see the player:error handler below).
+let autoRejoinAttempted = false;
 if (selectedRoomCode) {
   document.getElementById('codeInput').value = selectedRoomCode;
   // Arrived via a QR code/shared link - we already know the code, so never show the raw
@@ -32,7 +36,20 @@ if (selectedRoomCode) {
   hideAllTopViews();
   document.getElementById('connectingView').style.display = 'block';
   document.getElementById('connectingCode').textContent = selectedRoomCode;
-  socket.emit('player:roomInfo', { code: selectedRoomCode });
+  // If we already have a stored token for this room (came via "Rejoin Last Room", or a
+  // repeat visit to the same join link), go straight for a rejoin - it fully covers
+  // every room state (lobby/mid-game/ended) on its own, so there's no need for the
+  // separate roomInfo preview request too (firing both invited a race where roomInfo's
+  // stricter "lobby only" check could report an error for a rejoin that was actually
+  // about to succeed, e.g. reconnecting mid-game).
+  const storedToken = localStorage.getItem(`trivia_token_${selectedRoomCode}`);
+  if (storedToken) {
+    myToken = storedToken;
+    autoRejoinAttempted = true;
+    socket.emit('player:rejoin', { token: storedToken });
+  } else {
+    socket.emit('player:roomInfo', { code: selectedRoomCode });
+  }
 }
 
 function hideAllTopViews() {
@@ -57,21 +74,13 @@ AVATAR_COLORS.forEach((color, i) => {
   grid.appendChild(sw);
 });
 
-// Attempt auto-rejoin if we have a stored token for this code
-if (selectedRoomCode) {
-  const storedToken = localStorage.getItem(`trivia_token_${selectedRoomCode}`);
-  if (storedToken) {
-    myToken = storedToken;
-    socket.emit('player:rejoin', { token: storedToken });
-  }
-}
-
 // Re-attach after a genuine reconnect (dropped socket, backgrounded tab, brief network
 // blip) - the server hands each new socket a blank slate, so without this the game keeps
 // running but every input silently no-ops until the page is manually reloaded. Fires only
 // on an actual reconnect, never the initial connect (which the code above already covers).
 socket.io.on('reconnect', () => {
   if (myToken) {
+    autoRejoinAttempted = true;
     socket.emit('player:rejoin', { token: myToken });
   } else if (selectedRoomCode) {
     socket.emit('player:roomInfo', { code: selectedRoomCode });
@@ -161,7 +170,16 @@ socket.on('player:rejoined', ({ code, playerId, token, state, config, you, curre
 
 socket.on('player:error', ({ message }) => {
   if (!myId) {
-    // Failed before ever successfully joining/rejoining (bad code, expired session, etc.) -
+    if (autoRejoinAttempted) {
+      // The stored "rejoin last room" session is dead (expired/unknown token, room gone,
+      // etc.) - bounce back to the main menu with a toast instead of stranding the player
+      // on a join form pre-filled with a room code that no longer works.
+      if (selectedRoomCode) localStorage.removeItem(`trivia_token_${selectedRoomCode}`);
+      sessionStorage.setItem('trivia_toast', 'Session expired');
+      location.href = 'index.html';
+      return;
+    }
+    // Failed before ever successfully joining (bad code, room already started, etc.) -
     // fall back to a real code-entry screen with the error visible, rather than leaving the
     // player stranded on the "Connecting..." screen with the error hidden behind it.
     hideAllTopViews();
@@ -169,6 +187,15 @@ socket.on('player:error', ({ message }) => {
   }
   const errEl = document.getElementById('joinError');
   if (errEl) errEl.textContent = message;
+});
+
+// The host left (or was gone long enough it's not coming back) - the room is gone
+// server-side, so there's nothing left to reconnect to. Kick everyone back to the main
+// menu with a toast, same mechanism "Session expired" uses (see index.html).
+socket.on('room:closed', () => {
+  sessionStorage.setItem('trivia_toast', 'The host left — session ended.');
+  socket.disconnect();
+  location.href = 'index.html';
 });
 
 socket.on('room:players', (players) => {
@@ -238,11 +265,14 @@ socket.on('game:answering', () => hideIntro());
 const INTRO_IS_HOST = false;
 let introActive = false;
 let introStartAt = 0, introEndsAt = 0;
+let lastIntroData = null; // kept so toggling read-aloud ON mid-intro can start speaking immediately
 
 function showIntro(data) {
   introActive = true;
   introStartAt = Date.now();
   introEndsAt = data.introEndsAt || (introStartAt + 4000);
+  lastIntroData = data;
+  speakQuestion(data);
   document.getElementById('introQNum').textContent = data.index + 1;
   document.getElementById('introQTotal').textContent = data.total;
   document.getElementById('introQ').textContent = data.q;
@@ -258,8 +288,7 @@ function showIntro(data) {
   }
   const btn = document.getElementById('introStartBtn');
   if (btn) btn.style.display = 'none';
-  const hint = document.getElementById('introHint');
-  if (hint) hint.textContent = 'Read the question — answering opens when the host is ready…';
+  updateIntroHint();
   document.getElementById('introOverlay').classList.add('show');
   updateIntroCountdown();
 }
@@ -267,8 +296,91 @@ function showIntro(data) {
 function hideIntro() {
   if (!introActive) return;
   introActive = false;
+  stopSpeak();
   document.getElementById('introOverlay').classList.remove('show');
 }
+
+// ---- Read-aloud (opt-in, per player device): lets a player have their OWN device speak
+// the question + options during the intro phase, independent of the host's own read-aloud
+// (which plays through the host's device, e.g. for the room/call). Off by default -
+// localStorage `trivia_player_speak` - since every phone announcing at once wouldn't be
+// welcome by default; this is for whoever wants it (accessibility, playing remotely, etc).
+let speakEnabled = localStorage.getItem('trivia_player_speak') === '1';
+let speakKeepAlive = null;
+let speakTimeout = null;
+
+if (window.speechSynthesis) {
+  try { window.speechSynthesis.getVoices(); } catch (e) { /* ignore */ }
+  window.speechSynthesis.onvoiceschanged = () => { try { window.speechSynthesis.getVoices(); } catch (e) {} };
+}
+function speechAvailable() {
+  try {
+    return !!(window.speechSynthesis && window.SpeechSynthesisUtterance &&
+      window.speechSynthesis.getVoices && window.speechSynthesis.getVoices().length > 0);
+  } catch (e) { return false; }
+}
+
+function syncSpeakToggle() {
+  document.querySelectorAll('.speak-toggle-btn:not(#introHint)').forEach(b => {
+    b.textContent = speakEnabled ? '🔊 READ ALOUD' : '🔇 READ ALOUD';
+    b.classList.toggle('active', speakEnabled);
+  });
+  updateIntroHint();
+}
+// The intro overlay's own hint doubles as the mute toggle right where the player is
+// looking while a question is actually being read - clicking it (see player.html) calls
+// toggleSpeak() the same as the other buttons.
+function updateIntroHint() {
+  const hint = document.getElementById('introHint');
+  if (!hint) return;
+  hint.textContent = speakEnabled ? '🔊 Reading Aloud' : '🔇 Reading Muted';
+  hint.classList.toggle('active', speakEnabled);
+}
+function toggleSpeak() {
+  speakEnabled = !speakEnabled;
+  localStorage.setItem('trivia_player_speak', speakEnabled ? '1' : '0');
+  syncSpeakToggle();
+  if (!speakEnabled) stopSpeak();
+  else if (introActive) speakQuestion(lastIntroData);
+}
+
+function stopSpeak() {
+  if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+  if (speakKeepAlive) { clearInterval(speakKeepAlive); speakKeepAlive = null; }
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+}
+// Simpler than host.js's version - a player's own reading is just a bonus audio track,
+// not something the round's timing depends on, so there's no onDone callback to chain.
+function speakQuestion(data) {
+  stopSpeak();
+  if (!data || !speakEnabled || !speechAvailable()) return;
+  const chunks = [String(data.q)];
+  for (const key of ['A', 'B', 'C']) {
+    if (data.options[key]) chunks.push(`Option ${key}. ${data.options[key]}`);
+  }
+  const totalWords = chunks.reduce((n, c) => n + c.trim().split(/\s+/).length, 0);
+  speakTimeout = setTimeout(stopSpeak, totalWords * 480 + 3500); // insurance against a silently stuck engine
+  let i = 0;
+  const next = () => {
+    if (i >= chunks.length) { stopSpeak(); return; }
+    try {
+      const u = new SpeechSynthesisUtterance(chunks[i++]);
+      u.rate = 0.98;
+      u.onend = next;
+      u.onerror = next;
+      window.speechSynthesis.speak(u);
+    } catch (e) { stopSpeak(); }
+  };
+  // Chrome silently pauses speechSynthesis after ~15s of continuous speech.
+  speakKeepAlive = setInterval(() => {
+    try {
+      const s = window.speechSynthesis;
+      if (s && s.speaking && !s.paused) { s.pause(); s.resume(); }
+    } catch (e) { /* ignore */ }
+  }, 8000);
+  next();
+}
+syncSpeakToggle();
 
 function updateIntroCountdown() {
   if (!introActive) return;
@@ -318,6 +430,34 @@ function updatePhaseTimer(state, phaseEndsAt) {
   }
 }
 
+// Big centered "3... 2... 1..." flash during the final seconds of a phase that actually
+// demands player action - not the passive holds (reveal/fall_pause/death_anim).
+const BIG_COUNTDOWN_STATES = new Set(['question', 'escape', 'resolve']);
+const BIG_COUNTDOWN_THRESHOLD_MS = 3000;
+let lastBigCountdownNum = null;
+
+function updateBigCountdown(state, phaseEndsAt) {
+  const el = document.getElementById('bigCountdown');
+  if (!el) return;
+  const remainingMs = (phaseEndsAt || 0) - Date.now();
+  const show = BIG_COUNTDOWN_STATES.has(state) && remainingMs > 0 && remainingMs <= BIG_COUNTDOWN_THRESHOLD_MS;
+  if (!show) {
+    el.classList.remove('show');
+    lastBigCountdownNum = null;
+    return;
+  }
+  const num = Math.ceil(remainingMs / 1000);
+  if (num !== lastBigCountdownNum) {
+    lastBigCountdownNum = num;
+    el.textContent = num;
+    // Restart the pop animation on every new number (removing then re-adding the class
+    // with a forced reflow in between, rather than just adding it once and leaving it).
+    el.classList.remove('show');
+    void el.offsetWidth;
+    el.classList.add('show');
+  }
+}
+
 socket.on('game:lockin', (data) => {
   ArenaRender.onLockIn(data.cages);
 });
@@ -360,6 +500,7 @@ socket.on('game:tick', (data) => {
   // Safety net for a reconnect that landed after game:question/game:answering.
   if (data.state !== 'intro' && introActive) hideIntro();
   updatePhaseTimer(data.state, data.phaseEndsAt);
+  updateBigCountdown(data.state, data.phaseEndsAt);
 });
 
 socket.on('game:end', ({ reason, winners }) => {
@@ -399,6 +540,8 @@ function requestRematch() {
 
 socket.on('game:rematch', ({ players } = {}) => {
   lastPhaseState = null;
+  lastBigCountdownNum = null;
+  document.getElementById('bigCountdown').classList.remove('show');
   rematchCountdownEndsAt = null;
   document.getElementById('endView').style.display = 'none';
   // Sync local ready state from the server instead of assuming false - whoever's "Play
@@ -530,7 +673,7 @@ function drawFrame() {
       return serverJump >= myLocalJumpUntil ? p : { ...p, jumpUntil: myLocalJumpUntil };
     });
   }
-  const joystick = (joystickPointerId !== null && joystickOrigin && joystickCurrent)
+  const joystick = (!pinchActive && joystickPointerId !== null && joystickOrigin && joystickCurrent)
     ? { originX: joystickOrigin.x, originY: joystickOrigin.y, curX: joystickCurrent.x, curY: joystickCurrent.y }
     : null;
   ArenaRender.render(ctx, { players, dogs: snap.dogs, traps: snap.traps, myId, viewMode, joystick, mouseActive: mouseFollowActive || mousePanActive });
@@ -654,6 +797,8 @@ let joystickOrigin = null; // {x,y} screen coords
 let joystickCurrent = null;
 let pinchPointerIds = null; // [idA, idB] once a second finger joins while the joystick is held
 let pinchLastDist = null;
+let pinchActive = false; // true once the second finger has actually diverged enough to zoom -
+                          // hides/pauses the joystick so a pinch never also reads as movement
 let mouseFollowActive = false;
 let mouseFollowTarget = null; // {x,y} world coords
 let mousePanActive = false;   // right-button drag pans the overview camera
@@ -678,6 +823,17 @@ function setupPointerControls() {
   // Suppress the browser's right-click menu on the canvas - right-click is a game
   // control (jump), not a place to open a context menu.
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // Belt-and-suspenders against the browser's own pinch-to-zoom / swipe-navigation
+  // gestures hijacking a two-finger touch instead of it reaching our own pinch-zoom
+  // handling above - canvas#arena's touch-action:none (style.css) and the viewport
+  // meta's user-scalable=no cover most browsers already, but Safari's gesture events
+  // bypass touch-action entirely, and this stops any stray multi-touch scroll/nav too.
+  document.addEventListener('gesturestart', (e) => e.preventDefault());
+  document.addEventListener('gesturechange', (e) => e.preventDefault());
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
 
   canvas.addEventListener('pointerdown', (e) => {
     if (document.getElementById('gameView').style.display === 'none') return;
@@ -751,6 +907,13 @@ function setupPointerControls() {
       if (dist != null && pinchLastDist != null && Math.abs(dist - pinchLastDist) > PINCH_MOVE_THRESHOLD) {
         ArenaRender.adjustZoom(dist / pinchLastDist, viewMode, canvas);
         pinchLastDist = dist;
+        if (!pinchActive) {
+          // Confirmed pinch (not just a still-held second finger) - hand control over to
+          // zooming entirely: hide the joystick visual and stop sending movement, so the
+          // two gestures never fight each other on screen.
+          pinchActive = true;
+          sendDirInput(0, 0);
+        }
       }
     }
   });
@@ -780,13 +943,14 @@ function setupPointerControls() {
       sendDirInput(0, 0);
     } else if (pinchPointerIds && pinchPointerIds.includes(e.pointerId)) {
       // Never diverged enough to register as a pinch, and lifted quickly -> a tap-jump.
-      if (rec) {
+      if (!pinchActive && rec) {
         const heldMs = Date.now() - rec.startT;
         const moved = Math.hypot(rec.x - rec.startX, rec.y - rec.startY);
         if (heldMs <= TAP_MAX_MS && moved <= TAP_MAX_MOVE) triggerJump();
       }
       pinchPointerIds = null;
       pinchLastDist = null;
+      pinchActive = false;
     } else if (rec) {
       // A stray tap with no joystick active yet (rare - the joystick claims the first
       // finger down) - still honor it as a jump.
@@ -817,7 +981,10 @@ setupPointerControls();
 // converging as the player's own position approaches the target - and to keep the network
 // send rate sane either way.
 setInterval(() => {
-  if (joystickPointerId !== null && joystickOrigin && joystickCurrent) {
+  if (pinchActive) {
+    // A confirmed pinch owns both fingers' intent entirely - don't also steer from the
+    // joystick finger's (now purely gesture-driven) position.
+  } else if (joystickPointerId !== null && joystickOrigin && joystickCurrent) {
     const dx = joystickCurrent.x - joystickOrigin.x, dy = joystickCurrent.y - joystickOrigin.y;
     const dist = Math.hypot(dx, dy);
     sendDirInput(dist < JOYSTICK_DEADZONE ? 0 : dx / dist, dist < JOYSTICK_DEADZONE ? 0 : dy / dist);

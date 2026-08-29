@@ -29,26 +29,49 @@ const ArenaRender = (() => {
   // scale by zoom, translate by -camera.x/-camera.y) so 'overview' (whole map, host +
   // desktop players) and 'follow' (zoomed on the player, mobile) are just two different
   // camera targets/zoom levels through the same rendering path.
-  let camera = { x: ARENA_W / 2, y: ARENA_H / 2, zoom: 0, panX: 0, panY: 0 };
+  let camera = { x: ARENA_W / 2, y: ARENA_H / 2, zoom: 0, panX: 0, panY: 0, anchorX: 0, anchorY: 0 };
   let cameraMode = null; // tracks the last viewMode render() was called with
   let lastFollowX = null, lastFollowY = null; // last known follow target, for gaps in player data
   const OVERVIEW_ZOOM_MAX_MULT = 2.5; // how far 'overview' can zoom in past whole-map-fit
-  const FOLLOW_DEFAULT_ZOOM = 1.7; // 'follow' mode's default zoom (world px -> CSS px)
-  const FOLLOW_ZOOM_MAX_MULT = 1.7; // how far 'follow' can zoom in past its own default
+  // 'follow' mode's default zoom (world px -> CSS px) - kept close to whole-map-fit so
+  // players see plenty of surrounding arena without having to manually zoom out first;
+  // they can still zoom in further (FOLLOW_ZOOM_MAX_MULT) whenever they want a closer view.
+  const FOLLOW_DEFAULT_ZOOM = 1.0;
+  const FOLLOW_ZOOM_MAX_MULT = 2.9; // how far 'follow' can zoom in past its own default (same absolute max zoom-in as before this default was lowered)
   const OFFSCREEN_MARGIN = 26; // screen-space inset the off-screen door arrows clamp to
   const JOYSTICK_RADIUS = 52;
   const JOYSTICK_KNOB_RADIUS = 22;
+  // 'follow' mode renders the player above true screen-center by this fraction of the
+  // viewport height, reserving extra room below them for the bottom question HUD so it
+  // can never render on top of (obscure) the player's own sprite - see updateCamera().
+  const FOLLOW_BOTTOM_BUFFER_FRAC = 0.13;
+  // 'overview' mode (host + desktop players) reserves the same kind of bottom band, but
+  // has to do it differently: it's already showing the *entire* map edge-to-edge, so
+  // there's no slack to just shift the render anchor within (that would either crop the
+  // top of the map or leave it oversized). Instead it fits the map into a slightly
+  // *shorter* usable height, so the trapdoor row itself never renders low enough to sit
+  // under the fixed question HUD - see usableViewH()/fitZoom().
+  const OVERVIEW_BOTTOM_RESERVE_FRAC = 0.17;
 
   function clampNum(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
+  // The vertical CSS-px extent actually available for the world render, after setting
+  // aside 'overview' mode's bottom reserve band (see OVERVIEW_BOTTOM_RESERVE_FRAC above).
+  // 'follow' mode doesn't shrink anything here - it reserves its buffer purely by shifting
+  // the render anchor (see FOLLOW_BOTTOM_BUFFER_FRAC/updateCamera), since it's already
+  // zoomed in past whole-map-fit and has no "does the whole map still fit" constraint.
+  function usableViewH(viewH, mode) {
+    return mode === 'overview' ? viewH * (1 - OVERVIEW_BOTTOM_RESERVE_FRAC) : viewH;
+  }
+
   // Zoom that exactly contains the whole world in the given (CSS-pixel) viewport -
   // the shared floor for both modes' minimum zoom ("can't zoom out past the whole map").
-  function fitZoom(viewW, viewH) {
-    return Math.min(viewW / ARENA_W, viewH / ARENA_H) * 0.96; // slight padding so the border isn't clipped
+  function fitZoom(viewW, viewH, mode) {
+    return Math.min(viewW / ARENA_W, usableViewH(viewH, mode) / ARENA_H) * 0.96; // slight padding so the border isn't clipped
   }
 
   function getZoomRange(mode, viewW, viewH) {
-    const fit = fitZoom(viewW, viewH);
+    const fit = fitZoom(viewW, viewH, mode);
     if (mode === 'follow') {
       const def = Math.max(fit, FOLLOW_DEFAULT_ZOOM);
       return { min: fit, max: Math.max(def * FOLLOW_ZOOM_MAX_MULT, fit), default: def };
@@ -95,6 +118,15 @@ const ArenaRender = (() => {
     const py = mode === 'follow' ? 0 : camera.panY;
     camera.x = fitsW ? ARENA_W / 2 : clampNum(targetX + px, halfW, ARENA_W - halfW);
     camera.y = fitsH ? ARENA_H / 2 : clampNum(targetY + py, halfH, ARENA_H - halfH);
+
+    // Screen-space point that world (camera.x, camera.y) projects to. Normally dead
+    // center; 'follow' shifts it up so the player renders above true center, and
+    // 'overview' centers within its shrunk usable height instead of the full viewport -
+    // both leave the same kind of extra room below for the bottom question HUD.
+    camera.anchorX = viewW / 2;
+    camera.anchorY = mode === 'follow'
+      ? viewH * (0.5 - FOLLOW_BOTTOM_BUFFER_FRAC)
+      : usableViewH(viewH, mode) / 2;
   }
 
   // Called from wheel (desktop) / pinch (touch) handlers in player.js/host.js. Multiplies
@@ -111,7 +143,7 @@ const ArenaRender = (() => {
     const base = camera.zoom || range.default;
     camera.zoom = clampNum(base * factor, range.min, range.max);
     cameraMode = viewMode; // so the next render() clamps instead of resetting to default
-    if (camera.zoom <= fitZoom(viewW, viewH) + 1e-4) { camera.panX = 0; camera.panY = 0; }
+    if (camera.zoom <= fitZoom(viewW, viewH, viewMode) + 1e-4) { camera.panX = 0; camera.panY = 0; }
   }
 
   // Drag-to-pan the 'overview' camera (host + desktop players). dxCss/dyCss are the
@@ -134,12 +166,9 @@ const ArenaRender = (() => {
   // an absolute world point, unlike the touch joystick which only needs screen-space
   // direction) - see drawJoystick's comment for why touch never needed this.
   function screenToWorld(canvas, cssX, cssY) {
-    const dpr = window.devicePixelRatio || 1;
-    const viewW = canvas.clientWidth || (canvas.width / dpr);
-    const viewH = canvas.clientHeight || (canvas.height / dpr);
     return {
-      x: camera.x + (cssX - viewW / 2) / camera.zoom,
-      y: camera.y + (cssY - viewH / 2) / camera.zoom
+      x: camera.x + (cssX - camera.anchorX) / camera.zoom,
+      y: camera.y + (cssY - camera.anchorY) / camera.zoom
     };
   }
 
@@ -363,9 +392,12 @@ const ArenaRender = (() => {
   // letter there. Self-limiting - a no-op for any door that's actually in view, so it
   // naturally does nothing in 'overview' mode at its default zoom (whole world visible).
   function drawOffscreenIndicators(ctx, viewW, viewH) {
-    const cx = viewW / 2, cy = viewH / 2;
-    const insetHalfW = viewW / 2 - OFFSCREEN_MARGIN;
-    const insetHalfH = viewH / 2 - OFFSCREEN_MARGIN;
+    // Anchored to the same screen point render()'s world transform uses (not necessarily
+    // true screen-center - see FOLLOW_BOTTOM_BUFFER_FRAC), so an arrow always points
+    // correctly toward a door that's actually off the visible portion of the world.
+    const cx = camera.anchorX, cy = camera.anchorY;
+    const insetHalfW = Math.min(cx, viewW - cx) - OFFSCREEN_MARGIN;
+    const insetHalfH = Math.min(cy, viewH - cy) - OFFSCREEN_MARGIN;
     if (insetHalfW <= 0 || insetHalfH <= 0) return;
 
     for (const key of ['A', 'B', 'C']) {
@@ -928,7 +960,7 @@ const ArenaRender = (() => {
     ctx.fillStyle = '#111120';
     ctx.fillRect(0, 0, viewW, viewH);
 
-    ctx.translate(viewW / 2, viewH / 2);
+    ctx.translate(camera.anchorX, camera.anchorY);
     ctx.scale(camera.zoom, camera.zoom);
     ctx.translate(-camera.x, -camera.y);
 

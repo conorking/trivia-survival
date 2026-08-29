@@ -347,6 +347,32 @@ function updatePhaseTimer(state, phaseEndsAt) {
   }
 }
 
+// Big centered "3... 2... 1..." flash during the final seconds of a phase that actually
+// demands player action - not the passive holds (reveal/fall_pause/death_anim).
+const BIG_COUNTDOWN_STATES = new Set(['question', 'escape', 'resolve']);
+const BIG_COUNTDOWN_THRESHOLD_MS = 3000;
+let lastBigCountdownNum = null;
+
+function updateBigCountdown(state, phaseEndsAt) {
+  const el = document.getElementById('bigCountdown');
+  if (!el) return;
+  const remainingMs = (phaseEndsAt || 0) - Date.now();
+  const show = BIG_COUNTDOWN_STATES.has(state) && remainingMs > 0 && remainingMs <= BIG_COUNTDOWN_THRESHOLD_MS;
+  if (!show) {
+    el.classList.remove('show');
+    lastBigCountdownNum = null;
+    return;
+  }
+  const num = Math.ceil(remainingMs / 1000);
+  if (num !== lastBigCountdownNum) {
+    lastBigCountdownNum = num;
+    el.textContent = num;
+    el.classList.remove('show');
+    void el.offsetWidth;
+    el.classList.add('show');
+  }
+}
+
 socket.on('game:lockin', (data) => {
   ArenaRender.onLockIn(data.cages);
 });
@@ -381,6 +407,7 @@ socket.on('game:tick', (data) => {
   updateCounts(data.players);
   if (data.state !== 'intro' && introActive) hideIntro();
   updatePhaseTimer(data.state, data.phaseEndsAt);
+  updateBigCountdown(data.state, data.phaseEndsAt);
 });
 
 socket.on('game:end', ({ reason, winners }) => {
@@ -404,6 +431,8 @@ socket.on('game:end', ({ reason, winners }) => {
 socket.on('game:rematch', ({ config, players }) => {
   currentConfig = config;
   lastPhaseState = null;
+  lastBigCountdownNum = null;
+  document.getElementById('bigCountdown').classList.remove('show');
   rematchCountdownEndsAt = null;
   updateRematchBanner();
   hideIntro();
@@ -685,6 +714,17 @@ function rematch() {
 function newRoom() {
   sessionStorage.removeItem('trivia_host_room');
   location.reload();
+}
+
+// Explicit "the host is leaving" signal (top-nav logo / in-game EXIT link) - tells the
+// server to close the room for everyone right now, rather than leaving players stuck
+// waiting on a host who isn't coming back. Distinct from a bare disconnect (page
+// reload/network blip), which still gets a reconnect grace period - see server.js.
+function leaveRoom() {
+  socket.emit('host:leaveRoom');
+  sessionStorage.removeItem('trivia_host_room');
+  socket.disconnect();
+  location.href = 'index.html';
 }
 
 let toastTimer = null;

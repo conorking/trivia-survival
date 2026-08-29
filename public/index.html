@@ -20,10 +20,25 @@
     <button id="rejoinLastRoom" class="ghost-btn" style="display:none;" onclick="rejoinLastRoom()">REJOIN LAST ROOM</button>
   </div>
 </div>
+<div id="toast" class="toast"></div>
 <script>
   const params = new URLSearchParams(location.search);
   const prefill = params.get('code');
   if (prefill) document.getElementById('joinCode').value = prefill.toUpperCase();
+
+  // Shown once after a redirect that couldn't complete on its own page - e.g. a "Rejoin
+  // Last Room" whose stored session turned out to be dead, or a room the host closed -
+  // see player.js's player:error/room:closed handlers, which set this before redirecting.
+  (function showPendingToast() {
+    const msg = sessionStorage.getItem('trivia_toast');
+    if (!msg) return;
+    sessionStorage.removeItem('trivia_toast');
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = msg;
+    requestAnimationFrame(() => toast.classList.add('show'));
+    setTimeout(() => toast.classList.remove('show'), 2600);
+  })();
 
   function joinWithCode() {
     const code = document.getElementById('joinCode').value.trim().toUpperCase();

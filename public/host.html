@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Host - Trivia Survival</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="container">
   <div class="top-nav">
-    <a href="index.html" class="logo-link">🐾 TRIVIA SURVIVAL</a>
+    <a href="#" class="logo-link" onclick="leaveRoom(); return false;">🐾 TRIVIA SURVIVAL</a>
     <span class="nav-sub">HOST CONSOLE</span>
     <button class="ghost-btn nav-btn" id="castToggleBtn" onclick="toggleCastMode()">CAST VIEW</button>
   </div>
@@ -69,7 +69,7 @@
         <option value="custom">Custom Upload</option>
       </select>
       <label class="checkbox-row">
-        <input type="checkbox" id="cfgDifficultyRamp">
+        <input type="checkbox" id="cfgDifficultyRamp" value="true">
         <span>📈 Ramp difficulty - questions start easy and get harder as the game goes on (built-in sets only; a custom upload needs its own per-question "difficulty": 1-5 field to ramp, otherwise this has no effect)</span>
       </label>
       <div id="uploadRow" style="display:none; margin-top:10px;">
@@ -128,7 +128,7 @@
     <canvas id="arena"></canvas>
 
     <div class="hud hud-topleft">
-      <a href="index.html" class="logo-link interactive">🐾 EXIT</a>
+      <a href="#" class="logo-link interactive" onclick="leaveRoom(); return false;">🐾 EXIT</a>
       <div class="hud-stat">Q <span id="qIndex">1</span><span class="sep">/</span><span id="qTotal">10</span><span class="sep">·</span><span id="aliveCount">0</span> alive<span class="sep">·</span><span class="ghosts"><span id="ghostCount">0</span> 👻</span></div>
     </div>
 
@@ -136,6 +136,8 @@
       <div class="phase-label" id="phaseLabel"></div>
       <div class="timer-bar-wrap"><div class="timer-bar" id="timerBar"></div></div>
     </div>
+
+    <div class="hud big-countdown" id="bigCountdown"></div>
 
     <div class="hud hud-host cast-hide">
       <span class="code-pill" id="gameCodeVal">-----</span>

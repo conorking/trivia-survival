@@ -35,13 +35,34 @@ const manager = new GameManager(io);
 const DISCONNECT_GRACE_MS = 30000; // lobby/ended only - see Room.pruneOffline
 const REMATCH_READY_MIN = 2;
 const REMATCH_COUNTDOWN_MS = 6000;
+const HOST_LEAVE_GRACE_MS = 45000; // host reconnect grace before a silent disconnect counts as "left for good"
 
-// Periodically sweeps abandoned rooms, and (independently) drops any player who's been
-// disconnected for a while in a room that isn't mid-round - see Room.pruneOffline for why
-// this never touches an active round.
+// Reconnect lookup: token -> {code, playerId}
+const tokenIndex = new Map();
+
+// Ends a room for everyone - either the host explicitly left (host:leaveRoom) or has
+// been disconnected long enough (HOST_LEAVE_GRACE_MS, checked in the sweep interval
+// below) that they're not coming back. Every connected client gets kicked to the main
+// menu (room:closed) and the room + its players' reconnect tokens are wiped so there's
+// nothing left to rejoin.
+function closeRoomForHostLeave(room, reason) {
+  io.to(room.code).emit('room:closed', { reason });
+  for (const p of room.players.values()) tokenIndex.delete(p.token);
+  manager.removeRoom(room.code);
+}
+
+// Periodically sweeps abandoned rooms, closes any room whose host has been gone past
+// the grace period, and (independently) drops any player who's been disconnected for a
+// while in a room that isn't mid-round - see Room.pruneOffline for why that part never
+// touches an active round.
 setInterval(() => {
   manager.sweep();
+  const now = Date.now();
   for (const room of manager.rooms.values()) {
+    if (!room.hostConnected && room.hostDisconnectedAt && now - room.hostDisconnectedAt >= HOST_LEAVE_GRACE_MS) {
+      closeRoomForHostLeave(room, 'host_left');
+      continue;
+    }
     const removed = room.pruneOffline(DISCONNECT_GRACE_MS);
     if (removed.length) {
       for (const p of removed) tokenIndex.delete(p.token);
@@ -49,9 +70,6 @@ setInterval(() => {
     }
   }
 }, 10000);
-
-// Reconnect lookup: token -> {code, playerId}
-const tokenIndex = new Map();
 
 function sanitizeConfig(input, current) {
   const cfg = { ...current };
@@ -114,6 +132,7 @@ io.on('connection', socket => {
     if (!room) { socket.emit('host:error', { message: 'Room not found.' }); return; }
     room.hostSocketId = socket.id;
     room.hostConnected = true;
+    room.hostDisconnectedAt = 0;
     joinedRoomCode = room.code;
     isHost = true;
     socket.join(room.code);
@@ -154,6 +173,16 @@ io.on('connection', socket => {
     if (!room || !isHost) return;
     if (room.state === 'lobby') return;
     room.manualEnd = true;
+  });
+
+  // Explicit "the host is leaving the room" signal (nav-away links in host.html, routed
+  // through leaveRoom() in host.js rather than a plain link) - unlike a bare disconnect
+  // (which might just be a reload/reconnect, see HOST_LEAVE_GRACE_MS), this always closes
+  // the room immediately for everyone in it.
+  socket.on('host:leaveRoom', () => {
+    const room = manager.getRoom(joinedRoomCode);
+    if (!room || !isHost) return;
+    closeRoomForHostLeave(room, 'host_left');
   });
 
   socket.on('host:rematch', () => {
@@ -456,7 +485,7 @@ io.on('connection', socket => {
     if (!room) return;
     // isHost and playerId aren't mutually exclusive - a host who's also playing (see
     // host:joinAsPlayer) needs both of these to run, not just one.
-    if (isHost) room.hostConnected = false;
+    if (isHost) { room.hostConnected = false; room.hostDisconnectedAt = Date.now(); }
     if (playerId) {
       const player = room.players.get(playerId);
       // Do not let an obsolete tab mark a replacement connection offline.

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Join - Trivia Survival</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -39,8 +39,8 @@
       <input id="nameInput" type="text" maxlength="16" placeholder="Enter your name">
       <label>Pick an Avatar Color</label>
       <div class="avatar-grid" id="avatarGrid"></div>
-      <button class="primary" style="margin-top:14px;" onclick="joinGame()">JOIN</button>
       <button class="ghost-btn" style="margin-top:14px; width:100%;" onclick="changeRoom()">CHANGE ROOM</button>
+      <button class="primary" style="margin-top:14px; width:100%;" onclick="joinGame()">JOIN</button>
       <div class="error-msg" id="joinError"></div>
     </div>
     <div class="card" id="roomPreviewCard" style="display:none;">
@@ -54,7 +54,10 @@
     <h1 class="center">You're in!</h1>
     <div class="card center">
       <p class="muted">Waiting for host to start the game...</p>
-      <button class="primary" id="readyBtn" onclick="toggleReady()">READY UP</button>
+      <div>
+        <button class="ghost-btn speak-toggle-btn" style="margin-top:10px;" onclick="toggleSpeak()">🔇 READ QUESTIONS ALOUD</button>
+        <button class="primary" id="readyBtn" onclick="toggleReady()">READY UP</button>
+      </div>
       <div class="rematch-banner" id="rematchBanner" style="display:none;"></div>
       <h3 style="margin-top:20px;">Players (<span id="playerCount">0</span>)</h3>
       <div class="player-list" id="playerList"></div>
@@ -68,6 +71,7 @@
     <div class="hud hud-topleft">
       <a href="#" class="logo-link interactive" onclick="backToMenu(); return false;">🐾 LEAVE</a>
       <div class="hud-stat">Q <span id="qIndex">1</span><span class="sep">/</span><span id="qTotal">10</span><span class="sep">·</span><span id="aliveCount">0</span> alive</div>
+      <button class="ghost-btn interactive speak-toggle-btn" onclick="toggleSpeak()">🔇 READ ALOUD</button>
     </div>
 
     <div class="hud hud-timer">
@@ -76,6 +80,8 @@
     </div>
 
     <div class="hud hud-out" id="youStatus" style="display:none;">👻 YOU'RE OUT — SPECTATING</div>
+
+    <div class="hud big-countdown" id="bigCountdown"></div>
 
     <div class="hud hud-question" id="questionHud">
       <h3 id="questionText">Get ready…</h3>
@@ -89,7 +95,7 @@
     <div class="intro-q" id="introQ">…</div>
     <div class="intro-options" id="introOptions"></div>
     <div class="intro-countdown-wrap"><div class="intro-countdown" id="introCountdown"></div></div>
-    <div class="intro-hint" id="introHint">Read the question — answering opens in a moment…</div>
+    <div class="intro-hint interactive speak-toggle-btn" id="introHint" onclick="toggleSpeak()">🔇 Reading Muted</div>
     <button class="primary interactive" id="introStartBtn" style="display:none;" onclick="startAnswering()">▶ START ANSWERING</button>
   </div>
 

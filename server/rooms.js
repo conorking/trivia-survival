@@ -107,6 +107,9 @@ const UNSTICK_MS = 900; // how long obstacle-avoidance is suspended once trigger
 const HOME_SETTLE_MS = 500; // small buffer when the round ends via dogs-all-home w/ survivors
 const OBSTACLE_MARGIN = 14; // extra clearance dogs try to keep from trapdoor rects
 const TRAP_TRIGGER_RADIUS = 20;
+// A player must fully cross into an open trapdoor (their whole body, not just a
+// center-point graze of the front edge) before it's lethal - see rectContainsInset.
+const PIT_FALL_INSET = PLAYER_RADIUS;
 // Dog lunge (opt-in via config.dogLunge: 'off' | 'low' | 'high')
 const LUNGE_RANGE = 140;
 const LUNGE_WINDUP_MS = 150; // brief telegraph pause before the burst
@@ -151,6 +154,15 @@ function clamp(v, min, max) {
 
 function rectContains(rect, x, y) {
   return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
+}
+
+// Same as rectContains, but shrunk inward by `inset` on every side - used for the
+// pit-fall check so a player has to fully cross the threshold into an open trapdoor
+// (their whole body past the edge, not just a center-point graze of it) before it's
+// lethal, rather than dying the instant their position value ticks past the rect's edge.
+function rectContainsInset(rect, x, y, inset) {
+  return x >= rect.x + inset && x <= rect.x + rect.w - inset &&
+    y >= rect.y + inset && y <= rect.y + rect.h - inset;
 }
 
 function cloneTrapdoors(src) {
@@ -396,6 +408,7 @@ class Room {
     this.code = code;
     this.hostSocketId = hostSocketId;
     this.hostConnected = true;
+    this.hostDisconnectedAt = 0; // set on disconnect, cleared on host:rejoin - see HOST_LEAVE_GRACE_MS in server.js
     this.players = new Map(); // playerId -> player object
     this.config = {
       answerTimeSec: 15,
@@ -441,7 +454,7 @@ class Room {
     const player = this.addPlayer('Bot ' + (++this.botSeq), colors[this.botSeq % colors.length]);
     player.isBot = true;
     player.ready = true;
-    player.botState = { decidedForIndex: -1, doorTarget: null, jx: 0, jy: 0 };
+    player.botState = { decidedForIndex: -1, doorTarget: null, fleeX: ARENA_W / 2, fleeY: ARENA_H * 0.22 };
     return player;
   }
 
@@ -476,7 +489,7 @@ class Room {
     };
     for (const p of bots) {
       if (!p.alive || p.isGhost) { p.input = { dx: 0, dy: 0 }; continue; }
-      const bs = p.botState || (p.botState = { decidedForIndex: -1, doorTarget: null, jx: 0, jy: 0 });
+      const bs = p.botState || (p.botState = { decidedForIndex: -1, doorTarget: null, fleeX: ARENA_W / 2, fleeY: ARENA_H * 0.22 });
 
       if (this.state === 'question') {
         if (bs.decidedForIndex !== this.currentQuestionIndex) {
@@ -486,18 +499,26 @@ class Room {
           bs.doorTarget = Math.random() < this.botAccuracy
             ? correct
             : keys[Math.floor(Math.random() * 3)];
-          bs.jx = (Math.random() - 0.5) * 40;
-          bs.jy = (Math.random() - 0.5) * 30;
+          // Escape-phase flee point (used below), randomized once per question and
+          // spread widely across the open field - not just a small jitter around one
+          // shared rally point - so a crowd of bots fleeing a wrong door doesn't pile
+          // into each other densely enough to get jostled back onto a still-open pit.
+          bs.fleeX = ARENA_W / 2 + (Math.random() - 0.5) * ARENA_W * 0.7;
+          bs.fleeY = ARENA_H * 0.22 + (Math.random() - 0.5) * 60;
         }
+        // Walk to the door's own center, well clear of its edges - standing right at
+        // the boundary risks a bot reading as "not actually in the cage" at lock-in.
         const c = doorCenter(bs.doorTarget || 'A');
-        p.input = toward(p, c.x + bs.jx, c.y + bs.jy);
+        p.input = toward(p, c.x, c.y);
       } else if (this.state === 'escape') {
-        // Standing on an open pit? Bolt for open field. Otherwise hold position.
+        // Standing on an open pit? Bolt for this bot's own flee point - well clear of
+        // the trapdoor row (see bs.fleeX/Y above) so there's plenty of margin even after
+        // a jostle from other fleeing bots. Otherwise hold position.
         let onPit = null;
         for (const key of ['A', 'B', 'C']) {
           if (this.pitOpen[key] && !p.cagedAt && rectContains(this.trapdoors[key], p.x, p.y)) { onPit = key; break; }
         }
-        p.input = onPit ? toward(p, ARENA_W / 2 + bs.jx, ARENA_H * 0.45 + bs.jy, 4) : { dx: 0, dy: 0 };
+        p.input = onPit ? toward(p, bs.fleeX, bs.fleeY, 4) : { dx: 0, dy: 0 };
       } else if (this.state === 'resolve') {
         // Flee the nearest hunting dog; hug away from walls so we don't self-corner.
         let nearest = null, nd = Infinity;
@@ -861,7 +882,7 @@ class Room {
         if (p.cagedAt) continue;
         for (const key of ['A', 'B', 'C']) {
           if (!this.pitOpen[key]) continue;
-          if (rectContains(this.trapdoors[key], p.x, p.y)) {
+          if (rectContainsInset(this.trapdoors[key], p.x, p.y, PIT_FALL_INSET)) {
             drops.push(this.fallIntoPit(p, key, now));
             break;
           }
@@ -974,7 +995,7 @@ class Room {
       if (!p.alive || p.isGhost) continue;
       for (const key of ['A', 'B', 'C']) {
         if (!this.pitOpen[key]) continue;
-        if (rectContains(this.trapdoors[key], p.x, p.y)) {
+        if (rectContainsInset(this.trapdoors[key], p.x, p.y, PIT_FALL_INSET)) {
           drops.push(this.fallIntoPit(p, key, now));
           break;
         }

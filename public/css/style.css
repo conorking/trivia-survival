@@ -214,7 +214,10 @@ canvas#arena {
   background: #111120;
   touch-action: none; /* pointer/drag controls own gestures on the canvas */
 }
-body.in-game { overflow: hidden; }
+/* Blocks the browser's pull-to-refresh / edge-swipe-back navigation gestures from
+   firing during gameplay - a pinch or fast drag near a screen edge could otherwise be
+   misread as "go back" instead of a camera pinch-zoom or joystick drag. */
+body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; }
 
 .hud { position: fixed; z-index: 10; pointer-events: none; }
 .hud button, .hud a, .hud input, .hud .interactive, .hud.interactive { pointer-events: auto; }
@@ -233,6 +236,11 @@ body.in-game { overflow: hidden; }
 }
 .hud-stat .sep { color: #6a6a90; }
 .hud-stat .ghosts { color: #9a9ac0; }
+.hud-topleft .speak-toggle-btn {
+  font-family: 'VT323', monospace; font-size: 13px;
+  padding: 5px 8px; box-shadow: none; border-width: 2px;
+  background: rgba(16,16,42,0.7);
+}
 
 /* top-centre: the one always-critical element - phase label + timer bar */
 .hud-timer {
@@ -252,12 +260,15 @@ body.in-game { overflow: hidden; }
 .hud-question {
   left: 50%; bottom: 10px; transform: translateX(-50%);
   width: min(720px, 94vw);
+  max-height: 42vh;
+  overflow-y: auto;
   background: rgba(16,16,42,0.82);
   border: 3px solid var(--border);
   border-radius: 10px;
   padding: 12px 16px;
   text-align: center;
   transition: padding 0.2s ease;
+  pointer-events: auto; /* lets a long question scroll instead of clipping off-screen */
 }
 .hud-question h3 {
   margin: 0 0 8px; color: var(--accent); font-size: 14px; line-height: 1.4;
@@ -311,6 +322,28 @@ body.in-game { overflow: hidden; }
   border-radius: 6px; padding: 6px 10px;
 }
 
+/* Big centered "3... 2... 1..." flash for the final seconds of an action phase
+   (answering / escaping the wrong doors / surviving the dogs) - see updateBigCountdown
+   in player.js/host.js. Pops in fresh on every new number via the keyframe below. */
+.big-countdown {
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(64px, 16vw, 140px);
+  color: var(--accent);
+  text-shadow: 4px 4px 0 var(--border), 0 0 30px rgba(255,210,63,0.55);
+  z-index: 20;
+  opacity: 0;
+}
+.big-countdown.show { animation: bigCountdownPop 0.4s ease-out forwards; }
+@keyframes bigCountdownPop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
+  35% { opacity: 1; }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Per-player read-aloud mute toggle (player-only - the host has its own #speakToggle) */
+.speak-toggle-btn.active { border-color: var(--safe); color: var(--safe); }
+
 /* Full-screen question intro - shown during the 'intro' phase, before the timer */
 .intro-overlay {
   position: fixed; inset: 0; z-index: 30;
@@ -349,6 +382,8 @@ body.in-game { overflow: hidden; }
 }
 .intro-overlay .intro-countdown { height: 100%; width: 100%; background: var(--safe); transition: width 0.15s linear; }
 .intro-overlay .intro-hint { font-family: 'VT323', monospace; font-size: 18px; color: #9a9ac0; }
+.intro-overlay .intro-hint.speak-toggle-btn { cursor: pointer; text-decoration: underline dotted; }
+.intro-overlay .intro-hint.speak-toggle-btn:hover { color: var(--text); }
 .intro-overlay #introStartBtn { margin-top: 4px; }
 
 /* End-of-game overlay - sits on top of the still-visible arena instead of replacing it */
@@ -372,8 +407,9 @@ body.in-game { overflow: hidden; }
   .hud-timer { top: 3px; width: 97vw; }
   .hud-topleft { top: 32px; }
   .hud-topleft .logo-link, .hud-stat { font-size: 9px; padding: 5px 7px; }
+  .hud-topleft .speak-toggle-btn { font-size: 11px; padding: 4px 6px; }
   .hud-out { top: 78px; }
-  .hud-question { width: 97vw; bottom: 6px; padding: 9px 11px; }
+  .hud-question { width: 97vw; bottom: 6px; padding: 9px 11px; max-height: 36vh; }
   .hud-question h3 { font-size: 12px; }
   .hud-question .option-pill { font-size: 9px; padding: 6px 9px; }
   .hud-host { gap: 4px; }
