@@ -1,4 +1,10 @@
-const socket = io();
+// transports: prefer WebSocket over the default polling-first handshake. Some
+// corporate SSO/security proxies transparently rewrite plain HTTP XHR requests
+// (injecting tracking query params via a redirect) in a way that breaks
+// Socket.IO's polling transport with a false CORS error, but leave a raw
+// WebSocket upgrade alone. Polling stays listed as a fallback for the opposite
+// case (networks that block WebSocket upgrades outright).
+const socket = io({ transports: ['websocket', 'polling'] });
 let roomCode = null;
 let currentConfig = null;
 let uploadedQuestions = null;
