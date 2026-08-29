@@ -275,8 +275,10 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 }
 .hud-question.slim { padding: 6px 12px; }
 .hud-question.slim h3 {
+  /* Shrunk, but never truncated - the question (and, below, every answer option) must
+     stay fully readable in every phase; anything that doesn't fit wraps onto more lines
+     instead of being cut off (the box itself scrolls if it ever grows past max-height). */
   font-size: 11px; margin-bottom: 5px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .options-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .option-pill {
