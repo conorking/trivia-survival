@@ -1,0 +1,77 @@
+name: Build and deploy
+
+# Push-to-deploy: build the Docker image, push it to GHCR, then ping the
+# Watchtower instance already running on the home server to pull it and
+# restart the container. See docs/deploy-docker-cicd.md for the full setup
+# (one-time host config, the two repo secrets this needs, rollback, and how
+# to reuse this same file for a future project).
+#
+# Deliberately scoped tight: this workflow can push an image to a package
+# registry it owns (via the default GITHUB_TOKEN, permissioned below to
+# nothing but that) and make one authenticated HTTP call to one fixed URL.
+# No self-hosted runner, no SSH, no shell access to the home server.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lowercase image name
+        id: image
+        # GHCR requires a lowercase image path; github.repository preserves
+        # whatever case the owner/repo actually have.
+        run: echo "name=${REGISTRY}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.image.outputs.name }}:latest
+            ${{ steps.image.outputs.name }}:sha-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Trigger deploy
+        # Watchtower's HTTP API mode - see deploy/docker-compose.yml. This is
+        # a single POST to one fixed endpoint carrying a bearer token; it
+        # doesn't tell Watchtower which image to pull, it just asks it to
+        # check every label-enabled container on the host right now.
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer ${WATCHTOWER_TOKEN}" \
+            "${DEPLOY_WEBHOOK_URL}"
+        env:
+          WATCHTOWER_TOKEN: ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}
+          DEPLOY_WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL }}

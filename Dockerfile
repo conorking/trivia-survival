@@ -18,4 +18,15 @@ COPY public ./public
 ENV PORT=3000
 EXPOSE 3000
 
+# Never run as root - node:22-alpine already ships an unprivileged `node` user,
+# so this is free. Matches the same principle the systemd deploy path uses
+# (see deploy/trivia-survival.service).
+USER node
+
+# Lets `docker ps` / `docker compose ps` / Watchtower report real up-vs-wedged
+# status instead of just "process is running". Hits the landing page over
+# plain HTTP on the container's own port - no extra endpoint needed.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- "http://localhost:${PORT}/" || exit 1
+
 CMD ["node", "server/server.js"]

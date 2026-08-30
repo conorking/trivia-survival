@@ -1,1 +1,5 @@
 node_modules/
+
+# Real secrets for deploy/docker-compose.yml - never committed. See
+# deploy/.env.example and docs/deploy-docker-cicd.md.
+deploy/.env

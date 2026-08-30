@@ -594,11 +594,41 @@ the host opens the tunnel's printed URL themselves instead of `localhost`.
 
 For a persistent always-on public deployment (not just a per-session tunnel), see
 `docs/deploy-oracle-free-tier.md` + the `deploy/` folder (`trivia-survival.service`,
-`Caddyfile`) — as of 2026 Oracle Cloud's Always Free VM tier is the option that's still
-genuinely free forever for an app like this (Render/Fly.io/Railway free tiers are all
-effectively gone). `server.js` sets `app.set('trust proxy', true)` for correctness when
-run behind that kind of reverse proxy; otherwise no app code differs from any other
-deployment target.
+`Caddyfile`) — an earlier-explored option (rented VPS, own public IP). `server.js` sets
+`app.set('trust proxy', true)` for correctness when run behind that kind of reverse
+proxy; otherwise no app code differs from any other deployment target. **This is not
+what's actually serving traffic** — see the next section.
+
+## Home hosting deployment (live, Cloudflare Tunnel)
+
+The game actually runs from Conor's home network as of 2026-08-30, not on a VPS. Full
+architecture rationale and step-by-step setup live in the "Hosting from home network"
+Claude project (`home-hosting-blueprint.md`, `home-hosting-implementation-guide.md`) —
+not in this repo. Short version for anything touching this codebase:
+
+- **Why not port-forwarding**: home ISP (Skinny NZ) runs CGNAT on every plan — no
+  public IP ever reaches the router, so port-forward/DDNS was never on the table.
+  Instead, Cloudflare Tunnel (`cloudflared`) dials *out* from the host to Cloudflare's
+  edge; nothing on the home network ever listens for inbound traffic.
+- **Where it runs**: a separate always-on Windows mini PC (not a dev machine),
+  reached over RDP. Orchestration (`docker-compose.yml`, cloudflared's `config.yml` +
+  credentials) lives in `C:\hosting\` on that machine — outside this repo, not
+  committed to git. This repo's `Dockerfile` + `.dockerignore` (repo root) are what
+  that compose file builds from: `build: C:/source/trivia-survival`.
+- **Domain**: `cking.co.nz` (bought via Cloudflare Registrar, zone on Cloudflare's
+  nameservers already). Live at `triviasurvival.cking.co.nz`.
+- **Tunnel**: named `home-hosting`. Its ingress config maps that hostname straight to
+  the app's Compose service name — `service: http://triviasurvival:3000` — **not**
+  `localhost` (inside the `cloudflared` container, `localhost` means that container,
+  not the app container; this exact mix-up caused a "tunnel connects fine, nothing
+  loads" bug during setup — check this line first if that happens again). The app
+  container publishes no host ports (`ports:` omitted) — the tunnel is the only way in,
+  by design.
+- **Multiple apps/domains**: supported from this same tunnel — a new app is one more
+  Compose service on the same internal network, one more `ingress` line, one
+  `cloudflared tunnel route dns` call. No router/ISP changes, ever.
+- The Oracle/Caddy path above remains worth revisiting only if a future app needs raw
+  TCP/UDP, which Cloudflare Tunnel can't carry (HTTP/HTTPS/WebSocket only).
 
 ## Deliberately simplified for now (see README "Current scope")
 
