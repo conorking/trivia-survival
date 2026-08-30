@@ -19,8 +19,10 @@
     <div class="card center cast-hide" id="roomInfoCard" style="display:none;">
       <h2>Room Code</h2>
       <div class="join-info">
-        <div class="join-code" id="roomCode">-----</div>
-        <button class="copy-icon-btn" title="Copy code" onclick="copyCode()">📋</button>
+        <div class="join-code-row">
+          <div class="join-code" id="roomCode">-----</div>
+          <button class="copy-icon-btn" title="Copy code" onclick="copyCode()">📋</button>
+        </div>
         <div id="qrcode-box"></div>
       </div>
       <div class="link-row">
@@ -49,14 +51,14 @@
         <div>
           <label>Answer time per question (seconds)</label>
           <div class="slider-row">
-            <input type="range" id="cfgAnswerTimeRange" min="3" max="120" step="1" value="15">
+            <input type="range" id="cfgAnswerTimeRange" min="3" max="30" step="1" value="15">
             <input type="number" id="cfgAnswerTime" value="15" min="3" max="120">
           </div>
         </div>
         <div>
           <label>Number of questions</label>
           <div class="slider-row">
-            <input type="range" id="cfgQuestionCountRange" min="1" max="400" step="1" value="10">
+            <input type="range" id="cfgQuestionCountRange" min="1" max="50" step="1" value="10">
             <input type="number" id="cfgQuestionCount" value="10" min="1" max="400">
           </div>
         </div>
@@ -68,35 +70,37 @@
         <option value="webdev">Web Dev (HTML/CSS/JS/React)</option>
         <option value="custom">Custom Upload</option>
       </select>
-      <label class="checkbox-row">
-        <input type="checkbox" id="cfgDifficultyRamp" value="true">
-        <span class="checkbox-text">
-          <span class="checkbox-title">📈 Ramp difficulty</span>
-          <span class="checkbox-desc">Questions start easy and get harder as the game goes on. Built-in sets only — a custom upload needs its own per-question difficulty field to ramp.</span>
-        </span>
-      </label>
       <div id="uploadRow" style="display:none; margin-top:10px;">
         <label>Upload questions (.json)</label>
         <input type="file" id="questionFile" accept="application/json">
         <p class="muted" id="uploadStatus">Format: [{ "q": "...", "options": {"A":"..","B":"..","C":".."}, "correct": "A" }, ...]</p>
       </div>
-      <label class="checkbox-row">
-        <input type="checkbox" id="cfgBearTraps">
-        <span class="checkbox-text">
-          <span class="checkbox-title">🪤 Bear traps</span>
-          <span class="checkbox-desc">Spawn during the escape phase and root anyone who steps on one.</span>
-        </span>
-      </label>
-      <label>🐕‍🦺 Dog lunge (random speed bursts while hunting)</label>
+      <label>Dog lunge (random speed bursts while hunting)</label>
       <select id="cfgDogLunge">
         <option value="off">Off</option>
         <option value="low">Low</option>
         <option value="high">High</option>
       </select>
+      <label>Game Modifiers</label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgDifficultyRamp" value="true">
+        <span class="checkbox-text">
+          <span class="checkbox-title">Ramp difficulty</span>
+          <span class="checkbox-desc">Questions start easy and get harder as the game goes on. Built-in sets only — a custom upload needs its own per-question difficulty field to ramp.</span>
+        </span>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="cfgBearTraps">
+        <span class="checkbox-text">
+          <span class="checkbox-title">Bear traps</span>
+          <span class="checkbox-desc">Spawn during the escape phase and root anyone who steps on one.</span>
+        </span>
+      </label>
+      
       <label class="checkbox-row">
         <input type="checkbox" id="cfgDynamicCellScaling">
         <span class="checkbox-text">
-          <span class="checkbox-title">📉 Dynamic cell scaling</span>
+          <span class="checkbox-title">Shrinking cages</span>
           <span class="checkbox-desc">Cages shrink round by round as the game progresses.</span>
         </span>
       </label>

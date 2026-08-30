@@ -515,12 +515,13 @@ function showRoomInfo(code) {
   refreshPublicOrigin(code);
 }
 
+const qrCodeSize = 255;
 function renderJoinUrl(code, originOverride) {
   const base = originOverride || location.origin;
   const url = `${base}/player.html?code=${code}`;
   document.getElementById('joinUrl').value = url;
   document.getElementById('qrcode-box').innerHTML = '';
-  new QRCode(document.getElementById('qrcode-box'), { text: url, width: 120, height: 120 });
+  new QRCode(document.getElementById('qrcode-box'), { text: url, width: qrCodeSize, height: qrCodeSize });
 }
 
 // Best-effort upgrade of the join link/QR to whatever address actually reaches this
