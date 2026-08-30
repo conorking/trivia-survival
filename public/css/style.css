@@ -27,6 +27,51 @@
   --safe: #58d68d;
   --text: #f4f1de;
   --border: #0f0f1e;
+
+  /* ===== Type scale =====
+     Every font-size in this file references one of these instead of a raw
+     pixel value, so text sizing lives in one place and stays consistent
+     step-to-step instead of dozens of one-off numbers. Two families because
+     they read very differently at the same nominal size: VT323 is a thin,
+     slightly condensed terminal face (body copy/labels/buttons/inputs) that
+     needs to run a good bit larger than you'd expect to stay legible -
+     including at bold weight, which VT323 has no real face for, so a
+     synthetic/faux bold gets applied and reads worse, not better, on its
+     thin strokes; avoid font-weight:bold on VT323 text, lean on color/size
+     for emphasis instead (see .player-chip .ready-tick / .rematch-banner).
+     Press Start 2P is a heavy true pixel face (headings/HUD chrome/short
+     badge text) that reads "loud" even small - which is also why it's
+     reserved for short display text, never long-form copy, and its scale
+     can stay smaller.
+     In-game HUD overlay chrome and the debug/sandbox panel intentionally
+     reuse the *smaller* steps of these same scales rather than getting
+     their own separate scale - they're deliberately compact (real-mobile-
+     device-tuned canvas overlays, or developer-only chrome), and share
+     values with regular UI text purely where the numbers already matched,
+     not because they were bumped for legibility along with the general
+     reading-text sizes below.
+     A few genuinely responsive sizes (the mid-round countdown, the
+     full-screen question intro) use clamp() against the viewport instead
+     of a fixed step - that doesn't fit a shared token, and is left as a
+     literal where it appears. */
+  --fs-vt-3xs: 11px;  /* smallest possible - tiny-screen HUD squeeze only */
+  --fs-vt-2xs: 13px;  /* compact UI text: debug panel, small HUD host controls */
+  --fs-vt-xs:  16px;  /* secondary/compact reading text: nav subtitle, badges, banners */
+  --fs-vt-sm:  18px;  /* default reading text: labels, descriptions, roster, errors */
+  --fs-vt-base:20px;  /* form inputs, emphasized text */
+  --fs-vt-lg:  21px;  /* page base size */
+  --fs-vt-xl:  22px;  /* winners list */
+
+  --fs-px-2xs: 9px;   /* smallest in-game HUD chrome */
+  --fs-px-xs:  10px;  /* HUD corner readouts, small badges */
+  --fs-px-sm:  11px;  /* HUD phase label, option pills, toast */
+  --fs-px-base:12px;  /* buttons, code badges, intro question number */
+  --fs-px-md:  13px;  /* h3 */
+  --fs-px-lg:  14px;  /* menu buttons, winners entry, intro option letter, question text */
+  --fs-px-xl:  18px;  /* h2 */
+  --fs-px-2xl: 28px;  /* h1 */
+  --fs-px-3xl: 32px;  /* room join code */
+  --fs-px-icon-btn: 16px; /* one-off: the emoji glyph in the small square copy-icon button */
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +86,7 @@ body {
   background-size: 24px 24px;
   color: var(--text);
   font-family: 'VT323', monospace;
-  font-size: 21px;
+  font-size: var(--fs-vt-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,9 +98,9 @@ h1, h2, h3, .pixel-title {
   text-shadow: 3px 3px 0 var(--border);
 }
 
-h1 { font-size: 28px; color: var(--accent); }
-h2 { font-size: 18px; color: var(--accent2); }
-h3 { font-size: 13px; }
+h1 { font-size: var(--fs-px-2xl); color: var(--accent); }
+h2 { font-size: var(--fs-px-xl); color: var(--accent2); }
+h3 { font-size: var(--fs-px-md); }
 
 .container {
   width: 100%;
@@ -74,7 +119,7 @@ h3 { font-size: 13px; }
 
 button {
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
+  font-size: var(--fs-px-base);
   background: var(--accent2);
   color: #10102a;
   border: 3px solid var(--border);
@@ -93,7 +138,7 @@ button.ghost-btn { background: transparent; color: var(--text); border-color: va
 
 input[type=text], input[type=number], select, textarea {
   font-family: 'VT323', monospace;
-  font-size: 20px;
+  font-size: var(--fs-vt-base);
   background: #10102a;
   color: var(--text);
   border: 3px solid var(--border);
@@ -102,7 +147,7 @@ input[type=text], input[type=number], select, textarea {
   width: 100%;
 }
 
-label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
+label { display: block; margin: 12px 0 4px; font-size: var(--fs-vt-sm); color: #cfcfe8; }
 
 .slider-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .slider-row input[type=range] {
@@ -114,21 +159,68 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 }
 .slider-row input[type=number] { width: 76px; flex: 0 0 76px; text-align: center; }
 
+/* Card-style option rows (ramp difficulty / bear traps / dynamic cell scaling
+   in the host config) - a whole clickable row that pops gold when checked,
+   dark-panel when not, rather than a plain native checkbox + a run-on
+   sentence of label text. Each row is title + a short explainer line
+   underneath instead of one combined line, so the option reads at a glance
+   and the detail is still there for anyone who wants it. */
 .checkbox-row {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 16px 0 4px;
-  font-size: 16px;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 12px 0;
+  padding: 14px 16px;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-dark);
   color: var(--text);
   cursor: pointer;
+  transition: background 0.1s ease, color 0.1s ease;
 }
+.checkbox-row:has(input:checked) {
+  background: var(--accent);
+  color: #10102a;
+}
+
 .checkbox-row input[type=checkbox] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--accent);
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  margin: 2px 0 0;
+  border: 3px solid var(--accent2);
+  border-radius: 6px;
+  background: var(--border);
   cursor: pointer;
+  /* Flex-center the checkmark instead of hand-placed left/top offsets -
+     those drifted off-true the moment the box size or border changed. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.1s ease;
 }
+.checkbox-row input[type=checkbox]:checked {
+  border-color: var(--accent);
+}
+.checkbox-row input[type=checkbox]:checked::after {
+  content: '';
+  width: 7px;
+  height: 12px;
+  /* The border-trick checkmark's visual weight sits toward its own
+     bottom-right even once flex-centered as a box; this nudges it back to
+     dead-center by eye. */
+  margin: -3px 0 0 -1px;
+  border: solid var(--accent);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-text { display: flex; flex-direction: column; gap: 3px; }
+.checkbox-title { font-size: var(--fs-vt-base); }
+.checkbox-desc { font-size: var(--fs-vt-sm); opacity: 0.85; line-height: 1.35; }
+.checkbox-row:has(input:checked) .checkbox-desc { opacity: 0.75; }
 
 .row { display: flex; gap: 16px; flex-wrap: wrap; }
 .row > * { flex: 1; min-width: 140px; }
@@ -143,10 +235,10 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 }
 
 .menu-buttons { display: flex; flex-direction: column; gap: 16px; max-width: 320px; margin: 30px auto; }
-.menu-buttons button { font-size: 14px; padding: 20px; }
+.menu-buttons button { font-size: var(--fs-px-lg); padding: 20px; }
 
 .center { text-align: center; }
-.muted { color: #9a9ac0; font-size: 17px; }
+.muted { color: #9a9ac0; font-size: var(--fs-vt-sm); }
 
 /* Persistent top nav - present on every view so there's always a way back to the
    landing page, without pushing the game view down much. */
@@ -161,14 +253,14 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 }
 .top-nav .logo-link {
   font-family: 'Press Start 2P', monospace;
-  font-size: 14px;
+  font-size: var(--fs-px-lg);
   color: var(--accent);
   text-decoration: none;
   letter-spacing: 1px;
 }
 .top-nav .logo-link:hover { filter: brightness(1.15); }
 .top-nav .nav-sub {
-  font-size: 15px;
+  font-size: var(--fs-vt-xs);
   color: #9a9ac0;
 }
 
@@ -181,7 +273,7 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 }
 .join-code {
   font-family: 'Press Start 2P', monospace;
-  font-size: 32px;
+  font-size: var(--fs-px-3xl);
   color: var(--accent);
   letter-spacing: 6px;
   background: #10102a;
@@ -195,7 +287,7 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
 .player-chip {
   display: flex; align-items: center; gap: 6px;
   background: #10102a; border: 2px solid var(--border);
-  border-radius: 20px; padding: 6px 12px; font-size: 16px;
+  border-radius: 20px; padding: 6px 12px; font-size: var(--fs-vt-sm);
 }
 .dot { width: 12px; height: 12px; border-radius: 50%; }
 .player-chip.not-ready { opacity: 0.55; }
@@ -204,7 +296,10 @@ label { display: block; margin: 12px 0 4px; font-size: 17px; color: #cfcfe8; }
   border-color: var(--safe);
   box-shadow: 0 0 0 2px rgba(88,214,141,0.35);
 }
-.player-chip .ready-tick { color: var(--safe); font-weight: bold; margin-left: 2px; }
+/* Color, not weight, carries the emphasis here - VT323 has no real bold
+   face, and a synthetic bold just blurs its thin strokes instead of
+   reading as emphasis. */
+.player-chip .ready-tick { color: var(--safe); margin-left: 2px; }
 
 .avatar-grid { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
 .avatar-swatch {
@@ -244,18 +339,18 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 .hud-topleft { top: 6px; left: 8px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .hud-topleft .logo-link {
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px; color: var(--accent); text-decoration: none;
+  font-size: var(--fs-px-xs); color: var(--accent); text-decoration: none;
   background: rgba(16,16,42,0.7); border-radius: 6px; padding: 6px 8px;
 }
 .hud-stat {
-  font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text);
+  font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-xs); color: var(--text);
   background: rgba(16,16,42,0.7); border-radius: 6px; padding: 6px 8px;
   display: flex; gap: 8px; align-items: center;
 }
 .hud-stat .sep { color: #6a6a90; }
 .hud-stat .ghosts { color: #9a9ac0; }
 .hud-topleft .speak-toggle-btn {
-  font-family: 'VT323', monospace; font-size: 13px;
+  font-family: 'VT323', monospace; font-size: var(--fs-vt-2xs);
   padding: 5px 8px; box-shadow: none; border-width: 2px;
   background: rgba(16,16,42,0.7);
 }
@@ -267,7 +362,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 }
 .phase-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px; color: var(--accent);
+  font-size: var(--fs-px-sm); color: var(--accent);
   text-shadow: 2px 2px 0 var(--border);
   min-height: 14px; margin-bottom: 4px;
 }
@@ -289,24 +384,24 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   pointer-events: auto; /* lets a long question scroll instead of clipping off-screen */
 }
 .hud-question h3 {
-  margin: 0 0 8px; color: var(--accent); font-size: 14px; line-height: 1.4;
+  margin: 0 0 8px; color: var(--accent); font-size: var(--fs-px-lg); line-height: 1.4;
 }
 .hud-question.slim { padding: 6px 12px; }
 .hud-question.slim h3 {
   /* Shrunk, but never truncated - the question (and, below, every answer option) must
      stay fully readable in every phase; anything that doesn't fit wraps onto more lines
      instead of being cut off (the box itself scrolls if it ever grows past max-height). */
-  font-size: 11px; margin-bottom: 5px;
+  font-size: var(--fs-px-sm); margin-bottom: 5px;
 }
 .options-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .option-pill {
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
+  font-size: var(--fs-px-sm);
   padding: 8px 12px;
   border-radius: 6px;
   border: 2px solid var(--border);
 }
-.hud-question.slim .option-pill { font-size: 9px; padding: 5px 8px; }
+.hud-question.slim .option-pill { font-size: var(--fs-px-2xs); padding: 5px 8px; }
 .option-pill.A { background: #ef8f4f; }
 .option-pill.B { background: #4fb8ef; }
 .option-pill.C { background: #b84fef; color: white; }
@@ -318,11 +413,11 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   max-width: 60vw;
 }
 .hud-host button {
-  font-family: 'VT323', monospace; font-size: 14px;
+  font-family: 'VT323', monospace; font-size: var(--fs-vt-2xs);
   padding: 6px 10px; box-shadow: none; border-width: 2px;
 }
 .hud-host .code-pill {
-  font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--accent);
+  font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-xs); color: var(--accent);
   background: rgba(16,16,42,0.8); border: 2px solid var(--border);
   border-radius: 6px; padding: 6px 8px; letter-spacing: 2px;
 }
@@ -330,14 +425,14 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 /* bottom-left: cast-mode toggle - never itself cast-hidden, so it stays reachable */
 .hud-cast {
   bottom: 10px; left: 8px;
-  font-family: 'VT323', monospace; font-size: 13px;
+  font-family: 'VT323', monospace; font-size: var(--fs-vt-2xs);
   padding: 6px 10px; box-shadow: none; border-width: 2px;
 }
 
 /* player-only: shown only while the local player is a ghost */
 .hud-out {
   top: 92px; left: 50%; transform: translateX(-50%);
-  font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--danger);
+  font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-sm); color: var(--danger);
   background: rgba(16,16,42,0.8); border: 2px solid var(--danger);
   border-radius: 6px; padding: 6px 10px;
 }
@@ -375,7 +470,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 }
 .intro-overlay.show { display: flex; }
 .intro-overlay .intro-qnum {
-  font-family: 'Press Start 2P', monospace; font-size: 12px; color: #9a9ac0;
+  font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-base); color: #9a9ac0;
 }
 .intro-overlay .intro-q {
   font-family: 'Press Start 2P', monospace;
@@ -392,7 +487,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   border: 3px solid var(--border); border-radius: 10px;
   padding: 16px; font-size: clamp(14px, 2.4vw, 20px);
 }
-.intro-overlay .intro-opt .k { font-family: 'Press Start 2P', monospace; font-size: 14px; display: block; margin-bottom: 8px; }
+.intro-overlay .intro-opt .k { font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-lg); display: block; margin-bottom: 8px; }
 .intro-overlay .intro-opt.A { background: #ef8f4f; color: #10102a; }
 .intro-overlay .intro-opt.B { background: #4fb8ef; color: #10102a; }
 .intro-overlay .intro-opt.C { background: #b84fef; color: #fff; }
@@ -401,7 +496,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   border: 2px solid var(--border); border-radius: 6px; overflow: hidden;
 }
 .intro-overlay .intro-countdown { height: 100%; width: 100%; background: var(--safe); transition: width 0.15s linear; }
-.intro-overlay .intro-hint { font-family: 'VT323', monospace; font-size: 18px; color: #9a9ac0; }
+.intro-overlay .intro-hint { font-family: 'VT323', monospace; font-size: var(--fs-vt-sm); color: #9a9ac0; }
 .intro-overlay .intro-hint.speak-toggle-btn { cursor: pointer; text-decoration: underline dotted; }
 .intro-overlay .intro-hint.speak-toggle-btn:hover { color: var(--text); }
 .intro-overlay #introStartBtn { margin-top: 4px; }
@@ -426,46 +521,46 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 @media (max-width: 640px) {
   .hud-timer { top: 3px; width: 97vw; }
   .hud-topleft { top: 32px; }
-  .hud-topleft .logo-link, .hud-stat { font-size: 9px; padding: 5px 7px; }
-  .hud-topleft .speak-toggle-btn { font-size: 11px; padding: 4px 6px; }
+  .hud-topleft .logo-link, .hud-stat { font-size: var(--fs-px-2xs); padding: 5px 7px; }
+  .hud-topleft .speak-toggle-btn { font-size: var(--fs-vt-3xs); padding: 4px 6px; }
   .hud-out { top: 78px; }
   .hud-question { width: 97vw; bottom: 6px; padding: 9px 11px; max-height: 36vh; }
-  .hud-question h3 { font-size: 12px; }
-  .hud-question .option-pill { font-size: 9px; padding: 6px 9px; }
+  .hud-question h3 { font-size: var(--fs-px-base); }
+  .hud-question .option-pill { font-size: var(--fs-px-2xs); padding: 6px 9px; }
   .hud-host { gap: 4px; }
-  .hud-host button { font-size: 12px; padding: 5px 8px; }
+  .hud-host button { font-size: var(--fs-vt-3xs); padding: 5px 8px; }
   .intro-overlay .intro-opt { flex-basis: 100%; padding: 12px; }
 }
 
 .link-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 10px; }
 .link-row input { max-width: 340px; text-align: center; }
 
-.winners-list { font-size: 22px; text-align: center; }
-.winners-list .winner { color: var(--accent); font-family: 'Press Start 2P', monospace; font-size: 14px; margin: 8px 0; }
+.winners-list { font-size: var(--fs-vt-xl); text-align: center; }
+.winners-list .winner { color: var(--accent); font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-lg); margin: 8px 0; }
 
-.error-msg { color: var(--danger); font-size: 16px; margin-top: 6px; min-height: 20px; }
+.error-msg { color: var(--danger); font-size: var(--fs-vt-sm); margin-top: 6px; min-height: 20px; }
 
 /* Compact button for the persistent top-nav (e.g. the host's Cast View toggle) - stays
    reachable regardless of what else on the page is hidden. */
 .top-nav .nav-btn {
   margin-left: auto;
   font-family: 'VT323', monospace;
-  font-size: 15px;
+  font-size: var(--fs-vt-xs);
   padding: 6px 12px;
   box-shadow: none;
 }
 
 /* "Starting next round in Xs..." banner shown once enough players are ready in a
-   post-rematch lobby (see player.js/host.js updateRematchBanner). */
+   post-rematch lobby (see player.js/host.js updateRematchBanner). Color carries the
+   emphasis, not weight - see the type-scale comment on why VT323 avoids bold. */
 .rematch-banner {
   margin-top: 10px;
   padding: 8px 12px;
   text-align: center;
   background: var(--accent2);
   color: #10102a;
-  font-weight: bold;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: var(--fs-vt-xs);
 }
 
 /* Cast/spectator mode (host only): hides host-only chrome (config, roster, controls) for
@@ -483,7 +578,7 @@ body.cast-mode .cast-hide { display: none !important; }
   background: var(--safe);
   color: #0f2a1c;
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
+  font-size: var(--fs-px-sm);
   padding: 12px 18px;
   border-radius: 6px;
   border: 3px solid var(--border);
@@ -504,17 +599,17 @@ body.cast-mode .cast-hide { display: none !important; }
   border: 2px solid var(--border);
   border-radius: 20px;
   padding: 4px 10px 4px 14px;
-  font-size: 16px;
+  font-size: var(--fs-vt-xs);
 }
 .code-badge .code-val {
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
+  font-size: var(--fs-px-base);
   color: var(--accent);
   letter-spacing: 2px;
 }
 .code-badge button.copy-btn {
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: var(--fs-vt-xs);
   padding: 4px 10px;
   box-shadow: none;
   border-width: 2px;
@@ -525,7 +620,7 @@ body.cast-mode .cast-hide { display: none !important; }
   border-radius: 6px;
   width: 40px;
   height: 40px;
-  font-size: 16px;
+  font-size: var(--fs-px-icon-btn);
   padding: 0;
   box-shadow: 0 3px 0 var(--border);
 }
@@ -546,7 +641,7 @@ body.cast-mode .cast-hide { display: none !important; }
 body.debug-enabled .debug-card { display: block; }
 .debug-card { border-color: var(--accent); box-shadow: 0 6px 0 var(--accent); }
 .debug-card .row { display: flex; flex-wrap: wrap; gap: 8px; }
-.debug-card button.ghost-btn { padding: 8px 12px; font-size: 10px; }
+.debug-card button.ghost-btn { padding: 8px 12px; font-size: var(--fs-px-xs); }
 
 .debug-dock {
   position: fixed;
@@ -560,18 +655,18 @@ body.debug-enabled .debug-card { display: block; }
   border-radius: 8px;
   padding: 8px 10px 10px;
   z-index: 900;
-  font-size: 13px;
+  font-size: var(--fs-vt-2xs);
 }
 .debug-dock.collapsed .debug-dock-body { display: none; }
 .debug-dock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.debug-dock-head strong { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--accent); }
+.debug-dock-head strong { font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-xs); color: var(--accent); }
 .debug-sec { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 6px; }
 .debug-sec span { display: inline-flex; align-items: center; gap: 4px; }
 .debug-tuning-head { border-top: 2px solid #33335a; padding-top: 6px; }
-.debug-tuning-head strong { font-family: 'Press Start 2P', monospace; font-size: 9px; }
+.debug-tuning-head strong { font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-2xs); }
 button.debug-mini {
   font-family: 'VT323', monospace;
-  font-size: 13px;
+  font-size: var(--fs-vt-2xs);
   padding: 5px 8px;
   box-shadow: none;
   border-width: 2px;
@@ -579,7 +674,7 @@ button.debug-mini {
 }
 .debug-tuning.hidden { display: none; }
 .debug-tune-row { display: grid; grid-template-columns: 1fr; gap: 2px; margin-bottom: 8px; }
-.debug-tune-row label { margin: 0; font-size: 13px; color: #cfcfe8; }
+.debug-tune-row label { margin: 0; font-size: var(--fs-vt-2xs); color: #cfcfe8; }
 .debug-tune-row input[type=range] { width: 100%; }
-.debug-tune-row input[type=number] { font-size: 14px; padding: 3px 6px; width: 90px; }
+.debug-tune-row input[type=number] { font-size: var(--fs-vt-2xs); padding: 3px 6px; width: 90px; }
 body.cast-mode .debug-dock, body.cast-mode .debug-card { display: none !important; }
