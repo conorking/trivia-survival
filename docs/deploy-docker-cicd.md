@@ -44,13 +44,16 @@ HTTP call to one fixed URL. No self-hosted runner, no SSH/shell access.
 
 `C:\hosting\docker-compose.yml` currently has a `triviasurvival` service using
 `build: C:/source/trivia-survival` — a local build from a checked-out copy of
-this repo. Swap just that to pull the image GitHub Actions now publishes
-instead — copy this repo's `deploy/docker-compose.yml` over it (or merge by
-hand if `C:\hosting\docker-compose.yml` has grown other services since). The
-service/container name (`triviasurvival`) and port (`3000`, unpublished,
-tunnel-only) are unchanged on purpose, so the tunnel's existing ingress rule
-(`service: http://triviasurvival:3000`) needs no edits at all — you're only
-adding the new `watchtower` service alongside it.
+this repo, plus a `cloudflared` service, both on a shared `hosting_net`
+bridge network. This repo's `deploy/docker-compose.yml` is that exact file
+with the two changes needed: `triviasurvival` pulls a pre-built `image:`
+instead of building locally, and a new `watchtower` service joins the same
+`hosting_net` (it has to — that's what lets `cloudflared` reach it by name
+for the new tunnel route in step 4). Copy it over the real file (or merge by
+hand if `C:\hosting\docker-compose.yml` has grown further since). The
+`triviasurvival` service name and port (`3000`, unpublished, tunnel-only) are
+unchanged, so the tunnel's existing ingress rule
+(`service: http://triviasurvival:3000`) needs no edits at all.
 
 **2. Give Watchtower a way to pull your private GHCR image.**
 

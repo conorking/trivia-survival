@@ -1,61 +1,54 @@
-# Reference compose file for the home-server deployment (see
-# docs/deploy-docker-cicd.md for the full walkthrough). This is meant to
-# replace the `triviasurvival` service already sitting in
-# C:\hosting\docker-compose.yml on the mini PC — same service/container name
-# as today (so the existing Cloudflare Tunnel ingress rule,
-# `service: http://triviasurvival:3000`, needs no changes at all), the only
-# real change is that one service now pulls a pre-built `image:` instead of
-# doing a local `build:` from the checked-out repo. The `watchtower` service
-# is new — it's the piece that makes "docker push" become "live on the
-# server" without any inbound access (SSH, a runner, etc) onto this box.
+# Reference copy of C:\hosting\docker-compose.yml on the mini PC (see
+# docs/deploy-docker-cicd.md) — this IS your existing file, with exactly two
+# changes: `triviasurvival` pulls a pre-built `image:` instead of doing a
+# local `build:`, and a new `watchtower` service is added alongside
+# `cloudflared`. Everything else (network, no published ports, restart
+# policy) is untouched on purpose.
 #
-# It runs in HTTP-API-only mode - notice there's no WATCHTOWER_INTERVAL /
-# --schedule set anywhere below. That absence is deliberate: without a
-# schedule, Watchtower never polls on its own, it only checks/updates
-# labeled containers the instant its HTTP endpoint is hit by the GitHub
-# Actions workflow. No idle background traffic, no periodic registry hits
-# between real deploys.
+# Watchtower is what makes "docker push" become "live on this box" with no
+# inbound access (SSH, a runner, etc) onto it. It runs in HTTP-API-only mode
+# - notice there's no WATCHTOWER_INTERVAL/--schedule set anywhere below.
+# That absence is deliberate: without a schedule, Watchtower never polls on
+# its own, it only checks/updates labeled containers the instant its HTTP
+# endpoint is hit by the GitHub Actions workflow.
 #
-# Secrets (the Watchtower API token) are read from a sibling `.env` file,
-# NOT committed to git - see the "One-time host setup" section of the docs
-# for how to generate it.
+# Watchtower must be on `hosting_net` like the other two services, even
+# though it doesn't talk to `triviasurvival` over the network (it manages
+# containers via the Docker socket, not HTTP) - it needs to be reachable BY
+# `cloudflared` on that same network for the new tunnel route to it to work.
 #
-# Adding a future project to this same host: copy the `triviasurvival`
-# service block below, give it its own name/image/port, keep the same
-# watchtower label on it, and add a route for it on your Cloudflare Tunnel.
-# One shared `watchtower` service is enough for every project on this host -
-# its label filter (WATCHTOWER_LABEL_ENABLE) means it only ever touches
-# containers that explicitly opt in, and an update call re-checks all of
-# them, which is cheap at this scale.
+# Secrets (the Watchtower API token) come from a sibling `.env` file, NOT
+# committed to git - see "One-time host setup" in the docs.
 
 services:
   triviasurvival:
     image: ghcr.io/conorking/trivia-survival:latest
-    container_name: triviasurvival
     restart: unless-stopped
-    environment:
-      - PORT=3000
-    # Not published to the host directly - reached only via cloudflared,
-    # which already talks to this container by its service name
-    # (http://triviasurvival:3000) on the compose network.
-    expose:
-      - "3000"
+    networks: [hosting_net]
     labels:
       - com.centurylinklabs.watchtower.enable=true
+    # no "ports:" — reachable only from inside hosting_net
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ./cloudflared:/etc/cloudflared
+    networks: [hosting_net]
 
   watchtower:
     image: containrrr/watchtower:latest
-    container_name: watchtower
     restart: unless-stopped
+    networks: [hosting_net]
     volumes:
       # Lets Watchtower talk to the Docker daemon to pull images and
-      # recreate containers. This is inherent to what Watchtower does, not
-      # something specific to this setup - the container it's allowed to
-      # touch is still scoped by WATCHTOWER_LABEL_ENABLE below.
+      # recreate containers - the container it's allowed to touch is scoped
+      # by WATCHTOWER_LABEL_ENABLE below regardless.
       - /var/run/docker.sock:/var/run/docker.sock
       # A registry-auth file dedicated to Watchtower - see "One-time host
       # setup" in the docs for why this is a small hand-built config.json
-      # rather than just mounting your normal Docker Desktop config: Docker
+      # rather than mounting your normal Docker Desktop config: Docker
       # Desktop for Windows stores `docker login` credentials via the OS
       # credential manager by default, not embedded in config.json, which
       # Watchtower (a Linux container) can't read.
@@ -66,13 +59,16 @@ services:
       - WATCHTOWER_LABEL_ENABLE=true
       # On-demand only (see the file header above for why no interval is set).
       - WATCHTOWER_HTTP_API_UPDATE=true
-      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:?set this in deploy/.env}
+      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:?set this in .env}
       # Deletes the superseded image after a successful update so repeated
       # deploys don't slowly fill the disk.
       - WATCHTOWER_CLEANUP=true
-    expose:
-      - "8080"
     labels:
       # Watchtower must never update itself via the label filter above -
       # this is the documented way to exclude it explicitly.
       - com.centurylinklabs.watchtower.enable=false
+    # no "ports:" — reached only via the new tunnel route to watchtower:8080
+
+networks:
+  hosting_net:
+    driver: bridge
