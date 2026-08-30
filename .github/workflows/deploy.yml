@@ -29,7 +29,11 @@ jobs:
         # persistent real checkout at C:\source\trivia-survival, which is
         # also the exact path C:\hosting\docker-compose.yml's `build:`
         # context already points at.
-        shell: pwsh
+        # Windows PowerShell (powershell.exe), not PowerShell 7 (pwsh) - the
+        # latter isn't installed by default on a self-hosted Windows runner
+        # (only GitHub-hosted Windows runners ship both). Nothing here needs
+        # PowerShell 7 specifically.
+        shell: powershell
         run: |
           Set-Location C:\source\trivia-survival
           git pull
@@ -38,6 +42,6 @@ jobs:
         # Only `triviasurvival` declares a `build:` in the compose file, so
         # this never touches `cloudflared` - naming it explicitly anyway
         # for clarity, not because it's strictly required.
-        shell: pwsh
+        shell: powershell # see the note on the step above
         run: |
           docker compose -f C:\hosting\docker-compose.yml up -d --build triviasurvival
