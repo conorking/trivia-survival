@@ -63,18 +63,9 @@
           </div>
         </div>
       </div>
-      <label>Question Set</label>
-      <select id="cfgQuestionSet">
-        <option value="default">Built-in Default Set</option>
-        <option value="hard">Hard Mode (tricky/difficult)</option>
-        <option value="webdev">Web Dev (HTML/CSS/JS/React)</option>
-        <option value="custom">Custom Upload</option>
-      </select>
-      <div id="uploadRow" style="display:none; margin-top:10px;">
-        <label>Upload questions (.json)</label>
-        <input type="file" id="questionFile" accept="application/json">
-        <p class="muted" id="uploadStatus">Format: [{ "q": "...", "options": {"A":"..","B":"..","C":".."}, "correct": "A" }, ...]</p>
-      </div>
+      <label>Question categories <span class="muted" style="font-size:var(--fs-vt-xs);">(pick one or more - they're merged into one pool)</span></label>
+      <div id="categoryPicker"></div>
+      <div class="error-msg" id="categoryError"></div>
       <label>Dog lunge (random speed bursts while hunting)</label>
       <select id="cfgDogLunge">
         <option value="off">Off</option>

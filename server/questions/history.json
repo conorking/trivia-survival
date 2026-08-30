@@ -1,0 +1,4002 @@
+[
+  {
+    "q": "Who was the first President of the United States?",
+    "options": {
+      "A": "Thomas Jefferson",
+      "B": "George Washington",
+      "C": "John Adams"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The Great Wall of China was primarily built to defend against which group?",
+    "options": {
+      "A": "Mongols",
+      "B": "Japanese",
+      "C": "Russians"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which ancient civilization built Machu Picchu?",
+    "options": {
+      "A": "Aztec",
+      "B": "Maya",
+      "C": "Inca"
+    },
+    "correct": "C",
+    "difficulty": 1
+  },
+  {
+    "q": "In what year did the Berlin Wall fall?",
+    "options": {
+      "A": "1987",
+      "B": "1989",
+      "C": "1991"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who painted the ceiling of the Sistine Chapel?",
+    "options": {
+      "A": "Leonardo da Vinci",
+      "B": "Michelangelo",
+      "C": "Raphael"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The Rosetta Stone helped scholars decipher which ancient writing system?",
+    "options": {
+      "A": "Cuneiform",
+      "B": "Egyptian hieroglyphs",
+      "C": "Linear B"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which empire was ruled by Genghis Khan?",
+    "options": {
+      "A": "Ottoman Empire",
+      "B": "Mongol Empire",
+      "C": "Persian Empire"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The Titanic sank in which year?",
+    "options": {
+      "A": "1910",
+      "B": "1912",
+      "C": "1915"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who was the first woman to win a Nobel Prize?",
+    "options": {
+      "A": "Marie Curie",
+      "B": "Rosalind Franklin",
+      "C": "Ada Lovelace"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country gifted the Statue of Liberty to the United States?",
+    "options": {
+      "A": "England",
+      "B": "France",
+      "C": "Spain"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The French Revolution began in which year?",
+    "options": {
+      "A": "1776",
+      "B": "1789",
+      "C": "1804"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first emperor of Rome?",
+    "options": {
+      "A": "Julius Caesar",
+      "B": "Augustus",
+      "C": "Nero"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which war was fought between the North and South regions of the United States?",
+    "options": {
+      "A": "Revolutionary War",
+      "B": "Civil War",
+      "C": "War of 1812"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The Cold War was primarily between the United States and which country?",
+    "options": {
+      "A": "China",
+      "B": "Soviet Union",
+      "C": "North Korea"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote the Declaration of Independence?",
+    "options": {
+      "A": "Benjamin Franklin",
+      "B": "Thomas Jefferson",
+      "C": "George Washington"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which dynasty built the Forbidden City in Beijing?",
+    "options": {
+      "A": "Ming Dynasty",
+      "B": "Tang Dynasty",
+      "C": "Qing Dynasty"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which century did the Black Death devastate Europe?",
+    "options": {
+      "A": "12th century",
+      "B": "14th century",
+      "C": "16th century"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the last Tsar of Russia?",
+    "options": {
+      "A": "Alexander III",
+      "B": "Nicholas II",
+      "C": "Peter the Great"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The Magna Carta was signed in which year?",
+    "options": {
+      "A": "1066",
+      "B": "1215",
+      "C": "1492"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which explorer is credited with reaching the Americas in 1492?",
+    "options": {
+      "A": "Vasco da Gama",
+      "B": "Christopher Columbus",
+      "C": "Ferdinand Magellan"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "The ancient city of Pompeii was destroyed by the eruption of which volcano?",
+    "options": {
+      "A": "Mount Etna",
+      "B": "Mount Vesuvius",
+      "C": "Mount Fuji"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who was the leader of Nazi Germany during World War II?",
+    "options": {
+      "A": "Joseph Stalin",
+      "B": "Adolf Hitler",
+      "C": "Benito Mussolini"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which country was the first to grant women the right to vote nationally?",
+    "options": {
+      "A": "United States",
+      "B": "New Zealand",
+      "C": "United Kingdom"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "The Boston Tea Party took place in which year?",
+    "options": {
+      "A": "1773",
+      "B": "1776",
+      "C": "1781"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the ancient Egyptian queen known for her relationships with Julius Caesar and Mark Antony?",
+    "options": {
+      "A": "Nefertiti",
+      "B": "Cleopatra",
+      "C": "Hatshepsut"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which country was formerly known as Persia?",
+    "options": {
+      "A": "Iraq",
+      "B": "Iran",
+      "C": "Turkey"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The Wright brothers made their first powered flight in which year?",
+    "options": {
+      "A": "1903",
+      "B": "1908",
+      "C": "1913"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which US President served the longest time in office?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "Franklin D. Roosevelt",
+      "C": "George Washington"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The Hundred Years' War was fought between England and which country?",
+    "options": {
+      "A": "Spain",
+      "B": "France",
+      "C": "Germany"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was known as the 'Maid of Orleans'?",
+    "options": {
+      "A": "Marie Antoinette",
+      "B": "Joan of Arc",
+      "C": "Catherine the Great"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which ancient wonder of the world was located in Alexandria, Egypt?",
+    "options": {
+      "A": "The Lighthouse of Alexandria",
+      "B": "The Colossus of Rhodes",
+      "C": "The Hanging Gardens"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The Treaty of Versailles officially ended which war?",
+    "options": {
+      "A": "World War I",
+      "B": "World War II",
+      "C": "The Napoleonic Wars"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country did Napoleon Bonaparte rule as Emperor?",
+    "options": {
+      "A": "Spain",
+      "B": "France",
+      "C": "Italy"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In which year did India gain independence from British rule?",
+    "options": {
+      "A": "1945",
+      "B": "1947",
+      "C": "1950"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the chemical symbol for tin?",
+    "options": {
+      "A": "Ti",
+      "B": "Sn",
+      "C": "Tn"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In which year did the United States declare its independence?",
+    "options": {
+      "A": "1776",
+      "B": "1789",
+      "C": "1800"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "The Renaissance, a great flowering of art and learning, began in which country?",
+    "options": {
+      "A": "Italy",
+      "B": "France",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which US president was assassinated at Ford's Theatre?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "James Garfield",
+      "C": "William McKinley"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which ancient civilization is credited with inventing one of the earliest writing systems, cuneiform?",
+    "options": {
+      "A": "The Sumerians",
+      "B": "The Egyptians",
+      "C": "The Phoenicians"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The Spanish Armada, defeated in 1588, was sent to invade which country?",
+    "options": {
+      "A": "England",
+      "B": "France",
+      "C": "The Netherlands"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country adopted the guillotine as its primary state method of execution during its revolution?",
+    "options": {
+      "A": "France",
+      "B": "England",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The 1618 'Defenestration of Prague', which helped trigger the Thirty Years' War, involved throwing officials out of what?",
+    "options": {
+      "A": "A window",
+      "B": "A boat",
+      "C": "A carriage"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who is the only US president to have served two separate, non-consecutive terms?",
+    "options": {
+      "A": "Grover Cleveland",
+      "B": "Theodore Roosevelt",
+      "C": "Martin Van Buren"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which African country was formerly known as 'Rhodesia'?",
+    "options": {
+      "A": "Zimbabwe",
+      "B": "Zambia",
+      "C": "Botswana"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which year did the Wall Street Crash that triggered the Great Depression occur?",
+    "options": {
+      "A": "1929",
+      "B": "1932",
+      "C": "1937"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first Roman Emperor to convert to Christianity?",
+    "options": {
+      "A": "Constantine the Great",
+      "B": "Nero",
+      "C": "Marcus Aurelius"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The 1994 Rwandan genocide resulted in the mass killing of members of which ethnic group, primarily by Hutu extremists?",
+    "options": {
+      "A": "The Tutsi",
+      "B": "The Hutu",
+      "C": "The Twa"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which empire is considered the largest contiguous land empire in history?",
+    "options": {
+      "A": "The Mongol Empire",
+      "B": "The British Empire",
+      "C": "The Roman Empire"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The secret 1916 Sykes-Picot Agreement was a plan by Britain and France to divide which region after World War I?",
+    "options": {
+      "A": "The Middle East",
+      "B": "Africa",
+      "C": "Southeast Asia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The 1494 Treaty of Tordesillas divided newly claimed lands outside Europe between Spain and which other country?",
+    "options": {
+      "A": "Portugal",
+      "B": "England",
+      "C": "France"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which pre-Columbian civilization is credited with independently inventing the mathematical concept of zero?",
+    "options": {
+      "A": "The Maya",
+      "B": "The Aztec",
+      "C": "The Inca"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Catherine the Great, one of Russia's most famous rulers, was born a princess in which region?",
+    "options": {
+      "A": "A minor German principality",
+      "B": "France",
+      "C": "Austria"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US president's administration purchased Alaska from Russia in 1867?",
+    "options": {
+      "A": "Andrew Johnson",
+      "B": "Abraham Lincoln",
+      "C": "Ulysses S. Grant"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Haiti became the first Black-led republic in the world in 1804 after gaining independence from which country?",
+    "options": {
+      "A": "France",
+      "B": "Spain",
+      "C": "Britain"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The English monarchy was restored in 1660 after the period of republican rule under Oliver Cromwell, bringing back which royal house?",
+    "options": {
+      "A": "The Stuarts",
+      "B": "The Tudors",
+      "C": "The Hanoverians"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "At its peak in 1920, the British Empire covered roughly what share of the Earth's total land area, the largest of any empire in history by that measure?",
+    "options": {
+      "A": "About 24%",
+      "B": "About 10%",
+      "C": "About 40%"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Contrary to popular depictions, archaeological evidence shows that Viking warriors' helmets did NOT actually feature what?",
+    "options": {
+      "A": "Horns",
+      "B": "Metal",
+      "C": "Leather straps"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the last Byzantine Emperor, killed defending Constantinople when it fell to the Ottomans in 1453?",
+    "options": {
+      "A": "Constantine XI",
+      "B": "Justinian I",
+      "C": "Constantine the Great"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The Crimean War (1853–56) is often cited as the first war to be extensively documented by which new technology?",
+    "options": {
+      "A": "Photography",
+      "B": "Telegraphy alone",
+      "C": "Motion pictures"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The 1648 Peace of Westphalia, ending the Thirty Years' War, is widely credited as the origin of the modern concept of what?",
+    "options": {
+      "A": "State sovereignty and the nation-state",
+      "B": "Democratic elections",
+      "C": "International human rights law"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The 1896 Anglo-Zanzibar War, lasting under 45 minutes, is recorded as the shortest war in history — fought between Britain and which state?",
+    "options": {
+      "A": "Zanzibar",
+      "B": "Ethiopia",
+      "C": "Egypt"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Theodore Roosevelt was the youngest person ever to become US president (via succession), but who was the youngest person ever elected to the office?",
+    "options": {
+      "A": "John F. Kennedy",
+      "B": "Bill Clinton",
+      "C": "Theodore Roosevelt himself"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The 'Domesday Book', a sweeping survey of England's land and resources, was commissioned in 1086 by which king?",
+    "options": {
+      "A": "William the Conqueror",
+      "B": "Henry VIII",
+      "C": "King John"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The Eiffel Tower was originally meant to be dismantled after 20 years, but was saved because it proved useful for what?",
+    "options": {
+      "A": "Radio transmissions",
+      "B": "A weather observatory",
+      "C": "A military lookout post"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Despite its name, the Hundred Years' War between England and France actually lasted how long?",
+    "options": {
+      "A": "116 years",
+      "B": "100 years exactly",
+      "C": "137 years"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Napoleon Bonaparte's reputation as unusually short is a myth rooted in a units mix-up — by the standards of his own era, his height was actually...",
+    "options": {
+      "A": "About average for a Frenchman of the time",
+      "B": "Genuinely far below average",
+      "C": "Unusually tall"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Historians widely agree that Marie Antoinette almost certainly...",
+    "options": {
+      "A": "Never actually said 'Let them eat cake'",
+      "B": "Said it as a private joke to servants",
+      "C": "Said it publicly in a famous speech"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which US president served the shortest term in office, dying just 31 days after his inauguration?",
+    "options": {
+      "A": "William Henry Harrison",
+      "B": "Zachary Taylor",
+      "C": "James Garfield"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The 1932 'Emu War' in Australia, in which soldiers used machine guns against emus damaging crops, is generally regarded as having been effectively won by which side?",
+    "options": {
+      "A": "The emus",
+      "B": "The soldiers",
+      "C": "Neither — it ended in a negotiated truce"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which planet is known as the 'Red Planet'?",
+    "options": {
+      "A": "Mars",
+      "B": "Venus",
+      "C": "Mercury"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who rode on horseback to warn the Minutemen that the British were coming during the U.S. Revolutionary War?",
+    "options": {
+      "A": "Paul Revere",
+      "B": "Henry Longfellow",
+      "C": "Nathan Hale"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country did the Eureka Rebellion, an 1856 battle against colonial rule, take place in?",
+    "options": {
+      "A": "Australia",
+      "B": "Canada",
+      "C": "Brazil"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year was the famous 45 foot tall Hollywood sign first erected?",
+    "options": {
+      "A": "1923",
+      "B": "1913",
+      "C": "1933"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was Hannibal?",
+    "options": {
+      "A": "Carthaginian general",
+      "B": "British serial killer",
+      "C": "French explorer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "During which American Civil War campaign did Union troops dig a tunnel beneath Confederate troops to detonate explosives underneath them?",
+    "options": {
+      "A": "Siege of Petersburg",
+      "B": "Siege of Vicksburg",
+      "C": "Gettysburg Campagin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Toussaint Louverture led a successful slave revolt in which country?",
+    "options": {
+      "A": "Haiti",
+      "B": "France",
+      "C": "Cuba"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When was Google founded?",
+    "options": {
+      "A": "September 4, 1998",
+      "B": "October 9, 1997",
+      "C": "Feburary 7th, 2000"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The original Roman alphabet lacked the following letters EXCEPT:",
+    "options": {
+      "A": "X",
+      "B": "U",
+      "C": "J"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Pol Pot was the former dictator of which country?",
+    "options": {
+      "A": "Cambodia",
+      "B": "Laos",
+      "C": "North Korea"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Bohdan Khmelnytsky was which of the following?",
+    "options": {
+      "A": "Leader of the Ukrainian Cossacks",
+      "B": "Prince of Wallachia",
+      "C": "Grand Prince of Novgorod"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Abolitionist John Brown raided the arsenal in which Virginia Town?",
+    "options": {
+      "A": "Harper's Ferry",
+      "B": "Richmond",
+      "C": "Martinsburg"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the capital of South Vietnam before the Vietnam War?",
+    "options": {
+      "A": "Saigon",
+      "B": "Ho Chi Minh City",
+      "C": "Hanoi"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Bohemian Revolt (1618-1620) started after Protestants in Prague did what to their Catholic Lords Regents?",
+    "options": {
+      "A": "Threw them out of a window",
+      "B": "Locked them in stockades",
+      "C": "Hung them."
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Spain was formed in 1469 with the marriage of Isabella I of Castile and Ferdinand II of what other Iberian kingdom?",
+    "options": {
+      "A": "Aragon",
+      "B": "Galicia",
+      "C": "Navarre"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In which country was the Statue of Liberty built and exported to the United States of America?",
+    "options": {
+      "A": "France",
+      "B": "Spain",
+      "C": "England"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What micro-state is considered to have the oldest constitution still in effect?",
+    "options": {
+      "A": "San Marino",
+      "B": "Andorra",
+      "C": "Monaco"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which building was set aflame on August 24th, 1812?",
+    "options": {
+      "A": "The White House",
+      "B": "Grand National Assembly Building",
+      "C": "Palace of the Nation"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following ancient peoples was NOT classified as Hellenic (Greek)?",
+    "options": {
+      "A": "Illyrians",
+      "B": "Dorians",
+      "C": "Achaeans"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the War of the Pacific (1879 - 1883), Bolivia lost its access to the Pacific Ocean after being defeated by which South American country?",
+    "options": {
+      "A": "Chile",
+      "B": "Brazil",
+      "C": "Argentina"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the last colony the UK ceded marking the end of the British Empire?",
+    "options": {
+      "A": "Hong Kong",
+      "B": "India",
+      "C": "Ireland"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who tutored Alexander the Great?",
+    "options": {
+      "A": "Aristotle",
+      "B": "Socrates",
+      "C": "King Philip"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What were the first states to break away from Yugoslavia?",
+    "options": {
+      "A": "Slovenia, Croatia",
+      "B": "Macedonia, Montenegro",
+      "C": "Slovenia, Macedonia"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year did World War I begin?",
+    "options": {
+      "A": "1914",
+      "B": "1905",
+      "C": "1919"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "How old was Adolf Hitler when he died?",
+    "options": {
+      "A": "56",
+      "B": "43",
+      "C": "47"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The catastrophic nuclear accident that occurred in Ukraine in 1986 occurred at which power plant?",
+    "options": {
+      "A": "Chernobyl",
+      "B": "Ignalina",
+      "C": "Mayak"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Little Entente was an alliance formed against which nation?",
+    "options": {
+      "A": "Hungary",
+      "B": "France",
+      "C": "Prussia"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was the city of Rome, Italy founded?",
+    "options": {
+      "A": "753 BCE",
+      "B": "524 BCE",
+      "C": "697 BCE"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the British Prime Minister at the outbreak of the Second World War in 1939?",
+    "options": {
+      "A": "Neville Chamberlain",
+      "B": "Stanley Baldwin",
+      "C": "Winston Churchill"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When did the Crisis of the Third Century begin?",
+    "options": {
+      "A": "235 AD",
+      "B": "242 AD",
+      "C": "210 AD"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country were potatoes originally grown?",
+    "options": {
+      "A": "Peru",
+      "B": "United States",
+      "C": "Ireland"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who invented the \"Flying Shuttle\" in 1738; one of the key developments in the industrialization of weaving?",
+    "options": {
+      "A": "John Kay",
+      "B": "James Hargreaves",
+      "C": "Richard Arkwright"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "With which Greek philosopher would you associate the phrase, \"I know that I know nothing\"?",
+    "options": {
+      "A": "Socrates",
+      "B": "Aristotle",
+      "C": "Pythagoras"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The idea of Socialism was articulated and advanced by whom?",
+    "options": {
+      "A": "Karl Marx",
+      "B": "Vladimir Lenin",
+      "C": "Vladimir Putin"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country had an \"Orange Revolution\" between 2004 and 2005?",
+    "options": {
+      "A": "Ukraine",
+      "B": "Belarus",
+      "C": "Latvia"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Spitfire L.F. Mk IX had what engine?",
+    "options": {
+      "A": "Merlin 66",
+      "B": "Merlin 50",
+      "C": "Merlin X"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of the spy ring that helped the United States win the Revolutionary War?",
+    "options": {
+      "A": "Culper Ring",
+      "B": "New York Spy Ring",
+      "C": "Unnamed"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was found in 1946 by two young shepards near a cave?",
+    "options": {
+      "A": "Dead Sea Scrolls",
+      "B": "Sheep",
+      "C": "The First Oaxaca Cave Sleeper"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When was the Grand Patriotic War in the USSR concluded?",
+    "options": {
+      "A": "May 9th, 1945",
+      "B": "September 2nd, 1945",
+      "C": "August 9th, 1945"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the mnemonic device for remembering the fates of the wives of Henry VIII?",
+    "options": {
+      "A": "Divorced, Beheaded, Died, Divorced, Beheaded, Survived",
+      "B": "Died, Beheaded, Divorced, Beheaded, Survived, Divorced",
+      "C": "Survived, Beheaded, Died, Divorced, Divorced, Beheaded"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which modern country is known as \"The Graveyard of Empires\"?",
+    "options": {
+      "A": "Afghanistan",
+      "B": "China",
+      "C": "Russia"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following countries was the first to send an object into space?",
+    "options": {
+      "A": "Germany",
+      "B": "USA",
+      "C": "China"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first man to travel into outer space?",
+    "options": {
+      "A": "Yuri Gagarin",
+      "B": "Virgil Ivan \"Gus\" Grissom",
+      "C": "Neil Armstrong"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which WWII tank ace is credited with having destroyed the most tanks?",
+    "options": {
+      "A": "Kurt Knispel",
+      "B": "Michael Wittmann",
+      "C": "Otto Carius"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What did Albert Einstein win the Nobel Prize for in 1921?",
+    "options": {
+      "A": "Photoelectric Effect",
+      "B": "Wave-Particle Duality",
+      "C": "Zero-Point Energy"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When did L. L. Zamenhof first publish \"Unua Libro\", the first publication describing his international language Esperanto?",
+    "options": {
+      "A": "1887",
+      "B": "1897",
+      "C": "1915"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When is the Ides of March?",
+    "options": {
+      "A": "March 15",
+      "B": "March 31",
+      "C": "March 1"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In what year did Neil Armstrong and Buzz Aldrin land on the moon?",
+    "options": {
+      "A": "1969",
+      "B": "1965",
+      "C": "1973"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The crown of the Empire State Building was originally built for what purpose?",
+    "options": {
+      "A": "Airship Dock",
+      "B": "Antennae",
+      "C": "Flag Pole"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Joseph Smith was the founder of what religion?",
+    "options": {
+      "A": "Mormonism",
+      "B": "Christianity",
+      "C": "Hinduism"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the only US President to be elected four times?",
+    "options": {
+      "A": "Franklin Roosevelt",
+      "B": "George Washington",
+      "C": "Abraham Lincoln"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which English king was married to Eleanor of Aquitaine?",
+    "options": {
+      "A": "Henry II",
+      "B": "Henry I",
+      "C": "Henry V"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The gunpowder plot was a well-known failed assassination attempt against which of England's then reigning monarchs?",
+    "options": {
+      "A": "James I",
+      "B": "Elizabeth I",
+      "C": "Charles II"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which year did the Invasion of Kuwait by Iraq occur?",
+    "options": {
+      "A": "1990",
+      "B": "1992",
+      "C": "1988"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which historical conflict killed the most people?",
+    "options": {
+      "A": "World War II",
+      "B": "Three Kingdoms War",
+      "C": "Mongol conquests"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The United States Army Air Corps became the United States Air Force on what date?",
+    "options": {
+      "A": "September 18, 1947",
+      "B": "October 27, 1945",
+      "C": "November 08, 1944"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year was the Italian firearms manufacturer Beretta founded?",
+    "options": {
+      "A": "1526",
+      "B": "1776",
+      "C": "1923"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which day did World War I begin?",
+    "options": {
+      "A": "July 28",
+      "B": "June 28",
+      "C": "April 28"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of the following African countries was most successful in resisting colonization?",
+    "options": {
+      "A": "Ethiopia",
+      "B": "Côte d’Ivoire",
+      "C": "Namibia"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is the creator of the soft drink, Dr. Pepper?",
+    "options": {
+      "A": "Charles Alderton",
+      "B": "James Wellington",
+      "C": "Boris Heviltik"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the first American in space?",
+    "options": {
+      "A": "Alan Shephard",
+      "B": "Neil Armstrong",
+      "C": "Jim Lovell"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Hong Kong was a part of which country's territory before Britain regained it in 1945?",
+    "options": {
+      "A": "Japan",
+      "B": "China",
+      "C": "Phillipines"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was Genghis Khan's real name?",
+    "options": {
+      "A": "Temüjin",
+      "B": "Ögedei",
+      "C": "Temür"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the aim of the \"Umbrella Revolution\" in Hong Kong in 2014?",
+    "options": {
+      "A": "Genuine universal suffrage",
+      "B": "Go back under British Rule",
+      "C": "Lower taxes"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which one of these rulers did not belong to the Habsburg dynasty?",
+    "options": {
+      "A": "Philip V",
+      "B": "Charles V",
+      "C": "Philip II"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the year 1900, what were the most popular first names given to boy and girl babies born in the United States?",
+    "options": {
+      "A": "John and Mary",
+      "B": "Joseph and Catherine",
+      "C": "George and Anne"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What did the abbreviation \"RMS\" stand for in the RMS Titanic in 1912?",
+    "options": {
+      "A": "Royal Mail Ship",
+      "B": "Regular Maritime Schedule",
+      "C": "Regulated Maelstrom Sensor"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the Confederate general in the American Civil War?",
+    "options": {
+      "A": "Robert E. Lee",
+      "B": "George A. Custer",
+      "C": "George B. McClellan"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the last emperor of Mexico?",
+    "options": {
+      "A": "Ferdinand Maximilian",
+      "B": "Andrés Manuel López Obrador",
+      "C": "Napoleon III"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How long did the Warsaw Uprising during World War II last?",
+    "options": {
+      "A": "63 Days",
+      "B": "20 Days",
+      "C": "55 Days"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In 1453, which important city fell?",
+    "options": {
+      "A": "Constantinople",
+      "B": "Rome",
+      "C": "Athens"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What year were the Marian Reforms instituted in the Roman Republic?",
+    "options": {
+      "A": "107 BCE",
+      "B": "264 BCE",
+      "C": "102 CE"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What day did the Battle of Gettysburg begin?",
+    "options": {
+      "A": "July 1, 1863",
+      "B": "September 17, 1862",
+      "C": "Apr 30, 1863"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the transfer of disease, crops, and people across the Atlantic shortly after the discovery of the Americas called?",
+    "options": {
+      "A": "The Columbian Exchange",
+      "B": "Triangle Trade",
+      "C": "Transatlantic Slave Trade"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The coat of arms of the King of Spain contains the arms from the monarchs of Castille, Leon, Aragon and which other former Iberian kingdom?",
+    "options": {
+      "A": "Navarre",
+      "B": "Galicia",
+      "C": "Granada"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Greek god was the god of the Sun?",
+    "options": {
+      "A": "Helios",
+      "B": "Zeus",
+      "C": "Hades"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the United States of America celebrate during the 4th of July?",
+    "options": {
+      "A": "The signing of the Declaration of Independence",
+      "B": "The crossing of the Delaware River",
+      "C": "The ratification of the Constitution"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which famous military commander marched an army, which included war elephants, over the Alps during the Second Punic War?",
+    "options": {
+      "A": "Hannibal",
+      "B": "Garmanicus",
+      "C": "Alexander the Great"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When was Finland's 100th year of being independent?",
+    "options": {
+      "A": "2017",
+      "B": "2016",
+      "C": "2018"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which dictator killed the most people?",
+    "options": {
+      "A": "Mao Zedong",
+      "B": "Joseph Stalin",
+      "C": "Kim Il Sung"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "List the following Iranic empires in chronological order:",
+    "options": {
+      "A": "Median, Achaemenid, Parthian, Sassanid",
+      "B": "Achaemenid, Median, Parthian, Sassanid",
+      "C": "Achaemenid, Median, Sassanid, Parthian"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How old was the famous King Tutankhamen (Tut) when he died?",
+    "options": {
+      "A": "19",
+      "B": "21",
+      "C": "30"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When did the French Revolution begin?",
+    "options": {
+      "A": "May 05 1789",
+      "B": "April 12 1789",
+      "C": "May 06 1799"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Where was Abraham Lincoln when he was assassinated by John Wilkes Booth in 1865?",
+    "options": {
+      "A": "At the theatre",
+      "B": "On a boat",
+      "C": "In bed"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was Manfred von Richthofen's nickname?",
+    "options": {
+      "A": "The Red Baron",
+      "B": "The High Flying Ace",
+      "C": "The Blue Serpent"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the name of the chemical that was dropped on Vietnam during the Vietnam war?",
+    "options": {
+      "A": "Agent Orange",
+      "B": "Phosgene",
+      "C": "Hydrogen Cyanide"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How was Socrates executed?",
+    "options": {
+      "A": "Poison",
+      "B": "Firing squad",
+      "C": "Crucifixion"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What war did George Orwell famously volunteer for and nearly died in?",
+    "options": {
+      "A": "Spanish Civil War",
+      "B": "World War I",
+      "C": "World War II"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What year did World War II end?",
+    "options": {
+      "A": "1945",
+      "B": "1947",
+      "C": "1950"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which year did the Tokyo Subway Sarin Attack occur?",
+    "options": {
+      "A": "1995",
+      "B": "2011",
+      "C": "1991"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "One of the deadliest pandemics, the \"Spanish Flu\", killed off what percentage of the human world population at the time?",
+    "options": {
+      "A": "3 to 6 percent",
+      "B": "1 to 3 percent",
+      "C": "less than 1 percent"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "A collection of Sanskrit hymns and verses known as the Vedas are sacred texts in what religion?",
+    "options": {
+      "A": "Hinduism",
+      "B": "Judaism",
+      "C": "Islam"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "During the Mongolian invasions of Japan, what were the Mongol boats mostly stopped by?",
+    "options": {
+      "A": "Typhoons",
+      "B": "Tornados",
+      "C": "Economic depression"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Herero genocide was perpetrated in Africa by which of the following colonial nations?",
+    "options": {
+      "A": "Britain",
+      "B": "Belgium",
+      "C": "Germany"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Pianist Frédéric Chopin was a composer of which musical era?",
+    "options": {
+      "A": "Romantic",
+      "B": "Baroque",
+      "C": "Renaissance"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In 1961, an American B-52 aircraft crashed and nearly detonated two 4mt nuclear bombs over which US city?",
+    "options": {
+      "A": "Goldsboro, North Carolina",
+      "B": "Jacksonville, Florida",
+      "C": "Conway, Arkansas"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who led France during the \"Reign of Terror\" ?",
+    "options": {
+      "A": "Maximilien Robespierre",
+      "B": "Napoleon Bonaparte",
+      "C": "Louis XVI"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which famous world leader is famed for the saying, \"Let them eat cake\", yet is rumored that he/she never said it at all?",
+    "options": {
+      "A": "Marie Antoinette",
+      "B": "Elizabeth I",
+      "C": "Henry VIII"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In 1547 who became the 1st Tsar of Russia",
+    "options": {
+      "A": "Ivan the Terrible",
+      "B": "Alexis of Russia",
+      "C": "Peter the Great"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When was the \"Siege of Leningrad\" lifted during World War II?",
+    "options": {
+      "A": "January 1944",
+      "B": "September 1943",
+      "C": "November 1943"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "On which day did construction start on \"The Pentagon\", the headquarters for the United States Department of Defense?",
+    "options": {
+      "A": "September 11, 1941",
+      "B": "June 15, 1947",
+      "C": "September 2, 1962"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year did the Boxing Day earthquake & tsunami occur in the Indian Ocean?",
+    "options": {
+      "A": "2008",
+      "B": "2004",
+      "C": "2006"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In 1720, England was in massive debt and became involved in the South Sea Bubble. Who was the main mastermind behind it?",
+    "options": {
+      "A": "John Blunt",
+      "B": "Daniel Defoe",
+      "C": "John Churchill"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did the Battle of the Bulge end?",
+    "options": {
+      "A": "January 25, 1945",
+      "B": "August 6, 1945",
+      "C": "December 16, 1944"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The assassination of which royal led to the start of World War I?",
+    "options": {
+      "A": "Archduke Franz Ferdinand",
+      "B": "Louis Mountbatten",
+      "C": "Nicholas II"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "King Henry VIII was the second monarch of which European royal house?",
+    "options": {
+      "A": "Tudor",
+      "B": "Stuart",
+      "C": "Lancaster"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who assassinated President James A. Garfield?",
+    "options": {
+      "A": "Charles Guiteau",
+      "B": "Sirhan Sirhan",
+      "C": "Leon Czolgosz"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year did Kentucky become the 15th state to join the union?",
+    "options": {
+      "A": "1792",
+      "B": "1782",
+      "C": "1788"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is widely considered to be the oldest civilization known to mankind?",
+    "options": {
+      "A": "Sumeria",
+      "B": "Babylon",
+      "C": "Assyria"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did Canada leave the confederation to become their own nation?",
+    "options": {
+      "A": "July 1st, 1867",
+      "B": "July 1st, 1763",
+      "C": "July 1st, 1832"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In which years did the Battle of Gallipoli take place?",
+    "options": {
+      "A": "1915 - 1916",
+      "B": "1914 - 1918",
+      "C": "1915 - 1918"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which modern day country is the region that was known as Phrygia in ancient times?",
+    "options": {
+      "A": "Turkey",
+      "B": "Syria",
+      "C": "Greece"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the historical name of Sri Lanka?",
+    "options": {
+      "A": "Ceylon",
+      "B": "Colombo",
+      "C": "Badulla"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "These two countries held a commonwealth from the 16th to 18th century.",
+    "options": {
+      "A": "Poland and Lithuania",
+      "B": "Hutu and Rwanda",
+      "C": "Bangladesh and Bhutan"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first Chancellor of a united Germany in 1871?",
+    "options": {
+      "A": "Otto Von Bismark",
+      "B": "Fredrick the 2nd",
+      "C": "Robert Koch"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was the Gregorian Calendar first adopted?",
+    "options": {
+      "A": "1582",
+      "B": "1623",
+      "C": "1555"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which German field marshal was known as the `Desert Fox`?",
+    "options": {
+      "A": "Ernst Busch",
+      "B": "Wilhelm List",
+      "C": "Erwin Rommel"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "The Tsar Bomba, the most powerful nuclear bomb ever tested, had a yield of 50 megatons but theoretically had a maximum yield of how much?",
+    "options": {
+      "A": "100 Megatons",
+      "B": "200 Megatons",
+      "C": "150 Megatons"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the bloodiest single-day battle during the American Civil War?",
+    "options": {
+      "A": "The Battle of Antietam",
+      "B": "The Siege of Vicksburg",
+      "C": "The Battles of Chancellorsville"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the famous Apache leader who died in 1909 at the age of 70?",
+    "options": {
+      "A": "Geronimo",
+      "B": "Sitting Bull",
+      "C": "Red Cloud"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The \"Trail of Tears\" was a result of which United States President's Indian Removal Policy?",
+    "options": {
+      "A": "Andrew Jackson",
+      "B": "Harry S. Truman",
+      "C": "Martin Van Buren"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The 15th century conflicts between the Houses of York and Lancaster are known as the Wars of the what?",
+    "options": {
+      "A": "Wars of the Roses",
+      "B": "Wars of the Lillies",
+      "C": "Wars of the Daffodils"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "After the 1516 Battle of Marj Dabiq, the Ottoman Empire took control of Jerusalem from which sultanate?",
+    "options": {
+      "A": "Mamluk",
+      "B": "Ummayyad",
+      "C": "Seljuq"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which British monarch was also known as \"William of Orange\"?",
+    "options": {
+      "A": "William III",
+      "B": "William I",
+      "C": "William II"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Under which name was Rodrigo Borgia made Pope?",
+    "options": {
+      "A": "Alexander VI",
+      "B": "Rodrigo I",
+      "C": "Pius VII"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What date was the first flight of the P-40 Warhawk?",
+    "options": {
+      "A": "October 14 1938",
+      "B": "August 21 1939",
+      "C": "January 12 1940"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Apollo mission was the last one in NASA's Apollo program?",
+    "options": {
+      "A": "Apollo 17",
+      "B": "Apollo 11",
+      "C": "Apollo 15"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the Seven Wonders of the World, which wonder is the only that has survived to this day?",
+    "options": {
+      "A": "Great Pyramid of Giza",
+      "B": "Colossus of Rhodes",
+      "C": "Lighthouse of Alexandria"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The collapse of the Soviet Union took place in which year?",
+    "options": {
+      "A": "1991",
+      "B": "1891",
+      "C": "1990"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the name of the national hero of the Philippines who inspired and lead the Philippine Revolution against colonial Spain?",
+    "options": {
+      "A": "José Rizal",
+      "B": "Simón Bolívar",
+      "C": "José de San Martín"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the Prime Minister of Japan when Japan declared war on the US?",
+    "options": {
+      "A": "Hideki Tojo",
+      "B": "Michinomiya Hirohito",
+      "C": "Isoroku Yamamoto"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which is the hull NO. of the Fletcher class destroyer Fletcher?",
+    "options": {
+      "A": "DD-445",
+      "B": "DD-992",
+      "C": "DD-444"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name given to the series of confrontations between the UK and Iceland over North Atlantic fishing rights?",
+    "options": {
+      "A": "The Cod Wars",
+      "B": "The Lobster Wars",
+      "C": "The Mackerel Wars"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What number does the Roman numeral \"D\" stand for?",
+    "options": {
+      "A": "500",
+      "B": "100",
+      "C": "1000"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Battle of the Somme in World War I took place in which country?",
+    "options": {
+      "A": "France",
+      "B": "Germany",
+      "C": "Italy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first president of Kenya?",
+    "options": {
+      "A": "Jomo Kenyatta",
+      "B": "Tom Mboya",
+      "C": "Oginga Odinga"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which one of these tanks was designed and operated by the United Kingdom?",
+    "options": {
+      "A": "Tog II",
+      "B": "M4 Sherman",
+      "C": "T-34"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did Norway become free from Sweden?",
+    "options": {
+      "A": "1905",
+      "B": "1814",
+      "C": "1834"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did Texas secede from Mexico?",
+    "options": {
+      "A": "1836",
+      "B": "1845",
+      "C": "1844"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "During World War I, which nation's monarchs were blood related?",
+    "options": {
+      "A": "England, Germany, Russia",
+      "B": "Serbia, Russia, Croatia",
+      "C": "Germany, Spain, Austria"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the code name for the Allied invasion of Southern France on August 15th, 1944?",
+    "options": {
+      "A": "Operation Dragoon",
+      "B": "Operation Market Garden",
+      "C": "Operation Torch"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who assassinated Archduke Franz Ferdinand?",
+    "options": {
+      "A": "Gavrilo Princip",
+      "B": "Oskar Potiorek",
+      "C": "Ferdinand Cohen-Blind"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In relation to the British Occupation in Ireland, what does the IRA stand for.",
+    "options": {
+      "A": "Irish Republican Army",
+      "B": "Irish Reformation Army",
+      "C": "Irish-Royal Alliance"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "During what war did the \"Cuban Missile Crisis\" occur?",
+    "options": {
+      "A": "Cold War",
+      "B": "World War I",
+      "C": "Revolutionary War"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was the People's Republic of China founded?",
+    "options": {
+      "A": "October 1, 1949",
+      "B": "April 3, 1947",
+      "C": "May 7, 1945"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of his six wives was Henry VIII married to the longest?",
+    "options": {
+      "A": "Catherine of Aragon",
+      "B": "Anne Boleyn",
+      "C": "Catherine Parr"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When did Lithuania declare independence from the Soviet Union?",
+    "options": {
+      "A": "March 11th, 1990",
+      "B": "December 25th, 1991",
+      "C": "April 20th, 1989"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which game was the Game of the Year in 2018?",
+    "options": {
+      "A": "God of War",
+      "B": "Detroit: Become Human",
+      "C": "A Way Out"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "During the Roman Triumvirate of 42 BCE, what region of the Roman Republic was given to Lepidus?",
+    "options": {
+      "A": "Hispania",
+      "B": "Gallia",
+      "C": "Asia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The Panama Canal was finished under the administration of which U.S. president?",
+    "options": {
+      "A": "Woodrow Wilson",
+      "B": "Franklin Delano Roosevelt",
+      "C": "Herbert Hoover"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What country joined the EU in 2013?",
+    "options": {
+      "A": "Croatia",
+      "B": "Slovenia",
+      "C": "Turkey"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the name of the first permanent English settlement in America?",
+    "options": {
+      "A": "Jamestown",
+      "B": "St. John's",
+      "C": "Plymouth"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which war did the atomic bombings of Hiroshima and Nagasaki occur?",
+    "options": {
+      "A": "World War II",
+      "B": "Russo-Japanese War",
+      "C": "First Sino-Japanese War"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who discovered Penicillin?",
+    "options": {
+      "A": "Alexander Flemming",
+      "B": "Alfred Nobel",
+      "C": "Louis Pasteur"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The Hagia Sophia was commissioned by which emperor of the Byzantine Empire?",
+    "options": {
+      "A": "Justinian I",
+      "B": "Constantine IV",
+      "C": "Arcadius"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was Napoleon Bonaparte's name before he changed it?",
+    "options": {
+      "A": "Napoleone di Buonaparte",
+      "B": "Naapolion van Bonijpaart",
+      "C": "Napoleona de Buenoparte"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "After his loss at the Battle of Waterloo, Napoleon Bonaparte was exiled to which island?",
+    "options": {
+      "A": "St. Helena",
+      "B": "Corsica",
+      "C": "Canary"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which U.S. president was said to have been too honest to lie to his father about chopping down a cherry tree?",
+    "options": {
+      "A": "George Washington",
+      "B": "Abraham Lincoln",
+      "C": "Thomas Jefferson"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year did the First World War end?",
+    "options": {
+      "A": "1918",
+      "B": "1914",
+      "C": "1916"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following physicists did NOT work on the Manhattan project?",
+    "options": {
+      "A": "Murray Gell-Mann",
+      "B": "Richard Feynman",
+      "C": "J. Robert Oppenheimer"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year was the last natural case of smallpox documented?",
+    "options": {
+      "A": "1977",
+      "B": "1982",
+      "C": "1980"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was a military strategist in the Eastern Zhou period?",
+    "options": {
+      "A": "Sun Tzu",
+      "B": "Lu Bu",
+      "C": "Genghis Khan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The RMS Titanic sunk during her maiden voyage from Southampton, England to which American city?",
+    "options": {
+      "A": "New York City",
+      "B": "Boston",
+      "C": "Washington"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which American civilization is the source of the belief that the world would end or drastically change on December 21st, 2012?",
+    "options": {
+      "A": "The Mayans",
+      "B": "The Incas",
+      "C": "The Navajos"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What age was King Henry V when he died?",
+    "options": {
+      "A": "35",
+      "B": "62",
+      "C": "73"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these facilities was not present on the Titanic?",
+    "options": {
+      "A": "Fainting room",
+      "B": "Turkish bath",
+      "C": "Kennel"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these countries was NOT a part of the Soviet Union?",
+    "options": {
+      "A": "Afghanistan",
+      "B": "Kazakhstan",
+      "C": "Uzbekistan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When did the United States formally declare war on Japan, entering World War II?",
+    "options": {
+      "A": "December 8, 1941",
+      "B": "June 22, 1941",
+      "C": "September 1, 1939"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "To what political party did Abraham Lincoln belong when elected POTUS?",
+    "options": {
+      "A": "Republican",
+      "B": "Democrat",
+      "C": "Independent"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did construction of the Suez Canal finish?",
+    "options": {
+      "A": "1869",
+      "B": "1859",
+      "C": "1850"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What did the first vending machines in the early 1880's dispense?",
+    "options": {
+      "A": "Post cards",
+      "B": "Alcohol",
+      "C": "Sodas"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The first Legoland park was opened in 1968 in which of these cities?",
+    "options": {
+      "A": "Billund, Denmark",
+      "B": "Winter Haven, Florida",
+      "C": "Nagoya, Japan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year did the Battle of Verdun take place?",
+    "options": {
+      "A": "1916",
+      "B": "1917",
+      "C": "1915"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these 1900s tanks were designed and built BEFORE the others?",
+    "options": {
+      "A": "Renault FT",
+      "B": "M4 Sherman",
+      "C": "Cromwell"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following battles is often considered as marking the beginning of the fall of the Western Roman Empire?",
+    "options": {
+      "A": "Battle of Adrianople",
+      "B": "Battle of Pollentia",
+      "C": "Battle of Constantinople"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What historical event was Tchaikovsky's 1812 Overture referencing?",
+    "options": {
+      "A": "The Napoleonic Wars",
+      "B": "The Russian Revolution",
+      "C": "The Charge of the Light Brigade (Crimean War)"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first man to travel into outer space twice?",
+    "options": {
+      "A": "Gus Grissom",
+      "B": "Vladimir Komarov",
+      "C": "Charles Conrad"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who is attributed credit for recording the epic poem The Odyssey?",
+    "options": {
+      "A": "Homer",
+      "B": "Aristotle",
+      "C": "Odysseus"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these countries was sea charted in 1500 by the Portuguese maritime explorations?",
+    "options": {
+      "A": "Brazil",
+      "B": "India",
+      "C": "Madagascar"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The ancient city of Chichén Itzá was built by which civilization?",
+    "options": {
+      "A": "Mayans",
+      "B": "Aztecs",
+      "C": "Incas"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What disease crippled President Franklin D. Roosevelt and led him to help the nation find a cure?",
+    "options": {
+      "A": "Polio",
+      "B": "Cancer",
+      "C": "HIV"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following is not in the Indo-European language family?",
+    "options": {
+      "A": "Finnish",
+      "B": "Hindi",
+      "C": "Russian"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many years did the Hundred Years' War last?",
+    "options": {
+      "A": "116",
+      "B": "100",
+      "C": "101"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The pantheon in Rome was used to worship what god?",
+    "options": {
+      "A": "Zeus",
+      "B": "Any god they wanted",
+      "C": "Athena"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the bloodiest event in United States history, in terms of casualties?",
+    "options": {
+      "A": "Battle of Antietam",
+      "B": "September 11th",
+      "C": "D-Day"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following ancient Near Eastern peoples still exists as a modern ethnic group?",
+    "options": {
+      "A": "Assyrians",
+      "B": "Hittites",
+      "C": "Elamites"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In addition to his career as an astrologer and \"prophet\", Nostradamus published a 1555 treatise that included a section on what?",
+    "options": {
+      "A": "Making jams and jellies",
+      "B": "Cheating at card games",
+      "C": "Digging graves"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of the following Soviet revolutionaries was exiled from the USSR and later assassinated in 1940 for criticizing Stalinism?",
+    "options": {
+      "A": "Leon Trotsky",
+      "B": "Lev Kamenev",
+      "C": "Vladimir Lenin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Adolf Hitler was born on which date?",
+    "options": {
+      "A": "April 20, 1889",
+      "B": "June 12, 1889",
+      "C": "April 16, 1889"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the ship which was only a few miles away from the RMS Titanic when it struck an iceberg on April 14, 1912?",
+    "options": {
+      "A": "Californian",
+      "B": "Carpathia",
+      "C": "Cristol"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year did Skoal, a smokeless Tobacco company, release their first line of Pouches, known as \"Skoal Bandits\"?",
+    "options": {
+      "A": "1983",
+      "B": "1934",
+      "C": "1822"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which year was Nelson Mandela released from prison",
+    "options": {
+      "A": "1990",
+      "B": "1994",
+      "C": "1980"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did the British hand-over sovereignty of Hong Kong back to China?",
+    "options": {
+      "A": "1997",
+      "B": "1999",
+      "C": "1841"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did the Great Northern War, between Russia and Sweden, end?",
+    "options": {
+      "A": "1721",
+      "B": "1727",
+      "C": "1724"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The Arab Spring was a series of protests and rebellions that began in which of these Arab nations?",
+    "options": {
+      "A": "Tunisia",
+      "B": "Morocco",
+      "C": "Egypt"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In which year did the First World War begin?",
+    "options": {
+      "A": "1914",
+      "B": "1917",
+      "C": "1939"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year was the United States Declaration of Independence signed?",
+    "options": {
+      "A": "1776",
+      "B": "1774",
+      "C": "1777"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When was Adolf Hitler appointed as Chancellor of Germany?",
+    "options": {
+      "A": "January 30, 1933",
+      "B": "September 1, 1939",
+      "C": "October 6, 1939"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What Russian automatic gas-operated assault rifle was developed in the Soviet Union in 1947, and is still popularly used today?",
+    "options": {
+      "A": "AK-47",
+      "B": "RPK",
+      "C": "M16"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many manned moon landings have there been?",
+    "options": {
+      "A": "6",
+      "B": "3",
+      "C": "7"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "According to legend, the ancient Greeks constructed a huge wooden model of which animal to gain entrance to Troy?",
+    "options": {
+      "A": "Horse",
+      "B": "Elephant",
+      "C": "Wolf"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first wife of King Henry VIII?",
+    "options": {
+      "A": "Jane Seymour",
+      "B": "Anne of Cleves",
+      "C": "Catherine of Aragon"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Before the American colonies switched to the Gregorian calendar in 1752, on what date did their new year start?",
+    "options": {
+      "A": "March 25th",
+      "B": "September 25th",
+      "C": "December 1st"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How many Sister Ships were related to the TItanic?",
+    "options": {
+      "A": "2",
+      "B": "4",
+      "C": "3"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "On what street did the 1666 Great Fire of London start?",
+    "options": {
+      "A": "Pudding Lane",
+      "B": "Baker Street",
+      "C": "St Paul's Cathedral"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "During WWII, in 1945, the United States dropped atomic bombs on the two Japanese cities of Hiroshima and what other city?",
+    "options": {
+      "A": "Nagasaki",
+      "B": "Kawasaki",
+      "C": "Kagoshima"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country was an allied power in World War II?",
+    "options": {
+      "A": "Soviet Union",
+      "B": "Italy",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did the Wall Street Crash take place?",
+    "options": {
+      "A": "1929",
+      "B": "1932",
+      "C": "1925"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The term Luddite originally applied to disgruntled workers in which industry?",
+    "options": {
+      "A": "Textile",
+      "B": "Farming",
+      "C": "Ceramics"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In World War I, what was the name of the alliance of Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria?",
+    "options": {
+      "A": "The Central Powers",
+      "B": "The Axis Powers",
+      "C": "Authoritarian Alliance"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first explorer to sail to North America?",
+    "options": {
+      "A": "Leif Erikson",
+      "B": "Amerigo Vespucci",
+      "C": "Ferdinand Magellan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Battle of Hastings was fought in which year?",
+    "options": {
+      "A": "1066",
+      "B": "911",
+      "C": "1204"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When did Vesuvius destroy the city of Pompeii?",
+    "options": {
+      "A": "79 AD",
+      "B": "62 AD",
+      "C": "54 BC"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the Prime Minister of the United Kingdom for most of World War II?",
+    "options": {
+      "A": "Winston Churchill",
+      "B": "Neville Chamberlain",
+      "C": "Harold Macmillan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the original name of New York City?",
+    "options": {
+      "A": "New Amsterdam",
+      "B": "New London",
+      "C": "New Paris"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which U.S. president took part in the Potsdam Conference, where the Allies reached a peace settlement with Germany?",
+    "options": {
+      "A": "Harry S. Truman",
+      "B": "Dwight D. Eisenhower",
+      "C": "Herbert Hoover"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "During the Spanish Civil War (1936), Francisco Franco fought for which political faction?",
+    "options": {
+      "A": "Nationalist Spain",
+      "B": "Republican Spain",
+      "C": "Papal State"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Joseph Stalin had a criminal past doing what?",
+    "options": {
+      "A": "Robbing Trains",
+      "B": "Murder for Hire",
+      "C": "Tax Evasion"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What event marked the start of World War II?",
+    "options": {
+      "A": "Invasion of Poland (1939)",
+      "B": "Invasion of Russia (1942)",
+      "C": "Battle of Britain (1940)"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which naval battle was considered the turning point of the Pacific Ocean Theater during World War 2?",
+    "options": {
+      "A": "Battle of Midway",
+      "B": "Attack on Truk Island",
+      "C": "Attack on Pearl Harbor"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Where did first known lesbian rights organization in the United States, Daughters of Bilitis, start?",
+    "options": {
+      "A": "New York",
+      "B": "Los Angeles",
+      "C": "San Francisco"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the unofficial name for Germany between 1919 and 1933?",
+    "options": {
+      "A": "Weimar Republic",
+      "B": "Federal Republic of Germany",
+      "C": "Oesterreich"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was William Frederick Cody better known as?",
+    "options": {
+      "A": "Buffalo Bill",
+      "B": "Wild Bill Hickok",
+      "C": "Pawnee Bill"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which king was killed at the Battle of Bosworth Field in 1485?",
+    "options": {
+      "A": "Richard III",
+      "B": "Edward V",
+      "C": "Henry VII"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year is considered to be the year that the British Empire ended?",
+    "options": {
+      "A": "1997",
+      "B": "1986",
+      "C": "1981"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was the SS or Schutzstaffel established?",
+    "options": {
+      "A": "April 4th, 1925",
+      "B": "September 1st, 1941",
+      "C": "February 21st, 1926"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "From 1940 to 1942, what was the capital-in-exile of Free France ?",
+    "options": {
+      "A": "Brazzaville",
+      "B": "Algiers",
+      "C": "Tunis"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these positions did the astronomer and physicist Isaac Newton not hold?",
+    "options": {
+      "A": "Surveyor to the City of London",
+      "B": "Professor of Mathematics",
+      "C": "Member of Parliament"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Against which country did the Dutch Republic fight the Eighty Years' War?",
+    "options": {
+      "A": "Spain",
+      "B": "France",
+      "C": "Portugal"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What Southeast Asian country was formerly known as 'Lan Xang'?",
+    "options": {
+      "A": "Laos",
+      "B": "Cambodia",
+      "C": "Thailand"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When did Spanish Peninsular War start?",
+    "options": {
+      "A": "1808",
+      "B": "1810",
+      "C": "1809"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What year was Canada founded in?",
+    "options": {
+      "A": "1867",
+      "B": "1859",
+      "C": "1668"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When did Norway get its constitution?",
+    "options": {
+      "A": "1814",
+      "B": "1932",
+      "C": "1854"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which one of these cities did the Great Stink of 1858 occur?",
+    "options": {
+      "A": "London",
+      "B": "Berlin",
+      "C": "Moscow"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who led the Communist Revolution of Russia?",
+    "options": {
+      "A": "Vladimir Lenin",
+      "B": "Joseph Stalin",
+      "C": "Vladimir Putin"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "As poverty and racial tensions pushed African-Americans out of the southern US, many of them moved north in an event known as what?",
+    "options": {
+      "A": "The Great Migration",
+      "B": "The Harlem Renaissance",
+      "C": "The Resettlement"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Louis was known as 'The Sun King of France'?",
+    "options": {
+      "A": "Louis XIV",
+      "B": "Louis XIII",
+      "C": "Louis XVI"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first President of the People's Republic of China?",
+    "options": {
+      "A": "Mao Zedong",
+      "B": "Dong Biwu",
+      "C": "Li Xiannian"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The creator of the Enigma Cypher and Machine was of what nationality?",
+    "options": {
+      "A": "German",
+      "B": "American",
+      "C": "British"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When Christopher Columbus sailed to America, what was the first region he arrived in?",
+    "options": {
+      "A": "The Bahamas Archipelago",
+      "B": "Isthmus of Panama",
+      "C": "Nicaragua"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 1845, a series of wars named after which indigenous people began in New Zealand?",
+    "options": {
+      "A": "Māori",
+      "B": "Papuans",
+      "C": "Aborigines"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which year was Constantinople conquered by the Turks?",
+    "options": {
+      "A": "1453",
+      "B": "1435",
+      "C": "1440"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "John Moses Browning, the designer of the M1918 BAR (Browning Automatic Rifle) was a part of which religion?",
+    "options": {
+      "A": "Mormon",
+      "B": "Jewish",
+      "C": "Atheist"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Where was Portuguese explorer Ferdinand Magellan killed in 1521?",
+    "options": {
+      "A": "The Phillipines",
+      "B": "Guam",
+      "C": "Argentina"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of the German offensive operation in October 1941 to take Moscow before winter?",
+    "options": {
+      "A": "Case Blue",
+      "B": "Operation Typhoon",
+      "C": "Operation Barbarossa"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "When did Jamaica receive its independence from England?",
+    "options": {
+      "A": "1962",
+      "B": "1492",
+      "C": "1987"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Where was Napoleon Bonaparte born?",
+    "options": {
+      "A": "Brittany",
+      "B": "Corsica",
+      "C": "Normandy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which one of these countries was NOT in the Central Powers during WWI?",
+    "options": {
+      "A": "Spain",
+      "B": "Turkey",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What year did the Titanic sink?",
+    "options": {
+      "A": "1912",
+      "B": "1917",
+      "C": "1941"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When was the United States National Security Agency established?",
+    "options": {
+      "A": "November 4, 1952",
+      "B": "July 26, 1908",
+      "C": "July 1, 1973"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was Napoleon Bonaparte crowned emperor of the French?",
+    "options": {
+      "A": "December 2nd 1804",
+      "B": "July 3rd 1802",
+      "C": "October 15th 1804"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "During the Wars of the Roses (1455 - 1487) which Englishman was dubbed \"the Kingmaker\"?",
+    "options": {
+      "A": "Richard Neville",
+      "B": "Henry V",
+      "C": "Thomas Warwick"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The Fallingwater House, located in Pennsylvania, was designed by which architect?",
+    "options": {
+      "A": "Frank Lloyd Wright",
+      "B": "Antoni Gaudi",
+      "C": "Le Corbusier"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What nationality was sultan Saladin?",
+    "options": {
+      "A": "Kurdish",
+      "B": "Arab",
+      "C": "Egyptian"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What happened on June 6, 1944?",
+    "options": {
+      "A": "D-Day",
+      "B": "Atomic bombings of Hiroshima and Nagasaki",
+      "C": "Attack on Pearl Harbor"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What battle was the longest in World War I, lasting approximately 303 days?",
+    "options": {
+      "A": "Battle of Verdun",
+      "B": "Battle of Passchendaele",
+      "C": "Battle of Amiens"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country gifted the Statue of Liberty to the United States of America?",
+    "options": {
+      "A": "France",
+      "B": "England",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The seed drill was invented by which British inventor?",
+    "options": {
+      "A": "Jethro Tull",
+      "B": "Isaac Newton",
+      "C": "J.J Thomson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which South American country fought Great Britain over the Falkland Islands in 1982?",
+    "options": {
+      "A": "Argentina",
+      "B": "Brazil",
+      "C": "Chile"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the first recorded object to ever reach space?",
+    "options": {
+      "A": "Bumper-WAC",
+      "B": "Sputnik I",
+      "C": "Sputnik II"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the first president born in the independent United States?",
+    "options": {
+      "A": "Martin Van Buren",
+      "B": "John Adams",
+      "C": "George Washington"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the Canada's first capital?",
+    "options": {
+      "A": "Kingston",
+      "B": "Toronto",
+      "C": "Ottawa"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the first mammal successfully launched into Earth's orbit?",
+    "options": {
+      "A": "Laika, the dog",
+      "B": "Ham, the chimpanzee",
+      "C": "Baker, the monkey"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of one of the surviving palaces of Henry VIII located near Richmond, London?",
+    "options": {
+      "A": "Hampton Court",
+      "B": "St James's Palace",
+      "C": "Coughton Court"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the leader of the Communist Party of Yugoslavia ?",
+    "options": {
+      "A": "Josip Broz Tito",
+      "B": "Milos Obilic",
+      "C": "Aleskandar Petrovic"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country attacked the USS Liberty on June 8, 1967?",
+    "options": {
+      "A": "Israel",
+      "B": "Syria",
+      "C": "Saudi Arabia"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following was not one of Joseph Stalin's ten blows during World War II?",
+    "options": {
+      "A": "Vistula-Oder Offensive",
+      "B": "Leningrad-Novgorod Offensive",
+      "C": "Operation Bagration"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was among those killed in the 2010 Smolensk, Russia plane crash tragedy?",
+    "options": {
+      "A": "The Polish President",
+      "B": "Pope John Paul II",
+      "C": "Albert Putin"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the main developer of the Suez Canal?",
+    "options": {
+      "A": "Ferdinand de Lesseps",
+      "B": "Louis-Eugène Cavaignac",
+      "C": "John Milton"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of the African-American cultural explosion centered in upper Manhattan during the 1920s and 1930s?",
+    "options": {
+      "A": "Harlem Renaissance",
+      "B": "Inwood Renaissance",
+      "C": "Upper East Renaissance"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many women joined the United States Armed Services during World War II?",
+    "options": {
+      "A": "350,000",
+      "B": "225,000",
+      "C": "500,000"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The fraudelent doctor John R. Brinkley acummulated great fame and wealth in the early 1900s offering what service?",
+    "options": {
+      "A": "Goat testicles transplant",
+      "B": "Pig blood transfusion",
+      "C": "Cow liver transplant"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name commonly given to the ancient trade routes that connected the East and West of Eurasia?",
+    "options": {
+      "A": "Silk Road",
+      "B": "Clay Road",
+      "C": "Salt Road"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "How many sonatas did Ludwig van Beethoven write?",
+    "options": {
+      "A": "32",
+      "B": "50",
+      "C": "21"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What year did Australia become a federation?",
+    "options": {
+      "A": "1901",
+      "B": "1910",
+      "C": "1911"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "On which aircraft carrier did the Doolitte Raid launch from on April 18, 1942 during World War II?",
+    "options": {
+      "A": "USS Hornet",
+      "B": "USS Lexington",
+      "C": "USS Saratoga"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who is believed to have been the first European to 'discover' the land of New Zealand?",
+    "options": {
+      "A": "Abel Tasman",
+      "B": "Jeanne Baré",
+      "C": "John Cabot"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what dialogue did Socrates defend himself to the court of Athens?",
+    "options": {
+      "A": "The Apology",
+      "B": "The Laws",
+      "C": "The Republic"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did the North American Video Game Crash occur?",
+    "options": {
+      "A": "1983",
+      "B": "1982",
+      "C": "1993"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Las Vegas casino was originally constructed and operated by mobster Bugsy Siegel?",
+    "options": {
+      "A": "The Flamingo",
+      "B": "The Sands",
+      "C": "The Sahara"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the official German currency until 2002?",
+    "options": {
+      "A": "Mark",
+      "B": "Pound sterling",
+      "C": "Reichtoken"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following Assyrian kings did NOT rule during the Neo-Assyrian Empire?",
+    "options": {
+      "A": "Shamshi-Adad III",
+      "B": "Esharhaddon",
+      "C": "Ashur-nasir-pal II"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which King of England was faced with the Peasants' Revolt in 1381?",
+    "options": {
+      "A": "Richard II",
+      "B": "Edward II",
+      "C": "Henry IV"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the last Roman emperor in the Year of Four Emperors (69 AD)?",
+    "options": {
+      "A": "Vespasian",
+      "B": "Otho",
+      "C": "Galba"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many times was Albert Einstein married in his lifetime?",
+    "options": {
+      "A": "Twice",
+      "B": "Five",
+      "C": "Once"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the Boeing B-29 that dropped the 'Little Boy' atomic bomb on Hiroshima?",
+    "options": {
+      "A": "Enola Gay",
+      "B": "Necessary Evil",
+      "C": "Full House"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "All of the following are names of the Seven Warring States EXCEPT:",
+    "options": {
+      "A": "Zhai (翟)",
+      "B": "Zhao (趙)",
+      "C": "Qi (齊)"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first prime minister of Canada?",
+    "options": {
+      "A": "John Macdonald",
+      "B": "John Abbott",
+      "C": "Robert Borden"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "According to scholarly estimates, what percentage of the world population at the time died due to Tamerlane's conquests?",
+    "options": {
+      "A": "5%",
+      "B": "1%",
+      "C": "<1%"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When was \"The Gadget\", the first nuclear device to be detonated, tested?",
+    "options": {
+      "A": "July 16, 1945",
+      "B": "June 22, 1945",
+      "C": "April 5, 1945"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Nazi General was known as the \"Desert Fox\"?",
+    "options": {
+      "A": "Erwin Rommel",
+      "B": "Gerd von Rundstadt",
+      "C": "Wilhelm Keitel"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the US Navy spy ship which was attacked and captured by North Korean forces in 1968?",
+    "options": {
+      "A": "USS Pueblo",
+      "B": "USS Constitution",
+      "C": "USS Indianapolis"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When did O, Canada officially become the national anthem?",
+    "options": {
+      "A": "1980",
+      "B": "1950",
+      "C": "1880"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "America's Strategic Defense System during the Cold War was nicknamed after this famous movie.",
+    "options": {
+      "A": "Star Wars",
+      "B": "Jaws",
+      "C": "Alien"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following Presidents of the United States was assassinated?",
+    "options": {
+      "A": "William McKinley",
+      "B": "Lyndon Johnson",
+      "C": "Franklin Roosevelt"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Roman Emperor led the Roman Empire to reach its maximum territorial extent?",
+    "options": {
+      "A": "Trajan",
+      "B": "Julius Caesar",
+      "C": "Constantine the Great"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Second Boer War in 1899 was fought where?",
+    "options": {
+      "A": "South Africa",
+      "B": "Argentina",
+      "C": "Nepal"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The Korean War started in what year?",
+    "options": {
+      "A": "1950",
+      "B": "1945",
+      "C": "1960"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the real name of the Albanian national leader Skanderbeg?",
+    "options": {
+      "A": "Gjergj Kastrioti",
+      "B": "Diturak Zhulati",
+      "C": "Mirash Krasniki"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In 1939, Britain and France declared war on Germany after it invaded which country?",
+    "options": {
+      "A": "Poland",
+      "B": "Czechoslovakia",
+      "C": "Hungary"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the President of the United States during the signing of the Gadsden Purchase?",
+    "options": {
+      "A": "Franklin Pierce",
+      "B": "Andrew Johnson",
+      "C": "James Polk"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the total length of the Titanic?",
+    "options": {
+      "A": "882 ft | 268.8 m",
+      "B": "1042 ft | 317.6 m",
+      "C": "825 ft | 251.5 m"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did William the Conqueror take control of England?",
+    "options": {
+      "A": "1066",
+      "B": "1205",
+      "C": "901"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Australian Prime Minister disappeared in 1967 and was never found?",
+    "options": {
+      "A": "Edmund Barton",
+      "B": "Harold Holt",
+      "C": "Paul Keating"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "How did the Vikings call their short-lived colony in today's Canada?",
+    "options": {
+      "A": "Vínland",
+      "B": "Føroyar",
+      "C": "Hålogaland"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?",
+    "options": {
+      "A": "Pope Leo III",
+      "B": "Pope Urban IV",
+      "C": "Pope Stephen V"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When did the Battle of the Somme begin?",
+    "options": {
+      "A": "July 1st, 1916",
+      "B": "August 1st, 1916",
+      "C": "July 2nd, 1916"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first ruler of Haiti after the country had gained its independence?",
+    "options": {
+      "A": "Jean-Jacques Dessalines",
+      "B": "Toussaint Louverture",
+      "C": "Alexandre Petion"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Irish village in County Mayo built a tourism industry on the back of an alleged appearance by the Virgin Mary in 1879?",
+    "options": {
+      "A": "Knock",
+      "B": "Ballycastle",
+      "C": "Turlough"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The Ottoman Empire was dissolved after their loss in which war?",
+    "options": {
+      "A": "World War I",
+      "B": "Crimean War",
+      "C": "Second Balkan War"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the code name for the German invasion of the Soviet Union in WW2?",
+    "options": {
+      "A": "Operation Barbarossa",
+      "B": "Operation Kaiserschlact",
+      "C": "Operation Molotov"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "On which day did ARPANET suffer a 4 hour long network crash?",
+    "options": {
+      "A": "October 27, 1980",
+      "B": "November 21, 1969",
+      "C": "October 29, 1969"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Where and when was the first cardboard box made for industrial use?",
+    "options": {
+      "A": "England, 1817",
+      "B": "England, 1917",
+      "C": "United States, 1917"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How old was Lyndon B. Johnson when he assumed the role of President of the United States?",
+    "options": {
+      "A": "55",
+      "B": "50",
+      "C": "54"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these founding fathers of the United States of America later became president?",
+    "options": {
+      "A": "James Monroe",
+      "B": "Samuel Adams",
+      "C": "Roger Sherman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did the nuclear power plant in Chernobyl melt down?",
+    "options": {
+      "A": "1986",
+      "B": "1975",
+      "C": "1998"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which infamous European traitor was known as \"the last person to enter Parliament with honest intentions\"?",
+    "options": {
+      "A": "Guy Fawkes",
+      "B": "Robert Catesby",
+      "C": "Everard Digby"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the first sport to have been played on the moon?",
+    "options": {
+      "A": "Golf",
+      "B": "Football",
+      "C": "Tennis"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following countries was not an axis power during World War II?",
+    "options": {
+      "A": "Soviet Union",
+      "B": "Italy",
+      "C": "Japan"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who famously coined the phrase \"I think, therefore I am\"?",
+    "options": {
+      "A": "Descartes",
+      "B": "Plato",
+      "C": "Shakespeare"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the leader of Sweden in the Great Northern War?",
+    "options": {
+      "A": "Charles XII",
+      "B": "Per Albin Hansson",
+      "C": "Peter the Great"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "On which day did the attempted coup d'etat of 1991 in the Soviet Union begin?",
+    "options": {
+      "A": "August 19",
+      "B": "August 21",
+      "C": "December 26"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "On what day did Germany invade Poland?",
+    "options": {
+      "A": "September 1, 1939",
+      "B": "June 22, 1941",
+      "C": "July 7, 1937"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The ontological argument for the proof of God's existence is first attributed to whom?",
+    "options": {
+      "A": "Anselm of Canterbury",
+      "B": "René Descartes",
+      "C": "Aristotle"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The minigun was designed in 1960 by which manufacturer.",
+    "options": {
+      "A": "General Electric",
+      "B": "Heckler & Koch",
+      "C": "Sig Sauer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The son of which pope supposedly held a lecherous fête involving 50 courtesans in the papal palace?",
+    "options": {
+      "A": "Alexander VI",
+      "B": "Innocent V",
+      "C": "Urban II"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which country was Josef Stalin born in?",
+    "options": {
+      "A": "Georgia",
+      "B": "Germany",
+      "C": "Poland"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following was Brazil was a former colony under?",
+    "options": {
+      "A": "Portugal",
+      "B": "Spain",
+      "C": "The Netherlands"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The main objective of the German operation \"Case Blue\" during World War II was originally to capture what?",
+    "options": {
+      "A": "Caucasus",
+      "B": "Stalingrad",
+      "C": "Voronezh"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What year was the first Pizza Hut restaurant opened?",
+    "options": {
+      "A": "1958",
+      "B": "1976",
+      "C": "1965"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these countries remained neutral during World War II?",
+    "options": {
+      "A": "Switzerland",
+      "B": "France",
+      "C": "Italy"
+    },
+    "correct": "A",
+    "difficulty": 2
+  }
+]

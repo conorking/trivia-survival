@@ -152,6 +152,19 @@ function countBy(arr, key) {
   }, {});
 }
 
+// Like countBy, but for a field that's an array (questionSets - multi-select
+// categories) - a game selecting ['general','music'] increments both tallies
+// by 1 rather than fragmenting into a joint "general,music" bucket.
+function countByArrayField(arr, getArray) {
+  return arr.reduce((acc, e) => {
+    for (const v of (getArray(e) || [])) {
+      const k = String(v);
+      acc[k] = (acc[k] || 0) + 1;
+    }
+    return acc;
+  }, {});
+}
+
 // "Real player" is deliberately not a stored field - it's computed here
 // (!isBot && playedActively) so the definition can be tuned later without
 // needing to re-log anything.
@@ -197,7 +210,7 @@ function getSummary({ days = 30 } = {}) {
     deviceBreakdown: countBy(realPlayers, 'deviceHint'),
     countryBreakdown: countBy(realPlayers, 'country'),
     config: {
-      questionSet: countBy(gamesStarted, e => e.config && e.config.questionSet),
+      questionSets: countByArrayField(gamesStarted, e => e.config && e.config.questionSets),
       difficultyRamp: countBy(gamesStarted, e => e.config && !!e.config.difficultyRamp),
       bearTraps: countBy(gamesStarted, e => e.config && !!e.config.bearTraps),
       dogLunge: countBy(gamesStarted, e => e.config && e.config.dogLunge),

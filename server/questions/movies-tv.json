@@ -1,0 +1,4002 @@
+[
+  {
+    "q": "Which town is the setting for the Disney movie The Love Bug (1968)?",
+    "options": {
+      "A": "San Francisco",
+      "B": "Sacramento",
+      "C": "San Jose"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"Star Trek Nemesis\", why was Praetor Shinzon created?",
+    "options": {
+      "A": "To replace Picard as a Romulan Agent",
+      "B": "To destroy the Enterprise",
+      "C": "To become Picard's friend"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which animated film did Steven Lisberger direct in 1980 before going on to direct Tron?",
+    "options": {
+      "A": "Animalympics",
+      "B": "The Black Cauldron",
+      "C": "The Great Mouse Detecive"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The 1996 film 'Fargo' is primarily set in which US state?",
+    "options": {
+      "A": "Minnesota",
+      "B": "North Dakota",
+      "C": "Wisconsin"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Jurassic World\", which company purchases InGen and creates Jurassic World?",
+    "options": {
+      "A": "Masrani Global Corporation",
+      "B": "Biology Synthetics Technologies",
+      "C": "International Genetic Technologies"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following actors has only been in a Quentin Tarantino directed film once?",
+    "options": {
+      "A": "John Travolta",
+      "B": "Harvey Keitel",
+      "C": "Samuel L. Jackson"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In what year was the first Indian movie submitted for an Oscar?",
+    "options": {
+      "A": "1957",
+      "B": "1962",
+      "C": "1938"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what year was the first Transformers movie released?",
+    "options": {
+      "A": "1986",
+      "B": "2007",
+      "C": "2009"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 2002 film \"Kung Pow! Enter the Fist\", Master Pain changes his name to what?",
+    "options": {
+      "A": "Betty",
+      "B": "Sally",
+      "C": "Kitty"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 2010 Nightmare on Elm Street reboot, who played Freddy Kruger?",
+    "options": {
+      "A": "Jackie Earle Haley",
+      "B": "Tyler Mane",
+      "C": "Derek Mears"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actors made up the trio in \"The Good, the Bad, and the Ugly\"?",
+    "options": {
+      "A": "Clint Eastwood, Eli Wallach, and Lee Van Cleef",
+      "B": "Yul Brynner, Steve McQueen, and Charles Bronson",
+      "C": "Aldo Giuffrè, Mario Brega, and Luigi Pistilli"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What film did James Cameron's Avatar dethrone as the highest-grossing film ever?",
+    "options": {
+      "A": "Titanic",
+      "B": "Star Wars",
+      "C": "Jaws"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1999 movie Fight Club, which of these is not a rule of the \"fight club\"?",
+    "options": {
+      "A": "Always wear a shirt",
+      "B": "Only two guys to a fight",
+      "C": "Fights will go on as long as they have to"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who Voices the Devil on Devil's Flight in Final Destination 3?",
+    "options": {
+      "A": "Tony Todd",
+      "B": "Wendy Christensen",
+      "C": "Ian McKinley"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what movie does Eddie Murphy swap identities with Dan Aykroyd?",
+    "options": {
+      "A": "Trading Places",
+      "B": "Coming to America",
+      "C": "The Blues Brothers"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which star actor was in \"Top Gun\", \"Jerry Maguire\" and \"Born on the Fourth of July\"?",
+    "options": {
+      "A": "Tom Cruise",
+      "B": "Kelly McGillis",
+      "C": "John Travolta"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"The Hobbit,\" who was head of the White Council?",
+    "options": {
+      "A": "Saruman",
+      "B": "Lady Galadriel",
+      "C": "Gandalf"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played Deputy Marshal Samuel Gerard in the 1993 film \"The Fugitive\"?",
+    "options": {
+      "A": "Tommy Lee Jones",
+      "B": "Harvey Keitel",
+      "C": "Martin Landau"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is the director of the 1991 film \"Silence of the Lambs\"?",
+    "options": {
+      "A": "Jonathan Demme",
+      "B": "Stanley Kubrick",
+      "C": "Michael Bay"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the \"Jurassic Park\" universe, what is the name of the island that contains InGen's Site B?",
+    "options": {
+      "A": "Isla Sorna",
+      "B": "Isla Nublar",
+      "C": "Isla Muerta"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of James Dean's character in the 1955 movie \"Rebel Without a Cause\"?",
+    "options": {
+      "A": "Jim Stark",
+      "B": "Jim Kane",
+      "C": "Frank Stark"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1976 film 'Taxi Driver', how many guns did Travis buy from the salesman?",
+    "options": {
+      "A": "4",
+      "B": "6",
+      "C": "1"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who starred in the film 1973 movie \"Enter The Dragon\"?",
+    "options": {
+      "A": "Bruce Lee",
+      "B": "Jackie Chan",
+      "C": "Yun-Fat Chow"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Mark Wahlberg played the titular character of which 2008 video-game adaptation?",
+    "options": {
+      "A": "Max Payne",
+      "B": "Alan Wake",
+      "C": "Hitman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who performed the opening theme song for the James Bond 007 movie \"Goldfinger\"?",
+    "options": {
+      "A": "Shirley Basey",
+      "B": "Tom Jones",
+      "C": "Sheena Easton"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the film \"Harry Potter and the Order of The Phoenix\", why was Harry Potter's scream, after Sirius Black died, muted?",
+    "options": {
+      "A": "Too Agonizing",
+      "B": "Too Harsh",
+      "C": "Too Violent"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the first superhero film James Gunn was involved with?",
+    "options": {
+      "A": "The Specials",
+      "B": "Super",
+      "C": "Guardians of the Galaxy"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the wifi password given to Stephen Strange in Doctor Strange?",
+    "options": {
+      "A": "Shambala",
+      "B": "Peace",
+      "C": "Ancient"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the 1964 film \"Zulu\", what song does the British Army company sing before the final battle?",
+    "options": {
+      "A": "Men of Harlech",
+      "B": "Scotland the Brave",
+      "C": "The British Grenadiers"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these movies is NOT considered to be part of the Marvel Cinematic Universe?",
+    "options": {
+      "A": "Fantastic Four (2015)",
+      "B": "The Incredible Hulk (2008)",
+      "C": "Captain Marvel (2019)"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the title of the first Bond movie, released in 1962?",
+    "options": {
+      "A": "Dr. No",
+      "B": "Goldfinger",
+      "C": "Thunderball"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "This movie contains the quote, \"I feel the need ... the need for speed!\"",
+    "options": {
+      "A": "Top Gun",
+      "B": "The Color of Money",
+      "C": "Cocktail"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is frozen at the end of the movie \"Goldeneye\"?",
+    "options": {
+      "A": "Boris Grishenko",
+      "B": "James Bond",
+      "C": "Natalya Simonova"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which former Star Trek actor directed Three Men and a Baby (1987)?",
+    "options": {
+      "A": "Leonard Nimoy",
+      "B": "George Takei",
+      "C": "James Doohan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which 1955 film does Frank Sinatra play Nathan Detroit?",
+    "options": {
+      "A": "Guys and Dolls",
+      "B": "Anchors Aweigh",
+      "C": "From Here to Eternity"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who plays the character of Po in the Kung Fu Panda movies?",
+    "options": {
+      "A": "Jack Black",
+      "B": "McConahey Ramses",
+      "C": "Jim Petersson"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+    "options": {
+      "A": "George Clooney",
+      "B": "Michael Keaton",
+      "C": "Christian Bale"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actor plays the character \"Tommy Jarvis\" in \"Friday the 13th: The Final Chapter\" (1984)?",
+    "options": {
+      "A": "Corey Feldman",
+      "B": "Mel Gibson",
+      "C": "Mark Hamill"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the character Nicolas Cage plays in the movie \"National Treasure?\"",
+    "options": {
+      "A": "Benjamin Franklin Gates",
+      "B": "Thomas Jefferson Walker",
+      "C": "George Washington Swanson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Leonardo Di Caprio won his first Best Actor Oscar for his performance in which film?",
+    "options": {
+      "A": "The Revenant",
+      "B": "The Wolf Of Wall Street",
+      "C": "Inception"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie \"Blade Runner\", what is the term used for human-like androids ?",
+    "options": {
+      "A": "Replicants",
+      "B": "Synthetics",
+      "C": "Skinjobs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Daniel Radcliffe became a global star in the film industry due to his performance in which film franchise?",
+    "options": {
+      "A": "Harry Potter",
+      "B": "Ted",
+      "C": "Pirates of the Caribbean"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following films was directed by Ivan Reitman, written by Gary Ross, featured Kevin Kline, and was released in 1993?",
+    "options": {
+      "A": "Dave",
+      "B": "Will",
+      "C": "Carl"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which actor played the main character in the 1990 film \"Edward Scissorhands\"?",
+    "options": {
+      "A": "Clint Eastwood",
+      "B": "Ben Stiller",
+      "C": "Johnny Depp"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played the female lead in the 1933 film \"King Kong\"?",
+    "options": {
+      "A": "Fay Wray",
+      "B": "Jean Harlow",
+      "C": "Mae West"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following movies was not based on a novel by Stephen King?",
+    "options": {
+      "A": "The Thing",
+      "B": "Carrie",
+      "C": "The Green Mile"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of these Movies was NOT released in 1996?",
+    "options": {
+      "A": "Gladiator",
+      "B": "Independence Day",
+      "C": "Mission: Impossible"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the Artificial Intelligence system in the 1983 film, \"WarGames\"?",
+    "options": {
+      "A": "War Operation Plan Response",
+      "B": "Master Control Program",
+      "C": "West Campus Analog Computer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the foley artist who designed the famous sounds of Star Wars, including Chewbacca's roar and R2-D2's beeps and whistles?",
+    "options": {
+      "A": "Ben Burtt",
+      "B": "Ken Burns",
+      "C": "Ralph McQuarrie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played Baron Victor Frankestein in the 1957 Hammer horror film \"The Curse of Frankenstein\"?",
+    "options": {
+      "A": "Peter Cushing",
+      "B": "Boris Karloff",
+      "C": "Lon Chaney Jr."
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movie released in 2016 features Superman and Batman fighting?",
+    "options": {
+      "A": "Batman v Superman: Dawn of Justice",
+      "B": "Batman v Superman: Black of Knight",
+      "C": "Batman v Superman: Knightfall"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who plays Alice in the Resident Evil movies?",
+    "options": {
+      "A": "Milla Jovovich",
+      "B": "Milla Johnson",
+      "C": "Kim Demp"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "At the end of the 2001 film \"Rat Race\", whose concert do the contestants crash?",
+    "options": {
+      "A": "Smash Mouth",
+      "B": "Sum 41",
+      "C": "Linkin Park"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote and directed the 1986 film 'Platoon'?",
+    "options": {
+      "A": "Oliver Stone",
+      "B": "Francis Ford Coppola",
+      "C": "Michael Cimino"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the first movie to ever use a Wilhelm Scream?",
+    "options": {
+      "A": "Distant Drums",
+      "B": "The Charge at Feather River",
+      "C": "Indiana Jones"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the name of the protagonist in the movie Commando (1985)?",
+    "options": {
+      "A": "John Matrix",
+      "B": "Ben Richards",
+      "C": "Douglas Quaid"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who plays Jack Burton in the movie \"Big Trouble in Little China?\"",
+    "options": {
+      "A": "Kurt Russell",
+      "B": "John Cusack",
+      "C": "Harrison Ford"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which one of these films are shot entirely in one-take?",
+    "options": {
+      "A": "Russian Ark",
+      "B": "Birdman",
+      "C": "Schindler's List"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1971 film \"Willy Wonka & the Chocolate Factory\", who played Willy Wonka?",
+    "options": {
+      "A": "Gene Wilder",
+      "B": "Shia LeBouf",
+      "C": "Johnny Depp"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which stand-up comedian voiced the talking parrot \"Iago\" in Disney's 1992 adaptation of Aladdin?",
+    "options": {
+      "A": "Gilbert Gottfried",
+      "B": "Pauly Shore",
+      "C": "Jonathan Freeman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1984 movie \"The Terminator\", what model number is the Terminator portrayed by Arnold Schwarzenegger?",
+    "options": {
+      "A": "T-800",
+      "B": "T-888",
+      "C": "T-1000"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Actress Susan Sarandon caught pneumonia during filming of which movie?",
+    "options": {
+      "A": "The Rocky Horror Picture Show",
+      "B": "Dead Man Walking",
+      "C": "Enchanted"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1994 movie \"Speed\", what is the minimum speed the bus must go to prevent to bomb from exploding?",
+    "options": {
+      "A": "50 mph",
+      "B": "40 mph",
+      "C": "70 mph"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year did the James Cameron film \"Titanic\" come out in theaters?",
+    "options": {
+      "A": "1997",
+      "B": "1996",
+      "C": "1998"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Finding Nemo, what was the name of Nemo's mom?",
+    "options": {
+      "A": "Coral",
+      "B": "Sandy",
+      "C": "Pearl"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What were the Chilled Monkey Brains made from during Indiana Jones and the Temple of Doom?",
+    "options": {
+      "A": "Custard and Raspberry Sauce",
+      "B": "Strawberry Ice Cream",
+      "C": "Cherry Yogurt"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which iconic character is featured in movies such as \"The Enforcer\", \"Sudden Impact\", and \"The Dead Pool\"?",
+    "options": {
+      "A": "Dirty Harry",
+      "B": "Indiana Jones",
+      "C": "Harry Potter"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Youtuber Jerma985's 2014 film \"Rat Movie: Mystery of the Mayan Treasure,\" who is the man who tries to steal the Mayan Treasure?",
+    "options": {
+      "A": "Dick Dastardly Richards",
+      "B": "Gabe \"The Glue Man\" Degrossi",
+      "C": "Demon Lord Zeraxos"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which boxer was famous for striking the gong in the introduction to J. Arthur Rank films?",
+    "options": {
+      "A": "Bombardier Billy Wells",
+      "B": "Freddie Mills",
+      "C": "Don Cockell"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the director of \"Scott Pilgrim vs. the World (2010)\"?",
+    "options": {
+      "A": "Edgar Wright",
+      "B": "Chris Miller",
+      "C": "Seth Rogan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+    "options": {
+      "A": "October 21, 2015",
+      "B": "August 28, 2015",
+      "C": "July 20, 2015"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What character in the Winnie the Pooh films was added by Disney and does not appear in the original books?",
+    "options": {
+      "A": "Gopher",
+      "B": "Heffalumps",
+      "C": "Rabbit"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movie sequel had improved box office results compared to its original film?",
+    "options": {
+      "A": "Speed 2: Cruise Control",
+      "B": "Toy Story 2",
+      "C": "Sin City: A Dame to Kill For"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these actors does NOT appear in the 1998 movie \"Saving Private Ryan\"?",
+    "options": {
+      "A": "Ralph Fiennes",
+      "B": "Tom Hanks",
+      "C": "Vin Diesel"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "According to the Star Wars lore, what is Han Solo's home planet?",
+    "options": {
+      "A": "Corellia",
+      "B": "Tatooine",
+      "C": "Naboo"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What historical time period was the center of the Assassin’s Creed movie (2016)?",
+    "options": {
+      "A": "Spanish Inquisition",
+      "B": "Victorian England",
+      "C": "French Revolution"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Before getting the shotgun, what did the titular hobo in 'Hobo with a Shotgun' want to purchase?",
+    "options": {
+      "A": "a lawnmower",
+      "B": "a revolver",
+      "C": "a suit"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the correct spelling of the protagonist of the book in The NeverEnding Story (1984)?",
+    "options": {
+      "A": "Atreyu",
+      "B": "Atrayu",
+      "C": "Atraiyu"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year does Jurassic World open in the \"Jurassic Park\" universe?",
+    "options": {
+      "A": "2005",
+      "B": "2015",
+      "C": "2020"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the dog that played Toto in the 1939 film \"The Wizard of Oz\"?",
+    "options": {
+      "A": "Terry",
+      "B": "Tommy",
+      "C": "Toto"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The 2016 Disney animated film 'Moana' is based on which culture?",
+    "options": {
+      "A": "Polynesian",
+      "B": "Native American",
+      "C": "Japanese"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the queen's pet in A Bug's Life?",
+    "options": {
+      "A": "Aphie",
+      "B": "Flik",
+      "C": "Hopper"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "This movie contains the quote, \"I love the smell of napalm in the morning!\"",
+    "options": {
+      "A": "Apocalypse Now",
+      "B": "The Deer Hunter",
+      "C": "Full Metal Jacket"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the film \"Requiem for a Dream\", what drug does Jared Leto's character get addicted to?",
+    "options": {
+      "A": "Heroin",
+      "B": "Cocaine",
+      "C": "Marijuana"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie “The Iron Giant,” this character is the protagonist.",
+    "options": {
+      "A": "Kent Mansley",
+      "B": "Annie Hughes",
+      "C": "Hogarth Hughes"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these actors/actresses is NOT a part of the cast for the 2016 movie \"Suicide Squad\"?",
+    "options": {
+      "A": "Scarlett Johansson",
+      "B": "Jared Leto",
+      "C": "Margot Robbie"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the correct phrase for the Latin saying \"Romanes Eunt Domus\" in Monty Python's Life of Brian?",
+    "options": {
+      "A": "Romani Ite Domum",
+      "B": "Romans Go Home",
+      "C": "Tomate Ite Domum"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who voiced the character Draco in the 1996 movie 'DragonHeart'?",
+    "options": {
+      "A": "Sean Connery",
+      "B": "Dennis Quaid",
+      "C": "Brian Thompson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the birth name of Michael Keaton?",
+    "options": {
+      "A": "Michael Douglas",
+      "B": "Michael Richards",
+      "C": "Michael Kane"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movie did NOT feature the late actor John Candy?",
+    "options": {
+      "A": "Ghostbusters",
+      "B": "Home Alone",
+      "C": "Planes Trains and Automobiles"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "For the film \"Raiders of The Lost Ark\", what was Harrison Ford sick with during the filming of the Cairo chase?",
+    "options": {
+      "A": "Dysentery",
+      "B": "Constipation",
+      "C": "Acid Reflux"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who voices the main character Blu in the 2011 animated film \"Rio\"?",
+    "options": {
+      "A": "Jesse Eisenberg",
+      "B": "Michael Cera",
+      "C": "Zach Galifianakis"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movie contains the quote, \"Say hello to my little friend!\"?",
+    "options": {
+      "A": "Scarface",
+      "B": "Reservoir Dogs",
+      "C": "Heat"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Jurassic World\", what is the name of the dinosaur that is a genetic hybrid?",
+    "options": {
+      "A": "Indominus Rex",
+      "B": "Pteranodon",
+      "C": "Tyrannosaurus Rex"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is the main antagonist of Christopher Nolan's 2012 film \"The Dark Knight Rises\"?",
+    "options": {
+      "A": "Bane",
+      "B": "The Joker",
+      "C": "The Riddler"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which African country was the 2006 film 'Blood Diamond' mostly set in?",
+    "options": {
+      "A": "Sierra Leone",
+      "B": "Liberia",
+      "C": "Central African Republic"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which year was the first official Youtube Rewind released?",
+    "options": {
+      "A": "2010",
+      "B": "2012",
+      "C": "2011"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which documentary film maker wrote and starred in the film \"My Scientology Movie\" which first debuted in 2015?",
+    "options": {
+      "A": "Louis Theroux",
+      "B": "Errol Morris",
+      "C": "Joe Berlinger"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Tron: Legacy, Kevin Flynn wrote a program to create the perfect system. What was the program's name?",
+    "options": {
+      "A": "Clu",
+      "B": "Tron",
+      "C": "Quorra"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What Queen song plays during the final fight scene of the film \"Hardcore Henry\"?",
+    "options": {
+      "A": "Don't Stop Me Now",
+      "B": "Brighton Rock",
+      "C": "Another Bites the Dust"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who provided a majority of the songs and lyrics for \"Spirit: Stallion of the Cimarron\"?",
+    "options": {
+      "A": "Bryan Adams",
+      "B": "Oasis",
+      "C": "Air Supply"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1951 movie \"The Day The Earth Stood Still\" which US city did the alien spaceship land in?",
+    "options": {
+      "A": "Washington D.C.",
+      "B": "Los Angeles",
+      "C": "New York"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who directed the 2017 movie \"The Shape of Water\"?",
+    "options": {
+      "A": "Guillermo del Toro",
+      "B": "Steven Spielberg",
+      "C": "Martin Scorsese"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What city did the monster attack in the film, \"Cloverfield\"?",
+    "options": {
+      "A": "Chicago, Illinois",
+      "B": "Orlando, Florida",
+      "C": "New York, New York"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the supercomputer located in the control room in \"Jurassic Park\" (1993)?",
+    "options": {
+      "A": "Thinking Machines CM-5",
+      "B": "Cray XK7",
+      "C": "IBM Blue Gene/Q"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who is the protagonist of the 2002 film \"Kung Pow! Enter the Fist\"?",
+    "options": {
+      "A": "Chosen One",
+      "B": "Iron Monkey",
+      "C": "Master Tang"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who plays the Nemesis in the Resident Evil movies?",
+    "options": {
+      "A": "Matthew Taylor",
+      "B": "Jason Dip",
+      "C": "Jimmy Matts"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie Gremlins, after what time of day should you not feed Mogwai?",
+    "options": {
+      "A": "Midnight",
+      "B": "Evening",
+      "C": "Morning"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "This movie contains the quote, \"What we've got here is a failure to communicate.\"",
+    "options": {
+      "A": "Cool Hand Luke",
+      "B": "The Graduate",
+      "C": "In the Heat of the Night"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1995 film \"Balto\", who are Steele's accomplices?",
+    "options": {
+      "A": "Kaltag, Nikki, and Star",
+      "B": "Dusty, Kirby, and Ralph",
+      "C": "Nuk, Yak, and Sumac"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When was the movie 'Con Air' released?",
+    "options": {
+      "A": "1997",
+      "B": "1985",
+      "C": "1990"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which movie does Robin Williams' character have to disguise themselves into a woman?",
+    "options": {
+      "A": "Mrs. Doubtfire",
+      "B": "Jumanji",
+      "C": "Awakenings"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the first monster to appear alongside Godzilla?",
+    "options": {
+      "A": "Anguirus",
+      "B": "Mothra",
+      "C": "King Ghidora"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What breed of dog was Marley in the film \"Marley & Me\" (2008)?",
+    "options": {
+      "A": "Labrador Retriever",
+      "B": "Golden Retriever",
+      "C": "Shiba Inu"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which retired American football quarterback played himself in 'Ace Ventura: Pet Detective' and 'Little Nicky'?",
+    "options": {
+      "A": "Dan Marino",
+      "B": "Tom Brady",
+      "C": "Joe Montana"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Where does the original Friday The 13th movie take place?",
+    "options": {
+      "A": "Camp Crystal Lake",
+      "B": "Packanack",
+      "C": "Camp Forest Green"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "This movie contains the quote, \"Nobody puts Baby in a corner.\"",
+    "options": {
+      "A": "Dirty Dancing",
+      "B": "Ferris Bueller's Day Off",
+      "C": "Pretty in Pink"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Super Mario Bros. Movie (2023), who plays Toad?",
+    "options": {
+      "A": "Keegan-Michael Key",
+      "B": "Charlie Day",
+      "C": "Jack Black"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the first \"Star Wars\" film by release order?",
+    "options": {
+      "A": "A New Hope",
+      "B": "The Force Awakens",
+      "C": "Revenge of the Sith"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is Lilo's last name from Lilo and Stitch?",
+    "options": {
+      "A": "Pelekai",
+      "B": "Anoaʻi",
+      "C": "Kuʻulei"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How much money did the 2019 Marvel movie \"Avengers: Endgame\" gross for it's record-breaking worldwide opening weekend?",
+    "options": {
+      "A": "1.2 billion USD",
+      "B": "640 million USD",
+      "C": "456 million USD"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following James Bond villains is not affiliated with the SPECTRE organization?",
+    "options": {
+      "A": "Auric Goldfinger",
+      "B": "Dr. Julius No",
+      "C": "Rosa Klebb"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the birth name of Michael Caine?",
+    "options": {
+      "A": "Maurice Micklewhite",
+      "B": "Morris Coleman",
+      "C": "Carl Myers"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who plays protagonist Ethan Hunt in the \"Mission: Impossible\" film-series?",
+    "options": {
+      "A": "Tom Cruise",
+      "B": "Johnny Depp",
+      "C": "Sean Connery"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "7-Eleven stores were temporarily converted into Kwik E-marts to promote the release of what movie?",
+    "options": {
+      "A": "The Simpsons Movie",
+      "B": "Spider-Man 3",
+      "C": "Ratatouille"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the 1992 film \"Army of Darkness\", what name does Ash give to his double-barreled shotgun?",
+    "options": {
+      "A": "Boomstick",
+      "B": "Bloomstick",
+      "C": "Blastbranch"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Marvel superhero did Chris Evans play prior to his role as Captain America?",
+    "options": {
+      "A": "Human Torch",
+      "B": "Cyclops",
+      "C": "Daredevil"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following movies was not based on a book?",
+    "options": {
+      "A": "Citizen Kane",
+      "B": "The Godfather",
+      "C": "Jurassic Park"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who directed \"E.T. the Extra-Terrestrial\" (1982)?",
+    "options": {
+      "A": "Steven Spielberg",
+      "B": "James Cameron",
+      "C": "Tim Burton"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who directed the movies \"Pulp Fiction\", \"Reservoir Dogs\" and \"Django Unchained\"?",
+    "options": {
+      "A": "Quentin Tarantino",
+      "B": "Steven Spielberg",
+      "C": "James Cameron"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Mad Max franchise, what type of car is the Pursuit Special driven by Max?",
+    "options": {
+      "A": "Ford Falcon",
+      "B": "Chrysler Valiant Charger",
+      "C": "Pontiac Firebird"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Mulan (1998), who is the leader of the Huns?",
+    "options": {
+      "A": "Shan Yu",
+      "B": "Chien-Po",
+      "C": "Fa Zhou"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the first James Bond film?",
+    "options": {
+      "A": "Dr. No",
+      "B": "From Russia With Love",
+      "C": "Thunderball"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which 1973 film does Yul Brynner play a robotic cowboy who malfunctions and goes on a killing spree?",
+    "options": {
+      "A": "Westworld",
+      "B": "Android",
+      "C": "The Terminators"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Queen song `A Kind Of Magic` is featured in which 1986 film?",
+    "options": {
+      "A": "Highlander",
+      "B": "Flash Gordon",
+      "C": "Labyrinth"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What does TIE stand for in reference to the TIE Fighter in \"Star Wars\"?",
+    "options": {
+      "A": "Twin Ion Engine",
+      "B": "Twin Intercepter Engine",
+      "C": "Twin Inception Engine"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these films is NOT set in Los Angeles?",
+    "options": {
+      "A": "RoboCop",
+      "B": "Blade Runner",
+      "C": "The Terminator"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which movie of film director Stanley Kubrick is known to be an adaptation of a Stephen King novel?",
+    "options": {
+      "A": "The Shining",
+      "B": "2001: A Space Odyssey",
+      "C": "Dr. Strangelove"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following is NOT a quote from the 1942 film Casablanca?",
+    "options": {
+      "A": "\"Frankly, my dear, I don't give a damn.\"",
+      "B": "“Of all the gin joints, in all the towns, in all the world, she walks into mine…”",
+      "C": "\"Round up the usual suspects.\""
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actor and martial artist starred as Colonel Guile in the 1994 action film adaptation of Street Fighter?",
+    "options": {
+      "A": "Jean-Claude Van Damme",
+      "B": "Chuck Norris",
+      "C": "Steven Seagal"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who directed the Kill Bill movies?",
+    "options": {
+      "A": "Quentin Tarantino",
+      "B": "David Lean",
+      "C": "Stanley Kubrick"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the species of the \"Predator\" in the 1987 movie \"Predator\"?",
+    "options": {
+      "A": "Yautja",
+      "B": "Xenomorph",
+      "C": "Phocrex"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was Dorothy's surname in 'The Wizard Of Oz'?",
+    "options": {
+      "A": "Gale",
+      "B": "Day",
+      "C": "Parker"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following is not the name of a \"Bond Girl\"?",
+    "options": {
+      "A": "Vanessa Kensington",
+      "B": "Pam Bouvier",
+      "C": "Wai Lin"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who directed the 2015 movie \"The Revenant\"?",
+    "options": {
+      "A": "Alejandro G. Iñárritu",
+      "B": "David Fincher",
+      "C": "Wes Anderson"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Big Hero 6, what were Baymax's motions modeled after?",
+    "options": {
+      "A": "Baby penguins",
+      "B": "Baby ostriches",
+      "C": "Baby bears"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the villian in the 2015 Russian-American Sci-Fi Movie \"Hardcore Henry\"?",
+    "options": {
+      "A": "Akan",
+      "B": "Estelle",
+      "C": "Jimmy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which one of these action movies are shot entirely in one take?",
+    "options": {
+      "A": "Victoria",
+      "B": "Ip Man 2",
+      "C": "The Bourne Legacy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following films was NOT directed by Quentin Tarantino?",
+    "options": {
+      "A": "From Dusk till Dawn",
+      "B": "Pulp Fiction",
+      "C": "Reservoir Dogs"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the make and model of the tour vehicles in \"Jurassic Park\" (1993)?",
+    "options": {
+      "A": "1992 Ford Explorer XLT",
+      "B": "1992 Toyota Land Cruiser",
+      "C": "Mercedes M-Class"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played Thanos in Avengers: Infinity War and Avengers: End Game?",
+    "options": {
+      "A": "Josh Brolin",
+      "B": "Tom Hiddleston",
+      "C": "Sean Gunn"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which 1994 film did Roger Ebert famously despise, saying \"I hated hated hated hated hated this movie\".",
+    "options": {
+      "A": "North",
+      "B": "3 Ninjas Kick Back",
+      "C": "Richie Rich"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In Avengers: Infinity War, the Reality Stone (aka the Aether) was kept under safe possession by who?",
+    "options": {
+      "A": "The Collector",
+      "B": "Doctor Strange",
+      "C": "Scarlet Witch"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which actor plays the role of the main antagonist in the 2011 movie \"Tower Heist?\"",
+    "options": {
+      "A": "Alan Alda",
+      "B": "Eddie Murphy",
+      "C": "Kevin Nealon"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the robot in the 1951 science fiction film classic 'The Day the Earth Stood Still'?",
+    "options": {
+      "A": "Gort",
+      "B": "Robby",
+      "C": "Box"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these movies did Jeff Bridges not star in?",
+    "options": {
+      "A": "The Hateful Eight",
+      "B": "The Giver",
+      "C": "True Grit"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the assassin in the first \"Hellboy\" movie?",
+    "options": {
+      "A": "Karl Ruprecht Kroenen",
+      "B": "Klaus Werner von Krupt",
+      "C": "Ilsa Haupstein"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Bela Lugosi was a Hungarian-American actor best known for his starring role of what 1931 horror film?",
+    "options": {
+      "A": "Count Dracula",
+      "B": "Dr Frankenstein",
+      "C": "Werewolf"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following was not one of \"The Magnificent Seven\"?",
+    "options": {
+      "A": "Steve McQueen",
+      "B": "Charles Bronson",
+      "C": "Clint Eastwood"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "In the 1979 British film \"Quadrophenia\" what is the name of the main protagonist?",
+    "options": {
+      "A": "Jimmy Cooper",
+      "B": "Pete Townshend",
+      "C": "Franc Roddam"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Darth Vader's famous reveal to Luke is iconic. But which of these is the right one?",
+    "options": {
+      "A": "\"No. I am your father.\"",
+      "B": "\"You're wrong. I am your father.\"",
+      "C": "\"The truth is that I am your father.\""
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which sci-fi cult films plot concerns aliens attempting to prevent humans from creating a doomsday weapon?",
+    "options": {
+      "A": "Plan 9 from Outer Space",
+      "B": "The Man from Planet X",
+      "C": "It Came from Outer Space"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who voiced Metalbeard in \"The Lego Movie\"?",
+    "options": {
+      "A": "Nick Offerman",
+      "B": "Liam Neeson",
+      "C": "Morgan Freeman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which director directed the movie \"Pan's Labyrinth\"?",
+    "options": {
+      "A": "Guillermo Del Toro",
+      "B": "Alejandro González Iñárritu",
+      "C": "Alejandro Jodorowsky"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "This movie contains the quote, \"Houston, we have a problem.\"",
+    "options": {
+      "A": "Apollo 13",
+      "B": "The Right Stuff",
+      "C": "Capricorn One"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The killer in the 1981 film 'My Bloody Valentine' wears what sort of outfit?",
+    "options": {
+      "A": "Mining gear",
+      "B": "Clown costume",
+      "C": "Santa suit"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie \"Scream\" who is Ghost Face?",
+    "options": {
+      "A": "Billy Loomis and Stu Macher",
+      "B": "Dewey Riley",
+      "C": "Archie Prescott and Philip Marv"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of the following actors does not play a role in the movie \"The Usual Suspects?\"",
+    "options": {
+      "A": "Steve Buscemi",
+      "B": "Kevin Spacey",
+      "C": "Benicio Del Toro"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie \"Cast Away\" the main protagonist's best friend while on the island is named",
+    "options": {
+      "A": "Wilson",
+      "B": "Carson",
+      "C": "Willy"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The 2002 film \"28 Days Later\" is mainly set in which European country?",
+    "options": {
+      "A": "United Kingdom",
+      "B": "France",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the island that \"Jurassic Park\" is built on?",
+    "options": {
+      "A": "Isla Nublar",
+      "B": "Isla Muerta",
+      "C": "Isla Pena"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The film Mad Max: Fury Road features the Dies Irae  from which composer's requiem?",
+    "options": {
+      "A": "Verdi",
+      "B": "Berlioz",
+      "C": "Brahms"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which actor auditioned for the role of Luke Skywalker?",
+    "options": {
+      "A": "Kurt Russell",
+      "B": "Christopher Lambert",
+      "C": "James Remar"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which animated movie was first to feature a celebrity as a voice actor?",
+    "options": {
+      "A": "Aladdin",
+      "B": "Toy Story",
+      "C": "The Hunchback of Notre Dame"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Before \"Jurassic Park III\" was finalized and the Spinosaurus was chosen, which dinosaur was going to be the star?",
+    "options": {
+      "A": "Baryonyx",
+      "B": "Velociraptor",
+      "C": "Suchomimus"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How old was Laurence Fishburne when Francis Ford Coppola cast him in Apocalypse Now (1979)?",
+    "options": {
+      "A": "14",
+      "B": "16",
+      "C": "20"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What three movies, in order from release date, make up the \"Dollars Trilogy\"?",
+    "options": {
+      "A": "\"A Fistful of Dollars\", \"For a Few Dollars More\", \"The Good, the Bad, and the Ugly\"",
+      "B": "\"The Good, the Bad, and the Ugly\", \"For A Few Dollars More\", \"A Fistful of Dollars\"",
+      "C": "\"For a Few Dollars More\", \"A Fistful of Dollars\", \"The Good, the Bad, and the Ugly\""
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Johnny Depp made his big-screen acting debut in which film?",
+    "options": {
+      "A": "A Nightmare on Elm Street",
+      "B": "My Bloody Valentine",
+      "C": "Halloween"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 2012 film, \"The Lorax\", who is the antagonist?",
+    "options": {
+      "A": "Aloysius O'Hare",
+      "B": "Ted Wiggins",
+      "C": "Grammy Norma"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In The Lord of the Rings: The Fellowship of the Ring, which one of the following characters from the book was left out of the film?",
+    "options": {
+      "A": "Tom Bombadil",
+      "B": "Strider",
+      "C": "Barliman Butterbur"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did Clint Eastwood star as Inspector Harry Callahan in the film \"Dirty Harry\"?",
+    "options": {
+      "A": "1971",
+      "B": "1975",
+      "C": "1983"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Peter Jackson's film series \"The Lord of the Rings\" was shot entirely in which country?",
+    "options": {
+      "A": "New Zealand",
+      "B": "Canada",
+      "C": "Iceland"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Star Wars, what's the name of the new Government created after the defeat of the Galactic Empire?",
+    "options": {
+      "A": "The New Republic",
+      "B": "The Crimson Dawn",
+      "C": "The First Order"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 1979 British film \"Quadrophenia\" what is the name of the seaside city the mods are visiting?",
+    "options": {
+      "A": "Mousehole",
+      "B": "Bridlington",
+      "C": "Brighton"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Which 90's comedy cult classic features cameos appearances from Meat Loaf, Alice Cooper and Chris Farley?",
+    "options": {
+      "A": "Wayne's World",
+      "B": "Bill & Ted's Excellent Adventure",
+      "C": "Austin Powers: International Man of Mystery"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played Sgt. Gordon Elias in 'Platoon' (1986)?",
+    "options": {
+      "A": "Willem Dafoe",
+      "B": "Charlie Sheen",
+      "C": "Matt Damon"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie \"Back to the Future,\" what speed does Doc Brown's DeLorean need to reach in order to travel through time?",
+    "options": {
+      "A": "88 mph",
+      "B": "77 mph",
+      "C": "70 mph"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year was the movie \"Police Academy\" released?",
+    "options": {
+      "A": "1984",
+      "B": "1986",
+      "C": "1983"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "When does \"Rogue One: A Star Wars Story\" take place chronologically in the series?",
+    "options": {
+      "A": "Between Episode 3 and 4",
+      "B": "After Episode 6",
+      "C": "Before Episode 1"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What movie starring Bruce Willis contains the line \"I see dead people\"?",
+    "options": {
+      "A": "The Sixth Sense",
+      "B": "Die Hard",
+      "C": "Armageddon"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who directed Marvel's Avengers Endgame?",
+    "options": {
+      "A": "The Russo Brothers",
+      "B": "Josh Whedon",
+      "C": "Kevin Feige"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What did Alfred Hitchcock use as blood in the film \"Psycho\"?",
+    "options": {
+      "A": "Chocolate syrup",
+      "B": "Red food coloring",
+      "C": "Maple syrup"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the film \"Interstellar\", how long did they spend on Miller's planet?",
+    "options": {
+      "A": "23 years, 4 months, and 8 days",
+      "B": "15 years, 2 months, and 15 days",
+      "C": "10 months and 6 days"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who is revealed to be the villain at the end of the first live action Scooby Doo movie?",
+    "options": {
+      "A": "Scrappy Doo",
+      "B": "Old Man Mason",
+      "C": "Fred"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 2012, which movie won every category in the 32nd \"Golden Raspberry Awards\"?",
+    "options": {
+      "A": "Jack and Jill",
+      "B": "The Girl with the Dragon Tattoo",
+      "C": "Thor"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which actress portrayed Dr. Grace Augustine in the James Cameron movie \"Avatar\"?",
+    "options": {
+      "A": "Sigourney Weaver",
+      "B": "Jessica Chastain",
+      "C": "Alyssa Monroe"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Max Schreck, a famous German silent film actor, plays a famous monster in which 1922 film?",
+    "options": {
+      "A": "Nosferatu",
+      "B": "Frankenstein",
+      "C": "The Headless Horseman"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What year did the movie \"Napoleon Dynamite\" come out?",
+    "options": {
+      "A": "2004",
+      "B": "2002",
+      "C": "2005"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 2002 film \"Kung Pow! Enter the Fist\", why was Wimp Lo purposely trained wrong?",
+    "options": {
+      "A": "As a joke",
+      "B": "Revenge",
+      "C": "To test him"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movie includes a giant bunny-like spirit who has magic powers including growing trees?",
+    "options": {
+      "A": "My Neighbor Totoro",
+      "B": "Hop",
+      "C": "Rise of the Guardians"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was Bruce Campbell's iconic one-liner after getting a chainsaw hand in Evil Dead 2?",
+    "options": {
+      "A": "Groovy.",
+      "B": "Perfect.",
+      "C": "Nice."
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Ed Koch, the Mayor of New York in 1984, played himself in which Muppets movie?",
+    "options": {
+      "A": "The Muppets Take Manhattan",
+      "B": "The Muppet Christmas Carol",
+      "C": "The Muppet Movie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of the actor who played Leatherface in the 1974 horror film, The Texas Chainsaw Massacre?",
+    "options": {
+      "A": "Gunnar Hansen",
+      "B": "John Dugan",
+      "C": "Joe Bill Hogan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the 1974 Christmas flick \"The Year Without a Santa Claus,\" what are the names of the two elves who help Mrs. Claus save Christmas?",
+    "options": {
+      "A": "Jingle & Jangle",
+      "B": "Holly & Jolly",
+      "C": "Snowflake & Icicle"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Velma Kelly and Roxie Hart are the protagonists of which Oscar winning movie?",
+    "options": {
+      "A": "Chicago",
+      "B": "Cabaret",
+      "C": "All That Jazz"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was another suggested name for, the 1985 film, Back to the Future?",
+    "options": {
+      "A": "Spaceman From Pluto",
+      "B": "Hill Valley Time Travelers",
+      "C": "The Time Travelers"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which film does Humphrey Bogart say the famous line, \"Here's looking at you, kid\"?",
+    "options": {
+      "A": "Casablanca",
+      "B": "The Maltese Falcon",
+      "C": "The Treasure of the Sierra Madre"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who in Pulp Fiction says \"No, they got the metric system there, they wouldn't know what the f*** a Quarter Pounder is.\"",
+    "options": {
+      "A": "Vincent Vega",
+      "B": "Jules Winnfield",
+      "C": "Jimmie Dimmick"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What type of cheese, loved by Wallace and Gromit, had it's sale prices rise after their successful short films?",
+    "options": {
+      "A": "Cheddar",
+      "B": "Edam",
+      "C": "Wensleydale"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "Which one of these films did David Lynch direct, but not write?",
+    "options": {
+      "A": "The Straight Story",
+      "B": "Lost Highway",
+      "C": "Twin Peaks Fire Walk With Me"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The 1939 movie \"The Wizard of Oz\" contained a horse that changed color, what material did they use to achieve this effect?",
+    "options": {
+      "A": "Gelatin",
+      "B": "Paint",
+      "C": "CGI Effect"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the last Marx Brothers film to feature Zeppo?",
+    "options": {
+      "A": "Duck Soup",
+      "B": "A Day at the Races",
+      "C": "Monkey Business"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was Humphrey Bogart's middle name?",
+    "options": {
+      "A": "DeForest",
+      "B": "DeWinter",
+      "C": "Steven"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was Marilyn Monroe`s character's first name in the film \"Some Like It Hot\"?",
+    "options": {
+      "A": "Sugar",
+      "B": "Caramel",
+      "C": "Candy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the 2014 film \"Birdman\", what is the primary instrument in the score?",
+    "options": {
+      "A": "Drums",
+      "B": "Saxophone",
+      "C": "Violin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the movie \"V for Vendetta,\" what is the date that masked vigilante \"V\" urges people to remember?",
+    "options": {
+      "A": "November 5th",
+      "B": "November 6th",
+      "C": "September 5th"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Mean Girls\", who has breasts that tell when it's raining?",
+    "options": {
+      "A": "Karen Smith",
+      "B": "Gretchen Weiners",
+      "C": "Cady Heron"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "After India, which country produces the second most movies per year?",
+    "options": {
+      "A": "Nigeria",
+      "B": "United States",
+      "C": "France"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What American actor directed and co-starred alongside Emily Blunt in 2018's horror film \"A Quiet Place\"?",
+    "options": {
+      "A": "John Krasinski",
+      "B": "Keanu Reeves",
+      "C": "Josh Brolin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the Friday The 13th series, what is Jason's mother's first name?",
+    "options": {
+      "A": "Pamela",
+      "B": "Mary",
+      "C": "Angeline"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who directed the movie \"Alien\"?",
+    "options": {
+      "A": "Ridley Scott",
+      "B": "Christopher Nolan",
+      "C": "James Cameron"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which James Bond film had the theme song written and performed by English singer-songwriter Adele?",
+    "options": {
+      "A": "Skyfall",
+      "B": "Quantum Solace",
+      "C": "Spectre"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who did the score to the original Blade Runner?",
+    "options": {
+      "A": "Vangelis",
+      "B": "Kitaro",
+      "C": "Yanni"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In order to cut costs, what were most of the extras of Mad Max (1979) paid with?",
+    "options": {
+      "A": "Beer",
+      "B": "Fast food",
+      "C": "They weren't paid"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which famous singer was portrayed by actor Kevin Spacey in the 2004 biographical film \"Beyond the Sea\"?",
+    "options": {
+      "A": "Bobby Darin",
+      "B": "Frank Sinatra",
+      "C": "Dean Martin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"ALF\", what was ALF's real name?",
+    "options": {
+      "A": "Gordon Shumway",
+      "B": "Gordon Foster",
+      "C": "Gordon von Gam"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the movie \"Spaceballs\", what are the Spaceballs attempting to steal from Planet Druidia?",
+    "options": {
+      "A": "Air",
+      "B": "The Schwartz",
+      "C": "Meatballs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of these Disney classics was released in 1970?",
+    "options": {
+      "A": "The Aristocats",
+      "B": "One Hundred and One Dalmatians",
+      "C": "The Fox and the Hound"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the orange and white bot's name in \"Star Wars: The Force Awakens\"?",
+    "options": {
+      "A": "BB-8",
+      "B": "BB-3",
+      "C": "R2-D2"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who plays \"Bruce Wayne\" in the 2008 movie \"The Dark Knight\"?",
+    "options": {
+      "A": "Christian Bale",
+      "B": "Michael Caine",
+      "C": "Heath Ledger"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "\"The first rule is: you don't talk about it\" is a reference to which movie?",
+    "options": {
+      "A": "Fight Club",
+      "B": "The Island",
+      "C": "American Pie"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What mutated animals act as monsters in the movie 'Night of the Lepus'?",
+    "options": {
+      "A": "Rabbits",
+      "B": "Dogs",
+      "C": "Rats"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the film \"John Wick\" why does John Wick get out of retirement?",
+    "options": {
+      "A": "His puppy is killed and his car was stolen",
+      "B": "He was punched in the face",
+      "C": "He needed money"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actor plays Obi-Wan Kenobi in Star Wars Episodes I-III?",
+    "options": {
+      "A": "Ewan McGregor",
+      "B": "Alec Guinness",
+      "C": "Hayden Christensen"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Avengers: Infinity War, where was the Soul Stone located?",
+    "options": {
+      "A": "Vormir",
+      "B": "Xandar",
+      "C": "Asgard"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who starred as Bruce Wayne and Batman in Tim Burton's 1989 movie \"Batman\"?",
+    "options": {
+      "A": "Michael Keaton",
+      "B": "George Clooney",
+      "C": "Val Kilmer"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "According to \"Star Wars\" lore, which planet does Obi-Wan Kenobi come from?",
+    "options": {
+      "A": "Stewjon",
+      "B": "Alderaan",
+      "C": "Tatooine"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In what Disney movie can you spot the character \"Pac-Man\" in if you look closely enough in some scenes?",
+    "options": {
+      "A": "Tron",
+      "B": "Big Hero 6",
+      "C": "Fantasia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which DC superhero was NOT included in the 2017 movie \"Justice League\"?",
+    "options": {
+      "A": "Green Arrow",
+      "B": "Batman",
+      "C": "Cyborg"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "This trope refers to minor characters that are killed off to show how a monster works.",
+    "options": {
+      "A": "Red Shirt",
+      "B": "Minions",
+      "C": "Cannon Fodder"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actress danced the twist with John Travolta in 'Pulp Fiction'?",
+    "options": {
+      "A": "Uma Thurman",
+      "B": "Pam Grier",
+      "C": "Bridget Fonda"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Lord of the Rings: The Two Towers, where are the party of orcs taking the hobbits?",
+    "options": {
+      "A": "Isengard",
+      "B": "Rivendell",
+      "C": "Mordor"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Brendan Fraser starred in the following movies, except which one?",
+    "options": {
+      "A": "Titanic",
+      "B": "Encino Man",
+      "C": "Mrs. Winterbourne"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who is the main protagonist in, the 1985 film, Back to the Future?",
+    "options": {
+      "A": "Marty McFly",
+      "B": "Biff Tannen",
+      "C": "George McFly"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What did the first moving picture depict?",
+    "options": {
+      "A": "A galloping horse",
+      "B": "A woman in a dress",
+      "C": "A crackling fire"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these actors have NOT played Spiderman in the movies?",
+    "options": {
+      "A": "Michael Cera",
+      "B": "Andrew Garfield",
+      "C": "Tom Holland"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who directed the 1973 film \"American Graffiti\"?",
+    "options": {
+      "A": "George Lucas",
+      "B": "Ron Howard",
+      "C": "Steven Spielberg"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the \"Jurassic Park\" universe, when did \"Jurassic Park: San Diego\" begin construction?",
+    "options": {
+      "A": "1985",
+      "B": "1988",
+      "C": "1993"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which one of these actors is said to be cut from the film 'E.T. the Extra-Terrestrial'?",
+    "options": {
+      "A": "Harrison Ford",
+      "B": "Andy Kaufman",
+      "C": "Arnold Schwarzenegger"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Batman villain is Mark Hamill known for having voiced?",
+    "options": {
+      "A": "The Joker",
+      "B": "Two-Face",
+      "C": "Bane"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which film has been critically regarded as the best film of all time?",
+    "options": {
+      "A": "Citizen Kane",
+      "B": "Avatar",
+      "C": "The Room"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which 1958 movie starred Kirk Douglas and Tony Curtis as half-brothers Einar and Eric?",
+    "options": {
+      "A": "The Vikings",
+      "B": "The Long Ships",
+      "C": "Prince Valiant"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What name did Tom Hanks give to his volleyball companion in the film `Cast Away`?",
+    "options": {
+      "A": "Wilson",
+      "B": "Friday",
+      "C": "Billy"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which musical artist had a prominent role in the 2017 film \"Kingsman: The Golden Circle\"?",
+    "options": {
+      "A": "Elton John",
+      "B": "Rihanna",
+      "C": "Justin Bieber"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "About how much money did it cost for Tommy Wiseau to make his masterpiece \"The Room\" (2003)?",
+    "options": {
+      "A": "$6 Million",
+      "B": "$20,000",
+      "C": "$1 Million"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the \"Jurassic Park\" universe, what was the first dinosaur cloned by InGen in 1986?",
+    "options": {
+      "A": "Velociraptor",
+      "B": "Triceratops",
+      "C": "Brachiosaurus"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the first feature-length computer-animated movie?",
+    "options": {
+      "A": "Toy Story",
+      "B": "Tron",
+      "C": "101 Dalmatians"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Friday The 13th series, what year did Jason drown in?",
+    "options": {
+      "A": "1957",
+      "B": "1955",
+      "C": "1953"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who portrayed Han Solo in the Star Wars main film series?",
+    "options": {
+      "A": "Harrison Ford",
+      "B": "Peter Cushing",
+      "C": "Mark Hamill"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the 1986 film \"The Wraith\", what concept car is used for the Turbo Interceptor?",
+    "options": {
+      "A": "Dodge M4S",
+      "B": "Pontiac Banshee",
+      "C": "General Motors Firebird"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the fictional retro-mod band starring Austin Powers as the lead vocalist?",
+    "options": {
+      "A": "Ming Tea",
+      "B": "Cough Fi",
+      "C": "Mister E"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which was the first of Alfred Hitchcock's movies to be filmed in colour?",
+    "options": {
+      "A": "Rope",
+      "B": "Psycho",
+      "C": "Rebecca"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the oldest Disney film?",
+    "options": {
+      "A": "Snow White and the Seven Dwarfs",
+      "B": "Pinocchio",
+      "C": "Fantasia"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What superhero has been played in film by actors Michael Keaton, Val Kilmer, George Clooney and Christian Bale?",
+    "options": {
+      "A": "Batman",
+      "B": "Superman",
+      "C": "Iron Man"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the name of the planet in \"Aliens\"?",
+    "options": {
+      "A": "LV-426",
+      "B": "FR-838",
+      "C": "DI-621"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who played the Cenobite called \"Pinhead\" in the original Hellraiser films?",
+    "options": {
+      "A": "Doug Bradley",
+      "B": "Doug Jones",
+      "C": "Doug Savant"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which singer is portrayed by Bruce Campbell in the 2002 film 'Bubba Ho-Tep'?",
+    "options": {
+      "A": "Elvis Presley",
+      "B": "Hank Williams, Sr.",
+      "C": "Buddy Holly"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In Big Hero 6, what fictional city is the Big Hero 6 from?",
+    "options": {
+      "A": "San Fransokyo",
+      "B": "San Tokyo",
+      "C": "Sankyo"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Star Trek\", what is the Ferengi's First Rule of Acquisition?",
+    "options": {
+      "A": "Once you have their money, you never give it back.",
+      "B": "Never place friendship above profit",
+      "C": "Greed is Eternal"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Prior to working at Wizards of the Coast, \"Mark Rosewater\" was a writer for which show?",
+    "options": {
+      "A": "Roseanne",
+      "B": "Boy Meets World",
+      "C": "The X-Files"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In Breaking Bad, the initials W.W. refer to which of the following?",
+    "options": {
+      "A": "Walter White",
+      "B": "Willy Wonka",
+      "C": "Wally Walrus"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who co-founded the YouTube Let's Play channel \"Game Grumps\" alongside Newgrounds animator Egoraptor?",
+    "options": {
+      "A": "JonTron",
+      "B": "Pewdiepie",
+      "C": "Markiplier"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which British writer wrote for both Doctor Who and Sherlock?",
+    "options": {
+      "A": "Steven Moffatt",
+      "B": "Russell T Davies",
+      "C": "Toby Whithouse"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the original Star Trek TV series, what was Captain James T. Kirk's middle name?",
+    "options": {
+      "A": "Tiberius",
+      "B": "Trevor",
+      "C": "Tyrone"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In season one of the Netflix political drama \"House of Cards\", what government position does Frank Underwood hold?",
+    "options": {
+      "A": "House Majority Whip",
+      "B": "Attorney General",
+      "C": "Chief of Staff"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the planet that the Doctor from television series \"Doctor Who\" comes from?",
+    "options": {
+      "A": "Gallifrey",
+      "B": "Skaro",
+      "C": "Mondas"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "This composer worked on the 2003 TV series Battlestar Galatica.",
+    "options": {
+      "A": "Bear McCreary",
+      "B": "Ramin Djawadi",
+      "C": "Harry Gregson-Williams"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "On the NBC show Community, whose catch-phrase was \"Pop! Pop!\"?",
+    "options": {
+      "A": "Magnitude",
+      "B": "Leonard",
+      "C": "Senoir Chang"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which company has exclusive rights to air episodes of the \"The Grand Tour\"?",
+    "options": {
+      "A": "Amazon",
+      "B": "BBC",
+      "C": "CCTV"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Game of Thrones what is the name of Jon Snow's sword?",
+    "options": {
+      "A": "Longclaw",
+      "B": "Oathkeeper",
+      "C": "Widow's Wail"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the winner of the 2016 WWE Royal Rumble?",
+    "options": {
+      "A": "Triple H",
+      "B": "AJ Styles",
+      "C": "Dean Ambrose"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these characters in \"Stranger Things\" has the power of Telekinesis?",
+    "options": {
+      "A": "Eleven",
+      "B": "Mike",
+      "C": "Lucas"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In AMC's TV Series \"The Walking Dead\" what are \"Zombies\" referred to as?",
+    "options": {
+      "A": "Walkers",
+      "B": "Creepers",
+      "C": "Hell Pigs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What actor portrays Hogan \"Wash\" Washburne in the TV Show Firefly?",
+    "options": {
+      "A": "Alan Tudyk",
+      "B": "Nathan Fillion",
+      "C": "Sean Maher"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What year was Netflix founded?",
+    "options": {
+      "A": "1997",
+      "B": "2004",
+      "C": "2001"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"It's Always Sunny in Philadelphia\" what was the name of Frank's wrestling persona?",
+    "options": {
+      "A": "The Trash Man",
+      "B": "Bird of War",
+      "C": "The Maniac"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which PBS station was the first station to air \"Monty Python's Flying Circus\" (1969-1974) in the United States?",
+    "options": {
+      "A": "KERA (Dallas-Fort Worth)",
+      "B": "KLCS (Los Angeles)",
+      "C": "WNET (New York City)"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the Black Mirror episode \"Bandersnatch\", PAC-MAN stands for:",
+    "options": {
+      "A": "Program And Control Man",
+      "B": "Postgraduate Aplications Centre Man",
+      "C": "Political Action Committee Man"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many seasons did the TV show \"Donkey Kong Country\" last?",
+    "options": {
+      "A": "2",
+      "B": "1",
+      "C": "5"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of Chris's brother in \"Everybody Hates Chris\"?",
+    "options": {
+      "A": "Drew",
+      "B": "Jerome",
+      "C": "Greg"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the title of The Allman Brothers Band instrumental used as the theme to the BBC motoring show, 'Top Gear'?",
+    "options": {
+      "A": "Jessica",
+      "B": "Erica",
+      "C": "Sandra"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of the following was not an actor/actress on the American television show \"Saturday Night Live\" in Season 42?",
+    "options": {
+      "A": "Tina Fey",
+      "B": "Kate McKinnon",
+      "C": "Sasheer Zamata"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the TV show 'M*A*S*H', what was the nickname of Corporal Walter O'Reilly?",
+    "options": {
+      "A": "Radar",
+      "B": "Hot Lips",
+      "C": "Trapper"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The first half-hour CGI cartoon, ReBoot, aired on which year?",
+    "options": {
+      "A": "1994",
+      "B": "1993",
+      "C": "1998"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+    "options": {
+      "A": "George Clooney",
+      "B": "Dennis Miller",
+      "C": "Pierce Brosnan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the show 'Doctor Who', what is the name of the time-capsule model stolen by 'the Doctor'?",
+    "options": {
+      "A": "TT Type 40, Mark 3 (TARDIS)",
+      "B": "TT Type 1, Mark 3 (TARDIS)",
+      "C": "TT Type 40, Mark 5 (TARDIS)"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the show Stranger Things, what is Eleven's favorite breakfast food?",
+    "options": {
+      "A": "Eggo Waffles",
+      "B": "Captain Crunch",
+      "C": "Bacon and Eggs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the TV Show \"Donkey Kong Country\", which episode did the song \"Eddie, Let Me Go Back To My Home\" play in?",
+    "options": {
+      "A": "It's a Wonderful Life",
+      "B": "Message In A Bottle Show",
+      "C": "Ape-Nesia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Grant Gustin plays which superhero on the CW show of the same name?",
+    "options": {
+      "A": "The Flash",
+      "B": "The Arrow",
+      "C": "Daredevil"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Star Trek universe, what color is Vulcan blood?",
+    "options": {
+      "A": "Green",
+      "B": "Red",
+      "C": "Purple"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Star Trek: Voyager\", which episode did Voyager establish real-time communication with Starfleet Headquarters?",
+    "options": {
+      "A": "Pathfinder",
+      "B": "Message In A Bottle",
+      "C": "Counterpoint"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country does the YouTuber \"SinowBeats\" originate from?",
+    "options": {
+      "A": "Scotland",
+      "B": "England",
+      "C": "Germany"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In the show \"The Office\" who does Michael Scott eventually end up with?",
+    "options": {
+      "A": "Holly Flax",
+      "B": "Angela Martin",
+      "C": "Pam Beesly"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What breed of dog is \"Scooby Doo\"?",
+    "options": {
+      "A": "Great Dane",
+      "B": "Pit bull",
+      "C": "Doberman Pinscher"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"The Simpsons\", what is the real name of \"Comic Book Guy\"?",
+    "options": {
+      "A": "Jeff Albertson",
+      "B": "Edward Stone",
+      "C": "Jack Richardson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the UK \"Who Wants to be a Millionaire?\" cheating scandal known as?",
+    "options": {
+      "A": "Major Fraud",
+      "B": "Ingram Cheater",
+      "C": "Millionaire Crime"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the callsign of Commander William Adama in Battlestar Galactica (2004)?",
+    "options": {
+      "A": "Husker",
+      "B": "Starbuck",
+      "C": "Apollo"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What country is Cory in the House set in?",
+    "options": {
+      "A": "The United States of America",
+      "B": "Canada",
+      "C": "Venezuala"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the name of the the first episode of Doctor Who to air in 1963?",
+    "options": {
+      "A": "An Unearthly Child",
+      "B": "The Daleks",
+      "C": "The Edge of Destruction"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Game of Thrones, what continent lies across the Narrow Sea from Westeros?",
+    "options": {
+      "A": "Essos",
+      "B": "Easteros",
+      "C": "Westereast"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following actors portrayed the Ninth Doctor in the British television show \"Doctor Who\"?",
+    "options": {
+      "A": "Christopher Eccleston",
+      "B": "Matt Smith",
+      "C": "Tom Baker"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is Meg's full name in \"Family Guy\"?",
+    "options": {
+      "A": "Megatron Griffin",
+      "B": "Who-Cares Griffin",
+      "C": "Neil Griffin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Two and a Half Men, what is Alan Harper's son's name?",
+    "options": {
+      "A": "Jake",
+      "B": "John",
+      "C": "James"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who sang the theme song for the TV show 'Rawhide'?",
+    "options": {
+      "A": "Frankie Laine",
+      "B": "Tennessee Ernie Ford",
+      "C": "Slim Whitman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Guy's Grocery Games is hosted by which presenter?",
+    "options": {
+      "A": "Guy Fieri",
+      "B": "Guy Martin",
+      "C": "Guy Ritchie"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who played the sun baby in the original run of Teletubbies?",
+    "options": {
+      "A": "Jessica Smith",
+      "B": "Pui Fan Lee",
+      "C": "Lisa Brockwell"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How many seasons did \"Stargate SG-1\" have?",
+    "options": {
+      "A": "10",
+      "B": "7",
+      "C": "12"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Spongebob Squarepants,\" what is Mr. Krabs' full name?",
+    "options": {
+      "A": "Eugene H. Krabs",
+      "B": "Eugene J. Krabs",
+      "C": "Eugene D. Krabs"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who plays the character of Dennis Reynolds on It's Always Sunny in Philadelphia?",
+    "options": {
+      "A": "Glenn Howerton",
+      "B": "Charlie Day",
+      "C": "Danny DeVito"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the TV show \"Cheers\", Sam Malone was a former relief pitcher for which baseball team?",
+    "options": {
+      "A": "Boston Red Sox",
+      "B": "Baltimore Orioles",
+      "C": "Milwaukee Brewers"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Star Trek\", what sauce is commonly used by Klingons on bregit lung?",
+    "options": {
+      "A": "Grapok sauce",
+      "B": "Gazorpazorp pudding",
+      "C": "Sweet chili sauce"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "On the show \"Rick and Morty\", in episode \"Total Rickall\", who was a parasite?",
+    "options": {
+      "A": "Pencilvester",
+      "B": "Beth Smith",
+      "C": "Mr. Poopy Butthole"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The HBO series \"Game of Thrones\" is based on which series of books?",
+    "options": {
+      "A": "A Song of Ice and Fire",
+      "B": "The Wheel of Time",
+      "C": "Harry Potter"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the \"Flash\" and \"Arrow\" spinoff featuring a team of characters that have appeared on both shows?",
+    "options": {
+      "A": "Legends of Tomorrow",
+      "B": "Heroes of Tomorrow",
+      "C": "The Justice Society of America"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How long was Ken Jennings' win streak on Jeopardy?",
+    "options": {
+      "A": "74",
+      "B": "49",
+      "C": "62"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the television show Breaking Bad, what is the street name of Walter and Jesse's notorious product?",
+    "options": {
+      "A": "Baby Blue",
+      "B": "Rock Candy",
+      "C": "Blue Sky"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the mad scientist who owns Planet Express in Futurama?",
+    "options": {
+      "A": "Hubert J. Farnsworth",
+      "B": "Philip J. Fry",
+      "C": "Ogden Wernstrom"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which actor portrays \"Walter White\" in the series \"Breaking Bad\"?",
+    "options": {
+      "A": "Bryan Cranston",
+      "B": "Andrew Lincoln",
+      "C": "Aaron Paul"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which track by \"Massive Attack\" is used for the theme of \"House\"?",
+    "options": {
+      "A": "Teardrop",
+      "B": "Protection",
+      "C": "Black Milk"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who played Agent Fox Mulder in the TV sci-fi drama \"The X-Files\"?",
+    "options": {
+      "A": "David Duchovny",
+      "B": "Gillian Anderson",
+      "C": "Robert Patrick"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the star of the TV series \"24\"?",
+    "options": {
+      "A": "Kiefer Sutherland",
+      "B": "Kevin Bacon",
+      "C": "Hugh Laurie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Naruto: Shippuden, which of the following elements is a \"Kekkei Tōta?\"",
+    "options": {
+      "A": "Particle Style",
+      "B": "Any Doujutsu",
+      "C": "Shadow Style"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these television shows makes everyone look under their chair?",
+    "options": {
+      "A": "Oprah",
+      "B": "Saturday Night Live",
+      "C": "Larry Rubert"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the race horse that Tony Soprano becomes attached to?",
+    "options": {
+      "A": "Pie-O-My",
+      "B": "Bada Bing",
+      "C": "Honest Earnings"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which British seaside town was the BBC sitcom \"Fawlty Towers\" set?",
+    "options": {
+      "A": "Torquay",
+      "B": "Blackpool",
+      "C": "Great Yarmouth"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first ever actor to play \"The Doctor\" on \"Doctor Who\"?",
+    "options": {
+      "A": "William Hartnell",
+      "B": "Peter Capaldi",
+      "C": "Tom Baker"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the television show \"Lazy Town\", who is the actor of Robbie Rotten?",
+    "options": {
+      "A": "Stefán Stefánsson",
+      "B": "Magnús Scheving",
+      "C": "Stephen Carl"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of following is rude and dishonorable by Klingon standards?",
+    "options": {
+      "A": "Taking his D'k tahg",
+      "B": "Reaching over and taking his meal",
+      "C": "Punching him and taking his ship station position"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Alan Reed is known for providing the voice of which character?",
+    "options": {
+      "A": "Fred Flintstone",
+      "B": "Bugs Bunny",
+      "C": "Fangface"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "From what show is the character \"James Doakes\"?",
+    "options": {
+      "A": "Boardwalk Empire",
+      "B": "The Walking Dead",
+      "C": "Dexter"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What TV show featured older women named Blanche, Rose, Dorothy and Sophia?",
+    "options": {
+      "A": "The Golden Girls",
+      "B": "The Wonder Years",
+      "C": "Family Ties"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the setting of the show \"Parks and Recreation\"?",
+    "options": {
+      "A": "Pawnee, Indiana",
+      "B": "Eagleton, Indiana",
+      "C": "London, England"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the TV show \"Mad Men\", what was Donald Draper's birthname?",
+    "options": {
+      "A": "Richard \"Dick\" Whitman",
+      "B": "John Ashbury",
+      "C": "Michael \"Mikey\" Wilhelm"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which movie served as the KTMA pilot episode for the show \"Mystery Science Theater 3000\"?",
+    "options": {
+      "A": "The Green Slime",
+      "B": "The Crawling Eye",
+      "C": "Plan 9 From Outer Space"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which boxing personality was one of the presenters in the 1999 revival of It's a Knockout?",
+    "options": {
+      "A": "Frank Bruno",
+      "B": "Henry Cooper",
+      "C": "Joe Fraiser"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Star Trek race advances itself through assimilation?",
+    "options": {
+      "A": "Borg",
+      "B": "Betazoid",
+      "C": "Klingon"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the Sci-Fi television show Doctor Who, who plays the Tenth Doctor?",
+    "options": {
+      "A": "David Tennant",
+      "B": "Peter Capaldi",
+      "C": "Peter Davison"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which race enjoys a glass of warm baghol in \"Star Trek\"?",
+    "options": {
+      "A": "Klingon",
+      "B": "Vulcan",
+      "C": "Botha"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In \"Breaking Bad\", Walter White is a high school teacher diagnosed with which form of cancer?",
+    "options": {
+      "A": "Lung Cancer",
+      "B": "Prostate Cancer",
+      "C": "Testicular Cancer"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Game of Thrones, what is Littlefinger's real name?",
+    "options": {
+      "A": "Petyr Baelish",
+      "B": "Podrick Payne",
+      "C": "Torrhen Karstark"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What Nickelodeon game show featured a house on the set that the contestants would ransack to find hidden objects?",
+    "options": {
+      "A": "Finders Keepers",
+      "B": "Nickelodeon Guts",
+      "C": "Nick Arcade"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the real name of the famous spanish humorist, El Risitas?",
+    "options": {
+      "A": "Juan Joya Borga",
+      "B": "Gabriel Garcia Marquez",
+      "C": "Jesus Quintero"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the TV series \"Person of Interest\", who plays the character \"Harold Finch\"?",
+    "options": {
+      "A": "Michael Emerson",
+      "B": "Jim Caviezel",
+      "C": "Taraji P. Henson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In season one of the US Kitchen Nightmares, Gordan Ramsay tried to save 10 different restaurants. How many ended up closing afterwards?",
+    "options": {
+      "A": "9",
+      "B": "6",
+      "C": "0"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "At which university do \"The Big Bang Theory\" characters Mr. Wolowitz and Drs. Cooper, Hofstadter and Koothrappali work?",
+    "options": {
+      "A": "Caltech",
+      "B": "UCLA",
+      "C": "MIT"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "\"The A Team\" first aired in the USA and in the UK in what year?",
+    "options": {
+      "A": "1983",
+      "B": "1981",
+      "C": "1987"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who won the 10th season of Big Brother in the United States?",
+    "options": {
+      "A": "Dan Gheesling",
+      "B": "Adam Jasinski",
+      "C": "Hayden Moss"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "When did the TV show Rick and Morty first air on Adult Swim?",
+    "options": {
+      "A": "2013",
+      "B": "2014",
+      "C": "2016"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which former Coronation Street actress was once a hostess on the British Game Show \"Double Your Money\"?",
+    "options": {
+      "A": "Amanda Barrie",
+      "B": "Violet Carson",
+      "C": "Jean Alexander"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the original voice actor of Shaggy Rogers in Scooby-Doo?",
+    "options": {
+      "A": "Casey Kasem",
+      "B": "Dante Basco",
+      "C": "Frank Welker"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Star Trek, what is the name of Spock's father?",
+    "options": {
+      "A": "Sarek",
+      "B": "T'Pal",
+      "C": "Surak"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these Bojack Horseman characters is a human?",
+    "options": {
+      "A": "Todd Chavez",
+      "B": "Lennie Turtletaub",
+      "C": "Tom Jumbo-Grumbo"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Pat Cashman, the announcer for Super Smash Brothers: Brawl, also featured prominently in what famous TV show?",
+    "options": {
+      "A": "Bill Nye the Science Guy",
+      "B": "The Muppet Show",
+      "C": "Scooby-Doo"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 2008, British celebrity chef Gordon Ramsay believes he almost died after suffering what accident in Iceland while filming?",
+    "options": {
+      "A": "Slipping off a cliff, and nearly drowning in icy water",
+      "B": "Crash landing when arriving at Keflavík airport",
+      "C": "Being served under-cooked chicken at his hotel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the name of the police officer in the cartoon \"Top Cat\"?",
+    "options": {
+      "A": "Dibble",
+      "B": "Mahoney",
+      "C": "Murphy"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What year did the television company BBC officially launch the channel BBC One?",
+    "options": {
+      "A": "1936",
+      "B": "1948",
+      "C": "1955"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the show, Doctor Who, what does T.A.R.D.I.S stand for?",
+    "options": {
+      "A": "Time And Relative Dimensions In Space",
+      "B": "Time And Resting Dimensions In Space",
+      "C": "Toilet Aid Rope Dog Is Soup"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "On the NBC show Community what was Star Burns' real name?",
+    "options": {
+      "A": "Alex",
+      "B": "Todd",
+      "C": "Neal"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the surname of the character Daryl in AMC's show The Walking Dead?",
+    "options": {
+      "A": "Dixon",
+      "B": "Grimes",
+      "C": "Dicketson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In the show \"Futurama\" what is Fry's full name?",
+    "options": {
+      "A": "Philip J. Fry",
+      "B": "Fry J. Philip",
+      "C": "Fry Philip"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Star Trek\", what is the Klingon death ritual?",
+    "options": {
+      "A": "Look into sky and yell loudly in mourning.",
+      "B": "Shoot into space in a torpedo casing.",
+      "C": "Split the deceased's earnings between bloodkin."
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many seasons did the Sci-Fi television show \"Stargate Universe\" have?",
+    "options": {
+      "A": "2",
+      "B": "5",
+      "C": "3"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In DuckTales, what is the name of the city where all the main characters live?",
+    "options": {
+      "A": "Duckburg",
+      "B": "Duckwing",
+      "C": "Wingford"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the show \"Tengen Toppa Gurren Lagann\" what is the name of the character who force everyone to live underground?",
+    "options": {
+      "A": "Lordgenome",
+      "B": "Kingloname",
+      "C": "King Loname"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In the cartoon 'SpongeBob SquarePants', what did the acronym E.V.I.L stand for?",
+    "options": {
+      "A": "Every Villain Is Lemons",
+      "B": "Every Villain Is Limes",
+      "C": "Each Villain Is Lemonade"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Star Trek\", who was the founder of the Klingon Empire and its philosophy?",
+    "options": {
+      "A": "Kahless the Unforgettable",
+      "B": "Molor the Unforgiving",
+      "C": "Dahar Master Kor"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "How many seasons did the Sci-Fi television show \"Stargate Atlantis\" have?",
+    "options": {
+      "A": "5",
+      "B": "2",
+      "C": "7"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which character does voice actress Tara Strong NOT voice?",
+    "options": {
+      "A": "Bubbles (2016)",
+      "B": "Timmy Turner",
+      "C": "Harley Quinn"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In \"Donkey Kong Country\", why does Donkey Kong want to know the secret of the crystal coconut?",
+    "options": {
+      "A": "He's the big kahuna.",
+      "B": "To find out where all the bananas are.",
+      "C": "Because Diddy Kong forced him."
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who composed the theme song for The Simpsons?",
+    "options": {
+      "A": "Danny Elfman",
+      "B": "John Williams",
+      "C": "Hans Zimmer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the winner of \"Big Brother\" Season 10?",
+    "options": {
+      "A": "Dan Gheesling",
+      "B": "Bryce Kranyik",
+      "C": "Chris Mundorf"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What's Dr. Doofenshmirtz first name?",
+    "options": {
+      "A": "Heinz",
+      "B": "Hans",
+      "C": "Heidi"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does Bart sell his soul for in The Simpsons episode 'Bart Sells His Soul'?",
+    "options": {
+      "A": "$5",
+      "B": "A Copy of Bonestorm 2",
+      "C": "A Giant Gobstopper"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the pirate that sings the intro to \"Spongebob Squarepants\"?",
+    "options": {
+      "A": "Painty",
+      "B": "Lloyd",
+      "C": "Larry"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which show is known for the songs \"You are a Pirate\", \"Cooking by the Book\" and \"We Are Number One\"?",
+    "options": {
+      "A": "LazyTown",
+      "B": "DuckTales",
+      "C": "Tom and Jerry"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following won the first season of American Idol in 2002?",
+    "options": {
+      "A": "Kelly Clarkson",
+      "B": "Justin Guarini",
+      "C": "Ruben Studdard"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+    "options": {
+      "A": "The Governor",
+      "B": "Rick Grimes",
+      "C": "Daryl Dixon"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which of the following Autobot names in Michael Bay's movies was NOT a name for a Transformer in the original 1980's cartoon?",
+    "options": {
+      "A": "Mudflap",
+      "B": "Skids",
+      "C": "Ratchet"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the name of the inflatable duck sacrified to the crowd at the end of Episode 34 of the 18th season of Big Brother?",
+    "options": {
+      "A": "Pablo",
+      "B": "Esteban",
+      "C": "Duckster"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "When Donkey Kong died in the \"Donkey Kong Country\" episode \"It's a Wonderful Life\", who was his guardian angel?",
+    "options": {
+      "A": "Eddie the Mean Old Yeti",
+      "B": "Kiddy Kong",
+      "C": "King K. Rool"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the date of original airing of the pilot episode of My Little Pony: Friendship is Magic?",
+    "options": {
+      "A": "October 10th, 2010",
+      "B": "April 14th, 1984",
+      "C": "May 18th, 2015"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In \"Rick And Morty\", who shot \"Mr. Poopybutthole\" in the episode \"Total Rickall\"?",
+    "options": {
+      "A": "Beth",
+      "B": "Rick",
+      "C": "Morty"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The 1985 Toyota Corolla \"AE86\" was the hero car for what anime?",
+    "options": {
+      "A": "Initial D",
+      "B": "Ghost MF",
+      "C": "Ex Driver"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Cesar Romero played which iconic Batman villain from the 1960's TV show?",
+    "options": {
+      "A": "The Joker",
+      "B": "The Riddler",
+      "C": "Mr. Freeze"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these Disney shows is classified as an anime?",
+    "options": {
+      "A": "Stitch!",
+      "B": "Cory in the House",
+      "C": "Hannah Montana"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which character was played by Dustin Diamond in the sitcom 'Saved by the Bell'?",
+    "options": {
+      "A": "Screech",
+      "B": "Zack",
+      "C": "A.C. Slater"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The \"Psycho\" series of videos on YouTube was created by which of the following?",
+    "options": {
+      "A": "RiDGiD STUDiOS",
+      "B": "Dan Bell",
+      "C": "Billy Familia"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In \"Breaking Bad,\" which main character was planned to be killed in Season 1 but wasn't because the show creator liked the actor?",
+    "options": {
+      "A": "Jesse Pinkman",
+      "B": "Saul Goodman",
+      "C": "Hank Schrader"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these in the Star Trek series is NOT Klingon food?",
+    "options": {
+      "A": "Gagh",
+      "B": "Hors d'oeuvre",
+      "C": "Racht"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In the original Doctor Who series (1963), fourth doctor Tom Baker's scarf was how long?",
+    "options": {
+      "A": "7 Meters",
+      "B": "10 Meters",
+      "C": "5 Meters"
+    },
+    "correct": "A",
+    "difficulty": 3
+  }
+]

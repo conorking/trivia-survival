@@ -1,0 +1,882 @@
+[
+  {
+    "q": "Which Shakespeare play features the characters Rosencrantz and Guildenstern?",
+    "options": {
+      "A": "Macbeth",
+      "B": "Hamlet",
+      "C": "Othello"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Pride and Prejudice'?",
+    "options": {
+      "A": "Emily Bronte",
+      "B": "Jane Austen",
+      "C": "Virginia Woolf"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In which language was 'Don Quixote' originally written?",
+    "options": {
+      "A": "Italian",
+      "B": "Spanish",
+      "C": "Portuguese"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who is the author of the Harry Potter series?",
+    "options": {
+      "A": "J.R.R. Tolkien",
+      "B": "J.K. Rowling",
+      "C": "C.S. Lewis"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which word means the opposite of 'benevolent'?",
+    "options": {
+      "A": "Malevolent",
+      "B": "Generous",
+      "C": "Kind"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a group of crows called?",
+    "options": {
+      "A": "A murder",
+      "B": "A flock",
+      "C": "A gaggle"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Odyssey' and 'The Iliad'?",
+    "options": {
+      "A": "Homer",
+      "B": "Virgil",
+      "C": "Sophocles"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which language has the most native speakers in the world?",
+    "options": {
+      "A": "English",
+      "B": "Mandarin Chinese",
+      "C": "Spanish"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What does the Latin phrase 'et cetera' mean?",
+    "options": {
+      "A": "And so on",
+      "B": "For example",
+      "C": "In other words"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'War and Peace'?",
+    "options": {
+      "A": "Fyodor Dostoevsky",
+      "B": "Leo Tolstoy",
+      "C": "Anton Chekhov"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for a word that reads the same forwards and backwards?",
+    "options": {
+      "A": "Anagram",
+      "B": "Palindrome",
+      "C": "Acronym"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which novel begins with the line 'Call me Ishmael'?",
+    "options": {
+      "A": "Moby-Dick",
+      "B": "The Old Man and the Sea",
+      "C": "Treasure Island"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the study of word origins called?",
+    "options": {
+      "A": "Etymology",
+      "B": "Entomology",
+      "C": "Epistemology"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote the play 'Romeo and Juliet'?",
+    "options": {
+      "A": "Christopher Marlowe",
+      "B": "William Shakespeare",
+      "C": "Ben Jonson"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which of these is NOT one of the Bronte sisters?",
+    "options": {
+      "A": "Charlotte",
+      "B": "Emily",
+      "C": "Beatrix"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "In grammar, what part of speech is the word 'quickly'?",
+    "options": {
+      "A": "Adjective",
+      "B": "Adverb",
+      "C": "Noun"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which author created the detective Sherlock Holmes?",
+    "options": {
+      "A": "Agatha Christie",
+      "B": "Arthur Conan Doyle",
+      "C": "Edgar Allan Poe"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a 'haiku'?",
+    "options": {
+      "A": "A three-line Japanese poem",
+      "B": "A type of Japanese painting",
+      "C": "A Japanese sword"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which epic poem tells the story of Beowulf?",
+    "options": {
+      "A": "An Anglo-Saxon epic",
+      "B": "A Greek epic",
+      "C": "A Roman epic"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Greek mythology, who is the king of the gods?",
+    "options": {
+      "A": "Poseidon",
+      "B": "Zeus",
+      "C": "Hades"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which Norse god is associated with thunder?",
+    "options": {
+      "A": "Odin",
+      "B": "Loki",
+      "C": "Thor"
+    },
+    "correct": "C",
+    "difficulty": 1
+  },
+  {
+    "q": "In Greek mythology, who has snakes for hair and turns people to stone?",
+    "options": {
+      "A": "Medusa",
+      "B": "Circe",
+      "C": "Athena"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the name of the underworld in Greek mythology?",
+    "options": {
+      "A": "Olympus",
+      "B": "Hades",
+      "C": "Tartarus"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Egyptian god has the head of a jackal?",
+    "options": {
+      "A": "Ra",
+      "B": "Anubis",
+      "C": "Horus"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In Norse mythology, what is the name of Odin's eight-legged horse?",
+    "options": {
+      "A": "Sleipnir",
+      "B": "Shadowfax",
+      "C": "Fenrir"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the Titan condemned to hold up the sky for eternity?",
+    "options": {
+      "A": "Prometheus",
+      "B": "Atlas",
+      "C": "Cronus"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In Greek mythology, who flew too close to the sun with wax wings?",
+    "options": {
+      "A": "Icarus",
+      "B": "Perseus",
+      "C": "Theseus"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which Hindu god is known as the destroyer?",
+    "options": {
+      "A": "Brahma",
+      "B": "Vishnu",
+      "C": "Shiva"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What creature in Greek mythology is half-man, half-bull?",
+    "options": {
+      "A": "Centaur",
+      "B": "Minotaur",
+      "C": "Satyr"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who is the Roman equivalent of the Greek god Zeus?",
+    "options": {
+      "A": "Mars",
+      "B": "Jupiter",
+      "C": "Neptune"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In Egyptian mythology, who is the goddess of the sky?",
+    "options": {
+      "A": "Isis",
+      "B": "Nut",
+      "C": "Bastet"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which hero in Greek mythology completed twelve labors?",
+    "options": {
+      "A": "Achilles",
+      "B": "Hercules",
+      "C": "Odysseus"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the name of the three-headed dog that guards the Greek underworld?",
+    "options": {
+      "A": "Cerberus",
+      "B": "Fenrir",
+      "C": "Orthrus"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "In Norse mythology, what event marks the end of the world?",
+    "options": {
+      "A": "Armageddon",
+      "B": "Ragnarok",
+      "C": "Apocalypse"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the value of Pi rounded to two decimal places?",
+    "options": {
+      "A": "3.14",
+      "B": "3.41",
+      "C": "3.12"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "How many sides does a heptagon have?",
+    "options": {
+      "A": "6",
+      "B": "7",
+      "C": "8"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In which Shakespeare tragedy does the line 'Out, damned spot!' appear?",
+    "options": {
+      "A": "Macbeth",
+      "B": "Othello",
+      "C": "King Lear"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the whale in Herman Melville's novel 'Moby-Dick'?",
+    "options": {
+      "A": "Moby Dick",
+      "B": "Leviathan",
+      "C": "Jonah"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "'Currer Bell' was the male pen name used by which author to get published?",
+    "options": {
+      "A": "Charlotte Brontë",
+      "B": "Emily Brontë",
+      "C": "Jane Austen"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of these is often cited as the longest novel ever published, running to well over a million words?",
+    "options": {
+      "A": "'In Search of Lost Time' by Marcel Proust",
+      "B": "'War and Peace' by Leo Tolstoy",
+      "C": "'Les Misérables' by Victor Hugo"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which English word is a 'contronym' — meaning it can serve as its own opposite depending on context (e.g. 'to split apart' or 'to stick together')?",
+    "options": {
+      "A": "Cleave",
+      "B": "Quick",
+      "C": "Slow"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Who wrote the dystopian novel 'Brave New World'?",
+    "options": {
+      "A": "Aldous Huxley",
+      "B": "George Orwell",
+      "C": "Ray Bradbury"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In 'The Great Gatsby', what is the name of the wealthy man who throws lavish parties at his mansion?",
+    "options": {
+      "A": "Jay Gatsby",
+      "B": "Nick Carraway",
+      "C": "Tom Buchanan"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the literary term for giving human traits or emotions to non-human things?",
+    "options": {
+      "A": "Personification",
+      "B": "Metaphor",
+      "C": "Simile"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which literary and philosophical movement, associated with authors like Kafka and Camus, centers on themes of meaninglessness and human isolation?",
+    "options": {
+      "A": "Absurdism/Existentialism",
+      "B": "Romanticism",
+      "C": "Realism"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Crime and Punishment'?",
+    "options": {
+      "A": "Fyodor Dostoevsky",
+      "B": "Leo Tolstoy",
+      "C": "Anton Chekhov"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The word 'utopia', coined by Thomas More, literally translates from Greek to mean what?",
+    "options": {
+      "A": "No place",
+      "B": "Perfect place",
+      "C": "Golden place"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Shakespeare play is widely believed to be the last one he wrote entirely on his own?",
+    "options": {
+      "A": "The Tempest",
+      "B": "Hamlet",
+      "C": "Macbeth"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What pen name did Samuel Clemens write under?",
+    "options": {
+      "A": "Mark Twain",
+      "B": "O. Henry",
+      "C": "Lewis Carroll"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which novel begins with the line 'It is a truth universally acknowledged, that a single man in possession of a good fortune must be in want of a wife'?",
+    "options": {
+      "A": "Pride and Prejudice",
+      "B": "Sense and Sensibility",
+      "C": "Emma"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The term 'Orwellian', derived from George Orwell, typically describes what kind of situation?",
+    "options": {
+      "A": "Oppressive, surveillance-state government control",
+      "B": "A humorous misunderstanding",
+      "C": "A romantic tragedy"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Dante's 'Divine Comedy' describes a journey through which three realms?",
+    "options": {
+      "A": "Hell, Purgatory, and Heaven",
+      "B": "Earth, Heaven, and the Underworld",
+      "C": "Past, Present, and Future"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Paradise Lost', an epic poem about the fall of man?",
+    "options": {
+      "A": "John Milton",
+      "B": "John Donne",
+      "C": "William Blake"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "The literary term 'malapropism', for a comic misuse of similar-sounding words, is named after a character from which 18th-century play?",
+    "options": {
+      "A": "Mrs. Malaprop from Sheridan's 'The Rivals'",
+      "B": "A character from a Molière play",
+      "C": "A character from a Shakespeare play"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The German literary term 'bildungsroman' refers to a novel centered on what?",
+    "options": {
+      "A": "A character's coming-of-age and moral growth",
+      "B": "A murder mystery",
+      "C": "A war epic"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In Greek mythology, who is the goddess of love and beauty?",
+    "options": {
+      "A": "Aphrodite",
+      "B": "Athena",
+      "C": "Hera"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who is the Norse god of mischief and trickery?",
+    "options": {
+      "A": "Loki",
+      "B": "Baldr",
+      "C": "Heimdall"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who is the Greek god of the sea, brother of Zeus?",
+    "options": {
+      "A": "Poseidon",
+      "B": "Hades",
+      "C": "Apollo"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "In Greek mythology, which hero killed the Minotaur in the Labyrinth?",
+    "options": {
+      "A": "Theseus",
+      "B": "Perseus",
+      "C": "Jason"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is the Egyptian god of the afterlife and judge of the dead?",
+    "options": {
+      "A": "Osiris",
+      "B": "Ra",
+      "C": "Set"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In Greek mythology, when Pandora opened her jar (often called a 'box'), what was released into the world?",
+    "options": {
+      "A": "All the evils and troubles of humanity",
+      "B": "Fire",
+      "C": "Knowledge"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Greek goddess is said to have sprung fully formed and armored from the head of Zeus?",
+    "options": {
+      "A": "Athena",
+      "B": "Artemis",
+      "C": "Aphrodite"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Norse mythology, what is the name of the great World Tree that connects the nine realms?",
+    "options": {
+      "A": "Yggdrasil",
+      "B": "Bifrost",
+      "C": "Asgard"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Egyptian mythology, which god is depicted with the head of an ibis and is associated with writing and wisdom?",
+    "options": {
+      "A": "Thoth",
+      "B": "Horus",
+      "C": "Khnum"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Greek mythology, what was the name of the winged horse born from Medusa's blood after she was slain?",
+    "options": {
+      "A": "Pegasus",
+      "B": "Chiron",
+      "C": "Arion"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which figure in Greek mythology was cursed to speak only true prophecies that no one would ever believe?",
+    "options": {
+      "A": "Cassandra",
+      "B": "Pandora",
+      "C": "Niobe"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In Hindu mythology, the god Vishnu wields which discus-shaped weapon?",
+    "options": {
+      "A": "Sudarshana Chakra",
+      "B": "Trishula",
+      "C": "Vajra"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In Norse mythology, which monstrous wolf is fated to kill Odin during Ragnarok?",
+    "options": {
+      "A": "Fenrir",
+      "B": "Jörmungandr",
+      "C": "Sköll"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In Greek mythology, which Titaness was the mother of Zeus, Hades, Poseidon, and their siblings?",
+    "options": {
+      "A": "Rhea",
+      "B": "Gaia",
+      "C": "Themis"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In Aztec mythology, which feathered serpent god of wind and learning was famously conflated by the Spanish with a returning deity?",
+    "options": {
+      "A": "Quetzalcoatl",
+      "B": "Huitzilopochtli",
+      "C": "Tezcatlipoca"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 9 squared?",
+    "options": {
+      "A": "81",
+      "B": "72",
+      "C": "90"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is 17 mod 5 (the remainder when 17 is divided by 5)?",
+    "options": {
+      "A": "2",
+      "B": "3",
+      "C": "1"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'disaster' comes from roots meaning 'bad star', reflecting old beliefs connecting misfortune to what?",
+    "options": {
+      "A": "Astrology",
+      "B": "Broken houses",
+      "C": "Dark clouds"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'companion' literally derives from Latin roots meaning what?",
+    "options": {
+      "A": "One who shares bread",
+      "B": "One who fights alongside",
+      "C": "One who travels"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'nice' originally meant something close to the opposite of its modern sense. What did it mean in Middle English?",
+    "options": {
+      "A": "Foolish or ignorant",
+      "B": "Beautiful",
+      "C": "Wealthy"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The word 'silly' originally meant something close to the opposite of its modern sense. What did it mean in Old English?",
+    "options": {
+      "A": "Blessed, happy, or fortunate",
+      "B": "Sad",
+      "C": "Angry"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In English, Tuesday, Wednesday, Thursday, and Friday are all named after gods from which pantheon?",
+    "options": {
+      "A": "Norse/Germanic gods",
+      "B": "Roman gods",
+      "C": "Greek gods"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'bankrupt' comes from an Italian phrase, 'banca rotta', meaning what?",
+    "options": {
+      "A": "Broken bench",
+      "B": "Empty purse",
+      "C": "Lost coin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'avocado' comes from a Nahuatl (Aztec) word that also means what?",
+    "options": {
+      "A": "Testicle",
+      "B": "Green fruit",
+      "C": "Tree of life"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The word 'karaoke' literally translates from Japanese to mean what?",
+    "options": {
+      "A": "Empty orchestra",
+      "B": "Singing voice",
+      "C": "Happy song"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'ostracize' comes from the ancient Greek practice of voting to exile someone by writing their name on what?",
+    "options": {
+      "A": "A broken piece of pottery",
+      "B": "A leaf",
+      "C": "A coin"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The word 'checkmate' in chess ultimately derives from a Persian phrase meaning roughly what?",
+    "options": {
+      "A": "The king is helpless",
+      "B": "The game is over",
+      "C": "Victory is complete"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The word 'tantalize' comes from the Greek myth of Tantalus, who was eternally punished with food and drink kept just out of reach — reflecting what meaning?",
+    "options": {
+      "A": "Unattainable, eternal temptation",
+      "B": "Eternal sleep",
+      "C": "Eternal silence"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The word 'panic' derives from the Greek god Pan, who was believed to cause what effect in travelers and armies?",
+    "options": {
+      "A": "Sudden, irrational fear",
+      "B": "Deep, uncontrollable sleep",
+      "C": "Fits of laughter"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The word 'volcano' is named after which Roman god of fire and metalworking?",
+    "options": {
+      "A": "Vulcan",
+      "B": "Mars",
+      "C": "Neptune"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "A popular story claims the word 'quiz' originated from a Dublin theatre owner's overnight bet in 1791 to invent a nonsense word. Most linguists today consider this story to be...",
+    "options": {
+      "A": "An almost certainly false legend with no real evidence",
+      "B": "Verified true by contemporary newspaper records",
+      "C": "Confirmed as accurate by the Oxford English Dictionary"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "How many officially recognized planets are in our solar system, following the 2006 reclassification of Pluto as a dwarf planet?",
+    "options": {
+      "A": "8",
+      "B": "9",
+      "C": "10"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which planet experiences the most extreme temperature swings of any in the solar system, due to having virtually no atmosphere to retain heat?",
+    "options": {
+      "A": "Mercury",
+      "B": "Mars",
+      "C": "Venus"
+    },
+    "correct": "A",
+    "difficulty": 2
+  }
+]

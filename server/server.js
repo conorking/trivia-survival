@@ -5,7 +5,8 @@ const path = require('path');
 const { Server } = require('socket.io');
 const {
   GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN,
-  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning
+  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning,
+  QUESTION_CATEGORIES
 } = require('./rooms');
 const analytics = require('./analytics');
 
@@ -72,11 +73,19 @@ setInterval(() => {
   }
 }, 10000);
 
+const VALID_QUESTION_CATEGORIES = Object.keys(QUESTION_CATEGORIES);
+
 function sanitizeConfig(input, current) {
   const cfg = { ...current };
   if (input.answerTimeSec) cfg.answerTimeSec = Math.max(3, Math.min(120, Number(input.answerTimeSec)));
   if (input.questionCount) cfg.questionCount = Math.max(1, Math.min(400, Number(input.questionCount)));
-  if (['default', 'custom', 'webdev', 'hard'].includes(input.questionSet)) cfg.questionSet = input.questionSet;
+  // Multi-select: at least one valid category required, invalid/unknown keys are
+  // dropped rather than rejecting the whole selection. Falls back to the current
+  // value (constructor default 'general') if nothing valid was sent.
+  if (Array.isArray(input.questionSets)) {
+    const picked = input.questionSets.filter(k => VALID_QUESTION_CATEGORIES.includes(k));
+    if (picked.length) cfg.questionSets = picked;
+  }
   if (typeof input.difficultyRamp === 'boolean') cfg.difficultyRamp = input.difficultyRamp;
   if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
   if (['off', 'low', 'high'].includes(input.dogLunge)) cfg.dogLunge = input.dogLunge;
@@ -131,30 +140,6 @@ io.on('connection', socket => {
       tuning: DEBUG ? getTuning() : null,
       tuningMeta: DEBUG ? { defaults: DEFAULT_TUNING, bounds: TUNING_BOUNDS } : null
     });
-  });
-
-  socket.on('host:uploadQuestions', (payload = {}) => {
-    const room = manager.getRoom(joinedRoomCode);
-    if (!room || !isHost || room.state !== 'lobby') return;
-    try {
-      const list = Array.isArray(payload.questions) ? payload.questions : [];
-      const valid = list.filter(q =>
-        q && typeof q.q === 'string' &&
-        q.options && typeof q.options.A === 'string' &&
-        typeof q.options.B === 'string' && typeof q.options.C === 'string' &&
-        ['A', 'B', 'C'].includes(q.correct)
-      );
-      if (valid.length === 0) {
-        socket.emit('host:error', { message: 'No valid questions found in upload.' });
-        return;
-      }
-      room.customQuestions = valid;
-      room.config.questionSet = 'custom';
-      socket.emit('host:questionsUploaded', { count: valid.length });
-      io.to(room.code).emit('room:config', room.config);
-    } catch (e) {
-      socket.emit('host:error', { message: 'Could not parse question file.' });
-    }
   });
 
   socket.on('host:rejoin', ({ code } = {}) => {
@@ -608,6 +593,28 @@ app.get('/api/arena', (req, res) => {
   res.json({ w: ARENA_W, h: ARENA_H, trapdoors: TRAPDOORS, dogPen: DOG_PEN });
 });
 
+// Display metadata for the host's category picker - single source of truth
+// (QUESTION_CATEGORIES in rooms.js) so host.html never hardcodes a category
+// list that could drift out of sync with what's actually loaded. Only
+// categories with real content are ever in QUESTION_CATEGORIES to begin
+// with (see the comment there) - Politics/Science/New Zealand are follow-up
+// work and simply don't appear here yet.
+const CATEGORY_LABELS = {
+  general: '🎲 General Trivia',
+  'movies-tv': '🎬 Movies and TV shows',
+  music: '🎵 Music',
+  history: '🏛️ History',
+  literature: '📚 Literature',
+  webdev: '💻 Web Developer Trivia'
+};
+app.get('/api/question-categories', (req, res) => {
+  res.json(Object.keys(QUESTION_CATEGORIES).map(key => ({
+    key,
+    label: CATEGORY_LABELS[key] || key,
+    count: QUESTION_CATEGORIES[key].length
+  })));
+});
+
 app.get('/api/debug-enabled', (req, res) => {
   res.json({ enabled: DEBUG });
 });
@@ -733,7 +740,7 @@ function renderDashboardHtml(summary) {
   <div class="card">
     <h2>Config popularity</h2>
     <div class="config-row">
-      <div>${renderCountTable(summary.config.questionSet, 'Question set')}</div>
+      <div>${renderCountTable(summary.config.questionSets, 'Question category')}</div>
       <div>${renderCountTable(summary.config.dogLunge, 'Dog lunge')}</div>
     </div>
     <div class="config-row" style="margin-top:16px;">

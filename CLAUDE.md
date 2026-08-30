@@ -30,18 +30,18 @@ snapshot.
   token lookup (`tokenIndex` Map: token → {roomCode, playerId}).
 - `server/rooms.js` — the actual game: `Room` class with the full state machine, arena
   constants, tick loop. `GameManager` just tracks rooms by code.
-- `server/questions-default.json` — built-in general-knowledge question set (400
-  entries: everyday trivia — geography, history, science, pop culture, food, animals,
-  sports, art, language, etc.).
-- `server/questions-webdev.json` — built-in web-dev question set (400 entries: HTML, CSS,
-  JavaScript, React, general tooling).
-- `server/questions-hard.json` — built-in "Hard Mode" question set (400 entries): harder/
-  trickier general-knowledge questions across geography, history, science, literature,
-  mythology, math/logic, sports, etymology, and astronomy — many deliberately built
-  around common misconceptions (e.g. "which gas do humans exhale most?" → nitrogen, not
-  CO₂) rather than just obscure facts.
-  Each entry in all three files carries a `"difficulty"` field (1-5) used by
-  `config.difficultyRamp` — see "Difficulty ramp" further down.
+- `server/questions/` — one JSON file per question **category** (see "Question
+  categories" below): `general.json`, `movies-tv.json`, `music.json`, `history.json`,
+  `literature.json`, `webdev.json` (all loaded; `politics.json`/`science.json`/
+  `new-zealand.json` also exist on disk as empty `[]` placeholders but are
+  deliberately **not** loaded into `QUESTION_CATEGORIES` — see below). Every entry
+  carries a `"difficulty"` field (1-5) used by `config.difficultyRamp` — see
+  "Difficulty ramp" further down.
+- `server/build-questions.js` — one-off build script that produced the files above
+  (not part of the running app, rerun manually with `node server/build-questions.js
+  <scratch-dir-of-opentdb-raw-json>` if the source data ever changes). Documents
+  exactly how each category was assembled — see its own header comment and "Question
+  categories" below.
 - `public/index.html` — landing (host or join).
 - `public/host.html` + `public/js/host.js` — room creation, config form, lobby, live
   spectator view (always the `'overview'` camera — whole map, scroll-wheel zoom), end
@@ -645,30 +645,76 @@ not in this repo. Short version for anything touching this codebase:
   would need a real nav-mesh/A* if the arena ever grows more complex obstacles.
 - No persistence layer — rooms/tokens are in-memory, wiped on restart or after 3hr/no-
   connection sweep (`GameManager.sweep()`).
-- Four question sources per room (`config.questionSet`): `default`, `hard` (see the
-  file map above for what distinguishes it), `webdev` (HTML/CSS/JS/React), or `custom`
-  (one JSON upload, lives only on the `Room` object, gone when the room ends). All three
-  built-in sets are 400 entries each; `questionCount` can go up to 400 to match. Every
-  question's A/B/C letter assignment is reshuffled per-build (`shuffleOptionLetters` in
-  `buildQuestionSet()`) regardless of source, so the same question won't always have its
-  answer on the same letter across rounds/rematches.
-- **Difficulty ramp** (`config.difficultyRamp`, opt-in checkbox next to the question-set
-  picker): every entry in the three built-in JSON files carries a `"difficulty"` field
-  (integer 1-5, hand-tagged relative to that file's own theme — see each file's own
-  round-out-the-curve description in the file map). When enabled, `buildQuestionSet()`
-  calls `buildRampedOrder()` instead of a plain shuffle: groups the source pool by tier
-  (untagged/out-of-range questions land in tier 3, so a source without full tagging
-  degrades gracefully rather than erroring), shuffles within each tier, then spreads
-  `questionCount` picks across the 5 tiers as evenly as possible via
+- **Question categories, multi-select** (`config.questionSets`, an array — was a single
+  `config.questionSet` string before this round, no more `custom` upload, see below):
+  hosts pick one or more of `general` (🎲 General Trivia), `movies-tv` (🎬 Movies and TV
+  shows), `music` (🎵 Music), `history` (🏛️ History), `literature` (📚 Literature),
+  `webdev` (💻 Web Developer Trivia). `Room.buildQuestionSet()` (`server/rooms.js`)
+  concatenates every selected category's file into one combined pool before the usual
+  shuffle/ramp logic runs — picking several categories just means a bigger, mixed pool,
+  nothing else changes. `QUESTION_CATEGORIES` (rooms.js, exported) is the single source
+  of truth for which keys exist; `sanitizeConfig()` (server.js) validates against it and
+  a `GET /api/question-categories` endpoint feeds the host's picker UI
+  (`public/host.html`/`host.js`, a multi-select grid of the same `.checkbox-row` cards
+  used for the other config toggles) so the picker can never drift out of sync with
+  what's actually loaded. `general`/`movies-tv`/`music`/`history`/`webdev` are 400
+  entries each; `literature` is a smaller 88-entry placeholder (redistributed from the
+  old hard-mode set — see below) pending a real content pass; `politics`/`science`/
+  `new-zealand` don't exist as loadable categories yet at all (empty `[]` placeholder
+  files on disk, intentionally excluded from `QUESTION_CATEGORIES` so a host can never
+  select an empty category and get a broken 0-question game) — all explicit follow-up
+  work, not silently dropped. Every question's A/B/C letter assignment is still
+  reshuffled per-build (`shuffleOptionLetters`) regardless of category, so the same
+  question won't always have its answer on the same letter across rounds/rematches.
+  **Custom question upload was removed** (`host:uploadQuestions` and the upload UI are
+  gone entirely, not just hidden) — untested and not expected to see use pre-launch;
+  revisit if that changes.
+  Where the content came from (`server/build-questions.js`, a one-off script, not part
+  of the running app): `general`/`movies-tv`/`music`/`history` are built from real,
+  live-fetched [Open Trivia DB](https://opentdb.com) data (free, community-maintained)
+  merged with the old `questions-default.json` (quality-filtered - see the obviousness
+  pass below) and relevant chunks of the old `questions-hard.json` redistributed by
+  topic; `literature`'s 88 entries are purely redistributed `questions-hard.json`
+  content; `webdev` is the old `questions-webdev.json` ported unchanged. The two old
+  files no longer exist standalone - their content lives on inside the new category
+  files instead.
+  **Quality/"obviousness" pass**: the old `questions-default.json` had a real problem at
+  its easiest tier - kindergarten-simple questions ("what sound does a cow make?", "how
+  many days are in a week?") rather than genuine trivia recall. `build-questions.js`'s
+  `OBVIOUS_TO_REMOVE` is an explicit curated list of everything cut for this reason,
+  backfilled from the Open Trivia DB import to stay at 400 - tiers 3-5 of the old file
+  were already good and are untouched.
+- **No-repeat-within-a-room tracking** (`Room.usedQuestionTexts`, a `Set`, per-room):
+  every game start (`start()`) *including every rematch* used to reshuffle completely
+  independently, so a multi-round session had a real chance of repeating a question the
+  same group just saw (a rough birthday-paradox estimate for ~4 rematches of ~12
+  questions put the odds of at least one repeat above 90%). `buildQuestionSet()` now
+  filters the source pool down to `!usedQuestionTexts.has(q.q)` first, adds whatever it
+  draws back into the set, and only clears the set (starting a fresh no-repeat cycle)
+  once there isn't enough unused content left to fill a round - verified directly
+  against `Room` to go 33 consecutive rematches with zero repeats on the 400-question
+  default pool before needing to recycle. Persists across rematches on purpose (not
+  touched by `resetForRematch()`); resets naturally on room close since it's just a
+  field on the `Room` object.
+- **Everyone respawns to a fresh random position between rounds, not just at game
+  start**: `advanceRound()` used to leave players exactly where the previous round's
+  chase ended, so someone who happened to end up standing next to a door could just
+  never move again for the rest of the game. It now calls the same `randomSpawn()`
+  helper `start()`/`resetForRematch()` already used, for every `alive && !isGhost`
+  player, right before the next question is emitted - ghosts are left alone (they
+  already roam free, uninvolved in trapdoor mechanics).
+- **Difficulty ramp** (`config.difficultyRamp`, opt-in checkbox): every entry in every
+  category file carries a `"difficulty"` field (integer 1-5). When enabled,
+  `buildQuestionSet()` calls `buildRampedOrder()` instead of a plain shuffle: groups the
+  source pool by tier (untagged/out-of-range questions land in tier 3, so a source
+  without full tagging degrades gracefully rather than erroring), shuffles within each
+  tier, then spreads `questionCount` picks across the 5 tiers as evenly as possible via
   `distributeWithCapacity()` — a thin tier's shortfall rolls over to its neighbors so a
   sparse difficulty doesn't shrink the total question count — and concatenates low→high.
-  `buildRampedOrder()` returns `null` if *nothing* in the source has a valid difficulty
-  (e.g. a `custom` upload that didn't tag its questions), and `buildQuestionSet()` falls
-  back to the normal shuffle in that case — a `custom` set only ramps if the uploaded
-  JSON includes its own per-question `"difficulty"` field, nothing else is required to
-  make that work. `difficulty` itself never reaches the client — `shuffleOptionLetters`
-  (which every question passes through regardless of ramp) only carries `q`/`options`/
-  `correct` forward.
+  `buildRampedOrder()` returns `null` if *nothing* in the source has a valid difficulty,
+  and `buildQuestionSet()` falls back to the normal shuffle in that case. `difficulty`
+  itself never reaches the client — `shuffleOptionLetters` (which every question passes
+  through regardless of ramp) only carries `q`/`options`/`correct` forward.
 
 ## Feedback already implemented (most recent round)
 

@@ -93,10 +93,6 @@ socket.on('host:error', ({ message }) => {
   }
 });
 
-socket.on('host:questionsUploaded', ({ count }) => {
-  document.getElementById('uploadStatus').textContent = `✔ Loaded ${count} custom questions.`;
-});
-
 socket.on('room:config', (config) => { currentConfig = config; populateConfigForm(config); });
 
 socket.on('room:players', (players) => {
@@ -563,37 +559,71 @@ function refreshPublicOrigin(code) {
   });
 }
 
+// ---- Question category picker (multi-select) ----
+// Category list/labels/counts come from the server (/api/question-categories,
+// backed by rooms.js's QUESTION_CATEGORIES) rather than being hardcoded here,
+// so this never drifts out of sync with what's actually loaded - a category
+// with no content yet (see server/questions/, follow-up work) simply isn't
+// in the list at all rather than needing to be hidden client-side.
+let categoryList = [];
+let categoriesLoaded = false;
+let pendingConfig = null; // config received before the picker finished rendering
+
+function renderCategoryPicker() {
+  const el = document.getElementById('categoryPicker');
+  el.innerHTML = categoryList.map(cat => `
+    <label class="checkbox-row">
+      <input type="checkbox" data-key="${cat.key}" checked>
+      <span class="checkbox-text">
+        <span class="checkbox-title">${cat.label}</span>
+        <span class="checkbox-desc">${cat.count} questions</span>
+      </span>
+    </label>
+  `).join('');
+  // Never allow unchecking down to zero - the server would just fall back to
+  // 'general' silently, which is more confusing than refusing the click.
+  el.querySelectorAll('input[type=checkbox]').forEach(box => {
+    box.addEventListener('change', () => {
+      const anyChecked = Array.from(el.querySelectorAll('input[type=checkbox]')).some(b => b.checked);
+      const err = document.getElementById('categoryError');
+      if (!anyChecked) {
+        box.checked = true;
+        err.textContent = 'Pick at least one category.';
+      } else {
+        err.textContent = '';
+      }
+    });
+  });
+}
+
+function applyCategoryCheckboxes(questionSets) {
+  const keys = Array.isArray(questionSets) && questionSets.length ? questionSets : categoryList.map(c => c.key);
+  document.querySelectorAll('#categoryPicker input[type=checkbox]').forEach(box => {
+    box.checked = keys.includes(box.dataset.key);
+  });
+}
+
+fetch('/api/question-categories').then(r => r.json()).then(list => {
+  categoryList = list;
+  categoriesLoaded = true;
+  renderCategoryPicker();
+  if (pendingConfig) applyCategoryCheckboxes(pendingConfig.questionSets);
+}).catch(() => {
+  document.getElementById('categoryError').textContent = 'Could not load question categories.';
+});
+
 function populateConfigForm(config) {
   document.getElementById('cfgAnswerTime').value = config.answerTimeSec;
   document.getElementById('cfgAnswerTimeRange').value = config.answerTimeSec;
   document.getElementById('cfgQuestionCount').value = config.questionCount;
   document.getElementById('cfgQuestionCountRange').value = config.questionCount;
-  document.getElementById('cfgQuestionSet').value = config.questionSet;
   document.getElementById('cfgDifficultyRamp').checked = !!config.difficultyRamp;
   document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
   document.getElementById('cfgDogLunge').value = config.dogLunge || 'off';
   document.getElementById('cfgDynamicCellScaling').checked = !!config.dynamicCellScaling;
-  document.getElementById('uploadRow').style.display = config.questionSet === 'custom' ? 'block' : 'none';
+  pendingConfig = config;
+  if (categoriesLoaded) applyCategoryCheckboxes(config.questionSets);
 }
-
-document.getElementById('cfgQuestionSet').addEventListener('change', (e) => {
-  document.getElementById('uploadRow').style.display = e.target.value === 'custom' ? 'block' : 'none';
-});
-
-document.getElementById('questionFile').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const questions = JSON.parse(reader.result);
-      socket.emit('host:uploadQuestions', { questions });
-    } catch (err) {
-      document.getElementById('uploadStatus').textContent = 'Invalid JSON file.';
-    }
-  };
-  reader.readAsText(file);
-});
 
 // Keep each slider and its paired number box in sync, both directions.
 function linkSlider(rangeId, numberId) {
@@ -612,7 +642,7 @@ function collectConfig() {
   return {
     answerTimeSec: Number(document.getElementById('cfgAnswerTime').value),
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
-    questionSet: document.getElementById('cfgQuestionSet').value,
+    questionSets: Array.from(document.querySelectorAll('#categoryPicker input:checked')).map(el => el.dataset.key),
     difficultyRamp: document.getElementById('cfgDifficultyRamp').checked,
     bearTraps: document.getElementById('cfgBearTraps').checked,
     dogLunge: document.getElementById('cfgDogLunge').value,

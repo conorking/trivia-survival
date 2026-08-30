@@ -3,15 +3,25 @@ const fs = require('fs');
 const path = require('path');
 const analytics = require('./analytics');
 
-const DEFAULT_QUESTIONS = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'questions-default.json'), 'utf8')
-);
-const WEBDEV_QUESTIONS = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'questions-webdev.json'), 'utf8')
-);
-const HARD_QUESTIONS = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'questions-hard.json'), 'utf8')
-);
+// Category-based question sets (see server/questions/, built by
+// server/build-questions.js). Politics/Science/New Zealand are real,
+// intentional gaps - genuinely empty for now (follow-up content work), so
+// they're deliberately left out of QUESTION_CATEGORIES entirely rather than
+// loaded as empty arrays a host could select and get a broken 0-question
+// game from. QUESTION_CATEGORIES is also the source of truth for which
+// category keys sanitizeConfig() (server.js) accepts.
+const QUESTIONS_DIR = path.join(__dirname, 'questions');
+function loadCategory(file) {
+  return JSON.parse(fs.readFileSync(path.join(QUESTIONS_DIR, file), 'utf8'));
+}
+const QUESTION_CATEGORIES = {
+  general: loadCategory('general.json'),
+  'movies-tv': loadCategory('movies-tv.json'),
+  music: loadCategory('music.json'),
+  history: loadCategory('history.json'),
+  literature: loadCategory('literature.json'),
+  webdev: loadCategory('webdev.json')
+};
 
 // ---- Arena constants (logical units, client scales to fit canvas) ----
 // Landscape-leaning layout. The client now renders this through a camera (see
@@ -414,15 +424,23 @@ class Room {
     this.config = {
       answerTimeSec: 15,
       questionCount: 10,
-      questionSet: 'default', // 'default' | 'custom' | 'webdev' | 'hard'
+      // Multi-select - one or more keys of QUESTION_CATEGORIES, merged into
+      // one combined pool by buildQuestionSet(). Custom question upload was
+      // removed (untested, not expected to see use pre-launch - see
+      // CLAUDE.md if that changes).
+      questionSets: ['general'],
       difficultyRamp: false, // opt-in: order questions easy->hard instead of shuffling
       bearTraps: false, // opt-in escape-phase hazard
       dogLunge: 'off', // 'off' | 'low' | 'high'
       dynamicCellScaling: false // opt-in shrinking cages round over round
     };
-    this.customQuestions = null;
     this.state = 'lobby'; // lobby | intro | question | reveal | escape | fall_pause | resolve | death_anim | ended
     this.questions = [];
+    // Question text already shown in this room this session (persists across rematches -
+    // only cleared by buildQuestionSet() itself once the pool runs too thin to keep
+    // avoiding repeats). Not touched by resetForRematch() on purpose - the whole point is
+    // remembering across rounds, not just within one.
+    this.usedQuestionTexts = new Set();
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
@@ -733,17 +751,36 @@ class Room {
   }
 
   buildQuestionSet() {
-    let source;
-    if (this.config.questionSet === 'custom' && this.customQuestions) source = this.customQuestions;
-    else if (this.config.questionSet === 'webdev') source = WEBDEV_QUESTIONS;
-    else if (this.config.questionSet === 'hard') source = HARD_QUESTIONS;
-    else source = DEFAULT_QUESTIONS;
+    // Multi-select: merge every chosen category into one combined pool.
+    // sanitizeConfig() (server.js) already guarantees questionSets is a
+    // non-empty array of valid keys, but this falls back to 'general' too,
+    // just in case a room's config was set some other way (e.g. tests).
+    const keys = (this.config.questionSets && this.config.questionSets.length)
+      ? this.config.questionSets
+      : ['general'];
+    const source = keys.flatMap(key => QUESTION_CATEGORIES[key] || []);
+
+    // Avoid repeating a question this room has already shown this session - every game
+    // start (including every rematch) used to reshuffle completely independently, so a
+    // multi-round session had a real chance of repeating something the same group just
+    // saw (with a 400-question pool and ~4 rematches of ~12 questions each, a rough
+    // birthday-paradox estimate puts the odds of at least one repeat above 90%). Falls
+    // back to the full pool - clearing the used-set to start a fresh no-repeat cycle,
+    // rather than silently giving up on de-duplication for the rest of the room's
+    // lifetime - once there aren't enough unused questions left to fill a round.
+    let pool = source.filter(q => !this.usedQuestionTexts.has(q.q));
+    if (pool.length < Math.min(this.config.questionCount, source.length)) {
+      this.usedQuestionTexts.clear();
+      pool = source;
+    }
+
     // Ramp mode orders low->high difficulty instead of shuffling (falls back to the
     // normal shuffle if the source has no difficulty tags to ramp through - e.g. a
     // custom upload that didn't include them). Either way, each question's own A/B/C
     // letter assignment is reshuffled afterward so it isn't a learnable fixed property.
-    const ramped = this.config.difficultyRamp ? buildRampedOrder(source, this.config.questionCount) : null;
-    const arr = ramped || shuffleArray(source).slice(0, Math.min(this.config.questionCount, source.length));
+    const ramped = this.config.difficultyRamp ? buildRampedOrder(pool, this.config.questionCount) : null;
+    const arr = ramped || shuffleArray(pool).slice(0, Math.min(this.config.questionCount, pool.length));
+    for (const q of arr) this.usedQuestionTexts.add(q.q);
     this.questions = arr.map(shuffleOptionLetters);
   }
 
@@ -1366,6 +1403,18 @@ class Room {
     }
 
     this.resetHazards();
+    // Fresh random position for everyone still actually playing, every round - otherwise
+    // a player who ends one round conveniently close to a door can just stand still for
+    // the rest of the game, which undercuts the whole "commit to a door each round"
+    // tension. Ghosts already roam free and aren't part of this round's mechanics, so
+    // they're left alone; a disconnected-but-alive player gets moved too, harmless since
+    // they're already frozen in place regardless of where that is.
+    for (const p of this.players.values()) {
+      if (!p.alive || p.isGhost) continue;
+      const spawn = randomSpawn();
+      p.x = spawn.x;
+      p.y = spawn.y;
+    }
     this.currentQuestionIndex = nextIndex;
     this.currentQuestion = this.questions[nextIndex];
     this.computeTrapdoorsForRound();
@@ -1458,5 +1507,6 @@ class GameManager {
 
 module.exports = {
   GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, PLAYER_RADIUS, JUMP_MS,
-  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning
+  DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning,
+  QUESTION_CATEGORIES
 };
