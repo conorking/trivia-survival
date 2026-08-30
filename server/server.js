@@ -7,6 +7,7 @@ const {
   GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN,
   DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning
 } = require('./rooms');
+const analytics = require('./analytics');
 
 // Debug/sandbox mode (npm run debug, or TS_DEBUG=1). Off for a normal `npm start`:
 // the debug socket handlers below aren't registered and the host UI stays hidden.
@@ -83,17 +84,46 @@ function sanitizeConfig(input, current) {
   return cfg;
 }
 
+// Real client IP for the socket, if known - Cloudflare's cf-connecting-ip is the
+// reliable one once traffic flows through the tunnel (engine.io's own handshake.address
+// otherwise just reflects whatever's directly upstream, which behind a reverse proxy is
+// the proxy itself, not the actual visitor). Falls back to the raw socket address for
+// local/LAN testing where there's no Cloudflare in front at all.
+function clientIp(socket) {
+  return socket.handshake.headers['cf-connecting-ip'] || socket.handshake.address || 'unknown';
+}
+
+// Analytics only (see server/analytics.js) - stamps a freshly-added player with the
+// device/country hints derived from the socket that joined them, so recordPlayerLeft can
+// include them later. Never sent to any client (getPlayersPublic() doesn't include them).
+function tagPlayerHints(player, socket) {
+  player.deviceHint = analytics.deviceHintFromUA(socket.handshake.headers['user-agent']);
+  player.country = analytics.countryFromHeaders(socket.handshake.headers);
+}
+
 io.on('connection', socket => {
   let joinedRoomCode = null;
   let playerId = null;
   let isHost = false;
 
   socket.on('host:createRoom', (payload = {}) => {
+    // Unauthenticated and public-internet-reachable now - see server/analytics.js for
+    // why this is rate-limited (the room itself, not just the log write, is the thing
+    // being protected: each one gets its own tick loop).
+    if (!analytics.allowRoomCreate(clientIp(socket))) {
+      socket.emit('host:error', { message: 'Too many rooms created recently - please wait a bit and try again.' });
+      return;
+    }
     const room = manager.createRoom(socket.id);
     room.config = sanitizeConfig(payload, room.config);
     joinedRoomCode = room.code;
     isHost = true;
     socket.join(room.code);
+    analytics.logEvent('room_created', {
+      roomCode: room.code,
+      hostDeviceHint: analytics.deviceHintFromUA(socket.handshake.headers['user-agent']),
+      hostCountry: analytics.countryFromHeaders(socket.handshake.headers)
+    });
     socket.emit('host:roomCreated', {
       code: room.code,
       config: room.config,
@@ -204,6 +234,7 @@ io.on('connection', socket => {
       if (playerId && room.players.has(playerId)) return;
       const player = room.addPlayer(name || 'Host', color);
       player.socketId = socket.id;
+      tagPlayerHints(player, socket);
       tokenIndex.set(player.token, { code: room.code, playerId: player.id });
       room.hostPlayerId = player.id;
       playerId = player.id;
@@ -359,6 +390,7 @@ io.on('connection', socket => {
     if (playerId && room.players.has(playerId)) return; // already playing
     const player = room.addPlayer(name || 'Host', color);
     player.socketId = socket.id;
+    tagPlayerHints(player, socket);
     tokenIndex.set(player.token, { code: room.code, playerId: player.id });
     room.hostPlayerId = player.id;
     playerId = player.id;
@@ -376,7 +408,7 @@ io.on('connection', socket => {
     const player = room.players.get(playerId);
     if (player) {
       if (room.state === 'lobby') {
-        room.players.delete(playerId);
+        room.removePlayer(playerId, 'left_lobby');
         tokenIndex.delete(player.token);
       } else {
         // Mid-round: leave them exactly as a normal player who disconnected mid-round would
@@ -397,6 +429,7 @@ io.on('connection', socket => {
     if (room.state !== 'lobby') { socket.emit('player:error', { message: 'Game already in progress.' }); return; }
     const player = room.addPlayer(name, color);
     player.socketId = socket.id;
+    tagPlayerHints(player, socket);
     tokenIndex.set(player.token, { code: room.code, playerId: player.id });
     joinedRoomCode = room.code;
     playerId = player.id;
@@ -469,7 +502,11 @@ io.on('connection', socket => {
     const player = room.players.get(playerId);
     if (!player || !player.connected) return;
     const clampAxis = (v) => Math.max(-1, Math.min(1, Number(v) || 0));
-    player.input = { dx: clampAxis(input.dx), dy: clampAxis(input.dy) };
+    const dx = clampAxis(input.dx), dy = clampAxis(input.dy);
+    player.input = { dx, dy };
+    // Analytics only - cheap one-time flag flip, first real movement proves this player
+    // is actually trying the game, not just sitting in the lobby (see recordPlayerLeft).
+    if (!player.playedActively && (dx !== 0 || dy !== 0)) player.playedActively = true;
   });
 
   socket.on('player:jump', () => {
@@ -477,6 +514,7 @@ io.on('connection', socket => {
     if (!room || !playerId) return;
     const player = room.players.get(playerId);
     if (!player) return;
+    player.playedActively = true; // analytics only - see player:input above
     room.attemptJump(player, Date.now());
   });
 
@@ -622,6 +660,122 @@ function getNgrokPublicUrl() {
 
 app.get('/api/tunnel-info', async (req, res) => {
   res.json({ url: await getNgrokPublicUrl() });
+});
+
+// ---- Analytics dashboard (see server/analytics.js) ----
+// Gated behind ANALYTICS_TOKEN - if it's unset, both routes 404 rather than defaulting
+// to open, so there's no way to accidentally ship this world-readable. 404 (not 401/403)
+// on a bad/missing token too, so a prober can't even tell the route exists.
+function checkAnalyticsToken(req, res) {
+  const token = process.env.ANALYTICS_TOKEN;
+  if (!token || req.query.token !== token) { res.status(404).end(); return false; }
+  return true;
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function fmtMs(ms) {
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  return `${m}m ${s % 60}s`;
+}
+
+function renderCountTable(counts, labelHeader) {
+  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  if (!rows.length) return '<p class="muted">No data yet.</p>';
+  return `<table style="width:100%; border-collapse:collapse;">
+    <tr><th style="text-align:left;">${esc(labelHeader)}</th><th style="text-align:right;">Count</th></tr>
+    ${rows.map(([k, v]) => `<tr><td>${esc(k)}</td><td style="text-align:right;">${v}</td></tr>`).join('')}
+  </table>`;
+}
+
+function renderDashboardHtml(summary) {
+  const perDayRows = Object.entries(summary.roomsPerDay).sort().reverse().slice(0, 14);
+  return `<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Analytics - Trivia Survival</title>
+<link rel="stylesheet" href="/css/style.css">
+</head><body>
+<div class="container">
+  <div class="top-nav"><span class="pixel-title" style="font-family:'Press Start 2P',monospace; font-size:14px; color:var(--accent);">🐾 TRIVIA SURVIVAL ANALYTICS</span></div>
+
+  <div class="card">
+    <h2>Overview <span class="muted" style="font-size:var(--fs-vt-xs);">(last ${summary.windowDays} days)</span></h2>
+    <div class="config-row">
+      <div><label>Rooms created</label><div>${summary.roomsCreated}</div></div>
+      <div><label>Games started</label><div>${summary.gamesStarted}</div></div>
+      <div><label>Games ended</label><div>${summary.gamesEnded}</div></div>
+    </div>
+    <div class="config-row" style="margin-top:12px;">
+      <div><label>Real players seen</label><div>${summary.realPlayersSeen}</div></div>
+      <div><label>Actually played (not just joined)</label><div>${summary.realPlayersActive} (${100 - summary.bounceRatePct}%)</div></div>
+      <div><label>Bounce rate</label><div>${summary.bounceRatePct}%</div></div>
+    </div>
+    <div class="config-row" style="margin-top:12px;">
+      <div><label>Avg session (active players)</label><div>${fmtMs(summary.avgSessionMs)}</div></div>
+      <div><label>Median session</label><div>${fmtMs(summary.medianSessionMs)}</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Reach</h2>
+    <p class="muted">How many people a single host brings into a room.</p>
+    <div class="config-row">
+      <div><label>Avg players per room</label><div>${summary.avgPlayersPerRoom}</div></div>
+      <div><label>Largest room</label><div>${summary.maxPlayersInARoom}</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Config popularity</h2>
+    <div class="config-row">
+      <div>${renderCountTable(summary.config.questionSet, 'Question set')}</div>
+      <div>${renderCountTable(summary.config.dogLunge, 'Dog lunge')}</div>
+    </div>
+    <div class="config-row" style="margin-top:16px;">
+      <div>${renderCountTable(summary.config.difficultyRamp, 'Ramp difficulty')}</div>
+      <div>${renderCountTable(summary.config.bearTraps, 'Bear traps')}</div>
+      <div>${renderCountTable(summary.config.dynamicCellScaling, 'Dynamic cell scaling')}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Outcomes &amp; audience</h2>
+    <div class="config-row">
+      <div>${renderCountTable(summary.endReasons, 'How games ended')}</div>
+      <div>${renderCountTable(summary.deviceBreakdown, 'Device')}</div>
+      <div>${renderCountTable(summary.countryBreakdown, 'Country')}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Rooms per day <span class="muted" style="font-size:var(--fs-vt-xs);">(last 14 shown)</span></h2>
+    ${renderCountTable(Object.fromEntries(perDayRows), 'Date')}
+  </div>
+
+  <p class="muted center">
+    <a href="/admin/analytics/export.jsonl?token=${esc(process.env.ANALYTICS_TOKEN)}" style="color:var(--accent2);">Download raw JSONL</a>
+  </p>
+</div>
+</body></html>`;
+}
+
+app.get('/admin/analytics', (req, res) => {
+  if (!checkAnalyticsToken(req, res)) return;
+  const days = Math.max(1, Math.min(365, Number(req.query.days) || 30));
+  res.send(renderDashboardHtml(analytics.getSummary({ days })));
+});
+
+app.get('/admin/analytics/export.jsonl', (req, res) => {
+  if (!checkAnalyticsToken(req, res)) return;
+  const days = Math.max(1, Math.min(365, Number(req.query.days) || 30));
+  res.type('application/jsonl');
+  res.setHeader('Content-Disposition', 'attachment; filename="trivia-survival-analytics.jsonl"');
+  res.send(analytics.exportJsonl({ days }));
 });
 
 const PORT = process.env.PORT || 3000;

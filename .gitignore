@@ -1,1 +1,10 @@
 node_modules/
+
+# Local analytics event log (see server/analytics.js) - real usage data, never
+# committed. The live deploy keeps its own copy on a bind-mounted host volume,
+# outside this repo entirely - see docs/deploy-docker-cicd.md.
+data/analytics/
+
+# Real secrets for deploy/docker-compose.yml (ANALYTICS_TOKEN) - never
+# committed. See deploy/.env.example and docs/deploy-docker-cicd.md.
+deploy/.env

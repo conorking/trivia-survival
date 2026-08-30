@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');
+const analytics = require('./analytics');
 
 const DEFAULT_QUESTIONS = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'questions-default.json'), 'utf8')
@@ -634,7 +635,12 @@ class Room {
       disconnectedAt: 0,
       ready: false,
       cagedAt: null,
-      socketId: null
+      socketId: null,
+      // Analytics only - see server/analytics.js. joinedAt/playedActively
+      // drive the player_left session record; never sent to clients
+      // (getPlayersPublic() below doesn't include them).
+      joinedAt: Date.now(),
+      playedActively: false
     };
     this.players.set(id, player);
     return player;
@@ -652,10 +658,52 @@ class Room {
       if (!p.connected && p.disconnectedAt && now - p.disconnectedAt >= graceMs) {
         this.players.delete(id);
         if (this.hostPlayerId === id) this.hostPlayerId = null;
+        this.recordPlayerLeft(p, 'disconnected');
         removed.push(p);
       }
     }
     return removed;
+  }
+
+  // Explicit immediate removal (currently just host:leavePlayer's in-lobby branch) -
+  // routed through here rather than a bare players.delete() so every real removal path
+  // logs the same way. No-ops harmlessly if the player is already gone.
+  removePlayer(id, reason) {
+    const p = this.players.get(id);
+    if (!p) return null;
+    this.players.delete(id);
+    if (this.hostPlayerId === id) this.hostPlayerId = null;
+    this.recordPlayerLeft(p, reason);
+    return p;
+  }
+
+  // Analytics only (see server/analytics.js) - logs one player_left record and is a
+  // no-op for bots. Never removes the player from this.players itself; callers own that
+  // (pruneOffline/removePlayer do it before calling this; flushRemainingPlayers below
+  // calls this without removing, since the whole room is about to be torn down anyway).
+  recordPlayerLeft(p, reason) {
+    if (p.isBot) return;
+    const now = Date.now();
+    analytics.logEvent('player_left', {
+      roomCode: this.code,
+      playerId: p.id,
+      isHost: this.hostPlayerId === p.id,
+      isBot: false,
+      deviceHint: p.deviceHint || 'unknown',
+      country: p.country || 'unknown',
+      joinedAt: p.joinedAt,
+      durationMs: Math.max(0, now - (p.joinedAt || now)),
+      playedActively: !!p.playedActively,
+      reason
+    });
+  }
+
+  // Called once, right before a room is torn down outright (host left for good, or the
+  // periodic sweep reaps an abandoned/stale room) - without this, anyone still in
+  // this.players at that moment would never get a player_left record at all, since
+  // nothing else removes them one at a time in that path.
+  flushRemainingPlayers(reason) {
+    for (const p of this.players.values()) this.recordPlayerLeft(p, reason);
   }
 
   clearRematchTimer() {
@@ -738,6 +786,14 @@ class Room {
     this.clearRematchTimer();
     this.awaitingRematchStart = false;
     this.buildQuestionSet();
+    this.roundStartedAt = Date.now(); // analytics only - see endGame()'s durationMs
+    const realPlayers = Array.from(this.players.values()).filter(p => !p.isBot);
+    analytics.logEvent('game_started', {
+      roomCode: this.code,
+      playerCount: realPlayers.length,
+      botCount: this.players.size - realPlayers.length,
+      config: { ...this.config }
+    });
     this.state = 'intro';
     this.currentQuestionIndex = 0;
     this.currentQuestion = this.questions[0];
@@ -802,6 +858,12 @@ class Room {
   endGame(io, reason) {
     this.state = 'ended';
     const winners = Array.from(this.players.values()).filter(p => p.alive && !p.isGhost);
+    analytics.logEvent('game_ended', {
+      roomCode: this.code,
+      reason,
+      durationMs: Math.max(0, Date.now() - (this.roundStartedAt || Date.now())),
+      aliveAtEnd: winners.length
+    });
     io.to(this.code).emit('game:end', {
       reason,
       winners: winners.map(p => ({ id: p.id, name: p.name, color: p.color }))
@@ -1369,7 +1431,14 @@ class GameManager {
 
   removeRoom(code) {
     const room = this.rooms.get(code);
-    if (room) room.stopLoop();
+    if (room) {
+      room.stopLoop();
+      // Analytics only - anyone still in the room at this point (host left for
+      // good, or this is the periodic sweep reaping an abandoned/stale room)
+      // would otherwise never get a player_left record, since nothing else
+      // removes them one at a time in this path.
+      room.flushRemainingPlayers('room_closed');
+    }
     this.rooms.delete(code);
   }
 

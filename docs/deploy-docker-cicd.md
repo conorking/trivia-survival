@@ -122,6 +122,24 @@ changes that would block a pull) - which is also exactly what
 assumes today. Nothing new to set up here if that's already true; just
 worth confirming before the first real push.
 
+**4. Set up the analytics token.**
+
+`docker-compose.yml`'s `triviasurvival` service now needs an
+`ANALYTICS_TOKEN` (see "Usage analytics dashboard" below) and a bind-mounted
+folder for the event log, or the container won't start:
+
+```powershell
+cd C:\hosting
+mkdir analytics-data
+copy deploy\.env.example .env   # from this repo, or hand-create it
+```
+
+Edit `.env` and set `ANALYTICS_TOKEN` to a long random value:
+
+```powershell
+docker run --rm alpine sh -c "head -c32 /dev/urandom | od -An -tx1 | tr -d ' \n'"
+```
+
 ## What happens on every push to `master`
 
 1. The runner picks up the dispatched job (near-instantly - it maintains a
@@ -138,6 +156,25 @@ machine between runs (unlike a fresh GitHub-hosted runner every time).
 You can also trigger a deploy manually without a new commit: the workflow
 has `workflow_dispatch` enabled, so **Actions → Build and deploy → Run
 workflow** re-runs it against whatever `master` currently points to.
+
+## Usage analytics dashboard
+
+`server/analytics.js` logs the game's own lifecycle events (rooms created,
+games started with their config, games ended, players leaving with session
+length) to daily-rotated JSONL files under `data/analytics/` - entirely
+server-side, no client-side script, no third-party service. See the module's
+own header comment for the full design rationale (why this shape, how it
+stays cheap and non-blocking, why it can't be exploited to grow unbounded).
+
+**This is why the `analytics-data` bind mount in step 4 above matters**: the
+CI/CD pipeline recreates the container on every push, so without it every
+deploy would silently wipe the data.
+
+View it at `https://triviasurvival.cking.co.nz/admin/analytics?token=<your
+ANALYTICS_TOKEN>` - add `&days=N` to change the window (default 30). A
+"Download raw JSONL" link on the page pulls the underlying data for anything
+the built-in summary doesn't cover. If `ANALYTICS_TOKEN` isn't set, both
+routes 404 rather than serving an open dashboard.
 
 ## Rollback
 
@@ -189,3 +226,10 @@ payoff of this design over the previous one.
 - **Build fails**: reproduce locally with the same `docker compose -f
   C:\hosting\docker-compose.yml build triviasurvival` - the Actions log
   shows the same output either way, this isn't hidden from you.
+- **Container won't start / `docker compose up` complains about
+  `ANALYTICS_TOKEN`**: step 4's `.env` is missing or wasn't created in
+  `C:\hosting` (where `docker compose` is actually run from) - see "Usage
+  analytics dashboard" above.
+- **`/admin/analytics` 404s**: either the token in the URL doesn't match
+  `ANALYTICS_TOKEN` in `.env`, or that variable isn't set at all in the
+  running container - both cases 404 identically, by design.

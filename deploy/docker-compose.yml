@@ -13,12 +13,22 @@
 # `cloudflared` is unrelated to CI/CD - it's the tunnel that's already
 # routing traffic here, included for completeness of the real topology.
 # Both share `hosting_net` so cloudflared can reach the app by service name.
+#
+# `./analytics-data` is a bind mount, not optional: without it the usage
+# analytics (server/analytics.js) would live inside the container and be
+# wiped on every single deploy, since `up -d --build` recreates the
+# container each time. See "One-time host setup" in docs/deploy-docker-
+# cicd.md for creating the folder and setting ANALYTICS_TOKEN once.
 
 services:
   triviasurvival:
     build: C:/source/trivia-survival
     restart: unless-stopped
     networks: [hosting_net]
+    volumes:
+      - ./analytics-data:/app/data/analytics
+    environment:
+      - ANALYTICS_TOKEN=${ANALYTICS_TOKEN:?set this in .env}
     # no "ports:" — reachable only from inside hosting_net
 
   cloudflared:
