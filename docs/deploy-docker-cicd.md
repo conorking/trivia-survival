@@ -1,12 +1,51 @@
-# CI/CD: push-to-deploy onto the home-hosted instance
+# CI/CD: push-to-deploy via a self-hosted GitHub Actions runner
 
 For the setup documented in `CLAUDE.md`'s "Home hosting deployment" section:
-the game runs in Docker on a separate always-on Windows mini PC (`C:\hosting`,
-reached over RDP — not this dev machine), behind the `home-hosting` Cloudflare
-Tunnel on the `cking.co.nz` domain. This adds `git push` → live-on-that-box,
-without opening any inbound port beyond what the tunnel already exposes, and
-without giving GitHub Actions a persistent presence (a self-hosted runner,
-SSH access) on the box.
+the game runs in Docker on a separate always-on Windows mini PC (`C:\hosting`
+for the compose stack, `C:\source\trivia-survival` for the actual code
+checkout — reached over RDP, not this dev machine), behind the
+`home-hosting` Cloudflare Tunnel on `cking.co.nz`. This makes `git push` to
+`master` land on that live instance automatically.
+
+## Why this design, not a webhook
+
+An earlier version of this pipeline pushed images to GHCR and used
+Watchtower (triggered by a webhook) to pull and restart the container on
+push. That fell apart in practice — the Watchtower image turned out to be
+archived/unmaintained and broken against current Docker Engine, and its
+actively-maintained replacement is a single-maintainer fork, a real
+bus-factor risk for something with Docker-socket-level power. Underneath
+that, the design itself was the actual problem: a standing,
+internet-reachable HTTP endpoint with Docker-socket-equivalent power behind
+it, gated by nothing but a static bearer token, is a bespoke pattern with no
+strong precedent - hardening it (a Docker socket proxy, etc.) would have
+been fixing the wrong layer.
+
+**A self-hosted GitHub Actions runner is the standard, well-precedented
+answer to "deploy to infra you don't want to expose to the internet"** -
+functionally the same idea as a Jenkins/CloudBees agent: a process on your
+own infra that executes CI-dispatched jobs. It removes the standing network
+listener entirely (the runner dials *out* to GitHub, the same direction
+everything else here already runs), removes the Watchtower dependency
+entirely, and removes all the webhook secret/environment/registry machinery
+entirely - there's no secret to leak, because access is gated by "who can
+push to this private repo's `master`" (GitHub's own account security), not
+a string in an HTTP header.
+
+**GitHub's own caution against self-hosted runners is specifically about
+public repos with outside-PR triggers** - a stranger's pull request can get
+a workflow dispatched to your runner before anyone reviews it. That doesn't
+apply here: this repo is private, with no outside collaborators, and the
+workflow only ever triggers on `push` (never `pull_request`). That's exactly
+the configuration GitHub considers safe. **Keep it that way** - the
+workflow file itself carries a comment warning against ever adding a
+`pull_request` trigger without reconsidering this whole setup first.
+
+This also simplifies everything downstream: since the runner executes
+directly on the mini PC, there's no reason to push/pull an image through a
+registry at all. The job just does what you'd do by hand over RDP -
+`git pull`, `docker compose build`, `docker compose up -d` - just
+automatically, on every push.
 
 ## How it works
 
@@ -14,143 +53,87 @@ SSH access) on the box.
 push to master
       │
       ▼
-GitHub Actions (.github/workflows/deploy.yml)
-      │  builds the Docker image, pushes it to ghcr.io (private)
+Self-hosted runner (Windows service on the mini PC, registered to this
+repo only, dispatched only by push-to-master)
+      │  runs directly in the existing checkout at C:\source\trivia-survival
       ▼
-      │  one POST, Authorization: Bearer <token>, to a Cloudflare-tunneled
-      │  hostname on the mini PC
-      ▼
-Watchtower (deploy/docker-compose.yml, HTTP-API mode)
-      │  pulls the new :latest image, recreates the triviasurvival container
+  git pull
+  docker compose -f C:\hosting\docker-compose.yml up -d --build triviasurvival
       ▼
 Live instance updated
 ```
 
-Watchtower is the piece that makes this a *push*, not a poll: it's configured
-with `WATCHTOWER_HTTP_API_UPDATE=true` and no interval/schedule set at all,
-which means it does nothing on its own — it only checks/updates
-label-enabled containers the instant its one HTTP endpoint is hit. Between
-deploys there's no periodic registry traffic and nothing listening for
-inbound connections beyond the tunnel that's already there.
-
-GitHub Actions itself is scoped to exactly two capabilities the whole way
-through: push an image to a package registry it owns (`packages: write` on
-the built-in `GITHUB_TOKEN`, nothing broader), and make one authenticated
-HTTP call to one fixed URL. No self-hosted runner, no SSH/shell access.
-
 ## One-time host setup (on the mini PC, via RDP)
 
-**1. Replace the existing compose service's `build:` with an `image:` pull.**
+**1. Register a runner for this repo.**
 
-`C:\hosting\docker-compose.yml` currently has a `triviasurvival` service using
-`build: C:/source/trivia-survival` — a local build from a checked-out copy of
-this repo, plus a `cloudflared` service, both on a shared `hosting_net`
-bridge network. This repo's `deploy/docker-compose.yml` is that exact file
-with the two changes needed: `triviasurvival` pulls a pre-built `image:`
-instead of building locally, and a new `watchtower` service joins the same
-`hosting_net` (it has to — that's what lets `cloudflared` reach it by name
-for the new tunnel route in step 4). Copy it over the real file (or merge by
-hand if `C:\hosting\docker-compose.yml` has grown further since). The
-`triviasurvival` service name and port (`3000`, unpublished, tunnel-only) are
-unchanged, so the tunnel's existing ingress rule
-(`service: http://triviasurvival:3000`) needs no edits at all.
-
-**2. Give Watchtower a way to pull your private GHCR image.**
-
-Create a GitHub [Personal Access Token](https://github.com/settings/tokens)
-(classic is simplest) scoped to just `read:packages`.
-
-Docker Desktop for Windows stores `docker login` credentials via the OS
-credential manager by default, *not* embedded in `config.json` — which means
-a normal `docker login` here won't actually give the Watchtower container
-(a Linux container reading a plain file) anything usable. Instead, build
-Watchtower a small dedicated auth file directly, in PowerShell:
+Repo → **Settings → Actions → Runners → New self-hosted runner** → OS
+**Windows**, architecture **x64**. GitHub shows a short PowerShell script
+with a **registration token** embedded - that token is short-lived and only
+used once to link the runner to this repo; it isn't a secret you store
+anywhere afterward. Run the shown commands in a PowerShell prompt on the
+mini PC, e.g.:
 
 ```powershell
-cd C:\hosting
-mkdir watchtower-docker-config
-$pair = "<your-github-username>:<your-PAT>"
-$b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($pair))
-@"
-{"auths":{"ghcr.io":{"auth":"$b64"}}}
-"@ | Set-Content -Encoding utf8 watchtower-docker-config\config.json
+mkdir C:\actions-runner; cd C:\actions-runner
+Invoke-WebRequest -Uri <the URL GitHub shows> -OutFile actions-runner.zip
+Expand-Archive -Path actions-runner.zip -DestinationPath .
+.\config.cmd --url https://github.com/conorking/trivia-survival --token <the token GitHub shows>
 ```
 
-This file only grants pull access to your own GHCR images — keep it out of
-git (it already sits under `C:\hosting`, which isn't a repo checkout).
+When `config.cmd` asks for labels, the default is fine (the workflow just
+targets `self-hosted`, no custom label needed).
 
-**3. Set up the compose stack.**
+**2. Install it as a service that can actually reach Docker Desktop.**
+
+This is the one real gotcha on Windows: Docker Desktop's engine is tied to
+a logged-in user's session (it runs inside that user's WSL2 instance), not
+a system-wide daemon the way Docker Engine is on Linux. A service running
+as `LOCAL SYSTEM` frequently **cannot** reach it at all.
 
 ```powershell
-cd C:\hosting
-copy deploy\.env.example .env   # from this repo, or hand-create it
+.\svc.cmd install
 ```
 
-Edit `.env` and set `WATCHTOWER_HTTP_API_TOKEN` to a long random value —
-easiest generated via Docker itself, so you don't need `openssl` on PATH:
+When prompted for the account to run the service as, use the **same Windows
+user account that already runs Docker Desktop and the `docker compose`
+stack** today - not Local System. Then confirm that account is a member of
+the local `docker-users` group (**Computer Management → Local Users and
+Groups → Groups → docker-users**), and:
 
 ```powershell
-docker run --rm alpine sh -c "head -c32 /dev/urandom | od -An -tx1 | tr -d ' \n'"
+.\svc.cmd start
 ```
 
-Then bring the stack up:
+Check **Services** (`services.msc`) for "GitHub Actions Runner
+(...)" showing **Running**. If it won't reach Docker even after this (some
+Docker Desktop/WSL2 combinations still don't hand off session-bound access
+to a background service), the fallback is running the runner interactively
+instead of as a service - `run.cmd` placed in that user's Startup folder (or
+a Scheduled Task set to "run only when user is logged on") so it launches
+inside their actual desktop session, which definitely has Docker access.
 
-```powershell
-docker compose up -d
-docker compose logs -f watchtower   # confirm it started in HTTP-API mode,
-                                     # with no scheduled-poll message
-```
+**3. Confirm the checkout the runner will operate on.**
 
-**4. Route a hostname to Watchtower on the `home-hosting` tunnel.**
-
-One more public hostname on the same named tunnel that already serves
-`triviasurvival.cking.co.nz`, pointed at the new `watchtower` service instead:
-
-- **Zero Trust dashboard**: `home-hosting` tunnel → **Public Hostname** →
-  **Add a public hostname** → e.g. `deploy-triviasurvival.cking.co.nz` →
-  Service `http://watchtower:8080`.
-- **Or via the tunnel's `config.yml`**, add an ingress rule alongside the
-  existing one:
-
-  ```yaml
-  ingress:
-    - hostname: triviasurvival.cking.co.nz
-      service: http://triviasurvival:3000
-    - hostname: deploy-triviasurvival.cking.co.nz
-      service: http://watchtower:8080
-    - service: http_status:404
-  ```
-
-  then `cloudflared tunnel ingress validate` and restart the `cloudflared`
-  service/container.
-
-This hostname is protected only by Watchtower's own bearer-token check (same
-trust model as a Stripe/GitHub/Docker Hub webhook — a long random secret over
-HTTPS). Don't publish it anywhere; treat the token like a password.
-
-## GitHub-side setup
-
-In the repo → **Settings → Secrets and variables → Actions**, add:
-
-| Secret | Value |
-|---|---|
-| `WATCHTOWER_HTTP_API_TOKEN` | the same token you put in `.env` on the mini PC |
-| `DEPLOY_WEBHOOK_URL` | `https://deploy-triviasurvival.cking.co.nz/v1/update` |
-
-Nothing else to configure — `.github/workflows/deploy.yml` uses the
-repo-provided `GITHUB_TOKEN` for the GHCR push, so there's no separate PAT to
-create or rotate on the CI side.
+The workflow assumes `C:\source\trivia-survival` is already a git clone of
+this repo with a working `git pull` (origin reachable, no uncommitted local
+changes that would block a pull) - which is also exactly what
+`C:\hosting\docker-compose.yml`'s `build: C:/source/trivia-survival` already
+assumes today. Nothing new to set up here if that's already true; just
+worth confirming before the first real push.
 
 ## What happens on every push to `master`
 
-1. GitHub Actions builds the image from the repo's `Dockerfile`.
-2. Pushes it to `ghcr.io/conorking/trivia-survival` as both `:latest` (the
-   tag the running container tracks) and `:sha-<commit>` (an immutable tag,
-   kept around purely for rollback — see below).
-3. POSTs to the deploy webhook with the bearer token.
-4. Watchtower receives that, pulls the new `:latest`, and recreates the
-   `triviasurvival` container. Typically live within seconds of the workflow
-   finishing.
+1. The runner picks up the dispatched job (near-instantly - it maintains a
+   persistent connection to GitHub, this isn't polling on an interval).
+2. `git pull` in `C:\source\trivia-survival`.
+3. `docker compose -f C:\hosting\docker-compose.yml up -d --build
+   triviasurvival` - rebuilds just that service (it's the only one with a
+   `build:` key; `cloudflared` is untouched) and recreates the container.
+
+Typically live within the time it takes Docker to rebuild the changed
+layers - fast in practice, since the build cache persists on the same
+machine between runs (unlike a fresh GitHub-hosted runner every time).
 
 You can also trigger a deploy manually without a new commit: the workflow
 has `workflow_dispatch` enabled, so **Actions → Build and deploy → Run
@@ -158,56 +141,51 @@ workflow** re-runs it against whatever `master` currently points to.
 
 ## Rollback
 
-Every past build is still sitting in GHCR under its `:sha-<commit>` tag. To
-roll back, on the mini PC:
+No registry/image tags to juggle - it's a git checkout. On the mini PC:
 
 ```powershell
-docker pull ghcr.io/conorking/trivia-survival:sha-<old-commit-sha>
-docker tag ghcr.io/conorking/trivia-survival:sha-<old-commit-sha> `
-           ghcr.io/conorking/trivia-survival:latest
-docker compose up -d triviasurvival
+cd C:\source\trivia-survival
+git checkout <old-commit-sha>
+docker compose -f C:\hosting\docker-compose.yml up -d --build triviasurvival
 ```
 
-(Find `<old-commit-sha>` from GitHub's commit history, or the package
-version list at `github.com/conorking/trivia-survival/pkgs/container/trivia-survival`.)
-The next real push overwrites `:latest` again as normal.
+Or, more normally, `git revert` the bad commit and push it - that goes
+through the same pipeline as any other change and rebuilds automatically.
+Either way, remember to `git checkout master` afterward so the next real
+push doesn't fight a detached HEAD.
 
 ## Adding a future project on the same mini PC
 
-This was designed to repeat cleanly:
+1. Give the new project a `Dockerfile` and a `docker-compose.yml` entry
+   alongside `triviasurvival` in `C:\hosting\docker-compose.yml` (own
+   `build:` path, own network membership on `hosting_net` if `cloudflared`
+   needs to reach it).
+2. Register a runner for the new repo the same way (step 1 above) - a
+   separate runner per repo is simplest and keeps them independent; you
+   don't need to install a second copy of the runner software just to add
+   labels, but a fresh `config.cmd` run against the new repo's URL is the
+   straightforward path.
+3. Copy this repo's `.github/workflows/deploy.yml` into the new repo,
+   adjusting the two hardcoded paths (the checkout location and the compose
+   `-f` path) if they differ.
 
-1. Give the new project a `Dockerfile` and copy this repo's
-   `.github/workflows/deploy.yml` into it unchanged — the image name is
-   derived from `github.repository` automatically, nothing to edit.
-2. Add one more service block to `C:\hosting\docker-compose.yml` (own image,
-   own container name, own `expose` port), keeping the
-   `com.centurylinklabs.watchtower.enable=true` label. One shared Watchtower
-   instance is enough for every project on the box — its label filter means
-   it only ever touches containers that opt in, and a single update call
-   cheaply re-checks all of them.
-3. Add one more tunnel hostname on `home-hosting` if the new project needs
-   its own public URL (same pattern as step 4 above).
-4. Set the same two secret names (`WATCHTOWER_HTTP_API_TOKEN`,
-   `DEPLOY_WEBHOOK_URL`) on the new repo. Reusing the exact same values is
-   fine; issue the new project its own token instead if you'd rather keep
-   projects independently revocable.
+No registry, no webhook, no secrets to provision at all - that's the actual
+payoff of this design over the previous one.
 
 ## Troubleshooting
 
-- **Webhook call fails with 401/403**: the token in the GitHub secret
-  doesn't match `WATCHTOWER_HTTP_API_TOKEN` in `.env` on the mini PC —
-  re-copy it carefully, no surrounding quotes/whitespace.
-- **Webhook call fails to connect at all**: check the tunnel route from step
-  4 above — `cloudflared tunnel ingress validate` and the `cloudflared`
-  container/service logs are the first places to look.
-- **Deploy "succeeds" but the container never updates**: confirm the
-  `triviasurvival` service in `docker-compose.yml` is pinned to the `:latest`
-  tag (Watchtower only updates a container if a *newer* image exists for the
-  tag it's already running), and check `docker compose logs watchtower` for a
-  pull error — almost always the `watchtower-docker-config/config.json` from
-  step 2 being stale, missing, or (if it was created with a plain
-  `docker login` instead of the manual recipe above) pointing at the OS
-  credential manager instead of embedding real credentials.
-- **Build step fails in GitHub Actions**: check the Actions log directly —
-  this is the same `Dockerfile` you can build locally with `docker build .`
-  to reproduce.
+- **Push doesn't trigger anything / Actions tab shows the job queued
+  forever**: the runner service isn't running - check `services.msc` on the
+  mini PC, or `Settings → Actions → Runners` on GitHub (should show
+  "Idle", not offline).
+- **Job runs but the `docker compose` step fails with a connection/access
+  error**: the runner service is very likely running as the wrong account
+  (see step 2's Docker Desktop gotcha) - confirm it's logged on as the
+  Docker-Desktop-capable user and that account is in `docker-users`.
+- **`git pull` step fails**: something local in `C:\source\trivia-survival`
+  is blocking it (uncommitted changes, detached HEAD from a rollback that
+  never got checked back to `master`, diverged history) - RDP in and fix
+  the checkout's state directly, same as you would for any git repo.
+- **Build fails**: reproduce locally with the same `docker compose -f
+  C:\hosting\docker-compose.yml build triviasurvival` - the Actions log
+  shows the same output either way, this isn't hidden from you.

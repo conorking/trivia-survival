@@ -1,32 +1,24 @@
 # Reference copy of C:\hosting\docker-compose.yml on the mini PC (see
-# docs/deploy-docker-cicd.md) — this IS your existing file, with exactly two
-# changes: `triviasurvival` pulls a pre-built `image:` instead of doing a
-# local `build:`, and a new `watchtower` service is added alongside
-# `cloudflared`. Everything else (network, no published ports, restart
-# policy) is untouched on purpose.
+# docs/deploy-docker-cicd.md) — kept here purely as documentation of the
+# real deploy topology, same as deploy/Caddyfile and
+# deploy/trivia-survival.service already do for the Oracle deploy path.
+# There's nothing to actually apply from this file: it matches what's
+# already running.
 #
-# Watchtower is what makes "docker push" become "live on this box" with no
-# inbound access (SSH, a runner, etc) onto it. It runs in HTTP-API-only mode
-# - notice there's no WATCHTOWER_INTERVAL/--schedule set anywhere below.
-# That absence is deliberate: without a schedule, Watchtower never polls on
-# its own, it only checks/updates labeled containers the instant its HTTP
-# endpoint is hit by the GitHub Actions workflow.
-#
-# Watchtower must be on `hosting_net` like the other two services, even
-# though it doesn't talk to `triviasurvival` over the network (it manages
-# containers via the Docker socket, not HTTP) - it needs to be reachable BY
-# `cloudflared` on that same network for the new tunnel route to it to work.
-#
-# Secrets (the Watchtower API token) come from a sibling `.env` file, NOT
-# committed to git - see "One-time host setup" in the docs.
+# `triviasurvival` builds locally from this repo's checkout
+# (C:/source/trivia-survival) rather than pulling a pre-built image - the
+# self-hosted runner (.github/workflows/deploy.yml) does a `git pull` in
+# that same checkout on every push to master, then `docker compose up -d
+# --build`, so this is just the same manual update recipe, automated.
+# `cloudflared` is unrelated to CI/CD - it's the tunnel that's already
+# routing traffic here, included for completeness of the real topology.
+# Both share `hosting_net` so cloudflared can reach the app by service name.
 
 services:
   triviasurvival:
-    image: ghcr.io/conorking/trivia-survival:latest
+    build: C:/source/trivia-survival
     restart: unless-stopped
     networks: [hosting_net]
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
     # no "ports:" — reachable only from inside hosting_net
 
   cloudflared:
@@ -36,38 +28,6 @@ services:
     volumes:
       - ./cloudflared:/etc/cloudflared
     networks: [hosting_net]
-
-  watchtower:
-    image: containrrr/watchtower:latest
-    restart: unless-stopped
-    networks: [hosting_net]
-    volumes:
-      # Lets Watchtower talk to the Docker daemon to pull images and
-      # recreate containers - the container it's allowed to touch is scoped
-      # by WATCHTOWER_LABEL_ENABLE below regardless.
-      - /var/run/docker.sock:/var/run/docker.sock
-      # A registry-auth file dedicated to Watchtower - see "One-time host
-      # setup" in the docs for why this is a small hand-built config.json
-      # rather than mounting your normal Docker Desktop config: Docker
-      # Desktop for Windows stores `docker login` credentials via the OS
-      # credential manager by default, not embedded in config.json, which
-      # Watchtower (a Linux container) can't read.
-      - ./watchtower-docker-config/config.json:/config.json:ro
-    environment:
-      # Only touch containers explicitly labeled for it - matters once other
-      # projects share this host and this Watchtower instance.
-      - WATCHTOWER_LABEL_ENABLE=true
-      # On-demand only (see the file header above for why no interval is set).
-      - WATCHTOWER_HTTP_API_UPDATE=true
-      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:?set this in .env}
-      # Deletes the superseded image after a successful update so repeated
-      # deploys don't slowly fill the disk.
-      - WATCHTOWER_CLEANUP=true
-    labels:
-      # Watchtower must never update itself via the label filter above -
-      # this is the documented way to exclude it explicitly.
-      - com.centurylinklabs.watchtower.enable=false
-    # no "ports:" — reached only via the new tunnel route to watchtower:8080
 
 networks:
   hosting_net:

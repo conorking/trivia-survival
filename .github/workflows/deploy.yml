@@ -1,77 +1,43 @@
 name: Build and deploy
 
-# Push-to-deploy: build the Docker image, push it to GHCR, then ping the
-# Watchtower instance already running on the home server to pull it and
-# restart the container. See docs/deploy-docker-cicd.md for the full setup
-# (one-time host config, the two repo secrets this needs, rollback, and how
-# to reuse this same file for a future project).
+# Push-to-deploy via a self-hosted runner registered to this repo only, on
+# the mini PC itself. See docs/deploy-docker-cicd.md for the full setup and
+# why this replaced an earlier webhook/Watchtower design.
 #
-# Deliberately scoped tight: this workflow can push an image to a package
-# registry it owns (via the default GITHUB_TOKEN, permissioned below to
-# nothing but that) and make one authenticated HTTP call to one fixed URL.
-# No self-hosted runner, no SSH, no shell access to the home server.
-
+# IMPORTANT: this trigger must never include `pull_request` (or anything
+# else an outside contributor could cause to run). A self-hosted runner
+# executes whatever a triggered workflow tells it to, directly on real
+# infra - safe here only because this repo is private with no outside
+# collaborators and the only trigger is a push straight to `master`, which
+# requires push access to this repo. Widening the trigger without also
+# reconsidering that is how a self-hosted runner stops being safe.
 on:
   push:
     branches: [master]
   workflow_dispatch: {}
 
-permissions:
-  contents: read
-  packages: write
-
 concurrency:
   group: deploy-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
-env:
-  REGISTRY: ghcr.io
-
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Lowercase image name
-        id: image
-        # GHCR requires a lowercase image path; github.repository preserves
-        # whatever case the owner/repo actually have.
-        run: echo "name=${REGISTRY}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
-        env:
-          REGISTRY: ${{ env.REGISTRY }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ steps.image.outputs.name }}:latest
-            ${{ steps.image.outputs.name }}:sha-${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Trigger deploy
-        # Watchtower's HTTP API mode - see deploy/docker-compose.yml. This is
-        # a single POST to one fixed endpoint carrying a bearer token; it
-        # doesn't tell Watchtower which image to pull, it just asks it to
-        # check every label-enabled container on the host right now.
+      - name: Pull latest and rebuild
+        # No actions/checkout - the runner operates directly on the
+        # persistent real checkout at C:\source\trivia-survival, which is
+        # also the exact path C:\hosting\docker-compose.yml's `build:`
+        # context already points at.
+        shell: pwsh
         run: |
-          curl -fsS -X POST \
-            -H "Authorization: Bearer ${WATCHTOWER_TOKEN}" \
-            "${DEPLOY_WEBHOOK_URL}"
-        env:
-          WATCHTOWER_TOKEN: ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}
-          DEPLOY_WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+          Set-Location C:\source\trivia-survival
+          git pull
+
+      - name: Rebuild and restart the app container
+        # Only `triviasurvival` declares a `build:` in the compose file, so
+        # this never touches `cloudflared` - naming it explicitly anyway
+        # for clarity, not because it's strictly required.
+        shell: pwsh
+        run: |
+          docker compose -f C:\hosting\docker-compose.yml up -d --build triviasurvival
