@@ -98,12 +98,41 @@ function allowRoomCreate(ip) {
   roomCreateLog.set(key, kept);
   return true;
 }
-// Periodic sweep so this map can't grow forever across many distinct IPs.
+// ---- Player-join rate limit ----
+// player:join is unauthenticated. The per-socket "one join per connection" rule and the
+// per-room MAX_PLAYERS_PER_ROOM cap already bound the two concrete abuses (orphan-player
+// leak, unbounded roster); this is a coarse backstop against a single IP opening sockets
+// and re-joining in a tight loop. Deliberately very generous: a real event can put
+// 30-100 players behind ONE venue/NAT egress IP all joining within a couple of minutes,
+// so the ceiling has to sit far above that - it's only meant to catch a script doing
+// thousands, not to shape legitimate traffic.
+const JOIN_WINDOW_MS = 60 * 1000;
+const JOIN_MAX = 240;
+const joinLog = new Map(); // ip -> [join attempt timestamps within the window]
+
+function allowPlayerJoin(ip) {
+  const now = Date.now();
+  const key = ip || 'unknown';
+  const kept = (joinLog.get(key) || []).filter(t => now - t < JOIN_WINDOW_MS);
+  if (kept.length >= JOIN_MAX) {
+    joinLog.set(key, kept);
+    return false;
+  }
+  kept.push(now);
+  joinLog.set(key, kept);
+  return true;
+}
+
+// Periodic sweep so these maps can't grow forever across many distinct IPs.
 setInterval(() => {
   const now = Date.now();
   for (const [key, arr] of roomCreateLog) {
     const kept = arr.filter(t => now - t < ROOM_CREATE_WINDOW_MS);
     if (kept.length) roomCreateLog.set(key, kept); else roomCreateLog.delete(key);
+  }
+  for (const [key, arr] of joinLog) {
+    const kept = arr.filter(t => now - t < JOIN_WINDOW_MS);
+    if (kept.length) joinLog.set(key, kept); else joinLog.delete(key);
   }
 }, 5 * 60 * 1000).unref();
 
@@ -232,5 +261,5 @@ function exportJsonl({ days = 30 } = {}) {
 }
 
 module.exports = {
-  logEvent, deviceHintFromUA, countryFromHeaders, allowRoomCreate, getSummary, exportJsonl, DATA_DIR
+  logEvent, deviceHintFromUA, countryFromHeaders, allowRoomCreate, allowPlayerJoin, getSummary, exportJsonl, DATA_DIR
 };

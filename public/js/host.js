@@ -16,10 +16,22 @@ let latestPlayers = []; // raw (non-interpolated) - needed for mouse-follow stee
 let rematchCountdownEndsAt = null;
 
 const existingCode = sessionStorage.getItem('trivia_host_room');
+// Secret proving this tab is the host of `existingCode` on reconnect - without it, the
+// server would let anyone who knows the room code claim host. Per-tab (sessionStorage),
+// issued once in host:roomCreated.
+let hostToken = sessionStorage.getItem('trivia_host_token') || null;
+
+// Escape a string for safe interpolation into an HTML string (player names / colours are
+// untrusted - server-sanitized too, but this is the render-site guard).
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
 
 function attachToRoom() {
   if (roomCode || existingCode) {
-    socket.emit('host:rejoin', { code: roomCode || existingCode });
+    socket.emit('host:rejoin', { code: roomCode || existingCode, token: hostToken });
   } else {
     socket.emit('host:createRoom', {});
   }
@@ -35,9 +47,10 @@ socket.io.on('reconnect', attachToRoom);
 // waiting for the transport to time out - keeps room presence data accurate promptly.
 window.addEventListener('pagehide', () => { socket.disconnect(); });
 
-socket.on('host:roomCreated', ({ code, config, debug, tuning, tuningMeta }) => {
+socket.on('host:roomCreated', ({ code, hostToken: token, config, debug, tuning, tuningMeta }) => {
   roomCode = code;
   currentConfig = config;
+  if (token) { hostToken = token; sessionStorage.setItem('trivia_host_token', token); }
   sessionStorage.setItem('trivia_host_room', code);
   document.getElementById('cfgError').textContent = '';
   document.getElementById('startError').textContent = '';
@@ -89,6 +102,8 @@ socket.on('host:error', ({ message }) => {
   // rejoin entirely) - fall back to creating a new room automatically instead.
   if (existingCode && !roomCode && message === 'Room not found.') {
     sessionStorage.removeItem('trivia_host_room');
+    sessionStorage.removeItem('trivia_host_token');
+    hostToken = null;
     socket.emit('host:createRoom', {});
   }
 });
@@ -465,7 +480,7 @@ socket.on('game:end', ({ reason, winners }) => {
   document.getElementById('endReason').textContent = reasonText;
   const list = document.getElementById('winnersList');
   list.innerHTML = winners.length
-    ? winners.map(w => `<div class="winner" style="color:${w.color}">🏆 ${w.name}</div>`).join('')
+    ? winners.map(w => `<div class="winner" style="color:${esc(w.color)}">🏆 ${esc(w.name)}</div>`).join('')
     : '<p class="muted">No survivors this time!</p>';
 });
 
@@ -573,10 +588,10 @@ function renderCategoryPicker() {
   const el = document.getElementById('categoryPicker');
   el.innerHTML = categoryList.map(cat => `
     <label class="checkbox-row">
-      <input type="checkbox" data-key="${cat.key}" checked>
+      <input type="checkbox" data-key="${esc(cat.key)}" checked>
       <span class="checkbox-text">
-        <span class="checkbox-title">${cat.label}</span>
-        <span class="checkbox-desc">${cat.count} questions</span>
+        <span class="checkbox-title">${esc(cat.label)}</span>
+        <span class="checkbox-desc">${Number(cat.count) || 0} questions</span>
       </span>
     </label>
   `).join('');
@@ -655,8 +670,8 @@ function renderPlayerList(players) {
   const list = document.getElementById('playerList');
   list.innerHTML = players.map(p => `
     <div class="player-chip ${p.ready ? 'ready' : 'not-ready'} ${!p.connected ? 'dead' : ''}">
-      <span class="dot" style="background:${p.color}"></span>
-      ${p.name}${p.isBot ? ' 🤖' : ''} ${p.connected || p.isBot ? '' : '(offline)'}
+      <span class="dot" style="background:${esc(p.color)}"></span>
+      ${esc(p.name)}${p.isBot ? ' 🤖' : ''} ${p.connected || p.isBot ? '' : '(offline)'}
       ${p.ready ? '<span class="ready-tick">✔</span>' : ''}
     </div>
   `).join('');

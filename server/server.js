@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const os = require('os');
 const path = require('path');
+const crypto = require('crypto');
 const { Server } = require('socket.io');
 const {
   GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN,
@@ -19,7 +20,11 @@ const app = express();
 app.set('trust proxy', true); // correct req.ip/protocol when run behind Caddy/nginx/etc.
 const server = http.createServer(app);
 const io = new Server(server, {
-  maxHttpBufferSize: 2e6, // allow custom question JSON uploads up to ~2MB
+  // Every message a client can legitimately send is tiny (an input vector, a room code,
+  // a name). The old 2MB allowance was for the since-removed custom-question upload and
+  // now just widened the memory-amplification surface. 64KB is comfortably above any
+  // real payload.
+  maxHttpBufferSize: 64 * 1024,
   // A genuine, explicit leave ("back to menu", tab close) is detected instantly via the
   // clients' own socket.disconnect() + pagehide calls below, so this timeout only needs to
   // catch a socket that's actually gone dark - it doesn't need to be aggressive, and being
@@ -29,6 +34,31 @@ const io = new Server(server, {
   // that fix).
   pingInterval: 10000,
   pingTimeout: 20000
+});
+
+// ---- Security headers ----
+// Defense in depth. The app serves only its own first-party assets and makes zero
+// external network calls by design (see server/analytics.js), so a tight CSP costs
+// nothing. `'unsafe-inline'` for script/style is retained only because the HTML still
+// uses inline event handlers and style attributes - it still blocks loading attacker
+// script from another origin and blocks eval, and every player-controlled string is
+// now escaped at its render site regardless.
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "connect-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "frame-ancestors 'self'"
+  ].join('; '));
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  next();
 });
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -135,6 +165,7 @@ io.on('connection', socket => {
     });
     socket.emit('host:roomCreated', {
       code: room.code,
+      hostToken: room.hostToken,
       config: room.config,
       debug: DEBUG,
       tuning: DEBUG ? getTuning() : null,
@@ -142,9 +173,16 @@ io.on('connection', socket => {
     });
   });
 
-  socket.on('host:rejoin', ({ code } = {}) => {
+  socket.on('host:rejoin', ({ code, token } = {}) => {
     const room = manager.getRoom(code);
     if (!room) { socket.emit('host:error', { message: 'Room not found.' }); return; }
+    // Host controls are privileged - require the secret handed out at room creation.
+    // A mismatch is reported as "Room not found." (not a distinct "wrong token") so it
+    // gives a code-guesser nothing to work with.
+    if (room.hostToken && token !== room.hostToken) {
+      socket.emit('host:error', { message: 'Room not found.' });
+      return;
+    }
     room.hostSocketId = socket.id;
     room.hostConnected = true;
     room.hostDisconnectedAt = 0;
@@ -218,6 +256,7 @@ io.on('connection', socket => {
     const joinHostAsPlayer = (room, name, color) => {
       if (playerId && room.players.has(playerId)) return;
       const player = room.addPlayer(name || 'Host', color);
+      if (!player) return; // room full
       player.socketId = socket.id;
       tagPlayerHints(player, socket);
       tokenIndex.set(player.token, { code: room.code, playerId: player.id });
@@ -374,6 +413,7 @@ io.on('connection', socket => {
     if (!room || !isHost || room.state !== 'lobby') return;
     if (playerId && room.players.has(playerId)) return; // already playing
     const player = room.addPlayer(name || 'Host', color);
+    if (!player) { socket.emit('host:error', { message: 'Room is full.' }); return; }
     player.socketId = socket.id;
     tagPlayerHints(player, socket);
     tokenIndex.set(player.token, { code: room.code, playerId: player.id });
@@ -411,12 +451,22 @@ io.on('connection', socket => {
   socket.on('player:join', ({ code, name, color } = {}) => {
     const room = manager.getRoom(code);
     if (!room) { socket.emit('player:error', { message: 'Room not found.' }); return; }
+    // One join per socket. A socket that's already a player (here or anywhere) must use
+    // player:rejoin to re-attach - calling player:join again used to leak a
+    // permanently-"connected" orphan player per call, since the disconnect handler only
+    // ever clears the single player tracked in this connection's closure.
+    if (playerId) { socket.emit('player:error', { message: 'Already joined.' }); return; }
+    if (!analytics.allowPlayerJoin(clientIp(socket))) {
+      socket.emit('player:error', { message: 'Too many join attempts - please wait a moment and try again.' });
+      return;
+    }
     // Joining while a round is actually in progress is allowed, but you come in as a
     // spectating ghost for the rest of this game - a fresh join can never be used to
     // "respawn" back into a round you (or anyone) already got knocked out of. A
     // rematch / next game brings you in as a normal live player like everyone else.
     const midGame = room.state !== 'lobby' && room.state !== 'ended';
     const player = room.addPlayer(name, color);
+    if (!player) { socket.emit('player:error', { message: 'This room is full.' }); return; }
     player.socketId = socket.id;
     tagPlayerHints(player, socket);
     if (midGame) {
@@ -699,9 +749,19 @@ app.get('/api/tunnel-info', async (req, res) => {
 // Gated behind ANALYTICS_TOKEN - if it's unset, both routes 404 rather than defaulting
 // to open, so there's no way to accidentally ship this world-readable. 404 (not 401/403)
 // on a bad/missing token too, so a prober can't even tell the route exists.
+function timingSafeStrEqual(a, b) {
+  const bufA = Buffer.from(String(a));
+  const bufB = Buffer.from(String(b));
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
 function checkAnalyticsToken(req, res) {
   const token = process.env.ANALYTICS_TOKEN;
-  if (!token || req.query.token !== token) { res.status(404).end(); return false; }
+  if (!token || typeof req.query.token !== 'string' || !timingSafeStrEqual(req.query.token, token)) {
+    res.status(404).end();
+    return false;
+  }
   return true;
 }
 
@@ -791,7 +851,7 @@ function renderDashboardHtml(summary) {
   </div>
 
   <p class="muted center">
-    <a href="/admin/analytics/export.jsonl?token=${esc(process.env.ANALYTICS_TOKEN)}" style="color:var(--accent2);">Download raw JSONL</a>
+    <a href="/admin/analytics/export.jsonl?token=${esc(encodeURIComponent(process.env.ANALYTICS_TOKEN || ''))}" style="color:var(--accent2);">Download raw JSONL</a>
   </p>
 </div>
 </body></html>`;

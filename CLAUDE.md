@@ -572,10 +572,14 @@ sends an immediate, clean disconnect rather than waiting on the transport to tim
 on the explicit "back to menu" action and on the `pagehide` event (fires reliably on both
 desktop and mobile for any other way of leaving: closing the tab, browser back, etc.).
 
-Host reconnect is simpler/weaker: `sessionStorage` (per-tab) holds the room code, and
-`host:rejoin` just re-attaches by code with no token check — anyone who knows the code
-could claim host. Acceptable for the MVP/trusted-icebreaker use case; would need a real
-host token if this were ever exposed to hostile users.
+Host reconnect: `sessionStorage` (per-tab) holds the room code **and a `hostToken`**
+(random uuid, minted in the `Room` constructor, handed to the host once in
+`host:roomCreated`). `host:rejoin` requires the matching token — a mismatch (or none) is
+answered with the same generic `Room not found.` a bad code gets, so a code-guesser
+learns nothing. This closes the old "anyone who knows the 5-char code can claim host and
+drive start/end/kick/config" hole. The token is per-tab and in-memory only (like the
+player tokens); a server restart invalidates it, and `host.js` falls back to creating a
+fresh room in that case.
 
 ## Network access (LAN + internet without hosting)
 
@@ -727,6 +731,36 @@ not in this repo. Short version for anything touching this codebase:
   values stay in the JSON files (only the ramp's *grouping* changed).
 
 ## Feedback already implemented (most recent round)
+
+**Security hardening pass (player-input XSS + adjacent vectors):** an audit of every
+path from player-supplied input to another client. Fixes, all landed:
+- **Stored XSS via `name` / `color`** — both were stored raw (`addPlayer`) and
+  interpolated into `innerHTML` (`style="background:${p.color}"` + `${p.name}`) on the
+  player lobby/preview/winners lists **and the host console**, so any player could script
+  every other client + the host just by joining with a crafted `color`. Now: `color` is
+  allowlisted server-side to the avatar palette or a bare `#rrggbb` (`sanitizeColor` in
+  `rooms.js` — also kills the CSS-property-injection variant, e.g. a full-viewport
+  overlay); `name` is coerced-to-string, stripped of control + HTML-significant chars,
+  and capped (`sanitizeName`). Belt-and-suspenders: both client files got an `esc()`
+  helper wrapped around every `${...}` in an `innerHTML` template (`host.js` / `player.js`).
+- **No host auth** — see the "Host reconnect" paragraph above (`hostToken`).
+- **Room-flooding / orphan-player leak** — `player:join` now rejects a second join on a
+  socket that already has a player (the old behaviour leaked a permanently-"connected"
+  player per call, since `disconnect` only clears the one in the closure); `addPlayer`
+  enforces `MAX_PLAYERS_PER_ROOM` (150) and returns `null` (callers surface "room full");
+  a generous per-IP join backstop (`analytics.allowPlayerJoin`, 240/min — set far above a
+  real one-NAT venue of 100 players).
+- **Crash-on-bad-input** — a non-string `name` used to throw straight out of the handler
+  (`name.slice`), and a non-string `code` out of `getRoom` (`.toUpperCase`); both coerce
+  now.
+- **CSP + headers** — `server.js` sets a `Content-Security-Policy` (`default-src 'self'`,
+  no external origins — the app already makes zero external calls), `X-Content-Type-Options`,
+  `X-Frame-Options`, `Referrer-Policy`. `script-src`/`style-src` keep `'unsafe-inline'`
+  only because the HTML still uses inline handlers/attributes; it still blocks
+  cross-origin script + `connect-src`/`img-src` exfiltration.
+- **Minor** — `maxHttpBufferSize` cut from 2 MB (a leftover from the removed custom-
+  question upload) to 64 KB; analytics-dashboard token compare is now constant-time and
+  the export link URL-encodes the token.
 
 **Question repeats + difficulty banding:** noticeable question repeats between
 back-to-back sessions were traced to the no-repeat set being **per-room** — a new room

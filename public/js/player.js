@@ -14,6 +14,14 @@ let latestPlayers = []; // raw (non-interpolated) - used for status text
 let myAliveGhostState = { alive: true, isGhost: false };
 let myLocalJumpUntil = 0;
 
+// Escape a string for safe interpolation into an HTML string. Player names / colours are
+// untrusted (server-sanitized too, but this is the guard at the render site).
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
 // 'follow' (camera zoomed on the player, edge-to-edge canvas, virtual joystick) below
 // the breakpoint; 'overview' (whole map, same as host) above it - matches style.css's
 // canvas#arena.arena-follow breakpoint so the CSS layout and the camera mode always
@@ -153,7 +161,7 @@ function changeRoom() {
 function renderPreview(players) {
   const list = document.getElementById('previewPlayerList');
   document.getElementById('previewPlayerCount').textContent = players.length;
-  list.innerHTML = players.map(p => `<div class="player-chip"><span class="dot" style="background:${p.color}"></span>${p.name}</div>`).join('');
+  list.innerHTML = players.map(p => `<div class="player-chip"><span class="dot" style="background:${esc(p.color)}"></span>${esc(p.name)}</div>`).join('');
   document.getElementById('roomPreviewCard').style.display = 'block';
 }
 
@@ -241,8 +249,8 @@ socket.on('room:players', (players) => {
   if (list) {
     list.innerHTML = players.map(p => `
       <div class="player-chip ${p.ready ? 'ready' : 'not-ready'}">
-        <span class="dot" style="background:${p.color}"></span>
-        ${p.name}${p.id === myId ? ' (you)' : ''}
+        <span class="dot" style="background:${esc(p.color)}"></span>
+        ${esc(p.name)}${p.id === myId ? ' (you)' : ''}
         ${p.ready ? '<span class="ready-tick">✔</span>' : ''}
       </div>
     `).join('');
@@ -617,7 +625,7 @@ socket.on('game:end', ({ reason, winners }) => {
   document.getElementById('endReason').textContent = reasonText;
   const list = document.getElementById('winnersList');
   list.innerHTML = winners.length
-    ? winners.map(w => `<div class="winner" style="color:${w.color}">🏆 ${w.name}${w.id === myId ? ' (you)' : ''}</div>`).join('')
+    ? winners.map(w => `<div class="winner" style="color:${esc(w.color)}">🏆 ${esc(w.name)}${w.id === myId ? ' (you)' : ''}</div>`).join('')
     : '<p class="muted">No survivors this time!</p>';
   document.getElementById('rematchHint').style.display = 'none';
 });

@@ -144,6 +144,42 @@ const JUMP_COOLDOWN_GROWTH = 2; // cooldown doubles each consecutive jump
 const JUMP_CHAIN_RESET_MS = 2500; // this long without jumping resets the chain back to fresh
 const TICK_MS = 40; // 25Hz
 
+// Hard ceiling on players in a single room. The stated use case is 30-100; this leaves
+// generous headroom above that while making a join-flood (a raw socket client calling
+// player:join in a loop) a bounded rather than unbounded resource drain - every extra
+// player is broadcast in every 25Hz game:tick and iterated in the movement loop.
+const MAX_PLAYERS_PER_ROOM = 150;
+
+// The avatar palette the client offers. Also the server-side allowlist for the `color`
+// field: a player's colour is rendered into `style="..."` attributes on both the player
+// and host pages, so anything outside this set is rejected. A bare hex value is accepted
+// too (defensive - covers a future client that adds shades) but nothing else, which
+// closes both the attribute-breakout XSS and the CSS-property-injection (e.g. a
+// full-viewport overlay) that a free-form string allowed.
+const AVATAR_COLORS = [
+  '#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'
+];
+const HEX_COLOR_RE = /^#[0-9a-fA-F]{6}$/;
+function sanitizeColor(color) {
+  if (typeof color !== 'string') return AVATAR_COLORS[0];
+  if (AVATAR_COLORS.includes(color)) return color;
+  return HEX_COLOR_RE.test(color) ? color.toLowerCase() : AVATAR_COLORS[0];
+}
+// Player-supplied display name. Coerced to a string first (a non-string `name` used to
+// throw straight out of the socket handler - a trivial remote crash), stripped of
+// control chars and any character with HTML significance, collapsed whitespace, capped
+// at 16. Falls back to 'Player' if nothing usable is left.
+function sanitizeName(name) {
+  const raw = (typeof name === 'string' || typeof name === 'number') ? String(name) : '';
+  const cleaned = raw
+    .replace(/\s+/g, ' ')                       // fold all whitespace (tabs, newlines) to a single space
+    .replace(new RegExp('[\\u0000-\\u001f\\u007f<>&"\'`\\\\]', 'g'), '') // strip control + HTML/attr-significant chars
+    .trim()
+    .slice(0, 16)
+    .trim();
+  return cleaned || 'Player';
+}
+
 // Base/default cage layout - the fixed sizes dynamic cell scaling scales from, and the
 // starting point clients render before any round-specific data arrives.
 const TRAPDOORS = {
@@ -453,6 +489,11 @@ function createPennedDogs() {
 class Room {
   constructor(code, hostSocketId) {
     this.code = code;
+    // Secret the host proves on reconnect (host:rejoin). Without it, anyone who knew or
+    // guessed the 5-char room code could claim host and drive host-only controls
+    // (start/end game, kick players, change config). Handed to the host once at
+    // creation and kept only in that tab's sessionStorage.
+    this.hostToken = uuidv4();
     this.hostSocketId = hostSocketId;
     this.hostConnected = true;
     this.hostDisconnectedAt = 0; // set on disconnect, cleared on host:rejoin - see HOST_LEAVE_GRACE_MS in server.js
@@ -502,6 +543,7 @@ class Room {
   addBot() {
     const colors = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
     const player = this.addPlayer('Bot ' + (++this.botSeq), colors[this.botSeq % colors.length]);
+    if (!player) return null; // room full
     player.isBot = true;
     player.ready = true;
     player.botState = { decidedForIndex: -1, doorTarget: null, fleeX: ARENA_W / 2, fleeY: ARENA_H * 0.22 };
@@ -661,15 +703,20 @@ class Room {
     this.emitQuestion(io);
   }
 
+  // Returns the new player, or null if the room is already at MAX_PLAYERS_PER_ROOM
+  // (callers surface that to the client / bail). `name` and `avatarColor` are
+  // untrusted client input - both are sanitized here, never stored raw, since both
+  // are rendered into HTML on the player and host pages.
   addPlayer(name, avatarColor) {
+    if (this.players.size >= MAX_PLAYERS_PER_ROOM) return null;
     const id = uuidv4();
     const token = uuidv4();
     const spawn = randomSpawn();
     const player = {
       id,
       token,
-      name: name.slice(0, 16) || 'Player',
-      color: avatarColor || '#4f8fef',
+      name: sanitizeName(name),
+      color: sanitizeColor(avatarColor),
       x: spawn.x,
       y: spawn.y,
       input: { dx: 0, dy: 0 },
@@ -1503,7 +1550,9 @@ class GameManager {
   }
 
   getRoom(code) {
-    return this.rooms.get((code || '').toUpperCase());
+    // Coerce first - a non-string `code` (raw socket client sending a number/object)
+    // would otherwise throw out of .toUpperCase() and crash the handler.
+    return this.rooms.get(String(code == null ? '' : code).toUpperCase());
   }
 
   removeRoom(code) {
