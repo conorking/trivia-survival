@@ -411,10 +411,19 @@ io.on('connection', socket => {
   socket.on('player:join', ({ code, name, color } = {}) => {
     const room = manager.getRoom(code);
     if (!room) { socket.emit('player:error', { message: 'Room not found.' }); return; }
-    if (room.state !== 'lobby') { socket.emit('player:error', { message: 'Game already in progress.' }); return; }
+    // Joining while a round is actually in progress is allowed, but you come in as a
+    // spectating ghost for the rest of this game - a fresh join can never be used to
+    // "respawn" back into a round you (or anyone) already got knocked out of. A
+    // rematch / next game brings you in as a normal live player like everyone else.
+    const midGame = room.state !== 'lobby' && room.state !== 'ended';
     const player = room.addPlayer(name, color);
     player.socketId = socket.id;
     tagPlayerHints(player, socket);
+    if (midGame) {
+      player.alive = false;
+      player.isGhost = true;
+      player.cagedAt = null;
+    }
     tokenIndex.set(player.token, { code: room.code, playerId: player.id });
     joinedRoomCode = room.code;
     playerId = player.id;
@@ -424,7 +433,19 @@ io.on('connection', socket => {
       playerId: player.id,
       token: player.token,
       config: room.config,
-      arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN }
+      arena: { w: ARENA_W, h: ARENA_H, trapdoors: room.trapdoors, dogPen: DOG_PEN },
+      state: room.state,
+      you: { name: player.name, color: player.color, alive: player.alive, isGhost: player.isGhost },
+      currentQuestion: (room.state !== 'lobby' && room.currentQuestion) ? {
+        index: room.currentQuestionIndex,
+        total: room.questions.length,
+        q: room.currentQuestion.q,
+        options: room.currentQuestion.options,
+        phase: room.state,
+        introEndsAt: room.state === 'intro' ? room.phaseEndsAt : 0,
+        endsAt: room.phaseEndsAt,
+        trapdoors: room.trapdoors
+      } : null
     });
     io.to(room.code).emit('room:players', room.getPlayersPublic());
   });
@@ -543,15 +564,20 @@ io.on('connection', socket => {
   // host may still be actively configuring there.
   function maybeStartRematchCountdown(room) {
     if (!room.awaitingRematchStart || room.state !== 'lobby') return;
-    const readyCount = Array.from(room.players.values()).filter(p => p.connected && p.ready).length;
-    if (readyCount >= REMATCH_READY_MIN) {
+    // Auto-start only once EVERY connected player has readied up (not just a quorum) -
+    // still gated on the 2-player minimum. The host's own START GAME button remains the
+    // way to start with anyone not ready.
+    const readyToStart = (r) => {
+      const connected = Array.from(r.players.values()).filter(p => p.connected);
+      return connected.length >= REMATCH_READY_MIN && connected.every(p => p.ready);
+    };
+    if (readyToStart(room)) {
       if (room.rematchTimer) return; // already counting down
       const endsAt = Date.now() + REMATCH_COUNTDOWN_MS;
       io.to(room.code).emit('game:rematchCountdown', { endsAt });
       room.rematchTimer = setTimeout(() => {
         room.rematchTimer = null;
-        const stillReady = Array.from(room.players.values()).filter(p => p.connected && p.ready).length;
-        if (room.state === 'lobby' && room.awaitingRematchStart && stillReady >= REMATCH_READY_MIN) {
+        if (room.state === 'lobby' && room.awaitingRematchStart && readyToStart(room)) {
           room.start(io);
           io.to(room.code).emit('game:started', { config: room.config });
         }

@@ -713,9 +713,20 @@ const ArenaRender = (() => {
     ctx.restore();
   }
 
+  // Stable per-entity phase offset from an id string - so a time-based wobble stays
+  // anchored to *which* entity it is, not its current position (using a live coordinate
+  // as the phase made a moving ghost's bob jump wildly frame to frame - it read as a
+  // vibration - since the interpolated x shifts every frame).
+  function idPhase(id) {
+    const s = String(id);
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+    return (h % 6283) / 1000; // ~[0, 2π)
+  }
+
   function drawPlayer(ctx, p, isMe) {
     const now = Date.now();
-    const bob = p.isGhost ? Math.sin(now / 300 + p.x) * 3 : 0;
+    const bob = p.isGhost ? Math.sin(now / 300 + idPhase(p.id)) * 3 : 0;
     const jumping = p.jumpUntil && p.jumpUntil > now;
     let squashY = 0, scale = 1;
     if (jumping) {

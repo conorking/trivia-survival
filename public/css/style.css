@@ -569,6 +569,36 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   font-size: var(--fs-vt-xs);
 }
 
+/* Cycling gameplay tips shown at the bottom of the player lobby / ready screen. Rounded
+   yellow callout; the body text slides out left / in from the right as tips rotate (see
+   player.js cycleTip). It's a child of #lobbyView so it hides/shows with that view. */
+.tip-box {
+  width: min(560px, calc(100vw - 24px));
+  background: var(--accent);
+  color: #10102a;
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 4px 0 var(--border);
+  padding: 10px 16px 12px;
+  overflow: hidden;
+  z-index: 40;
+  justify-self: center;
+}
+.tip-box .tip-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-px-xs);
+  margin-bottom: 6px;
+}
+.tip-box .tip-body {
+  font-size: var(--fs-vt-sm);
+  line-height: 1.35;
+  transition: transform 0.32s ease, opacity 0.32s ease;
+}
+.tip-box .tip-body.slide-out { transform: translateX(-32px); opacity: 0; }
+.tip-box .tip-body.slide-in { transform: translateX(32px); opacity: 0; transition: none; }
+/* Keep the roster clear of the fixed tip callout on short screens. */
+#lobbyView { padding-bottom: 130px; }
+
 /* Cast/spectator mode (host only): hides host-only chrome (config, roster, controls) for
    a clean full-screen view suited to projecting via a screen-share, leaving just the
    question banner/timer and the arena canvas visible. The toggle that turns this off is

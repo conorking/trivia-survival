@@ -63,6 +63,13 @@
       <h3 style="margin-top:20px;">Players (<span id="playerCount">0</span>)</h3>
       <div class="player-list" id="playerList"></div>
     </div>
+
+    <!-- Cycling gameplay tips - fixed to the bottom of the screen while in the lobby -->
+    <div class="tip-box" id="tipBox">
+      <div class="tip-title">TIP</div>
+      <div class="tip-body" id="tipBody"></div>
+      <button class="primary" style="margin-top:10px;" onclick="nextTip()">NEXT TIP</button>
+    </div>
   </div>
 
   <!-- GAME VIEW - full-viewport canvas with a translucent overlay HUD on top -->

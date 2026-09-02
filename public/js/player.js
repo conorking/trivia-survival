@@ -145,25 +145,32 @@ function renderPreview(players) {
 }
 
 socket.on('player:roomInfo', ({ code, state, players }) => {
-  if (state !== 'lobby') {
-    // Room exists but can't be joined (already started, etc.) - back to a real code-entry
-    // screen (with the error shown) rather than leaving the "Connecting..." screen hanging.
-    hideAllTopViews();
-    document.getElementById('joinView').style.display = 'block';
-    document.getElementById('joinError').textContent = 'This game has already started.';
-    return;
-  }
   selectedRoomCode = code;
   renderPreview(players);
   hideAllTopViews();
   document.getElementById('customizeView').style.display = 'block';
+  // A game already in progress can still be joined - you come in spectating as a ghost
+  // until the next round (see server player:join). Let the player know before they commit.
+  if (state !== 'lobby' && state !== 'ended') {
+    showToast("Game in progress — you'll join as a ghost spectator");
+  }
 });
 
-socket.on('player:joined', ({ code, playerId, token, arena }) => {
+socket.on('player:joined', ({ code, playerId, token, arena, state, you, currentQuestion }) => {
   myId = playerId; myToken = token; myRoomCode = code;
   localStorage.setItem(`trivia_token_${code}`, token);
   ArenaRender.setArena(arena);
-  showLobby();
+  if (you) myAliveGhostState = { alive: you.alive, isGhost: you.isGhost };
+  if (state && state !== 'lobby' && state !== 'ended') {
+    // Joined mid-round - spectating as a ghost until the next game (see server player:join).
+    showGameView();
+    if (currentQuestion) renderQuestion(currentQuestion);
+    showToast("Game in progress — you're spectating as a ghost");
+  } else if (state === 'ended') {
+    showEndView();
+  } else {
+    showLobby();
+  }
 });
 
 socket.on('player:rejoined', ({ code, playerId, token, state, config, you, currentQuestion, arena }) => {
@@ -243,6 +250,35 @@ function updateRematchBanner() {
   el.style.display = 'block';
 }
 setInterval(updateRematchBanner, 250);
+
+// ---- Cycling gameplay tips (player lobby / ready screen) ----
+const GAMEPLAY_TIPS = [
+  'If you picked the wrong answer, you get a second chance! Get off the answer before the trap door opens and escape the dogs to stay alive!',
+  'Make sure you get to an answer before the time expires, or you will be hunted by the dogs!',
+  'You can jump by pressing space or tapping to get a speed boost.',
+  'You can push players out of the way or block them with your body (unless you are a ghost).',
+  'If you evade the dogs for long enough, eventually they will return to their kennel.'
+];
+let tipIndex = 0;
+const tipBodyEl = document.getElementById('tipBody');
+if (tipBodyEl) {
+  tipBodyEl.textContent = GAMEPLAY_TIPS[0];
+  setInterval(() => {
+    nextTip()
+  }, 6000);
+}
+function nextTip() {
+  tipBodyEl.classList.add('slide-out');
+  setTimeout(() => {
+    tipIndex = (tipIndex + 1) % GAMEPLAY_TIPS.length;
+    tipBodyEl.textContent = GAMEPLAY_TIPS[tipIndex];
+    tipBodyEl.classList.remove('slide-out');
+    tipBodyEl.classList.add('slide-in'); // start off-screen right, no transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => tipBodyEl.classList.remove('slide-in')); // then ease in
+    });
+  }, 340); // matches .tip-body transition duration
+}
 
 socket.on('game:started', () => {
   rematchCountdownEndsAt = null;

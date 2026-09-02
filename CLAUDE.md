@@ -718,6 +718,30 @@ not in this repo. Short version for anything touching this codebase:
 
 ## Feedback already implemented (most recent round)
 
+**Playtesting round — mid-game join, ghost smoothing, lobby tips, stricter ready-up:**
+(1) **Join mid-round as a spectating ghost** — `player:join` (`server.js`) no longer
+rejects a non-lobby room; if `room.state` is a live round it flags the new player
+`alive:false/isGhost:true` so a fresh join can't be used to "respawn" into a round.
+`player:joined` now carries `state`/`you`/`currentQuestion` (mirroring `player:rejoined`)
+and `player.js`'s handler routes straight to the game view (spectating) when mid-round,
+end view when `ended`, lobby otherwise. `player:roomInfo` (client) dropped its
+"already started" hard block — it proceeds to the customise screen with a toast instead.
+A rematch/next game brings the ghost joiner in as a normal live player like everyone
+else (`start()`/`resetForRematch()` already reset alive/ghost for all players).
+(2) **Ghost "vibration" fix** (`arena-render.js`) — `drawPlayer`'s ghost bob used
+`Math.sin(now/300 + p.x)`; `p.x` is the *interpolated* position, so it shifted every
+frame while a ghost moved and the wobble jumped around (read as vibration). Now uses a
+stable per-id phase (`idPhase(p.id)`).
+(3) **Cycling gameplay tips** — a fixed rounded-yellow `.tip-box` (`#tipBox`, child of
+`#lobbyView` so it shows/hides with it) at the bottom of the player lobby/ready screen,
+title "TIP" + body that rotates through `GAMEPLAY_TIPS` in `player.js` every 6s with a
+slide-out-left / slide-in-from-right transition (`cycleTip`, `.tip-body.slide-out/.slide-in`).
+(4) **Ready-up auto-start now needs EVERY connected player ready**, not a 2-person
+quorum — `maybeStartRematchCountdown` (`server.js`) checks `connected.every(p => p.ready)`
+(still gated on the 2-player minimum). The host's own START GAME button is unchanged and
+remains the way to start with someone not ready. Only affects the post-rematch
+auto-start countdown; the first game was always host-driven.
+
 **Game-screen refactor** (touches the wire protocol — see the `intro` phase in "Game
 state machine" and "In-game screen" above for the details):
 (1) **Full-viewport canvas + overlay HUD** — the in-game screen was rebuilt so the
