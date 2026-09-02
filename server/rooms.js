@@ -80,9 +80,12 @@ const TUNING_BOUNDS = {
   JUMP_MAX_COOLDOWN_MS: [0, 20000]
 };
 function setTuning(patch = {}) {
+  if (!patch || typeof patch !== 'object') return { ...TUNING };
   for (const [k, raw] of Object.entries(patch)) {
+    // Only real, own tuning keys - never inherited names like __proto__ / constructor,
+    // and never a key that isn't in the bounds table.
+    if (!Object.prototype.hasOwnProperty.call(TUNING_BOUNDS, k)) continue;
     const bounds = TUNING_BOUNDS[k];
-    if (!bounds) continue;
     const v = Number(raw);
     if (!Number.isFinite(v)) continue;
     TUNING[k] = Math.max(bounds[0], Math.min(bounds[1], v));
@@ -165,15 +168,18 @@ function sanitizeColor(color) {
   if (AVATAR_COLORS.includes(color)) return color;
   return HEX_COLOR_RE.test(color) ? color.toLowerCase() : AVATAR_COLORS[0];
 }
-// Player-supplied display name. Coerced to a string first (a non-string `name` used to
-// throw straight out of the socket handler - a trivial remote crash), stripped of
-// control chars and any character with HTML significance, collapsed whitespace, capped
-// at 16. Falls back to 'Player' if nothing usable is left.
+// Player-supplied display name. Restricted to ASCII letters and digits, with runs
+// of any other character folded to a single space. Nothing else survives. This is
+// both an injection guard (the name is rendered into HTML on the player and host
+// pages) and a defence against unicode display abuse - RTL overrides, zero-width
+// joiners, homoglyphs, "zalgo" combining marks. A non-string / non-number `name`
+// becomes "" -> the "Player" fallback, so the socket handler can never throw on a
+// hostile payload.
 function sanitizeName(name) {
   const raw = (typeof name === 'string' || typeof name === 'number') ? String(name) : '';
   const cleaned = raw
-    .replace(/\s+/g, ' ')                       // fold all whitespace (tabs, newlines) to a single space
-    .replace(new RegExp('[\\u0000-\\u001f\\u007f<>&"\'`\\\\]', 'g'), '') // strip control + HTML/attr-significant chars
+    .replace(/[^A-Za-z0-9]+/g, ' ') // any run of non-alphanumerics -> one space
+    .replace(/ +/g, ' ')
     .trim()
     .slice(0, 16)
     .trim();

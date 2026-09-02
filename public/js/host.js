@@ -757,10 +757,22 @@ let hostSelectedColor = HOST_AVATAR_COLORS[0];
 // for next time either way.
 const NAME_STORAGE_KEY = 'trivia_player_name';
 
+// Mirror the server's name rule (sanitizeName in rooms.js): alphanumerics + single spaces.
+function cleanNameInput(v) {
+  return String(v || '').replace(/[^A-Za-z0-9]+/g, ' ').replace(/ +/g, ' ').replace(/^ /, '').slice(0, 16);
+}
+
 function showJoinAsPlayerPicker() {
   const input = document.getElementById('hostPlayerName');
   const savedName = localStorage.getItem(NAME_STORAGE_KEY);
-  if (savedName && !input.value) input.value = savedName;
+  if (savedName && !input.value) input.value = cleanNameInput(savedName);
+  if (!input.dataset.filterBound) {
+    input.dataset.filterBound = '1';
+    input.addEventListener('input', () => {
+      const c = cleanNameInput(input.value);
+      if (c !== input.value) input.value = c;
+    });
+  }
   document.getElementById('hostPlayerPicker').style.display = 'block';
 }
 function cancelJoinAsPlayer() {

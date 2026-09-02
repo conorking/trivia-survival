@@ -599,9 +599,15 @@ the host opens the tunnel's printed URL themselves instead of `localhost`.
 For a persistent always-on public deployment (not just a per-session tunnel), see
 `docs/deploy-oracle-free-tier.md` + the `deploy/` folder (`trivia-survival.service`,
 `Caddyfile`) — an earlier-explored option (rented VPS, own public IP). `server.js` sets
-`app.set('trust proxy', true)` for correctness when run behind that kind of reverse
+`app.set('trust proxy', 1)` (exactly one hop — the Cloudflare tunnel / reverse proxy
+directly in front; `true`/trust-all would let a direct client spoof `X-Forwarded-For`
+and defeat the per-IP rate limits) for correctness when run behind that kind of reverse
 proxy; otherwise no app code differs from any other deployment target. **This is not
-what's actually serving traffic** — see the next section.
+what's actually serving traffic** — see the next section. Note the per-IP limiters key
+off `cf-connecting-ip` (socket handshake header) first — that's trustworthy **because
+the prod container publishes no host ports and the tunnel is the only ingress**, so a
+client can't reach the origin directly to forge it. A future deployment that exposes the
+port directly would need to stop trusting that header.
 
 ## Home hosting deployment (live, Cloudflare Tunnel)
 
@@ -740,27 +746,54 @@ path from player-supplied input to another client. Fixes, all landed:
   every other client + the host just by joining with a crafted `color`. Now: `color` is
   allowlisted server-side to the avatar palette or a bare `#rrggbb` (`sanitizeColor` in
   `rooms.js` — also kills the CSS-property-injection variant, e.g. a full-viewport
-  overlay); `name` is coerced-to-string, stripped of control + HTML-significant chars,
-  and capped (`sanitizeName`). Belt-and-suspenders: both client files got an `esc()`
-  helper wrapped around every `${...}` in an `innerHTML` template (`host.js` / `player.js`).
-- **No host auth** — see the "Host reconnect" paragraph above (`hostToken`).
+  overlay). Belt-and-suspenders: both client files got an `esc()` helper wrapped around
+  every `${...}` in an `innerHTML` template (`host.js` / `player.js`).
+- **Player name is now `[A-Za-z0-9 ]` only** (`sanitizeName`, `rooms.js`) — runs of any
+  other character fold to a single space, then collapse/trim/cap-16. Kills the injection
+  angle outright and also unicode display abuse (RTL overrides, zero-width joiners,
+  homoglyphs, zalgo). Mirrored in the client name fields (`cleanNameInput` +
+  `pattern="[A-Za-z0-9 ]*"` in `player.html` / `host.html`) so the field shows what you
+  actually get; the server is the authority regardless.
+- **No host auth** — see the "Host reconnect" paragraph above (`hostToken`, constant-time
+  compare).
 - **Room-flooding / orphan-player leak** — `player:join` now rejects a second join on a
   socket that already has a player (the old behaviour leaked a permanently-"connected"
   player per call, since `disconnect` only clears the one in the closure); `addPlayer`
   enforces `MAX_PLAYERS_PER_ROOM` (150) and returns `null` (callers surface "room full");
-  a generous per-IP join backstop (`analytics.allowPlayerJoin`, 240/min — set far above a
-  real one-NAT venue of 100 players).
+  a very generous per-IP backstop shared by `player:join` + `player:roomInfo`
+  (`analytics.allowPlayerJoin`, 500/min — set far above a real one-NAT venue so it only
+  catches scripted abuse, never real traffic).
 - **Crash-on-bad-input** — a non-string `name` used to throw straight out of the handler
   (`name.slice`), and a non-string `code` out of `getRoom` (`.toUpperCase`); both coerce
-  now.
-- **CSP + headers** — `server.js` sets a `Content-Security-Policy` (`default-src 'self'`,
+  now. `setTuning` (debug only) ignores non-own / non-bounds-table keys, so `__proto__` /
+  `constructor` in a patch are inert.
+- **CSP + headers** — `server.js` sets `Content-Security-Policy` (`default-src 'self'`,
   no external origins — the app already makes zero external calls), `X-Content-Type-Options`,
-  `X-Frame-Options`, `Referrer-Policy`. `script-src`/`style-src` keep `'unsafe-inline'`
-  only because the HTML still uses inline handlers/attributes; it still blocks
-  cross-origin script + `connect-src`/`img-src` exfiltration.
+  `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and `Strict-Transport-Security`
+  **only when `req.secure`** (so the plain-HTTP LAN path is never HTTPS-pinned).
+  `x-powered-by` is disabled. `trust proxy` tightened from `true` to `1` (see "Network
+  access" above). `script-src`/`style-src` keep `'unsafe-inline'` only because the HTML
+  still uses inline handlers/attributes; it still blocks cross-origin script + `connect-src`
+  / `img-src` exfiltration.
+- **Dependencies** — `npm audit` was clean except a `qs` query-string-parsing DoS pair
+  (GHSA-4mjr-xmp4-gh2g / GHSA-x5fp-wj9c-mxmx) pulled in transitively by express 4.x, which
+  still pins the vulnerable range; a `package.json` `overrides: { "qs": "^6.16.0" }` forces
+  the patched line (same parse/stringify API). The remaining `uuid` advisory
+  (GHSA-w5hq-g745-h8pq) is **not reachable** — it's the `buf`-argument path in v3/v5/v6 and
+  the code only ever calls `uuidv4()` with no args; the fix is an ESM-only major that would
+  break `require('uuid')`, so it's deliberately not taken.
 - **Minor** — `maxHttpBufferSize` cut from 2 MB (a leftover from the removed custom-
   question upload) to 64 KB; analytics-dashboard token compare is now constant-time and
   the export link URL-encodes the token.
+- **Reviewed and OK, no change needed** — no `eval` / `new Function` / dynamic `require`;
+  no `child_process` in the server (only the manual `scripts/start-with-tunnel.js` dev
+  launcher); question files load by hardcoded name, no path from `config` to the
+  filesystem; `sanitizeConfig` only ever assigns fixed literal keys (no prototype
+  pollution); `express.static` serves `public/` only and ignores dotfiles; Docker image
+  runs as non-root `node`, prod build omits `--debug` so the `debug:*` handlers and bot
+  controls don't exist. Residual risk noted but not app-fixable: raw socket
+  connection-flooding (mitigated at the Cloudflare edge; a per-IP socket cap would break
+  one-NAT venue play).
 
 **Question repeats + difficulty banding:** noticeable question repeats between
 back-to-back sessions were traced to the no-repeat set being **per-room** — a new room

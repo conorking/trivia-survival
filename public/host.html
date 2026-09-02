@@ -36,7 +36,7 @@
       </div>
       <div class="card" id="hostPlayerPicker" style="display:none; margin-top:10px;">
         <label>Your Name</label>
-        <input id="hostPlayerName" type="text" maxlength="16" placeholder="Host">
+        <input id="hostPlayerName" type="text" maxlength="16" pattern="[A-Za-z0-9 ]*" autocomplete="off" placeholder="Host">
         <label>Pick an Avatar Color</label>
         <div class="avatar-grid" id="hostAvatarGrid"></div>
         <button class="primary" style="margin-top:10px; width:100%;" onclick="confirmJoinAsPlayer()">JOIN</button>

@@ -37,7 +37,7 @@
     <h1 class="center">🐾 MAKE YOUR ENTRANCE</h1>
     <div class="card">
       <label>Your Name</label>
-      <input id="nameInput" type="text" maxlength="16" placeholder="Enter your name">
+      <input id="nameInput" type="text" maxlength="16" pattern="[A-Za-z0-9 ]*" autocomplete="off" placeholder="Enter your name">
       <label>Pick an Avatar Color</label>
       <div class="avatar-grid" id="avatarGrid"></div>
       <button class="ghost-btn" style="margin-top:14px; width:100%;" onclick="changeRoom()">CHANGE ROOM</button>

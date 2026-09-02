@@ -17,7 +17,11 @@ const DEBUG = process.argv.includes('--debug') || process.env.TS_DEBUG === '1';
 if (DEBUG) console.log('[debug] sandbox mode ENABLED - bots, solo start, phase/tuning controls available on the host page');
 
 const app = express();
-app.set('trust proxy', true); // correct req.ip/protocol when run behind Caddy/nginx/etc.
+app.disable('x-powered-by'); // don't advertise the framework
+// Trust exactly one proxy hop - in production that's the Cloudflare tunnel / reverse
+// proxy directly in front. `true` (trust every hop) would let a direct client spoof
+// X-Forwarded-For and defeat the per-IP rate limits; `1` pins it to the real edge.
+app.set('trust proxy', 1);
 const server = http.createServer(app);
 const io = new Server(server, {
   // Every message a client can legitimately send is tiny (an input vector, a room code,
@@ -58,6 +62,11 @@ app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=(), payment=()');
+  // HSTS only on connections that actually arrived over HTTPS (the Cloudflare tunnel sets
+  // X-Forwarded-Proto, honoured via `trust proxy`). Never on the plain-HTTP LAN path -
+  // pinning HTTPS on a bare LAN IP with no cert would make the game unreachable there.
+  if (req.secure) res.setHeader('Strict-Transport-Security', 'max-age=15552000');
   next();
 });
 
@@ -178,8 +187,9 @@ io.on('connection', socket => {
     if (!room) { socket.emit('host:error', { message: 'Room not found.' }); return; }
     // Host controls are privileged - require the secret handed out at room creation.
     // A mismatch is reported as "Room not found." (not a distinct "wrong token") so it
-    // gives a code-guesser nothing to work with.
-    if (room.hostToken && token !== room.hostToken) {
+    // gives a code-guesser nothing to work with; the compare is constant-time so it
+    // leaks nothing through timing either.
+    if (!room.hostToken || typeof token !== 'string' || !timingSafeStrEqual(token, room.hostToken)) {
       socket.emit('host:error', { message: 'Room not found.' });
       return;
     }
@@ -381,6 +391,13 @@ io.on('connection', socket => {
   }
 
   socket.on('player:roomInfo', ({ code } = {}) => {
+    // Same coarse per-IP ceiling as player:join - this is the other unauthenticated
+    // lookup and would otherwise let a script enumerate room codes / harvest rosters
+    // unthrottled.
+    if (!analytics.allowPlayerJoin(clientIp(socket))) {
+      socket.emit('player:error', { message: 'Too many requests - please wait a moment.' });
+      return;
+    }
     const room = manager.getRoom(code);
     if (!room) { socket.emit('player:error', { message: 'Room not found.' }); return; }
     socket.emit('player:roomInfo', {

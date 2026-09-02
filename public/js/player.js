@@ -36,11 +36,24 @@ computeViewMode();
 const AVATAR_COLORS = ['#4f8fef', '#ef4f6b', '#58d68d', '#ffd23f', '#b84fef', '#ef8f4f', '#4fdada', '#ff69b4'];
 let selectedColor = AVATAR_COLORS[0];
 
+// Names are alphanumerics + spaces only - the server enforces this (sanitizeName in
+// rooms.js); this mirrors it in the field so what you type is what you get.
+function cleanNameInput(v) {
+  return String(v || '').replace(/[^A-Za-z0-9]+/g, ' ').replace(/ +/g, ' ').replace(/^ /, '').slice(0, 16);
+}
+
 // Remembers the name last used to join a room (shared with host.js's own "join as
 // player" name field) so it's prefilled next time instead of typing it fresh every game.
 const NAME_STORAGE_KEY = 'trivia_player_name';
 const savedName = localStorage.getItem(NAME_STORAGE_KEY);
-if (savedName) document.getElementById('nameInput').value = savedName;
+const nameInputEl = document.getElementById('nameInput');
+if (nameInputEl) {
+  if (savedName) nameInputEl.value = cleanNameInput(savedName);
+  nameInputEl.addEventListener('input', () => {
+    const cleaned = cleanNameInput(nameInputEl.value);
+    if (cleaned !== nameInputEl.value) nameInputEl.value = cleaned;
+  });
+}
 
 const params = new URLSearchParams(location.search);
 const codeFromUrl = params.get('code');

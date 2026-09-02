@@ -107,8 +107,8 @@ function allowRoomCreate(ip) {
 // so the ceiling has to sit far above that - it's only meant to catch a script doing
 // thousands, not to shape legitimate traffic.
 const JOIN_WINDOW_MS = 60 * 1000;
-const JOIN_MAX = 240;
-const joinLog = new Map(); // ip -> [join attempt timestamps within the window]
+const JOIN_MAX = 500; // shared by player:join AND player:roomInfo - see the note above re: one-NAT venues
+const joinLog = new Map(); // ip -> [join/roomInfo attempt timestamps within the window]
 
 function allowPlayerJoin(ip) {
   const now = Date.now();
