@@ -684,18 +684,23 @@ not in this repo. Short version for anything touching this codebase:
   `OBVIOUS_TO_REMOVE` is an explicit curated list of everything cut for this reason,
   backfilled from the Open Trivia DB import to stay at 400 - tiers 3-5 of the old file
   were already good and are untouched.
-- **No-repeat-within-a-room tracking** (`Room.usedQuestionTexts`, a `Set`, per-room):
-  every game start (`start()`) *including every rematch* used to reshuffle completely
-  independently, so a multi-round session had a real chance of repeating a question the
-  same group just saw (a rough birthday-paradox estimate for ~4 rematches of ~12
-  questions put the odds of at least one repeat above 90%). `buildQuestionSet()` now
-  filters the source pool down to `!usedQuestionTexts.has(q.q)` first, adds whatever it
-  draws back into the set, and only clears the set (starting a fresh no-repeat cycle)
-  once there isn't enough unused content left to fill a round - verified directly
-  against `Room` to go 33 consecutive rematches with zero repeats on the 400-question
-  default pool before needing to recycle. Persists across rematches on purpose (not
-  touched by `resetForRematch()`); resets naturally on room close since it's just a
-  field on the `Room` object.
+- **No-repeat tracking is process-global** (`RECENTLY_SHOWN`, a module-level `Set` in
+  `rooms.js` — was `Room.usedQuestionTexts`, per-room). Every game start (`start()`)
+  *including every rematch* used to reshuffle independently, so a multi-round session
+  could repeat a question the same group just saw. The per-room set fixed that *within* a
+  rematch chain but was lost the moment a room was torn down and a new one made — which is
+  exactly what happens between back-to-back playtest / event sessions ("New Room", a
+  sweep of an emptied room, a host reload), so repeats a game or two apart still slipped
+  through across room boundaries. `RECENTLY_SHOWN` lives on the process, shared by every
+  room: `buildQuestionSet()` filters the source pool to `!RECENTLY_SHOWN.has(q.q)`,
+  `markShown()` adds the drawn questions (LRU, capped at `RECENT_CAP` = 4000 — far above
+  all bundled content combined, so nothing is evicted early inside a single event), and
+  if too few unseen remain to fill a round it `forgetShown()`s just *this selection's*
+  categories (a concurrent event on other categories is untouched) and starts them on a
+  fresh cycle. Verified: ~34 consecutive games (rematch **or** brand-new room) with zero
+  repeats on a single 400-question category before any recycle. `resetRecentlyShown()` is
+  exported for tests. The genuinely small pool is `literature` (88 entries — recycles
+  after ~7 games of 12); that needs a content pass, not a code fix.
 - **Everyone respawns to a fresh random position between rounds, not just at game
   start**: `advanceRound()` used to leave players exactly where the previous round's
   chase ended, so someone who happened to end up standing next to a door could just
@@ -704,19 +709,37 @@ not in this repo. Short version for anything touching this codebase:
   player, right before the next question is emitted - ghosts are left alone (they
   already roam free, uninvolved in trapdoor mechanics).
 - **Difficulty ramp** (`config.difficultyRamp`, opt-in checkbox): every entry in every
-  category file carries a `"difficulty"` field (integer 1-5). When enabled,
-  `buildQuestionSet()` calls `buildRampedOrder()` instead of a plain shuffle: groups the
-  source pool by tier (untagged/out-of-range questions land in tier 3, so a source
-  without full tagging degrades gracefully rather than erroring), shuffles within each
-  tier, then spreads `questionCount` picks across the 5 tiers as evenly as possible via
-  `distributeWithCapacity()` — a thin tier's shortfall rolls over to its neighbors so a
-  sparse difficulty doesn't shrink the total question count — and concatenates low→high.
+  category file carries a `"difficulty"` field (integer 1-5), but the ramp collapses
+  those into **3 bands** — easy (1-2), medium (3), hard (4-5), via `difficultyBand()`.
+  Five bands were far too thin at the extremes to ramp through: `movies-tv` and `music`
+  have *no* difficulty-1 or -5 questions at all, `history` has only 6 at tier 5 — so a
+  5-tier ramp leaned on the middle almost immediately and drew from a tiny pool per tier.
+  The 3 bands are each well-populated in every category (e.g. general 143 / 91 / 166).
+  When enabled, `buildQuestionSet()` calls `buildRampedOrder()` instead of a plain
+  shuffle: buckets the source pool into the 3 bands (untagged → middle band), shuffles
+  within each, then spreads `questionCount` picks across the bands as evenly as possible
+  via `distributeWithCapacity()` — a thin band's shortfall rolls over to its neighbors so
+  it doesn't shrink the total question count — and concatenates easy→hard.
   `buildRampedOrder()` returns `null` if *nothing* in the source has a valid difficulty,
   and `buildQuestionSet()` falls back to the normal shuffle in that case. `difficulty`
   itself never reaches the client — `shuffleOptionLetters` (which every question passes
-  through regardless of ramp) only carries `q`/`options`/`correct` forward.
+  through regardless of ramp) only carries `q`/`options`/`correct` forward. The raw 1-5
+  values stay in the JSON files (only the ramp's *grouping* changed).
 
 ## Feedback already implemented (most recent round)
+
+**Question repeats + difficulty banding:** noticeable question repeats between
+back-to-back sessions were traced to the no-repeat set being **per-room** — a new room
+(the common case between playtest sessions) started with a clean slate, so repeats a
+game or two apart were pure chance. Fixed by hoisting it to a **process-global**
+`RECENTLY_SHOWN` LRU set shared by every room (see "No-repeat tracking is process-global"
+above) — ~34 games with zero repeats on a 400-question category now, rematch or new room
+alike. Separately, the difficulty ramp went from **5 tiers to 3 bands** (easy 1-2 /
+medium 3 / hard 4-5, `difficultyBand()` in `rooms.js`) because several categories have
+empty tier-1/tier-5 buckets, which made a 5-tier ramp degenerate and draw from a thin
+per-tier pool. The `"difficulty"` values in the question JSON are unchanged (still 1-5);
+only the ramp's grouping changed. `literature` (88 entries) still recycles after ~7
+games — that's a content gap, flagged for a future pass, not a code fix.
 
 **Playtesting round — mid-game join, ghost smoothing, lobby tips, stricter ready-up:**
 (1) **Join mid-round as a spectating ghost** — `player:join` (`server.js`) no longer

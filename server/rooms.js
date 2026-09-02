@@ -362,26 +362,62 @@ function distributeWithCapacity(n, capacities) {
   return alloc;
 }
 
-const DIFFICULTY_TIERS = [1, 2, 3, 4, 5];
+// The `difficulty` field in the question files is 1-5, but the ramp groups them into
+// just 3 bands - easy (1-2), medium (3), hard (4-5). Five bands left the extremes far
+// too thin to ramp through: several categories have *no* difficulty-1 or -5 questions at
+// all (movies-tv, music), and history has only 6 at tier 5 - so a 5-tier ramp collapsed
+// toward the middle almost immediately and drew from a much smaller effective pool per
+// tier. Three bands are each well-populated in every category, so the ramp stays a real
+// easy->hard curve for far longer and there's a bigger draw at every step.
+const DIFFICULTY_BANDS = 3;
+function difficultyBand(d) {
+  if (!Number.isInteger(d)) return 1; // untagged -> middle band
+  if (d <= 2) return 0;
+  if (d === 3) return 1;
+  return 2;
+}
 
 // Builds an easy->hard ordered question list for the "ramp difficulty" mode: groups the
-// source pool by its `difficulty` field (1-5; anything missing/out-of-range is treated as
-// a middling 3 so a source without full tagging still degrades gracefully rather than
-// erroring), shuffles within each tier so repeat games don't ramp through the exact same
-// sequence, then picks a roughly even spread across tiers (topped up from neighboring
-// tiers if one runs thin - see distributeWithCapacity) and concatenates low->high. Falls
-// back to null (caller then uses the normal shuffle) if nothing in the source is tagged
-// at all, since there's no curve to ramp through in that case.
+// source pool into the 3 difficulty bands above, shuffles within each band so repeat
+// games don't ramp through the exact same sequence, then picks a roughly even spread
+// across bands (topped up from neighboring bands if one runs thin - see
+// distributeWithCapacity) and concatenates easy->hard. Falls back to null (caller then
+// uses the normal shuffle) if nothing in the source is difficulty-tagged at all, since
+// there's no curve to ramp through in that case.
 function buildRampedOrder(source, count) {
   if (!source.some(q => Number.isInteger(q.difficulty))) return null;
-  const tiers = DIFFICULTY_TIERS.map(tier => shuffleArray(
-    source.filter(q => (Number.isInteger(q.difficulty) ? q.difficulty : 3) === tier)
-  ));
+  const bands = Array.from({ length: DIFFICULTY_BANDS }, () => []);
+  for (const q of source) bands[difficultyBand(q.difficulty)].push(q);
+  const tiers = bands.map(shuffleArray);
   const total = tiers.reduce((sum, t) => sum + t.length, 0);
   const n = Math.min(count, total);
   const alloc = distributeWithCapacity(n, tiers.map(t => t.length));
   return tiers.flatMap((t, i) => t.slice(0, alloc[i]));
 }
+
+// ---- Process-global "recently shown" question history ----
+// No-repeat tracking used to live on the Room (`usedQuestionTexts`), so it was lost the
+// moment a room was torn down and a new one created - which is exactly what happens
+// between back-to-back playtest / event sessions ("New Room", a sweep of an empty room,
+// a server tab reload). That let the same question resurface a game or two later even
+// though the code "remembered" it within a single rematch chain. Hoisting it to module
+// scope means every room on this process shares one rolling history, so a question stays
+// off the table across room boundaries too. LRU-capped so it can't grow without bound on
+// a long-lived server; the cap is far larger than all bundled content combined (~2.1k),
+// so within any single event nothing is ever evicted early.
+const RECENT_CAP = 4000;
+const RECENTLY_SHOWN = new Set(); // question text -> presence; Set keeps insertion order (used for LRU eviction)
+function markShown(texts) {
+  for (const t of texts) {
+    RECENTLY_SHOWN.delete(t); // re-add at the end so a re-shown question counts as freshly seen
+    RECENTLY_SHOWN.add(t);
+  }
+  while (RECENTLY_SHOWN.size > RECENT_CAP) {
+    RECENTLY_SHOWN.delete(RECENTLY_SHOWN.values().next().value); // drop the oldest
+  }
+}
+function forgetShown(texts) { for (const t of texts) RECENTLY_SHOWN.delete(t); }
+function resetRecentlyShown() { RECENTLY_SHOWN.clear(); } // exported for tests/debug
 
 const DOG_PEN_SLOTS = [
   { x: DOG_PEN.x + 30, y: DOG_PEN.y + 35 },
@@ -436,11 +472,6 @@ class Room {
     };
     this.state = 'lobby'; // lobby | intro | question | reveal | escape | fall_pause | resolve | death_anim | ended
     this.questions = [];
-    // Question text already shown in this room this session (persists across rematches -
-    // only cleared by buildQuestionSet() itself once the pool runs too thin to keep
-    // avoiding repeats). Not touched by resetForRematch() on purpose - the whole point is
-    // remembering across rounds, not just within one.
-    this.usedQuestionTexts = new Set();
     this.currentQuestionIndex = -1;
     this.currentQuestion = null;
     this.phaseEndsAt = 0;
@@ -760,27 +791,24 @@ class Room {
       : ['general'];
     const source = keys.flatMap(key => QUESTION_CATEGORIES[key] || []);
 
-    // Avoid repeating a question this room has already shown this session - every game
-    // start (including every rematch) used to reshuffle completely independently, so a
-    // multi-round session had a real chance of repeating something the same group just
-    // saw (with a 400-question pool and ~4 rematches of ~12 questions each, a rough
-    // birthday-paradox estimate puts the odds of at least one repeat above 90%). Falls
-    // back to the full pool - clearing the used-set to start a fresh no-repeat cycle,
-    // rather than silently giving up on de-duplication for the rest of the room's
-    // lifetime - once there aren't enough unused questions left to fill a round.
-    let pool = source.filter(q => !this.usedQuestionTexts.has(q.q));
+    // Drop anything shown recently by ANY room on this process (see RECENTLY_SHOWN) so a
+    // question doesn't resurface a game or two later - within a rematch chain or across a
+    // brand-new room. If that leaves too few to fill a round, forget just this selection's
+    // categories and start them on a fresh no-repeat cycle (a concurrent event on other
+    // categories is untouched).
+    let pool = source.filter(q => !RECENTLY_SHOWN.has(q.q));
     if (pool.length < Math.min(this.config.questionCount, source.length)) {
-      this.usedQuestionTexts.clear();
+      forgetShown(source.map(q => q.q));
       pool = source;
     }
 
-    // Ramp mode orders low->high difficulty instead of shuffling (falls back to the
-    // normal shuffle if the source has no difficulty tags to ramp through - e.g. a
-    // custom upload that didn't include them). Either way, each question's own A/B/C
-    // letter assignment is reshuffled afterward so it isn't a learnable fixed property.
+    // Ramp mode orders easy->hard instead of shuffling (falls back to the normal shuffle
+    // if the source has no difficulty tags to ramp through - e.g. a custom upload that
+    // didn't include them). Either way, each question's own A/B/C letter assignment is
+    // reshuffled afterward so it isn't a learnable fixed property.
     const ramped = this.config.difficultyRamp ? buildRampedOrder(pool, this.config.questionCount) : null;
     const arr = ramped || shuffleArray(pool).slice(0, Math.min(this.config.questionCount, pool.length));
-    for (const q of arr) this.usedQuestionTexts.add(q.q);
+    markShown(arr.map(q => q.q));
     this.questions = arr.map(shuffleOptionLetters);
   }
 
@@ -1508,5 +1536,5 @@ class GameManager {
 module.exports = {
   GameManager, ARENA_W, ARENA_H, TRAPDOORS, DOG_PEN, PLAYER_RADIUS, JUMP_MS,
   DEFAULT_TUNING, TUNING_BOUNDS, getTuning, setTuning, resetTuning,
-  QUESTION_CATEGORIES
+  QUESTION_CATEGORIES, resetRecentlyShown
 };
