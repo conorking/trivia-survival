@@ -64,6 +64,18 @@ if (selectedRoomCode) {
   }
 }
 
+// Keep the page URL carrying ?code=<room> at all times once we know which room we're in,
+// so a refresh (or a shared/bookmarked URL) reconnects to the same room instead of
+// dropping back to the blank join form. replaceState (not pushState) - this isn't a new
+// history entry, just keeping the current one honest.
+function syncUrlCode(code) {
+  if (!code) return;
+  const want = `?code=${encodeURIComponent(code)}`;
+  if (location.search !== want) {
+    try { history.replaceState(null, '', want + location.hash); } catch (e) { /* ignore */ }
+  }
+}
+
 function hideAllTopViews() {
   document.getElementById('joinView').style.display = 'none';
   document.getElementById('connectingView').style.display = 'none';
@@ -135,6 +147,7 @@ function changeRoom() {
   hideAllTopViews();
   document.getElementById('joinView').style.display = 'block';
   document.getElementById('joinError').textContent = '';
+  try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ }
 }
 
 function renderPreview(players) {
@@ -146,6 +159,7 @@ function renderPreview(players) {
 
 socket.on('player:roomInfo', ({ code, state, players }) => {
   selectedRoomCode = code;
+  syncUrlCode(code);
   renderPreview(players);
   hideAllTopViews();
   document.getElementById('customizeView').style.display = 'block';
@@ -159,6 +173,7 @@ socket.on('player:roomInfo', ({ code, state, players }) => {
 socket.on('player:joined', ({ code, playerId, token, arena, state, you, currentQuestion }) => {
   myId = playerId; myToken = token; myRoomCode = code;
   localStorage.setItem(`trivia_token_${code}`, token);
+  syncUrlCode(code);
   ArenaRender.setArena(arena);
   if (you) myAliveGhostState = { alive: you.alive, isGhost: you.isGhost };
   if (state && state !== 'lobby' && state !== 'ended') {
@@ -177,6 +192,7 @@ socket.on('player:rejoined', ({ code, playerId, token, state, config, you, curre
   myId = playerId; myToken = token; myRoomCode = code;
   myAliveGhostState = { alive: you.alive, isGhost: you.isGhost };
   localStorage.setItem(`trivia_token_${code}`, token);
+  syncUrlCode(code);
   ArenaRender.setArena(arena);
   if (state === 'lobby') {
     showLobby();
@@ -260,14 +276,19 @@ const GAMEPLAY_TIPS = [
   'If you evade the dogs for long enough, eventually they will return to their kennel.'
 ];
 let tipIndex = 0;
+let tipTimer = null;
 const tipBodyEl = document.getElementById('tipBody');
+function scheduleTipCycle() {
+  clearInterval(tipTimer);
+  tipTimer = setInterval(nextTip, 6000);
+}
 if (tipBodyEl) {
   tipBodyEl.textContent = GAMEPLAY_TIPS[0];
-  setInterval(() => {
-    nextTip()
-  }, 6000);
+  scheduleTipCycle();
 }
 function nextTip() {
+  if (!tipBodyEl) return;
+  scheduleTipCycle(); // reset the auto-advance clock (a manual NEXT TIP press shouldn't double-advance)
   tipBodyEl.classList.add('slide-out');
   setTimeout(() => {
     tipIndex = (tipIndex + 1) % GAMEPLAY_TIPS.length;
@@ -377,7 +398,7 @@ function speechAvailable() {
 
 function syncSpeakToggle() {
   document.querySelectorAll('.speak-toggle-btn:not(#introHint)').forEach(b => {
-    b.textContent = speakEnabled ? '🔊 READ ALOUD' : '🔇 READ ALOUD';
+    b.textContent = speakEnabled ? '🔊 READ QUESTIONS ALOUD' : '🔇 READ QUESTIONS MUTED';
     b.classList.toggle('active', speakEnabled);
   });
   updateIntroHint();

@@ -429,10 +429,10 @@ class Room {
       // removed (untested, not expected to see use pre-launch - see
       // CLAUDE.md if that changes).
       questionSets: ['general'],
-      difficultyRamp: false, // opt-in: order questions easy->hard instead of shuffling
+      difficultyRamp: true, // opt-in: order questions easy->hard instead of shuffling
       bearTraps: false, // opt-in escape-phase hazard
-      dogLunge: 'off', // 'off' | 'low' | 'high'
-      dynamicCellScaling: false // opt-in shrinking cages round over round
+      dogLunge: 'low', // 'off' | 'low' | 'high' - default: dogs leap rarely
+      dynamicCellScaling: true // shrinking cages round over round (default on)
     };
     this.state = 'lobby'; // lobby | intro | question | reveal | escape | fall_pause | resolve | death_anim | ended
     this.questions = [];

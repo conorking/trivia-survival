@@ -166,7 +166,7 @@ base width/height:
 - **Width** (opt-in, `config.dynamicCellScaling`): shrinks each door, centered on its
   fixed horizontal midpoint, from `CELL_SCALE_START` (1.15x) at round 1 down to
   `CELL_SCALE_END` (0.55x, floored by `MIN_DOOR_DIM`) by the last round, interpolated on
-  `currentQuestionIndex`. Off by default = always base width.
+  `currentQuestionIndex`. **On by default now** (was off); when disabled = always base width.
 - **Height** (always on, not a setting): grows with `this.players.size` so a full room
   can physically fit in one cage — `PLAYER_COUNT_HEIGHT_PER_PLAYER` per player above
   `PLAYER_COUNT_HEIGHT_THRESHOLD` (20), capped at `PLAYER_COUNT_HEIGHT_MAX_BOOST` (90px).
@@ -271,12 +271,12 @@ lobby → intro → question → reveal → escape → fall_pause? → resolve �
   state for `DOG_EAT_MS` (~2.5s, holds position) before resuming the hunt or heading
   home. A dog goes `'returning'` (walks itself home) once it's at/over capacity or
   `DOG_GIVEUP_MS` (~9s) has passed since release, then `'home'` on arrival. If
-  `config.dogLunge` is `'low'` or `'high'` (default `'off'`), a hunting dog with a target
-  in range gets occasional windup-then-speed-burst lunges (small state machine on the
-  dog: `lungePhase` `'idle'→'windup'→'lunging'→'idle'`, cooldown-gated) — frequency/
-  cooldown come from `LUNGE_PRESETS[config.dogLunge]` (`{chance, checkIntervalMs,
+  `config.dogLunge` is `'low'` or `'high'` (**default `'low'`** now — was `'off'`), a
+  hunting dog with a target in range gets occasional windup-then-speed-burst lunges (small
+  state machine on the dog: `lungePhase` `'idle'→'windup'→'lunging'→'idle'`, cooldown-gated)
+  — frequency/cooldown come from `LUNGE_PRESETS[config.dogLunge]` (`{chance, checkIntervalMs,
   cooldownMs}`); windup/duration/speed multiplier stay fixed regardless of preset, only
-  frequency differs. Off by default, dogs behave exactly as before when disabled. The
+  frequency differs. With `'off'`, dogs behave exactly as before lunges existed. The
   phase ends when either **all dogs are home** or
   **everyone outside the safe cage is dead**
   — a round can end with live survivors if the dogs simply got full/bored first.
@@ -741,6 +741,23 @@ quorum — `maybeStartRematchCountdown` (`server.js`) checks `connected.every(p 
 (still gated on the 2-player minimum). The host's own START GAME button is unchanged and
 remains the way to start with someone not ready. Only affects the post-rematch
 auto-start countdown; the first game was always host-driven.
+(5) **Player URL always carries `?code=<room>`** — `player.js`'s `syncUrlCode()`
+(`history.replaceState`, no new history entry) is called from `player:roomInfo` /
+`player:joined` / `player:rejoined` so a mid-session refresh (or a bookmarked/shared URL)
+reconnects to the same room instead of dropping to the blank join form; `changeRoom()`
+clears it again. Host reconnect is unchanged (per-tab `sessionStorage`).
+(6) **Checkerboard floor no longer spills past the arena edge** — `drawFloor()`
+(`arena-render.js`) clamps the last row/column tile to `ARENA_W/H` (900×640 aren't exact
+multiples of the 32px tile, so the right/bottom tiles used to poke out past the border).
+(7) **New default config**: `dogLunge: 'low'` (was `'off'`) and `dynamicCellScaling: true`
+(was `false`) in `Room.config` (`rooms.js`); `host.html`'s form controls updated to match
+(the host's `applyConfig()` re-syncs from the server config anyway).
+(8) **Corner HUD stays visible during the `intro` phase** — `.hud-topleft`, `.hud-host`
+(host room-code pill), and `.hud-cast` got `z-index: 35` (above the `.intro-overlay`'s
+30) in `style.css`, so the Q/alive readout and especially the room code stay on screen
+while the question is being read — latecomers watching a cast screen can still grab the
+code. The centre-of-screen intro content is clear of the corners; `.hud-timer` /
+`.hud-question` stay behind the overlay as before.
 
 **Game-screen refactor** (touches the wire protocol — see the `intro` phase in "Game
 state machine" and "In-game screen" above for the details):

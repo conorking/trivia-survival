@@ -341,8 +341,11 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 .hud { position: fixed; z-index: 10; pointer-events: none; }
 .hud button, .hud a, .hud input, .hud .interactive, .hud.interactive { pointer-events: auto; }
 
-/* top-left: logo (back) + a compact Q / alive readout */
-.hud-topleft { top: 6px; left: 8px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+/* top-left: logo (back) + a compact Q / alive readout.
+   z-index above the question intro overlay (30) so the Q/alive readout - and, on the
+   host, the room code (.hud-host) - stay on screen through the intro phase too, not just
+   once the answer timer starts. The corners are clear of the centred intro content. */
+.hud-topleft { top: 6px; left: 8px; z-index: 35; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .hud-topleft .logo-link {
   font-family: 'Press Start 2P', monospace;
   font-size: var(--fs-px-xs); color: var(--accent); text-decoration: none;
@@ -412,9 +415,11 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 .option-pill.B { background: #4fb8ef; }
 .option-pill.C { background: #b84fef; color: white; }
 
-/* top-right: host-only controls (hidden in cast mode) */
+/* top-right: host-only controls (hidden in cast mode). z-index above the intro overlay
+   (see .hud-topleft) so the room code stays visible while the question is being read -
+   latecomers watching a cast screen can still grab the code to join. */
 .hud-host {
-  top: 6px; right: 8px;
+  top: 6px; right: 8px; z-index: 35;
   display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end;
   max-width: 60vw;
 }
@@ -430,7 +435,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 
 /* bottom-left: cast-mode toggle - never itself cast-hidden, so it stays reachable */
 .hud-cast {
-  bottom: 10px; left: 8px;
+  bottom: 10px; left: 8px; z-index: 35;
   font-family: 'VT323', monospace; font-size: var(--fs-vt-2xs);
   padding: 6px 10px; box-shadow: none; border-width: 2px;
 }
@@ -597,7 +602,7 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 .tip-box .tip-body.slide-out { transform: translateX(-32px); opacity: 0; }
 .tip-box .tip-body.slide-in { transform: translateX(32px); opacity: 0; transition: none; }
 /* Keep the roster clear of the fixed tip callout on short screens. */
-#lobbyView { padding-bottom: 130px; }
+#lobbyView { padding-bottom: 190px; }
 
 /* Cast/spectator mode (host only): hides host-only chrome (config, roster, controls) for
    a clean full-screen view suited to projecting via a screen-share, leaving just the

@@ -359,7 +359,9 @@ const ArenaRender = (() => {
       for (let x = 0; x < ARENA_W; x += tile) {
         if (((x / tile) + (y / tile)) % 2 === 0) {
           ctx.fillStyle = 'rgba(255,255,255,0.035)';
-          ctx.fillRect(x, y, tile, tile);
+          // Clamp the last row/column so a partial tile never spills past the arena edge
+          // (ARENA_W/H aren't exact multiples of `tile`).
+          ctx.fillRect(x, y, Math.min(tile, ARENA_W - x), Math.min(tile, ARENA_H - y));
         }
       }
     }

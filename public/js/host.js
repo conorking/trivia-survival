@@ -212,7 +212,7 @@ function beginReading(data) {
 function updateIntroHint(overrideText) {
   const el = document.getElementById('introHint');
   if (!el) return;
-  el.textContent = overrideText || (speakEnabled ? '🔊 Reading Aloud' : '🔇 Reading Muted');
+  el.textContent = overrideText || (speakEnabled ? '🔊 Reading QuestionsAloud' : '🔇 Reading Questions Muted');
   el.classList.toggle('active', speakEnabled && !overrideText);
 }
 
