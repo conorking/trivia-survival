@@ -359,7 +359,7 @@ const PHASE_LABELS = {
   reveal: (s) => `Revealing the answer... ${s}s`,
   escape: (s) => `Get off the wrong doors! ${s}s`,
   fall_pause: () => 'Uh oh...',
-  resolve: (s) => `Survive the dogs for another ${s}s...`,
+  resolve: (s) => `Survive the dogs! ${s}s`,
   death_anim: () => 'Round over...'
 };
 const SLIM_QUESTION_STATES = new Set(['reveal', 'escape', 'fall_pause', 'resolve', 'death_anim']);

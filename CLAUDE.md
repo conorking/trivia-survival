@@ -371,8 +371,8 @@ during `question`; `releaseDogs()` now also sets it to the dog give-up deadline 
 A single `updatePhaseTimer(state, phaseEndsAt)`, duplicated the same way in both client
 files, drives the `#timerBar` width transition (only restarts on an actual state change,
 tracked via `lastPhaseState`, reset to `null` on `game:rematch`) plus a `#phaseLabel`
-text line recomputed every tick so embedded countdowns (e.g. "Survive the dogs for
-another Xs...") stay live. This replaced the old `question`-only `animateTimer()` call
+text line recomputed every tick so embedded countdowns (e.g. "Survive the dogs! Xs")
+stay live. This replaced the old `question`-only `animateTimer()` call
 and the on-canvas "dogs give up in Xs" badge (`drawChaseCountdown`, removed from
 `arena-render.js`) — there's now exactly one timer UI element used by every phase.
 
@@ -758,6 +758,28 @@ multiples of the 32px tile, so the right/bottom tiles used to poke out past the 
 while the question is being read — latecomers watching a cast screen can still grab the
 code. The centre-of-screen intro content is clear of the corners; `.hud-timer` /
 `.hud-question` stay behind the overlay as before.
+(9) **Mobile HUD stopped overlapping itself** (`@media (max-width: 640px)` in
+`style.css`, verified with headless-Chrome screenshots at 412/360px — driver in the
+scratchpad). The old rule left the top-right host cluster at `top:6px` colliding with the
+full-width timer label, the ghost banner landing on the top-left read-aloud button, and
+the cast toggle sitting under the question box. Now: the phase label is forced to one
+compact line (`--fs-px-2xs`, `nowrap`); **`.hud-host` moves to the bottom-right on
+phones** (`top:auto; bottom:8px` — the top row can't hold both the Q/alive readout and
+the whole host cluster) with `.hud-cast` bottom-left and `#gameView:has(.hud-cast)
+.hud-question` lifted to `bottom:76px` to clear both; the player-only `.hud-out` ghost
+banner uses a short label (`<span class="short">👻 YOU'RE OUT</span>`, swapped in under
+640px) centred at `top:108px` just below the left stack. `drawTouchHint` in
+`arena-render.js` dropped from `viewH*0.14` to `*0.2` so it clears that banner.
+`.hud-question h3` got `overflow-wrap:anywhere; word-break:break-word` so a long question
+word wraps instead of clipping the box edge.
+(10) **Top timer bar made more prominent** — `.hud-timer` sits further from the top edge
+(`top:14px` desktop / `10px` mobile, was `6`/`2`), the `.phase-label` is a step larger
+(`--fs-px-md` desktop / `--fs-px-sm` mobile, was `--fs-px-sm`/`--fs-px-2xs`), and
+`.timer-bar-wrap` is taller with a heavier border + drop shadow (`height:15px`, `3px`
+border, `box-shadow`). Mobile `.hud-topleft` dropped to `top:46px` and `.hud-out` to
+`122px` to clear the taller timer band. The `resolve` phase label was shortened
+(`Survive the dogs! Xs`, was `Survive the dogs for another Xs...`) in both `player.js`
+and `host.js` so the longest label still fits one `nowrap` line at the bigger mobile size.
 
 **Game-screen refactor** (touches the wire protocol — see the `intro` phase in "Game
 state machine" and "In-game screen" above for the details):

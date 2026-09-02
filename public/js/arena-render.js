@@ -380,7 +380,7 @@ const ArenaRender = (() => {
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('Touch & drag anywhere to move · second finger tap = jump', viewW / 2, viewH * 0.14);
+    ctx.fillText('Touch & drag anywhere to move · second finger tap = jump', viewW / 2, viewH * 0.2);
     ctx.restore();
   }
 

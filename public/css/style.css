@@ -364,18 +364,22 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   background: rgba(16,16,42,0.7);
 }
 
-/* top-centre: the one always-critical element - phase label + timer bar */
+/* top-centre: the one always-critical element - phase label + timer bar. Sits a little
+   inset from the top edge and deliberately larger/bolder than the rest of the HUD chrome. */
 .hud-timer {
-  top: 6px; left: 50%; transform: translateX(-50%);
-  width: min(420px, 74vw); text-align: center;
+  top: 14px; left: 50%; transform: translateX(-50%);
+  width: min(420px, 78vw); text-align: center;
 }
 .phase-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: var(--fs-px-sm); color: var(--accent);
+  font-size: var(--fs-px-md); color: var(--accent);
   text-shadow: 2px 2px 0 var(--border);
-  min-height: 14px; margin-bottom: 4px;
+  min-height: 16px; margin-bottom: 6px;
 }
-.timer-bar-wrap { height: 10px; background: rgba(16,16,42,0.85); border-radius: 6px; overflow: hidden; border: 2px solid var(--border); }
+.timer-bar-wrap {
+  height: 15px; background: rgba(16,16,42,0.9); border-radius: 8px; overflow: hidden;
+  border: 3px solid var(--border); box-shadow: 0 3px 0 var(--border);
+}
 .timer-bar { height: 100%; background: var(--accent); width: 100%; transition: width 0.1s linear; }
 
 /* bottom-centre: question + option pills. Prominent while answering, slim afterwards. */
@@ -394,6 +398,9 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 }
 .hud-question h3 {
   margin: 0 0 8px; color: var(--accent); font-size: var(--fs-px-lg); line-height: 1.4;
+  /* Press Start 2P has no hyphenation and very wide glyphs - a long question word can
+     otherwise push a line past the box edge and clip. Let it break rather than overflow. */
+  overflow-wrap: anywhere; word-break: break-word;
 }
 .hud-question.slim { padding: 6px 12px; }
 .hud-question.slim h3 {
@@ -445,8 +452,9 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
   top: 92px; left: 50%; transform: translateX(-50%);
   font-family: 'Press Start 2P', monospace; font-size: var(--fs-px-sm); color: var(--danger);
   background: rgba(16,16,42,0.8); border: 2px solid var(--danger);
-  border-radius: 6px; padding: 6px 10px;
+  border-radius: 6px; padding: 6px 10px; white-space: nowrap;
 }
+.hud-out .short { display: none; } /* swapped in for the full label on narrow screens */
 
 /* Big centered "3... 2... 1..." flash for the final seconds of an action phase
    (answering / escaping the wrong doors / surviving the dogs) - see updateBigCountdown
@@ -526,20 +534,43 @@ body.in-game { overflow: hidden; overscroll-behavior: none; touch-action: none; 
 }
 .end-overlay .card { max-width: 480px; width: 100%; margin: auto; }
 
-/* Small screens: the timer takes the whole top edge and the Q/alive readout drops
-   below it (they'd overlap side-by-side on a phone). Shrink the rest of the HUD so it
-   leaves the arena as much room as possible (the canvas is always full-viewport). */
+/* Small screens: dedicate horizontal bands so nothing overlaps.
+   - Band 0 (very top): the phase label + timer bar, forced to one compact line.
+   - Band 1 (~top:32px): the two corner clusters (top-left readout / top-right host
+     controls), each kept narrow enough to stay in its own corner and never meet in the
+     middle or collide with the timer above.
+   - The player's ghost banner moves to the top-right (players have no host cluster there)
+     so it can't land on the left stack's read-aloud button.
+   - The bottom question box is lifted clear of the bottom-left cast toggle.
+   The canvas is always full-viewport behind all of this. */
 @media (max-width: 640px) {
-  .hud-timer { top: 3px; width: 97vw; }
-  .hud-topleft { top: 32px; }
-  .hud-topleft .logo-link, .hud-stat { font-size: var(--fs-px-2xs); padding: 5px 7px; }
-  .hud-topleft .speak-toggle-btn { font-size: var(--fs-vt-3xs); padding: 4px 6px; }
-  .hud-out { top: 78px; }
-  .hud-question { width: 97vw; bottom: 6px; padding: 9px 11px; max-height: 36vh; }
+  .hud-timer { top: 10px; width: 94vw; }
+  .phase-label { font-size: var(--fs-px-sm); min-height: 14px; margin-bottom: 5px; white-space: nowrap; }
+  .timer-bar-wrap { height: 12px; border-width: 2px; }
+
+  .hud-topleft { top: 46px; gap: 4px; }
+  .hud-topleft .logo-link, .hud-stat { font-size: var(--fs-px-2xs); padding: 4px 6px; }
+  .hud-topleft .speak-toggle-btn { font-size: var(--fs-vt-3xs); padding: 3px 6px; }
+
+  /* Host controls move to the bottom-right on a phone - the top row isn't wide enough to
+     hold both the Q/alive readout (left) and the full host control cluster without them
+     colliding. Bottom-left keeps the cast toggle; the question box lifts clear of both. */
+  .hud-host { top: auto; bottom: 8px; right: 8px; gap: 4px; max-width: 70vw; }
+  .hud-host button { font-size: var(--fs-vt-3xs); padding: 4px 7px; border-width: 2px; }
+  .hud-host .code-pill { font-size: var(--fs-px-2xs); padding: 4px 6px; }
+
+  /* player-only ghost banner: short label, centred just under the top-left stack. */
+  .hud-out { top: 122px; font-size: var(--fs-px-2xs); padding: 5px 8px; }
+  .hud-out .full { display: none; }
+  .hud-out .short { display: inline; }
+
+  .hud-question { width: 96vw; bottom: 12px; padding: 9px 11px; max-height: 32vh; }
   .hud-question h3 { font-size: var(--fs-px-base); }
   .hud-question .option-pill { font-size: var(--fs-px-2xs); padding: 6px 9px; }
-  .hud-host { gap: 4px; }
-  .hud-host button { font-size: var(--fs-vt-3xs); padding: 5px 8px; }
+  /* Host only: lift the question box clear of the bottom-row cast toggle + host controls. */
+  #gameView:has(.hud-cast) .hud-question { bottom: 76px; }
+  .hud-cast { bottom: 8px; }
+
   .intro-overlay .intro-opt { flex-basis: 100%; padding: 12px; }
 }
 
