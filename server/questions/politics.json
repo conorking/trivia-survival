@@ -1,1 +1,3982 @@
-[]
+[
+  {
+    "q": "What is a system of government in which citizens vote for representatives?",
+    "options": {
+      "A": "Monarchy",
+      "B": "Democracy",
+      "C": "Theocracy"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is rule by a single person with absolute power called?",
+    "options": {
+      "A": "Democracy",
+      "B": "Autocracy",
+      "C": "Oligarchy"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a government led by religious leaders or law called?",
+    "options": {
+      "A": "Theocracy",
+      "B": "Meritocracy",
+      "C": "Plutocracy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is government by a small group of people called?",
+    "options": {
+      "A": "Monarchy",
+      "B": "Oligarchy",
+      "C": "Democracy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a country ruled by a king or queen called?",
+    "options": {
+      "A": "Republic",
+      "B": "Monarchy",
+      "C": "Federation"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a state with no monarch, where power rests with the people or their representatives?",
+    "options": {
+      "A": "Republic",
+      "B": "Principality",
+      "C": "Duchy"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In a 'constitutional monarchy', the monarch's powers are limited by what?",
+    "options": {
+      "A": "The army",
+      "B": "A constitution",
+      "C": "The church"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for government by the wealthy?",
+    "options": {
+      "A": "Plutocracy",
+      "B": "Aristocracy",
+      "C": "Bureaucracy"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a one-party state most associated with?",
+    "options": {
+      "A": "Pluralism",
+      "B": "Authoritarianism",
+      "C": "Federalism"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What term describes a government where power is shared between central and regional authorities?",
+    "options": {
+      "A": "Unitary",
+      "B": "Federal",
+      "C": "Confederal"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the opposite of a federal system, where power is concentrated centrally?",
+    "options": {
+      "A": "Confederal system",
+      "B": "Unitary system",
+      "C": "Devolved system"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for transferring power from central government to regional governments?",
+    "options": {
+      "A": "Centralisation",
+      "B": "Devolution",
+      "C": "Nationalisation"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What do you call a system with two legislative chambers?",
+    "options": {
+      "A": "Unicameral",
+      "B": "Bicameral",
+      "C": "Tricameral"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What do you call a legislature with only one chamber?",
+    "options": {
+      "A": "Bicameral",
+      "B": "Unicameral",
+      "C": "Multicameral"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the right to vote?",
+    "options": {
+      "A": "Suffrage",
+      "B": "Sanction",
+      "C": "Sovereignty"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'universal suffrage'?",
+    "options": {
+      "A": "The right of all adult citizens to vote",
+      "B": "A tax on voting",
+      "C": "Compulsory military service"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a change or addition to a constitution?",
+    "options": {
+      "A": "Amendment",
+      "B": "Annexation",
+      "C": "Adjournment"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the separation of a government into legislative, executive and judicial branches called?",
+    "options": {
+      "A": "Federalism",
+      "B": "Separation of powers",
+      "C": "Bicameralism"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which branch of government makes laws?",
+    "options": {
+      "A": "Executive",
+      "B": "Legislative",
+      "C": "Judicial"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which branch of government enforces laws?",
+    "options": {
+      "A": "Legislative",
+      "B": "Executive",
+      "C": "Judicial"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which branch of government interprets laws?",
+    "options": {
+      "A": "Legislative",
+      "B": "Executive",
+      "C": "Judicial"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'coup d'etat'?",
+    "options": {
+      "A": "A peaceful election",
+      "B": "A sudden illegal seizure of power",
+      "C": "A trade agreement"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a formal agreement between countries?",
+    "options": {
+      "A": "Treaty",
+      "B": "Tariff",
+      "C": "Testimony"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'referendum'?",
+    "options": {
+      "A": "A direct public vote on a specific issue",
+      "B": "A parliamentary debate",
+      "C": "A cabinet reshuffle"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What term describes a politician crossing to another party?",
+    "options": {
+      "A": "Filibustering",
+      "B": "Defecting",
+      "C": "Lobbying"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'lobbying'?",
+    "options": {
+      "A": "Attempting to influence legislators' decisions",
+      "B": "Counting votes",
+      "C": "Writing a constitution"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'filibuster' in a legislature?",
+    "options": {
+      "A": "Prolonged speech to delay or block a vote",
+      "B": "A secret ballot",
+      "C": "A vote of no confidence"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'gerrymandering'?",
+    "options": {
+      "A": "Manipulating electoral district boundaries for advantage",
+      "B": "Bribing voters",
+      "C": "Extending voting hours"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a period when an outgoing official still holds office after an election?",
+    "options": {
+      "A": "Lame duck period",
+      "B": "Transition tax",
+      "C": "Sunset clause"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'coalition government'?",
+    "options": {
+      "A": "A government formed by two or more parties together",
+      "B": "A government with no opposition",
+      "C": "A military government"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year was the United Nations founded?",
+    "options": {
+      "A": "1919",
+      "B": "1945",
+      "C": "1955"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Where is the headquarters of the United Nations?",
+    "options": {
+      "A": "Geneva",
+      "B": "New York City",
+      "C": "Brussels"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "How many permanent members does the UN Security Council have?",
+    "options": {
+      "A": "Three",
+      "B": "Five",
+      "C": "Fifteen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these is NOT a permanent member of the UN Security Council?",
+    "options": {
+      "A": "China",
+      "B": "Germany",
+      "C": "France"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What power do the permanent members of the UN Security Council uniquely hold?",
+    "options": {
+      "A": "The veto",
+      "B": "Tax exemption",
+      "C": "A double vote"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the main deliberative body of the UN where every member state has one vote?",
+    "options": {
+      "A": "Security Council",
+      "B": "General Assembly",
+      "C": "Secretariat"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the highest administrative officer of the UN called?",
+    "options": {
+      "A": "President",
+      "B": "Secretary-General",
+      "C": "Chancellor"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What UN body is the principal judicial organ, based in The Hague?",
+    "options": {
+      "A": "International Criminal Court",
+      "B": "International Court of Justice",
+      "C": "European Court of Human Rights"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What does WHO stand for?",
+    "options": {
+      "A": "World Health Organization",
+      "B": "World Heritage Office",
+      "C": "Western Hemisphere Organization"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What does NATO stand for?",
+    "options": {
+      "A": "North Atlantic Trade Organization",
+      "B": "North Atlantic Treaty Organization",
+      "C": "Northern Alliance Treaty Organization"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In what year was NATO founded?",
+    "options": {
+      "A": "1939",
+      "B": "1949",
+      "C": "1961"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the core principle of NATO's Article 5?",
+    "options": {
+      "A": "An attack on one member is an attack on all",
+      "B": "Members must adopt the same currency",
+      "C": "Members cannot trade with non-members"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What organisation was NATO originally formed to counter?",
+    "options": {
+      "A": "The Ottoman Empire",
+      "B": "The Soviet Union",
+      "C": "Nazi Germany"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the Soviet-led military alliance opposing NATO during the Cold War?",
+    "options": {
+      "A": "The Warsaw Pact",
+      "B": "The Comintern",
+      "C": "The Axis"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does the acronym EU stand for?",
+    "options": {
+      "A": "European Union",
+      "B": "Economic Union",
+      "C": "Eastern Union"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What treaty, signed in 1992, formally created the European Union?",
+    "options": {
+      "A": "Treaty of Rome",
+      "B": "Maastricht Treaty",
+      "C": "Treaty of Lisbon"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Where is the European Parliament's official seat?",
+    "options": {
+      "A": "Brussels",
+      "B": "Strasbourg",
+      "C": "Frankfurt"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the currency used by most EU member states?",
+    "options": {
+      "A": "The euro",
+      "B": "The ecu",
+      "C": "The florin"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which country voted in a 2016 referendum to leave the European Union?",
+    "options": {
+      "A": "Greece",
+      "B": "The United Kingdom",
+      "C": "Denmark"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the informal name for the UK's departure from the EU?",
+    "options": {
+      "A": "Grexit",
+      "B": "Brexit",
+      "C": "Frexit"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What does IMF stand for?",
+    "options": {
+      "A": "International Monetary Fund",
+      "B": "International Markets Federation",
+      "C": "Investment Management Foundation"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the WTO regulate?",
+    "options": {
+      "A": "International trade",
+      "B": "Nuclear weapons",
+      "C": "Space exploration"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the G7?",
+    "options": {
+      "A": "A group of seven major advanced economies",
+      "B": "The seven founding UN members",
+      "C": "A NATO command"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country was suspended from the G8, returning it to the G7, in 2014?",
+    "options": {
+      "A": "China",
+      "B": "Russia",
+      "C": "India"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What organisation of oil-exporting countries coordinates petroleum policy?",
+    "options": {
+      "A": "OPEC",
+      "B": "NAFTA",
+      "C": "ASEAN"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does ASEAN stand for?",
+    "options": {
+      "A": "Association of Southeast Asian Nations",
+      "B": "Asian Standards and Economic Alliance Network",
+      "C": "Allied States of Eastern Asian Nations"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the African Union's headquarters city?",
+    "options": {
+      "A": "Nairobi",
+      "B": "Addis Ababa",
+      "C": "Cairo"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What court, based in The Hague, prosecutes individuals for war crimes and genocide?",
+    "options": {
+      "A": "International Court of Justice",
+      "B": "International Criminal Court",
+      "C": "Permanent Court of Arbitration"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What does UNESCO primarily deal with?",
+    "options": {
+      "A": "Education, science and culture",
+      "B": "Refugees",
+      "C": "Weather forecasting"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does UNICEF focus on?",
+    "options": {
+      "A": "Children's welfare",
+      "B": "Agriculture",
+      "C": "Disarmament"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many branches does the US federal government have?",
+    "options": {
+      "A": "Two",
+      "B": "Three",
+      "C": "Four"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What are the two chambers of the US Congress?",
+    "options": {
+      "A": "House and Senate",
+      "B": "Commons and Lords",
+      "C": "Assembly and Council"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "How many US senators does each state have?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Based on population"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many members are in the US House of Representatives?",
+    "options": {
+      "A": "435",
+      "B": "100",
+      "C": "538"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How long is a US president's term?",
+    "options": {
+      "A": "Three years",
+      "B": "Four years",
+      "C": "Six years"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "How many terms can a US president serve, under the 22nd Amendment?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Unlimited"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What body formally elects the US president?",
+    "options": {
+      "A": "The Senate",
+      "B": "The Electoral College",
+      "C": "The Supreme Court"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many electoral votes are needed to win the US presidency?",
+    "options": {
+      "A": "270",
+      "B": "300",
+      "C": "218"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who is first in the US presidential line of succession after the vice president?",
+    "options": {
+      "A": "Secretary of State",
+      "B": "Speaker of the House",
+      "C": "Chief Justice"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who presides over the US Senate and can cast tie-breaking votes?",
+    "options": {
+      "A": "The Speaker",
+      "B": "The Vice President",
+      "C": "The Majority Leader"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many justices sit on the US Supreme Court?",
+    "options": {
+      "A": "Seven",
+      "B": "Nine",
+      "C": "Twelve"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "How long do US Supreme Court justices serve?",
+    "options": {
+      "A": "Ten years",
+      "B": "For life (during good behaviour)",
+      "C": "Until age 70"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the first ten amendments to the US Constitution collectively called?",
+    "options": {
+      "A": "The Federalist Papers",
+      "B": "The Bill of Rights",
+      "C": "The Articles of Confederation"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which amendment to the US Constitution protects freedom of speech and religion?",
+    "options": {
+      "A": "First",
+      "B": "Second",
+      "C": "Fifth"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which amendment abolished slavery in the United States?",
+    "options": {
+      "A": "13th",
+      "B": "15th",
+      "C": "19th"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which amendment gave American women the right to vote?",
+    "options": {
+      "A": "15th",
+      "B": "19th",
+      "C": "26th"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In what year did the US Constitution take effect?",
+    "options": {
+      "A": "1776",
+      "B": "1789",
+      "C": "1812"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What document begins 'We the People'?",
+    "options": {
+      "A": "The Declaration of Independence",
+      "B": "The US Constitution",
+      "C": "The Gettysburg Address"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What document begins 'When in the Course of human events'?",
+    "options": {
+      "A": "The US Constitution",
+      "B": "The Declaration of Independence",
+      "C": "The Emancipation Proclamation"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first President of the United States?",
+    "options": {
+      "A": "Thomas Jefferson",
+      "B": "George Washington",
+      "C": "John Adams"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who was president during the American Civil War?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "Andrew Johnson",
+      "C": "Ulysses S. Grant"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which president is on the US one-dollar bill?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "George Washington",
+      "C": "Benjamin Franklin"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which US president resigned in 1974 over the Watergate scandal?",
+    "options": {
+      "A": "Lyndon Johnson",
+      "B": "Richard Nixon",
+      "C": "Gerald Ford"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US president was in office during the Great Depression's start and much of the New Deal?",
+    "options": {
+      "A": "Herbert Hoover",
+      "B": "Franklin D. Roosevelt",
+      "C": "Harry Truman"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the only US president to serve more than two terms?",
+    "options": {
+      "A": "Theodore Roosevelt",
+      "B": "Franklin D. Roosevelt",
+      "C": "Woodrow Wilson"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US president delivered the Gettysburg Address?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "Andrew Jackson",
+      "C": "James Madison"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a legislative act being rejected by the president?",
+    "options": {
+      "A": "Repeal",
+      "B": "Veto",
+      "C": "Recall"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "How can the US Congress override a presidential veto?",
+    "options": {
+      "A": "A simple majority in one house",
+      "B": "A two-thirds vote in both houses",
+      "C": "A Supreme Court ruling"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the process of formally charging a president with misconduct called?",
+    "options": {
+      "A": "Impeachment",
+      "B": "Indictment",
+      "C": "Censure"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which body holds an impeachment trial for a US president?",
+    "options": {
+      "A": "The House",
+      "B": "The Senate",
+      "C": "The Supreme Court"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the West Wing' of the White House used for?",
+    "options": {
+      "A": "The president's living quarters",
+      "B": "Offices including the Oval Office",
+      "C": "State dinners"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What are the two major political parties in the United States?",
+    "options": {
+      "A": "Labour and Conservative",
+      "B": "Democratic and Republican",
+      "C": "Liberal and National"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What animal symbolises the US Republican Party?",
+    "options": {
+      "A": "Donkey",
+      "B": "Elephant",
+      "C": "Eagle"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What animal symbolises the US Democratic Party?",
+    "options": {
+      "A": "Elephant",
+      "B": "Donkey",
+      "C": "Bear"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What are the two houses of the UK Parliament?",
+    "options": {
+      "A": "Senate and Congress",
+      "B": "Commons and Lords",
+      "C": "Assembly and Senate"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the official residence of the UK Prime Minister?",
+    "options": {
+      "A": "Buckingham Palace",
+      "B": "10 Downing Street",
+      "C": "Westminster Abbey"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who was the first female Prime Minister of the United Kingdom?",
+    "options": {
+      "A": "Theresa May",
+      "B": "Margaret Thatcher",
+      "C": "Queen Elizabeth II"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the elected lower house of the UK Parliament called?",
+    "options": {
+      "A": "House of Lords",
+      "B": "House of Commons",
+      "C": "House of Representatives"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the maximum term of a UK Parliament before an election must be held?",
+    "options": {
+      "A": "Three years",
+      "B": "Five years",
+      "C": "Seven years"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What role does the UK monarch play in government today?",
+    "options": {
+      "A": "Largely ceremonial head of state",
+      "B": "Head of the army with veto power",
+      "C": "Chief judge"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the UK's system of a monarch as head of state and elected Parliament called?",
+    "options": {
+      "A": "Absolute monarchy",
+      "B": "Constitutional monarchy",
+      "C": "Federal republic"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the ceremonial speech that opens a session of the UK Parliament, written by the government?",
+    "options": {
+      "A": "The Address",
+      "B": "The King's/Queen's Speech",
+      "C": "The Manifesto"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the UK opposition's alternative front bench of spokespeople called?",
+    "options": {
+      "A": "The Privy Council",
+      "B": "The Shadow Cabinet",
+      "C": "The Star Chamber"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the weekly session where the UK PM answers MPs' questions called?",
+    "options": {
+      "A": "Question Time",
+      "B": "Prime Minister's Questions",
+      "C": "The Despatch"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What voting system is used to elect MPs to the UK House of Commons?",
+    "options": {
+      "A": "Proportional representation",
+      "B": "First-past-the-post",
+      "C": "Single transferable vote"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which UK nations have devolved parliaments or assemblies?",
+    "options": {
+      "A": "Scotland, Wales and Northern Ireland",
+      "B": "Only Scotland",
+      "C": "England and Wales only"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the highest court in the United Kingdom?",
+    "options": {
+      "A": "The House of Lords",
+      "B": "The Supreme Court",
+      "C": "The Old Bailey"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'by-election' in the UK?",
+    "options": {
+      "A": "A general election",
+      "B": "An election to fill a single vacant seat",
+      "C": "A local council election"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the title of the MP who keeps order in the House of Commons?",
+    "options": {
+      "A": "The Whip",
+      "B": "The Speaker",
+      "C": "The Leader"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a parliamentary 'whip'?",
+    "options": {
+      "A": "An MP who enforces party discipline on votes",
+      "B": "A rule about speaking time",
+      "C": "The mace on the table"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'vote of no confidence'?",
+    "options": {
+      "A": "A vote that can force a government to resign or call an election",
+      "B": "A secret ballot for party leader",
+      "C": "A budget vote"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the UK government's annual financial statement called?",
+    "options": {
+      "A": "The Budget",
+      "B": "The Ledger",
+      "C": "The Estimate"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the UK cabinet minister in charge of finance called?",
+    "options": {
+      "A": "Foreign Secretary",
+      "B": "Chancellor of the Exchequer",
+      "C": "Home Secretary"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the UK cabinet minister in charge of domestic affairs and policing called?",
+    "options": {
+      "A": "Home Secretary",
+      "B": "Defence Secretary",
+      "C": "Lord Chancellor"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the collective term for the group of senior ministers who set UK government policy?",
+    "options": {
+      "A": "The Cabinet",
+      "B": "The Bench",
+      "C": "The Council"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What are the members of the UK House of Lords mostly?",
+    "options": {
+      "A": "Elected representatives",
+      "B": "Appointed life peers",
+      "C": "Hereditary rulers only"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which ideology broadly favours minimal government intervention in the economy?",
+    "options": {
+      "A": "Socialism",
+      "B": "Classical liberalism",
+      "C": "Fascism"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which ideology emphasises collective ownership of the means of production?",
+    "options": {
+      "A": "Capitalism",
+      "B": "Socialism",
+      "C": "Libertarianism"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which economic system is based on private ownership and free markets?",
+    "options": {
+      "A": "Communism",
+      "B": "Capitalism",
+      "C": "Feudalism"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'The Communist Manifesto' with Friedrich Engels?",
+    "options": {
+      "A": "Vladimir Lenin",
+      "B": "Karl Marx",
+      "C": "Leon Trotsky"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Wealth of Nations', a foundational text of capitalism?",
+    "options": {
+      "A": "John Maynard Keynes",
+      "B": "Adam Smith",
+      "C": "David Ricardo"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What term describes wanting to preserve traditional institutions and gradual change?",
+    "options": {
+      "A": "Radicalism",
+      "B": "Conservatism",
+      "C": "Anarchism"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What ideology rejects all forms of coercive government?",
+    "options": {
+      "A": "Anarchism",
+      "B": "Authoritarianism",
+      "C": "Monarchism"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'populism' broadly defined as?",
+    "options": {
+      "A": "Politics that pits 'the people' against 'the elite'",
+      "B": "Rule by experts",
+      "C": "A type of proportional voting"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What term describes an extreme right-wing authoritarian, ultranationalist ideology?",
+    "options": {
+      "A": "Fascism",
+      "B": "Federalism",
+      "C": "Fabianism"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which political spectrum term is associated with progressive change and equality?",
+    "options": {
+      "A": "The right",
+      "B": "The left",
+      "C": "The centre"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'protectionism' in trade policy?",
+    "options": {
+      "A": "Removing all tariffs",
+      "B": "Shielding domestic industry with tariffs and quotas",
+      "C": "Adopting a common currency"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'laissez-faire' economics?",
+    "options": {
+      "A": "Heavy state planning",
+      "B": "Minimal government interference in markets",
+      "C": "Mandatory price controls"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'welfare state'?",
+    "options": {
+      "A": "A state that provides social services like healthcare and unemployment support",
+      "B": "A state with no taxes",
+      "C": "A military dictatorship"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What does 'nationalisation' mean?",
+    "options": {
+      "A": "Government taking ownership of an industry",
+      "B": "Selling state assets to private firms",
+      "C": "Joining an international union"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'privatisation' mean?",
+    "options": {
+      "A": "Government taking over private firms",
+      "B": "Transferring state assets to private ownership",
+      "C": "Banning foreign investment"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'diplomatic immunity'?",
+    "options": {
+      "A": "Exemption of diplomats from local prosecution",
+      "B": "The right to declare war",
+      "C": "Free international travel for all citizens"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is an 'embassy'?",
+    "options": {
+      "A": "A country's main diplomatic mission in a foreign capital",
+      "B": "An international court",
+      "C": "A trade fair"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the head of an embassy usually called?",
+    "options": {
+      "A": "Consul",
+      "B": "Ambassador",
+      "C": "Attache"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'asylum' in a political context?",
+    "options": {
+      "A": "Protection granted by a state to a foreign refugee",
+      "B": "A tax on imports",
+      "C": "A parliamentary recess"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a state's supreme authority over its own territory?",
+    "options": {
+      "A": "Federalism",
+      "B": "Sovereignty",
+      "C": "Suffrage"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'sanction' in international relations?",
+    "options": {
+      "A": "A penalty such as a trade or financial restriction",
+      "B": "A peace treaty",
+      "C": "A diplomatic dinner"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'realpolitik'?",
+    "options": {
+      "A": "Politics based on practical power rather than ideology or ethics",
+      "B": "Reality television about politicians",
+      "C": "A German political party"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What 1215 English document limited the power of the monarch and influenced later constitutions?",
+    "options": {
+      "A": "The Domesday Book",
+      "B": "Magna Carta",
+      "C": "The Bill of Rights 1689"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What document adopted in 1948 by the UN sets out fundamental human rights?",
+    "options": {
+      "A": "The Geneva Conventions",
+      "B": "The Universal Declaration of Human Rights",
+      "C": "The Helsinki Accords"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "The Treaty of Versailles in 1919 formally ended which war?",
+    "options": {
+      "A": "The Franco-Prussian War",
+      "B": "World War I",
+      "C": "The Napoleonic Wars"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What 1994 event in South Africa marked the end of apartheid rule?",
+    "options": {
+      "A": "The first multiracial democratic election",
+      "B": "Independence from Britain",
+      "C": "Joining the Commonwealth"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who became South Africa's first democratically elected president in 1994?",
+    "options": {
+      "A": "Desmond Tutu",
+      "B": "Nelson Mandela",
+      "C": "Thabo Mbeki"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The Berlin Wall, dividing a city and symbolising the Cold War, fell in what year?",
+    "options": {
+      "A": "1985",
+      "B": "1989",
+      "C": "1991"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which political union dissolved in 1991 into 15 independent states?",
+    "options": {
+      "A": "Yugoslavia",
+      "B": "The Soviet Union",
+      "C": "Czechoslovakia"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the policy of racial segregation in South Africa from 1948 to the early 1990s called?",
+    "options": {
+      "A": "Jim Crow",
+      "B": "Apartheid",
+      "C": "Partition"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which country's 1789 revolution produced the 'Declaration of the Rights of Man and of the Citizen'?",
+    "options": {
+      "A": "The United States",
+      "B": "France",
+      "C": "Haiti"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US civil-rights leader delivered the 'I Have a Dream' speech in 1963?",
+    "options": {
+      "A": "Malcolm X",
+      "B": "Martin Luther King Jr.",
+      "C": "Thurgood Marshall"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The Good Friday Agreement of 1998 helped end conflict in which region?",
+    "options": {
+      "A": "The Basque Country",
+      "B": "Northern Ireland",
+      "C": "Cyprus"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What was the 1962 confrontation between the US and USSR over missiles on an island called?",
+    "options": {
+      "A": "The Bay of Pigs",
+      "B": "The Cuban Missile Crisis",
+      "C": "The Suez Crisis"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which document is the oldest written national constitution still in use?",
+    "options": {
+      "A": "The Magna Carta",
+      "B": "The United States Constitution",
+      "C": "The French Constitution"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What alliance system is often cited as a cause of World War I's rapid escalation?",
+    "options": {
+      "A": "Non-aligned movement",
+      "B": "Entangling alliances",
+      "C": "The League of Nations"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What international body, a predecessor to the UN, was founded after World War I?",
+    "options": {
+      "A": "The League of Nations",
+      "B": "The Concert of Europe",
+      "C": "The Hanseatic League"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country never joined the League of Nations despite its president proposing it?",
+    "options": {
+      "A": "France",
+      "B": "The United States",
+      "C": "Japan"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What 1955 conference gave rise to the Non-Aligned Movement?",
+    "options": {
+      "A": "The Bandung Conference",
+      "B": "The Yalta Conference",
+      "C": "The Congress of Vienna"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What 1815 congress redrew the map of Europe after Napoleon's defeat?",
+    "options": {
+      "A": "The Congress of Vienna",
+      "B": "The Treaty of Utrecht",
+      "C": "The Peace of Westphalia"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The 1648 Peace of Westphalia is often credited with establishing which modern concept?",
+    "options": {
+      "A": "Universal suffrage",
+      "B": "The sovereign nation-state",
+      "C": "Free trade"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which 1993 accords were an attempt at an Israeli-Palestinian peace framework?",
+    "options": {
+      "A": "Camp David Accords",
+      "B": "Oslo Accords",
+      "C": "Dayton Accords"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The 1995 Dayton Agreement ended a war in which country?",
+    "options": {
+      "A": "Bosnia and Herzegovina",
+      "B": "Georgia",
+      "C": "Rwanda"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for the 19th-century US belief in expansion across the continent?",
+    "options": {
+      "A": "Manifest Destiny",
+      "B": "The Monroe Doctrine",
+      "C": "Isolationism"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The Monroe Doctrine warned European powers against interfering in which region?",
+    "options": {
+      "A": "Africa",
+      "B": "The Americas",
+      "C": "Southeast Asia"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the head of government of Germany called?",
+    "options": {
+      "A": "President",
+      "B": "Chancellor",
+      "C": "Prime Minister"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the head of government of Spain and Italy called?",
+    "options": {
+      "A": "Chancellor",
+      "B": "President",
+      "C": "Prime Minister"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the head of state of France called?",
+    "options": {
+      "A": "Chancellor",
+      "B": "President",
+      "C": "Taoiseach"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the head of government of the Republic of Ireland called?",
+    "options": {
+      "A": "Taoiseach",
+      "B": "Chancellor",
+      "C": "Premier"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What title does the elected leader of Israel's government hold?",
+    "options": {
+      "A": "President",
+      "B": "Prime Minister",
+      "C": "Chancellor"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the founding leader and first Prime Minister of independent India?",
+    "options": {
+      "A": "Mahatma Gandhi",
+      "B": "Jawaharlal Nehru",
+      "C": "Sardar Patel"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who led the Soviet Union during the policies of 'glasnost' and 'perestroika'?",
+    "options": {
+      "A": "Leonid Brezhnev",
+      "B": "Mikhail Gorbachev",
+      "C": "Nikita Khrushchev"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first President of the People's Republic of China?",
+    "options": {
+      "A": "Deng Xiaoping",
+      "B": "Mao Zedong",
+      "C": "Zhou Enlai"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was British Prime Minister for most of World War II?",
+    "options": {
+      "A": "Neville Chamberlain",
+      "B": "Winston Churchill",
+      "C": "Clement Attlee"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which French general and statesman led the Free French in WWII and later founded the Fifth Republic?",
+    "options": {
+      "A": "Georges Pompidou",
+      "B": "Charles de Gaulle",
+      "C": "Philippe Petain"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first Chancellor of a unified Germany in the 19th century?",
+    "options": {
+      "A": "Otto von Bismarck",
+      "B": "Kaiser Wilhelm I",
+      "C": "Konrad Adenauer"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Italian leader founded the National Fascist Party?",
+    "options": {
+      "A": "Benito Mussolini",
+      "B": "Victor Emmanuel III",
+      "C": "Giuseppe Garibaldi"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the long-serving leader of Cuba from 1959, handing power to his brother in 2008?",
+    "options": {
+      "A": "Che Guevara",
+      "B": "Fidel Castro",
+      "C": "Fulgencio Batista"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which independence leader is known as the father of the Indian nation for non-violent resistance?",
+    "options": {
+      "A": "B.R. Ambedkar",
+      "B": "Mahatma Gandhi",
+      "C": "Subhas Chandra Bose"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first female Chancellor of Germany?",
+    "options": {
+      "A": "Ursula von der Leyen",
+      "B": "Angela Merkel",
+      "C": "Annalena Baerbock"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US president is credited with the Louisiana Purchase from France in 1803?",
+    "options": {
+      "A": "George Washington",
+      "B": "Thomas Jefferson",
+      "C": "James Monroe"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which US president established the New Deal programs during the Great Depression?",
+    "options": {
+      "A": "Herbert Hoover",
+      "B": "Franklin D. Roosevelt",
+      "C": "Calvin Coolidge"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first Catholic President of the United States?",
+    "options": {
+      "A": "Lyndon B. Johnson",
+      "B": "John F. Kennedy",
+      "C": "Jimmy Carter"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which president signed the US Civil Rights Act of 1964 into law?",
+    "options": {
+      "A": "John F. Kennedy",
+      "B": "Lyndon B. Johnson",
+      "C": "Richard Nixon"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the first African American President of the United States?",
+    "options": {
+      "A": "Barack Obama",
+      "B": "Colin Powell",
+      "C": "Jesse Jackson"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the voting system where the candidate with the most votes wins, even without a majority?",
+    "options": {
+      "A": "Proportional representation",
+      "B": "First-past-the-post",
+      "C": "Approval voting"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What voting system allocates seats in proportion to each party's share of the vote?",
+    "options": {
+      "A": "Plurality",
+      "B": "Proportional representation",
+      "C": "Bloc voting"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'secret ballot'?",
+    "options": {
+      "A": "Voting done privately so choices can't be traced",
+      "B": "A vote held without announcement",
+      "C": "A vote only party members can see"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'compulsory voting'?",
+    "options": {
+      "A": "A legal requirement for eligible citizens to vote",
+      "B": "A ban on abstaining in parliament",
+      "C": "Voting more than once"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country is well known for enforcing compulsory voting?",
+    "options": {
+      "A": "Canada",
+      "B": "Australia",
+      "C": "Japan"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'swing state' (or marginal seat)?",
+    "options": {
+      "A": "A district that could be won by either major party",
+      "B": "A safe seat",
+      "C": "A vacant seat"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'voter turnout'?",
+    "options": {
+      "A": "The percentage of eligible voters who cast a ballot",
+      "B": "The number of candidates",
+      "C": "The margin of victory"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'plebiscite'?",
+    "options": {
+      "A": "A direct vote by the electorate on an important question",
+      "B": "A parliamentary committee",
+      "C": "A campaign donation"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'incumbency'?",
+    "options": {
+      "A": "Currently holding the office being contested",
+      "B": "Running for the first time",
+      "C": "Being term-limited"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'landslide' in an election?",
+    "options": {
+      "A": "An overwhelming victory margin",
+      "B": "A recount",
+      "C": "A tied result"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'primary election' in the US?",
+    "options": {
+      "A": "An election to choose a party's candidate",
+      "B": "The final election",
+      "C": "A local council vote"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'caucus' in US politics?",
+    "options": {
+      "A": "A meeting of party members to select candidates or set policy",
+      "B": "A type of ballot",
+      "C": "A campaign advertisement"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'redistricting'?",
+    "options": {
+      "A": "Redrawing the boundaries of electoral districts",
+      "B": "Counting absentee ballots",
+      "C": "Registering new voters"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is an 'exit poll'?",
+    "options": {
+      "A": "A survey of voters as they leave polling places",
+      "B": "The official vote count",
+      "C": "A poll of politicians"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the 'franchise' in a political context?",
+    "options": {
+      "A": "The right to vote",
+      "B": "A campaign slogan",
+      "C": "A political party's branding"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'hung parliament'?",
+    "options": {
+      "A": "No single party has an outright majority",
+      "B": "Parliament is suspended",
+      "C": "All seats are vacant"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'proportional representation' designed to reduce?",
+    "options": {
+      "A": "Voter turnout",
+      "B": "The gap between vote share and seat share",
+      "C": "The number of parties"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'coalition of the willing'?",
+    "options": {
+      "A": "An ad hoc group of states acting together, often militarily, without a formal alliance",
+      "B": "A permanent treaty organisation",
+      "C": "A single-party government"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'devolution' as practised in the UK an example of?",
+    "options": {
+      "A": "Centralising power",
+      "B": "Delegating powers to sub-national governments",
+      "C": "Abolishing regional government"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the 'D'Hondt method' used for?",
+    "options": {
+      "A": "Allocating seats under proportional representation",
+      "B": "Drawing district lines",
+      "C": "Counting spoiled ballots"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What US city is the seat of the federal government?",
+    "options": {
+      "A": "New York",
+      "B": "Washington, D.C.",
+      "C": "Philadelphia"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the capital and seat of government of Australia?",
+    "options": {
+      "A": "Sydney",
+      "B": "Canberra",
+      "C": "Melbourne"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the seat of the European Commission?",
+    "options": {
+      "A": "Paris",
+      "B": "Brussels",
+      "C": "Vienna"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which city hosts the International Court of Justice and many international tribunals?",
+    "options": {
+      "A": "Geneva",
+      "B": "The Hague",
+      "C": "Vienna"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is Canada's capital city?",
+    "options": {
+      "A": "Toronto",
+      "B": "Ottawa",
+      "C": "Vancouver"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is Brazil's purpose-built capital city?",
+    "options": {
+      "A": "Rio de Janeiro",
+      "B": "Brasilia",
+      "C": "Sao Paulo"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country moved its capital from Karachi and later to a planned city, Islamabad?",
+    "options": {
+      "A": "India",
+      "B": "Pakistan",
+      "C": "Bangladesh"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the seat of government of the Netherlands (though Amsterdam is the constitutional capital)?",
+    "options": {
+      "A": "Rotterdam",
+      "B": "The Hague",
+      "C": "Utrecht"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is South Africa's administrative (executive) capital?",
+    "options": {
+      "A": "Cape Town",
+      "B": "Pretoria",
+      "C": "Bloemfontein"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for a country's official representative sent to live in another country?",
+    "options": {
+      "A": "Delegate",
+      "B": "Ambassador",
+      "C": "Envoy of state"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'constituency'?",
+    "options": {
+      "A": "The body of voters who elect a representative",
+      "B": "A government department",
+      "C": "A political donation"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'manifesto' in an election?",
+    "options": {
+      "A": "A published statement of a party's policies and intentions",
+      "B": "A ballot paper",
+      "C": "A concession speech"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'bipartisanship'?",
+    "options": {
+      "A": "Cooperation between two opposing political parties",
+      "B": "Rule by two leaders",
+      "C": "A two-round election"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'think tank'?",
+    "options": {
+      "A": "An organisation that researches and advocates policy",
+      "B": "A cabinet committee",
+      "C": "A voting machine"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the fourth estate' a nickname for?",
+    "options": {
+      "A": "The judiciary",
+      "B": "The press/news media",
+      "C": "The civil service"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the civil service'?",
+    "options": {
+      "A": "The permanent bureaucracy that implements government policy",
+      "B": "Elected legislators",
+      "C": "The armed forces"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'quorum' in a legislature?",
+    "options": {
+      "A": "The minimum number of members needed to conduct business",
+      "B": "A unanimous vote",
+      "C": "The ruling party"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'ratification' of a treaty?",
+    "options": {
+      "A": "Formal approval that makes it binding",
+      "B": "The initial signing",
+      "C": "Withdrawing from it"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'head of state' as distinct from a 'head of government'?",
+    "options": {
+      "A": "The chief public representative of a country, sometimes ceremonial",
+      "B": "The leader of the opposition",
+      "C": "The chief judge"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In many parliamentary systems, who formally appoints the Prime Minister?",
+    "options": {
+      "A": "The head of state (monarch or president)",
+      "B": "The Supreme Court",
+      "C": "The outgoing PM"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'life peer' in the UK?",
+    "options": {
+      "A": "A member of the House of Lords appointed for life, not hereditary",
+      "B": "An elected MP",
+      "C": "A retired judge"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the opposition' in a parliamentary system?",
+    "options": {
+      "A": "Parties not in government that scrutinise and challenge it",
+      "B": "Independent voters",
+      "C": "The civil service"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'green paper' in UK/EU policymaking?",
+    "options": {
+      "A": "A consultation document setting out ideas for discussion",
+      "B": "A finalised law",
+      "C": "A budget"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a 'white paper' in policymaking?",
+    "options": {
+      "A": "A document setting out firm government proposals for legislation",
+      "B": "An opinion poll",
+      "C": "A press release"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does 'bicameralism' provide, in theory?",
+    "options": {
+      "A": "Checks between two chambers on legislation",
+      "B": "Faster lawmaking",
+      "C": "Fewer elections"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'sortition'?",
+    "options": {
+      "A": "Selecting officials or juries by random lottery",
+      "B": "A runoff election",
+      "C": "A recount"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a 'confidence and supply' arrangement?",
+    "options": {
+      "A": "A minor party agrees to support a minority government on key votes without joining it",
+      "B": "A merger of two parties",
+      "C": "A caretaker government"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What colour is traditionally associated with environmentalist political parties?",
+    "options": {
+      "A": "Blue",
+      "B": "Green",
+      "C": "Orange"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a citizen's basic duty on election day?",
+    "options": {
+      "A": "To campaign",
+      "B": "To cast a vote",
+      "C": "To count ballots"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the term for someone running for political office?",
+    "options": {
+      "A": "A candidate",
+      "B": "A constituent",
+      "C": "A councillor"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What do we call the people who live in an area a politician represents?",
+    "options": {
+      "A": "Delegates",
+      "B": "Constituents",
+      "C": "Lobbyists"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'bill' before it becomes law?",
+    "options": {
+      "A": "A proposed law under consideration",
+      "B": "A government debt",
+      "C": "A court ruling"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is it called when a bill is approved and becomes law?",
+    "options": {
+      "A": "It is enacted",
+      "B": "It is vetoed",
+      "C": "It is tabled"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for the leader of a city or town government in many countries?",
+    "options": {
+      "A": "Governor",
+      "B": "Mayor",
+      "C": "Premier"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the leader of a US state's government called?",
+    "options": {
+      "A": "Mayor",
+      "B": "Governor",
+      "C": "Chancellor"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for the boundary line between two countries?",
+    "options": {
+      "A": "Border",
+      "B": "Coastline",
+      "C": "Meridian"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a country that governs itself and is not ruled by another country?",
+    "options": {
+      "A": "A colony",
+      "B": "An independent state",
+      "C": "A protectorate"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the term for a country's system of fundamental laws and principles?",
+    "options": {
+      "A": "Its constitution",
+      "B": "Its census",
+      "C": "Its charter of trade"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'foreign policy'?",
+    "options": {
+      "A": "A country's strategy for dealing with other countries",
+      "B": "Rules for immigration only",
+      "C": "A tax on imports"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'domestic policy'?",
+    "options": {
+      "A": "Government decisions on internal matters like health and education",
+      "B": "Rules for embassies",
+      "C": "Trade agreements"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for money a government collects from citizens and businesses?",
+    "options": {
+      "A": "Tariffs",
+      "B": "Taxes",
+      "C": "Tithes"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is government spending exceeding its income in a year called?",
+    "options": {
+      "A": "A surplus",
+      "B": "A deficit",
+      "C": "A subsidy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is it called when a government's income exceeds its spending?",
+    "options": {
+      "A": "A deficit",
+      "B": "A surplus",
+      "C": "A bailout"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the total amount a government owes called?",
+    "options": {
+      "A": "The budget",
+      "B": "The national debt",
+      "C": "The tariff"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'census'?",
+    "options": {
+      "A": "An official count of a population",
+      "B": "A vote of no confidence",
+      "C": "A trade agreement"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for drawing up the government's spending and tax plans?",
+    "options": {
+      "A": "Budgeting",
+      "B": "Filibustering",
+      "C": "Redistricting"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'diplomacy'?",
+    "options": {
+      "A": "Managing international relations through negotiation",
+      "B": "Declaring war",
+      "C": "Collecting taxes abroad"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for officially ending diplomatic relations or recalling an ambassador?",
+    "options": {
+      "A": "Ratification",
+      "B": "A diplomatic rupture",
+      "C": "Accreditation"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'summit' in international politics?",
+    "options": {
+      "A": "A meeting between heads of state or government",
+      "B": "A parliamentary vote",
+      "C": "A trade fair"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a ceasefire'?",
+    "options": {
+      "A": "An agreement to stop fighting, at least temporarily",
+      "B": "A declaration of war",
+      "C": "A peace treaty"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'an armistice'?",
+    "options": {
+      "A": "A formal agreement to end fighting",
+      "B": "A military parade",
+      "C": "A draft law"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for one state forcibly incorporating the territory of another?",
+    "options": {
+      "A": "Secession",
+      "B": "Annexation",
+      "C": "Devolution"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'secession'?",
+    "options": {
+      "A": "A region formally withdrawing from a country",
+      "B": "Joining an alliance",
+      "C": "Holding an election"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a temporary government during a transition?",
+    "options": {
+      "A": "A shadow government",
+      "B": "A caretaker or interim government",
+      "C": "A junta"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'junta'?",
+    "options": {
+      "A": "A military group ruling a country after seizing power",
+      "B": "A parliamentary committee",
+      "C": "A trade bloc"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'martial law'?",
+    "options": {
+      "A": "Rule by the military, often suspending normal civil law",
+      "B": "International maritime law",
+      "C": "A type of election law"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a curfew'?",
+    "options": {
+      "A": "An order requiring people to stay indoors during set hours",
+      "B": "A voting deadline",
+      "C": "A tax holiday"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the parliament of Japan called?",
+    "options": {
+      "A": "The Knesset",
+      "B": "The Diet",
+      "C": "The Duma"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the lower house of the Russian parliament called?",
+    "options": {
+      "A": "The Sejm",
+      "B": "The State Duma",
+      "C": "The Riksdag"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the parliament of Israel called?",
+    "options": {
+      "A": "The Knesset",
+      "B": "The Majlis",
+      "C": "The Storting"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the German federal parliament's main chamber called?",
+    "options": {
+      "A": "The Bundesrat",
+      "B": "The Bundestag",
+      "C": "The Reichstag"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What building houses the German Bundestag in Berlin?",
+    "options": {
+      "A": "The Brandenburg Gate",
+      "B": "The Reichstag building",
+      "C": "Charlottenburg Palace"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the parliament of Spain called?",
+    "options": {
+      "A": "The Cortes Generales",
+      "B": "The Storting",
+      "C": "The Folketing"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Irish parliament as a whole called?",
+    "options": {
+      "A": "The Oireachtas",
+      "B": "The Storting",
+      "C": "The Riksdag"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the directly elected lower house of the Irish parliament called?",
+    "options": {
+      "A": "Seanad Eireann",
+      "B": "Dail Eireann",
+      "C": "Ard Fheis"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Indian parliament's lower house called?",
+    "options": {
+      "A": "Rajya Sabha",
+      "B": "Lok Sabha",
+      "C": "Vidhan Sabha"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the Chinese national legislature called?",
+    "options": {
+      "A": "The National People's Congress",
+      "B": "The Politburo",
+      "C": "The State Council"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the French parliament's lower house called?",
+    "options": {
+      "A": "The Senate",
+      "B": "The National Assembly",
+      "C": "The Council of State"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country's constitution is famously unwritten (uncodified)?",
+    "options": {
+      "A": "The United States",
+      "B": "The United Kingdom",
+      "C": "Germany"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which sovereign state's head of state, the Pope, is elected for life by the College of Cardinals?",
+    "options": {
+      "A": "Vatican City",
+      "B": "San Marino",
+      "C": "Monaco"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which two co-princes jointly serve as head of state of Andorra?",
+    "options": {
+      "A": "The Kings of Spain and France",
+      "B": "The President of France and the Bishop of Urgell",
+      "C": "The UN Secretary-General and the Pope"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Switzerland's head of state is best described as what?",
+    "options": {
+      "A": "A single president",
+      "B": "A seven-member Federal Council with a rotating presidency",
+      "C": "A monarch"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which country is the world's most populous democracy?",
+    "options": {
+      "A": "The United States",
+      "B": "India",
+      "C": "Indonesia"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country pioneered women's suffrage at the national level in 1893?",
+    "options": {
+      "A": "Australia",
+      "B": "New Zealand",
+      "C": "Finland"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Nordic countries are constitutional monarchies?",
+    "options": {
+      "A": "Norway, Sweden and Denmark",
+      "B": "Finland and Iceland",
+      "C": "All five Nordic countries"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the head of government of Canada, Australia and New Zealand each called?",
+    "options": {
+      "A": "President",
+      "B": "Prime Minister",
+      "C": "Governor-General"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who represents the monarch as head of state in Canada, Australia and New Zealand?",
+    "options": {
+      "A": "The Prime Minister",
+      "B": "The Governor-General",
+      "C": "The Chief Justice"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Commonwealth of Nations?",
+    "options": {
+      "A": "A voluntary association of mostly former British Empire countries",
+      "B": "A military alliance",
+      "C": "A single-currency zone"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Roughly how many member states does the United Nations have?",
+    "options": {
+      "A": "About 190",
+      "B": "About 100",
+      "C": "About 250"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which is the newest widely recognised country to join the UN, in 2011?",
+    "options": {
+      "A": "Kosovo",
+      "B": "South Sudan",
+      "C": "East Timor"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the seat of the Organization of American States?",
+    "options": {
+      "A": "Mexico City",
+      "B": "Washington, D.C.",
+      "C": "Buenos Aires"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which body sets monetary policy for countries using the euro?",
+    "options": {
+      "A": "The European Central Bank",
+      "B": "The Bank of England",
+      "C": "The Federal Reserve"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the Roman general and statesman assassinated on the Ides of March, 44 BC?",
+    "options": {
+      "A": "Augustus",
+      "B": "Julius Caesar",
+      "C": "Mark Antony"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first Roman emperor?",
+    "options": {
+      "A": "Julius Caesar",
+      "B": "Augustus",
+      "C": "Nero"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which queen ruled England during a golden age from 1558 to 1603?",
+    "options": {
+      "A": "Mary I",
+      "B": "Elizabeth I",
+      "C": "Anne"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which English king was executed in 1649 after the English Civil War?",
+    "options": {
+      "A": "Charles I",
+      "B": "James II",
+      "C": "Henry VIII"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who ruled Britain as a republic-style 'Lord Protector' in the 1650s?",
+    "options": {
+      "A": "Oliver Cromwell",
+      "B": "William of Orange",
+      "C": "Robert Walpole"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who is generally regarded as the first British Prime Minister?",
+    "options": {
+      "A": "William Pitt the Younger",
+      "B": "Robert Walpole",
+      "C": "Benjamin Disraeli"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which French emperor was defeated at Waterloo in 1815?",
+    "options": {
+      "A": "Louis XVI",
+      "B": "Napoleon Bonaparte",
+      "C": "Charles X"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first President of the French Fifth Republic?",
+    "options": {
+      "A": "Francois Mitterrand",
+      "B": "Charles de Gaulle",
+      "C": "Georges Pompidou"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which US president issued the Emancipation Proclamation?",
+    "options": {
+      "A": "Ulysses S. Grant",
+      "B": "Abraham Lincoln",
+      "C": "Andrew Johnson"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which US president is associated with 'Square Deal' reforms and trust-busting in the early 1900s?",
+    "options": {
+      "A": "William Taft",
+      "B": "Theodore Roosevelt",
+      "C": "Woodrow Wilson"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which US president is associated with the 'New Frontier' and the space race commitment?",
+    "options": {
+      "A": "Dwight Eisenhower",
+      "B": "John F. Kennedy",
+      "C": "Lyndon Johnson"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which two leaders signed the Camp David Accords in 1978, mediated by Jimmy Carter?",
+    "options": {
+      "A": "Sadat and Begin",
+      "B": "Nasser and Meir",
+      "C": "Assad and Rabin"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Who was the Polish trade-union leader who became president after the fall of communism?",
+    "options": {
+      "A": "Vaclav Havel",
+      "B": "Lech Walesa",
+      "C": "Wojciech Jaruzelski"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the dissident playwright who became the first president of the post-communist Czech Republic?",
+    "options": {
+      "A": "Vaclav Havel",
+      "B": "Alexander Dubcek",
+      "C": "Milos Zeman"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Indian prime minister was assassinated in 1984 by her own bodyguards?",
+    "options": {
+      "A": "Sonia Gandhi",
+      "B": "Indira Gandhi",
+      "C": "Pratibha Patil"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Pakistani leader became the first woman to head a democratic government in a Muslim-majority nation?",
+    "options": {
+      "A": "Benazir Bhutto",
+      "B": "Sheikh Hasina",
+      "C": "Khaleda Zia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who was the anti-apartheid archbishop who chaired South Africa's Truth and Reconciliation Commission?",
+    "options": {
+      "A": "Desmond Tutu",
+      "B": "Oliver Tambo",
+      "C": "Walter Sisulu"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who led Ghana to independence in 1957, the first sub-Saharan African colony to break free?",
+    "options": {
+      "A": "Jomo Kenyatta",
+      "B": "Kwame Nkrumah",
+      "C": "Julius Nyerere"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which US Secretary of State is closely associated with detente and 'shuttle diplomacy' in the 1970s?",
+    "options": {
+      "A": "Dean Rusk",
+      "B": "Henry Kissinger",
+      "C": "Cyrus Vance"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The 'Iron Curtain' phrase describing the Cold War divide was popularised by which leader?",
+    "options": {
+      "A": "Franklin Roosevelt",
+      "B": "Winston Churchill",
+      "C": "Harry Truman"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which doctrine committed the US to containing the spread of communism after WWII?",
+    "options": {
+      "A": "The Monroe Doctrine",
+      "B": "The Truman Doctrine",
+      "C": "The Eisenhower Doctrine"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The Marshall Plan provided US aid to rebuild which region after WWII?",
+    "options": {
+      "A": "Japan",
+      "B": "Western Europe",
+      "C": "Latin America"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What 1970s-80s policy of easing US-Soviet tensions is known by a French word for 'relaxation'?",
+    "options": {
+      "A": "Glasnost",
+      "B": "Detente",
+      "C": "Perestroika"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which wall's construction in 1961 physically divided a European city for 28 years?",
+    "options": {
+      "A": "The Berlin Wall",
+      "B": "Hadrian's Wall",
+      "C": "The Peace Line"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which 1919-1933 US constitutional amendment banned alcohol before being repealed?",
+    "options": {
+      "A": "16th",
+      "B": "18th",
+      "C": "21st"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the social contract' in political philosophy?",
+    "options": {
+      "A": "The idea that legitimate government rests on the consent of the governed",
+      "B": "A trade agreement between states",
+      "C": "A employment law"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which philosopher wrote 'Leviathan', arguing for a strong sovereign to avoid a 'war of all against all'?",
+    "options": {
+      "A": "John Locke",
+      "B": "Thomas Hobbes",
+      "C": "Jean-Jacques Rousseau"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which philosopher's ideas on natural rights and government by consent influenced the US Declaration of Independence?",
+    "options": {
+      "A": "Thomas Hobbes",
+      "B": "John Locke",
+      "C": "Edmund Burke"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which philosopher argued for the separation of powers in 'The Spirit of the Laws'?",
+    "options": {
+      "A": "Voltaire",
+      "B": "Montesquieu",
+      "C": "Rousseau"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which thinker is considered a founder of modern conservatism, reacting to the French Revolution?",
+    "options": {
+      "A": "Thomas Paine",
+      "B": "Edmund Burke",
+      "C": "John Stuart Mill"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "'On Liberty', defending individual freedom against state and social coercion, was written by whom?",
+    "options": {
+      "A": "John Stuart Mill",
+      "B": "Jeremy Bentham",
+      "C": "T.H. Green"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'the tyranny of the majority', a concern raised by Tocqueville and Mill?",
+    "options": {
+      "A": "When majority rule oppresses a minority's rights",
+      "B": "When a small elite rules",
+      "C": "A very close election"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'checks and balances'?",
+    "options": {
+      "A": "Each branch of government can limit the others' power",
+      "B": "A budgeting rule",
+      "C": "A recount procedure"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'judicial review'?",
+    "options": {
+      "A": "Courts' power to strike down laws that violate the constitution",
+      "B": "Parliament reviewing judges",
+      "C": "A retrial"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which landmark 1803 US case established judicial review?",
+    "options": {
+      "A": "Marbury v. Madison",
+      "B": "Brown v. Board of Education",
+      "C": "Roe v. Wade"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'federal supremacy'?",
+    "options": {
+      "A": "Where valid federal law overrides conflicting state law",
+      "B": "State law always winning",
+      "C": "International law overriding all"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'the commerce clause' in the US Constitution used to justify?",
+    "options": {
+      "A": "Federal regulation of interstate trade and, by extension, much economic activity",
+      "B": "Declaring war",
+      "C": "Appointing judges"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a 'constitutional convention' (uncodified rule) in the Westminster system?",
+    "options": {
+      "A": "An unwritten but binding political practice",
+      "B": "A meeting to write a new constitution",
+      "C": "A court hearing"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'collective cabinet responsibility'?",
+    "options": {
+      "A": "Ministers must publicly support cabinet decisions or resign",
+      "B": "The cabinet votes on every law",
+      "C": "Ministers are elected by parliament"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'the West Lothian question' about?",
+    "options": {
+      "A": "MPs from devolved nations voting on matters affecting only England",
+      "B": "US Electoral College maths",
+      "C": "EU voting weights"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'proportional representation by single transferable vote' known for?",
+    "options": {
+      "A": "Voters ranking candidates in multi-member districts",
+      "B": "Winner-take-all in single seats",
+      "C": "Party lists only"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'first-past-the-post' criticised for producing?",
+    "options": {
+      "A": "Disproportional results and wasted votes",
+      "B": "Too many coalitions",
+      "C": "Low turnout by law"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'writ of habeas corpus'?",
+    "options": {
+      "A": "A legal order requiring a detained person be brought before a court",
+      "B": "A tax demand",
+      "C": "A declaration of war"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the rule of law'?",
+    "options": {
+      "A": "The principle that everyone, including government, is subject to law",
+      "B": "Rule by judges",
+      "C": "Majority rule"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'sovereign immunity'?",
+    "options": {
+      "A": "The legal doctrine that a state cannot be sued without its consent",
+      "B": "Diplomats' exemption from parking fines",
+      "C": "A monarch's right to veto"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'the spoils system' in politics?",
+    "options": {
+      "A": "Awarding government jobs to political supporters",
+      "B": "A recount method",
+      "C": "A campaign finance law"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'log-rolling' in a legislature?",
+    "options": {
+      "A": "Trading votes so each member gets their favoured bill passed",
+      "B": "A filibuster tactic",
+      "C": "A budget rule"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'a sunset clause' in legislation?",
+    "options": {
+      "A": "A provision that the law expires unless renewed",
+      "B": "A rule taking effect at dusk",
+      "C": "A veto override"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'an omnibus bill'?",
+    "options": {
+      "A": "A single bill bundling many unrelated measures",
+      "B": "A transport law",
+      "C": "A bill about buses"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'pork-barrel spending'?",
+    "options": {
+      "A": "Government spending directed to a legislator's district for local benefit or votes",
+      "B": "Defence procurement",
+      "C": "Foreign aid"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the incumbency advantage'?",
+    "options": {
+      "A": "The electoral edge current officeholders tend to have",
+      "B": "A rule giving incumbents extra votes",
+      "C": "Free campaign advertising for challengers"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a caretaker convention'?",
+    "options": {
+      "A": "Limits on major government decisions during an election campaign",
+      "B": "A rule about acting ministers",
+      "C": "A childcare policy"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'realignment' in electoral politics?",
+    "options": {
+      "A": "A lasting shift in the party loyalties of voter groups",
+      "B": "A recount",
+      "C": "Redrawing borders"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What does 'unicameral' Nebraska make it, uniquely among US states?",
+    "options": {
+      "A": "The only state with a one-house legislature",
+      "B": "The only state without a governor",
+      "C": "The only state with compulsory voting"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'a constitutional crisis'?",
+    "options": {
+      "A": "A situation the constitution does not clearly resolve, threatening governance",
+      "B": "Any government scandal",
+      "C": "A budget shortfall"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name for the group of advisers to a head of government?",
+    "options": {
+      "A": "The jury",
+      "B": "The cabinet",
+      "C": "The bench"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What do you call a law passed by a legislature?",
+    "options": {
+      "A": "A statute",
+      "B": "A verdict",
+      "C": "A decree of court"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for the introductory statement of a constitution's purpose?",
+    "options": {
+      "A": "The preamble",
+      "B": "The appendix",
+      "C": "The postscript"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The first ten amendments to which document make up the US Bill of Rights?",
+    "options": {
+      "A": "The Declaration of Independence",
+      "B": "The US Constitution",
+      "C": "The Articles of Confederation"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for a politician's set period in office?",
+    "options": {
+      "A": "A term",
+      "B": "A session",
+      "C": "A recess"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is 'the opposition leader' often also called in Westminster systems?",
+    "options": {
+      "A": "The Speaker",
+      "B": "The Leader of the Opposition",
+      "C": "The Chief Whip"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a country with a monarch who has real political power called?",
+    "options": {
+      "A": "A constitutional monarchy",
+      "B": "An absolute monarchy",
+      "C": "A republic"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which of these countries is an absolute monarchy?",
+    "options": {
+      "A": "Sweden",
+      "B": "Saudi Arabia",
+      "C": "Spain"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the practice of one country controlling another territory as a colony?",
+    "options": {
+      "A": "Federalism",
+      "B": "Colonialism",
+      "C": "Isolationism"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'decolonisation'?",
+    "options": {
+      "A": "The process of colonies gaining independence",
+      "B": "Founding new colonies",
+      "C": "Merging two countries"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for a country's withdrawal into itself, avoiding foreign entanglements?",
+    "options": {
+      "A": "Interventionism",
+      "B": "Isolationism",
+      "C": "Expansionism"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the balance of power' in international relations?",
+    "options": {
+      "A": "A distribution of power that prevents any one state from dominating",
+      "B": "An equal number of seats for each party",
+      "C": "A trade surplus"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'soft power'?",
+    "options": {
+      "A": "Influence through culture and values rather than force",
+      "B": "A weak military",
+      "C": "A minority government"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'hard power'?",
+    "options": {
+      "A": "Coercive influence through military or economic force",
+      "B": "Diplomacy",
+      "C": "Cultural exchange"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a bloc' in politics?",
+    "options": {
+      "A": "A group of countries or parties acting together",
+      "B": "A single vote",
+      "C": "A parliamentary building"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What was the 'Eastern Bloc'?",
+    "options": {
+      "A": "The communist states aligned with the Soviet Union during the Cold War",
+      "B": "The founding members of the EU",
+      "C": "NATO's original members"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the third world' a Cold War-era term for?",
+    "options": {
+      "A": "Countries not aligned with either the US or Soviet blocs",
+      "B": "The three most powerful nations",
+      "C": "War-torn regions only"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'globalisation'?",
+    "options": {
+      "A": "Increasing interconnection of economies and cultures worldwide",
+      "B": "A single world government",
+      "C": "The spread of one language"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a tariff'?",
+    "options": {
+      "A": "A tax on imported goods",
+      "B": "A subsidy for exporters",
+      "C": "A trade treaty"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a quota' in trade?",
+    "options": {
+      "A": "A limit on the quantity of a good that can be imported",
+      "B": "A tax refund",
+      "C": "A currency exchange rate"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a free trade agreement'?",
+    "options": {
+      "A": "A deal reducing or removing trade barriers between countries",
+      "B": "A ban on all exports",
+      "C": "A shared army"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What trade agreement did the US, Canada and Mexico sign in 1994, later replaced by the USMCA?",
+    "options": {
+      "A": "NAFTA",
+      "B": "CETA",
+      "C": "TPP"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the single market' in the EU context?",
+    "options": {
+      "A": "Free movement of goods, services, capital and people among members",
+      "B": "A single stock exchange",
+      "C": "One shared tax rate"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the Schengen Area'?",
+    "options": {
+      "A": "A zone of European countries with no internal border checks",
+      "B": "The eurozone",
+      "C": "The EU customs union"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a veto'?",
+    "options": {
+      "A": "The power to unilaterally block a decision",
+      "B": "A majority vote",
+      "C": "A campaign promise"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'abstaining' in a vote?",
+    "options": {
+      "A": "Choosing not to vote either for or against",
+      "B": "Voting twice",
+      "C": "Blocking the vote"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a landslide majority'?",
+    "options": {
+      "A": "Winning by a very large margin",
+      "B": "A tied vote",
+      "C": "A minority government"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a minority government'?",
+    "options": {
+      "A": "A government whose party holds fewer than half the seats",
+      "B": "A government led by a small party",
+      "C": "An unelected government"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a majority government'?",
+    "options": {
+      "A": "A government whose party controls more than half the seats",
+      "B": "Any elected government",
+      "C": "A two-party coalition"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a landmark ruling'?",
+    "options": {
+      "A": "A court decision that significantly changes the interpretation of law",
+      "B": "A boundary marker",
+      "C": "A budget"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the formal questioning of officials by a legislative committee?",
+    "options": {
+      "A": "A hearing",
+      "B": "A recess",
+      "C": "A caucus"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a whistleblower'?",
+    "options": {
+      "A": "Someone who exposes wrongdoing within an organisation",
+      "B": "A referee in parliament",
+      "C": "A campaign manager"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'freedom of information' legislation designed to do?",
+    "options": {
+      "A": "Give the public a right to access government records",
+      "B": "Protect state secrets",
+      "C": "Fund public broadcasting"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a coalition' as opposed to a 'merger' of parties?",
+    "options": {
+      "A": "An alliance where parties keep separate identities",
+      "B": "Two parties becoming one",
+      "C": "A party splitting in two"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'crossing the floor'?",
+    "options": {
+      "A": "A legislator voting against their own party or switching parties",
+      "B": "Walking out of a session",
+      "C": "A ceremonial procession"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a private member's bill'?",
+    "options": {
+      "A": "Legislation introduced by a legislator who is not a government minister",
+      "B": "A bill kept secret",
+      "C": "A bill about private property"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'royal assent' in the Westminster system?",
+    "options": {
+      "A": "The monarch's formal approval needed for a bill to become law",
+      "B": "The monarch proposing a law",
+      "C": "A knighthood"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'dissolution' of parliament?",
+    "options": {
+      "A": "Formally ending a parliament ahead of a general election",
+      "B": "A committee vote",
+      "C": "A budget"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'prorogation' of parliament?",
+    "options": {
+      "A": "Suspending parliament without dissolving it",
+      "B": "A vote of confidence",
+      "C": "An impeachment"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a 'backbencher'?",
+    "options": {
+      "A": "A legislator who holds no ministerial or shadow office",
+      "B": "A retired politician",
+      "C": "A committee chair"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'frontbencher'?",
+    "options": {
+      "A": "A senior member holding a ministerial or shadow ministerial role",
+      "B": "A first-term legislator",
+      "C": "A party donor"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the Speaker' expected to be in the House of Commons?",
+    "options": {
+      "A": "Politically impartial while chairing debates",
+      "B": "The leader of the largest party",
+      "C": "A judge"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which house of the US Congress has the sole power to originate revenue (tax) bills?",
+    "options": {
+      "A": "The Senate",
+      "B": "The House of Representatives",
+      "C": "Either house"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which house of the US Congress confirms presidential appointments and ratifies treaties?",
+    "options": {
+      "A": "The House",
+      "B": "The Senate",
+      "C": "Both jointly"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What fraction of the Senate is up for election every two years?",
+    "options": {
+      "A": "One half",
+      "B": "One third",
+      "C": "All of it"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "How often is the US House of Representatives elected in full?",
+    "options": {
+      "A": "Every two years",
+      "B": "Every four years",
+      "C": "Every six years"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the State of the Union' address?",
+    "options": {
+      "A": "An annual message from the US president to Congress on the nation's condition",
+      "B": "A Supreme Court opinion",
+      "C": "A budget document"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'executive order' in the US?",
+    "options": {
+      "A": "A directive issued by the president managing federal operations",
+      "B": "A law passed by Congress",
+      "C": "A court injunction"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the cabinet' in the US federal government made up of?",
+    "options": {
+      "A": "The vice president and the heads of the executive departments",
+      "B": "Senior members of Congress",
+      "C": "Supreme Court justices"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the electoral roll' or 'electoral register'?",
+    "options": {
+      "A": "The official list of people entitled to vote",
+      "B": "The ballot paper",
+      "C": "The list of candidates"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a polling station'?",
+    "options": {
+      "A": "A place where voters go to cast their ballots",
+      "B": "A market research firm",
+      "C": "A government ministry"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is 'a returning officer'?",
+    "options": {
+      "A": "The official responsible for running an election in a constituency",
+      "B": "A recount observer",
+      "C": "A campaign treasurer"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a spoilt ballot'?",
+    "options": {
+      "A": "A ballot marked incorrectly or defaced so it cannot be counted",
+      "B": "A ballot cast late",
+      "C": "A postal vote"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a coalition agreement'?",
+    "options": {
+      "A": "A negotiated document setting out the shared programme of parties in government together",
+      "B": "A trade treaty",
+      "C": "A ceasefire"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the loyal opposition'?",
+    "options": {
+      "A": "Opposition parties that oppose the government while remaining loyal to the state",
+      "B": "A faction within the ruling party",
+      "C": "Independent voters"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a mandate' in politics?",
+    "options": {
+      "A": "The authority to govern granted by winning an election",
+      "B": "A court order",
+      "C": "A tax"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'political asylum' distinct from 'refugee status' in that asylum is...",
+    "options": {
+      "A": "Claimed from within the destination country",
+      "B": "Granted only by the UN",
+      "C": "Temporary by definition"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which international agreement of 1951 defines who is a refugee and their rights?",
+    "options": {
+      "A": "The Geneva Convention on Refugees (1951 Refugee Convention)",
+      "B": "The Kyoto Protocol",
+      "C": "The Treaty of Rome"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'a non-governmental organisation' (NGO)?",
+    "options": {
+      "A": "A non-profit group operating independently of government",
+      "B": "A government department",
+      "C": "A political party"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'the median voter theorem' about?",
+    "options": {
+      "A": "Parties tending to move toward the centre to win the median voter",
+      "B": "Counting votes in the middle of the day",
+      "C": "The average age of voters"
+    },
+    "correct": "A",
+    "difficulty": 5
+  }
+]

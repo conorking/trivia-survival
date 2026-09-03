@@ -32,13 +32,30 @@ snapshot.
   constants, tick loop. `GameManager` just tracks rooms by code.
 - `server/questions/` — one JSON file per question **category** (see "Question
   categories" below): `general.json`, `movies-tv.json`, `music.json`, `history.json`,
-  `literature.json`, `webdev.json` (all loaded; `politics.json`/`science.json`/
-  `new-zealand.json` also exist on disk as empty `[]` placeholders but are
-  deliberately **not** loaded into `QUESTION_CATEGORIES` — see below). Every entry
-  carries a `"difficulty"` field (1-5) used by `config.difficultyRamp` — see
-  "Difficulty ramp" further down.
-- `server/build-questions.js` — one-off build script that produced the files above
-  (not part of the running app, rerun manually with `node server/build-questions.js
+  `literature.json`, `science.json`, `politics.json`, `new-zealand.json`, `webdev.json`
+  — **all nine now loaded** into `QUESTION_CATEGORIES` (science/politics/new-zealand were
+  empty `[]` placeholders until a content pass; see "Question categories" and
+  `build-questions-extra.js` below). Every entry carries a `"difficulty"` field (1-5)
+  used by `config.difficultyRamp` **and** `config.questionDifficulty` — see "Difficulty
+  ramp" / "Fixed-difficulty picker" further down.
+- `server/build-questions-extra.js` — one-off build script (same spirit as
+  `build-questions.js`, not part of the running app) that generates `science.json` (~420),
+  `politics.json` (~400), `new-zealand.json` (~400) and `literature.json` (~440).
+  Questions are held in a compact `["q", ["A","B","C"], correctIdx, difficulty]` form and
+  expanded / deduped (by normalised q-text + option sanity) / band-counted on write. It
+  writes all four files **fresh** — `LITERATURE_ORIGINAL` in the script holds the ~80
+  entries that shipped in the first `literature.json` (stray maths/astronomy items
+  dropped), so there's a single source of truth and no merge-with-disk step. Rerun:
+  `node server/build-questions-extra.js`.
+- `server/check-questions.js` — question-file linter (not part of the running app).
+  `node server/check-questions.js` after editing anything in `server/questions/`: flags
+  integrity errors (bad `correct` key, blank/duplicate options, duplicate questions),
+  **giveaway wording** (a quoted letter / "N-letter" / "starts with X" / acronym-shape
+  clause that only the correct option satisfies — the class that produced the "hidden
+  arrow between 'E' and 'x'" → FedEx bug), and weak "both X and Y" / hedge / editing-
+  artefact answers. Exits non-zero if anything is flagged. Currently clean.
+- `server/build-questions.js` — one-off build script that produced the original five
+  400-entry sets (not part of the running app, rerun manually with `node server/build-questions.js
   <scratch-dir-of-opentdb-raw-json>` if the source data ever changes). Documents
   exactly how each category was assembled — see its own header comment and "Question
   categories" below.
@@ -659,21 +676,20 @@ not in this repo. Short version for anything touching this codebase:
   `config.questionSet` string before this round, no more `custom` upload, see below):
   hosts pick one or more of `general` (🎲 General Trivia), `movies-tv` (🎬 Movies and TV
   shows), `music` (🎵 Music), `history` (🏛️ History), `literature` (📚 Literature),
-  `webdev` (💻 Web Developer Trivia). `Room.buildQuestionSet()` (`server/rooms.js`)
-  concatenates every selected category's file into one combined pool before the usual
-  shuffle/ramp logic runs — picking several categories just means a bigger, mixed pool,
-  nothing else changes. `QUESTION_CATEGORIES` (rooms.js, exported) is the single source
-  of truth for which keys exist; `sanitizeConfig()` (server.js) validates against it and
-  a `GET /api/question-categories` endpoint feeds the host's picker UI
-  (`public/host.html`/`host.js`, a multi-select grid of the same `.checkbox-row` cards
-  used for the other config toggles) so the picker can never drift out of sync with
-  what's actually loaded. `general`/`movies-tv`/`music`/`history`/`webdev` are 400
-  entries each; `literature` is a smaller 88-entry placeholder (redistributed from the
-  old hard-mode set — see below) pending a real content pass; `politics`/`science`/
-  `new-zealand` don't exist as loadable categories yet at all (empty `[]` placeholder
-  files on disk, intentionally excluded from `QUESTION_CATEGORIES` so a host can never
-  select an empty category and get a broken 0-question game) — all explicit follow-up
-  work, not silently dropped. Every question's A/B/C letter assignment is still
+  `science` (🔬 Science), `politics` (🗳️ Politics & Government), `new-zealand`
+  (🥝 New Zealand), `webdev` (💻 Web Developer Trivia). `Room.buildQuestionSet()`
+  (`server/rooms.js`) concatenates every selected category's file into one combined pool
+  before the usual shuffle/ramp logic runs — picking several categories just means a
+  bigger, mixed pool, nothing else changes. `QUESTION_CATEGORIES` (rooms.js, exported) is
+  the single source of truth for which keys exist; `sanitizeConfig()` (server.js)
+  validates against it and a `GET /api/question-categories` endpoint feeds the host's
+  picker UI (`public/host.html`/`host.js`, a multi-select grid of the same `.checkbox-row`
+  cards used for the other config toggles) so the picker can never drift out of sync with
+  what's actually loaded. **All nine categories are now loaded and selectable**:
+  `general`/`movies-tv`/`music`/`history`/`webdev` are 400 entries each; `literature` is
+  ~450 (its original 88 curated entries plus a content pass); `science` ~420, `politics`
+  ~400, `new-zealand` ~400 (previously empty `[]` placeholders — filled by
+  `build-questions-extra.js`, see the file map). Every question's A/B/C letter assignment is still
   reshuffled per-build (`shuffleOptionLetters`) regardless of category, so the same
   question won't always have its answer on the same letter across rounds/rematches.
   **Custom question upload was removed** (`host:uploadQuestions` and the upload UI are
@@ -684,10 +700,13 @@ not in this repo. Short version for anything touching this codebase:
   live-fetched [Open Trivia DB](https://opentdb.com) data (free, community-maintained)
   merged with the old `questions-default.json` (quality-filtered - see the obviousness
   pass below) and relevant chunks of the old `questions-hard.json` redistributed by
-  topic; `literature`'s 88 entries are purely redistributed `questions-hard.json`
-  content; `webdev` is the old `questions-webdev.json` ported unchanged. The two old
-  files no longer exist standalone - their content lives on inside the new category
-  files instead.
+  topic; `literature` started as 88 redistributed `questions-hard.json` entries and was
+  later expanded; `webdev` is the old `questions-webdev.json` ported unchanged. The two
+  old files no longer exist standalone - their content lives on inside the new category
+  files instead. `science`/`politics`/`new-zealand` and the literature expansion were
+  hand-authored in `server/build-questions-extra.js` (institutional/canonical facts,
+  non-partisan for politics) and have since had a validity review pass (see the
+  most-recent feedback entry).
   **Quality/"obviousness" pass**: the old `questions-default.json` had a real problem at
   its easiest tier - kindergarten-simple questions ("what sound does a cow make?", "how
   many days are in a week?") rather than genuine trivia recall. `build-questions.js`'s
@@ -735,8 +754,55 @@ not in this repo. Short version for anything touching this codebase:
   itself never reaches the client — `shuffleOptionLetters` (which every question passes
   through regardless of ramp) only carries `q`/`options`/`correct` forward. The raw 1-5
   values stay in the JSON files (only the ramp's *grouping* changed).
+- **Fixed-difficulty picker** (`config.questionDifficulty`: `'random'` | `'easy'` |
+  `'medium'` | `'hard'`, default `'random'`): a host dropdown (`#cfgQuestionDifficulty`
+  in `host.html`, greyed out by `syncQuestionDifficultyEnabled()` in `host.js` while the
+  ramp checkbox is ticked) that restricts the whole game to one difficulty band. In
+  `buildQuestionSet()` it runs **only when `!difficultyRamp`** — the ramp already owns
+  the full 1-5 range — via `DIFFICULTY_CHOICE_BAND` → `difficultyBand()`, narrowing
+  `source` before the recently-shown filter. If the chosen band has nothing in the picked
+  categories it keeps the unfiltered pool (never ships a 0-question game); if the band is
+  just smaller than `questionCount` the game runs shorter, same as ramp mode.
+  `sanitizeConfig()` (server.js) validates the four values; analytics logs it (dashboard
+  "Question difficulty" table). Uses the same 3 bands as the ramp, each well-populated in
+  every category — easy/med/hard pools are roughly 110-160 per band on a ~400 set.
 
 ## Feedback already implemented (most recent round)
+
+**Question-validity review pass:** prompted by a question whose wording gave the answer
+away ("...a hidden arrow between the letters 'E' and 'x'" → only FedEx has an E and an x).
+Built `server/check-questions.js` (kept — it's the permanent linter now): structural
+giveaways (quoted letters / "N-letter" / "begins with X" / acronym-shape mismatches that
+only the correct option satisfies), weak answer patterns ("both X and Y" non-answers,
+"(also used)" hedges, editing artifacts), plus integrity (dup options/questions, bad
+keys). Then hand-reviewed all ~1,570 newly-authored
+science/politics/NZ/literature questions plus `general.json` in full, and skimmed
+`history`/`music`/`webdev`. Fixes: the FedEx question rephrased; ~6 "both/either" and
+"not really a thing" non-answers rewritten to have one clean answer; a handful of
+distractors that were also correct fixed (`general` "flying fox" is a bat; `general`
+letters J *and* Q are both absent from element symbols → distractor changed to X; NZ
+"doona" is the Australian word not the NZ one; NZ all-time test points scorer scoped to
+NZ since Farrell passed Carter globally; science "boundary of the observable universe"
+given a real term); several garbled/artefact question stems cleaned; a few near-dupes and
+stray maths/astronomy items in `literature` removed. `build-questions-extra.js` no longer
+merges with disk (bakes `LITERATURE_ORIGINAL` in) so re-runs are deterministic. Counts
+now: literature 442, science 420, politics 398, NZ 400. `node server/check-questions.js`
+is clean and is the thing to run after any future question edit.
+
+**Question content expansion + fixed-difficulty picker:** (1) `science.json`,
+`politics.json` and `new-zealand.json` went from empty `[]` to ~400 entries each and
+`literature.json` grew from 88 to ~450, all via the new one-off
+`server/build-questions-extra.js` (compact `["q",[opts],idx,difficulty]` rows →
+expand/dedupe/write; literature merges with the existing file). All three new categories
+are now registered in `QUESTION_CATEGORIES` (rooms.js) + `CATEGORY_LABELS` (server.js)
+and selectable in the host picker. Content is canonical/institutional facts (politics
+kept non-partisan and free of fast-ageing current events); volume was prioritised over
+exhaustive fact-checking on an explicit call, so a spot-check pass is a reasonable
+follow-up. (2) New `config.questionDifficulty` host setting (`random`/`easy`/`medium`/
+`hard`) — see "Fixed-difficulty picker" above. Touches `sanitizeConfig` (server.js),
+`Room.config` + `buildQuestionSet` + `DIFFICULTY_CHOICE_BAND` (rooms.js), the host form
+(`host.html`/`host.js`, disabled while ramp is on), and the analytics dashboard. No
+wire-protocol change (it rides in the existing `config` object).
 
 **Security hardening pass (player-input XSS + adjacent vectors):** an audit of every
 path from player-supplied input to another client. Fixes, all landed:
@@ -782,6 +848,20 @@ path from player-supplied input to another client. Fixes, all landed:
   (GHSA-w5hq-g745-h8pq) is **not reachable** — it's the `buf`-argument path in v3/v5/v6 and
   the code only ever calls `uuidv4()` with no args; the fix is an ESM-only major that would
   break `require('uuid')`, so it's deliberately not taken.
+- **Rematch-timer resource leak** — `GameManager.removeRoom` only called `stopLoop()`,
+  not `clearRematchTimer()`, so a host who left during the 6 s post-rematch countdown left
+  a pending `setTimeout` that could later call `room.start()` and spin up a fresh 25 Hz
+  `setInterval` on a room no longer in the manager — never swept, never stopped, repeatable
+  for unbounded CPU/interval leak. Now `Room.destroy()` (called by `removeRoom`) kills both
+  timers and latches `room.destroyed`; `start()` / `startLoop()` refuse to run on a
+  destroyed room.
+- **Global room cap** — `GameManager.createRoom` returns `null` past `MAX_ROOMS` (500);
+  the per-IP `allowRoomCreate` limit only slows one source, this bounds the total so a
+  distributed burst can't create enough concurrent tick loops to exhaust CPU.
+- **Rate-limiter map growth** — `allowRoomCreate` / `allowPlayerJoin` IP maps are now
+  capped (`LIMITER_MAX_IPS`, oldest-evicted); relevant only on a hypothetical non-CF
+  deployment where `cf-connecting-ip` is spoofable. `countryFromHeaders` validates to a
+  2-letter code so a spoofed header can't bloat every analytics line.
 - **Minor** — `maxHttpBufferSize` cut from 2 MB (a leftover from the removed custom-
   question upload) to 64 KB; analytics-dashboard token compare is now constant-time and
   the export link URL-encodes the token.
@@ -791,9 +871,18 @@ path from player-supplied input to another client. Fixes, all landed:
   filesystem; `sanitizeConfig` only ever assigns fixed literal keys (no prototype
   pollution); `express.static` serves `public/` only and ignores dotfiles; Docker image
   runs as non-root `node`, prod build omits `--debug` so the `debug:*` handlers and bot
-  controls don't exist. Residual risk noted but not app-fixable: raw socket
-  connection-flooding (mitigated at the Cloudflare edge; a per-IP socket cap would break
-  one-NAT venue play).
+  controls don't exist; socket.io-parser 4.2.7 / engine.io 6.6.9 / ws 8.21.3 are all past
+  their prototype-pollution / DoS CVEs; there's no ambient session credential so
+  cross-site WebSocket hijacking gains an attacker nothing; movement/jump/position are
+  fully server-authoritative and clamped, so client tampering can't teleport or speed-hack.
+  **Residual risks that are deployment/architecture, not app bugs:** (a) raw-socket
+  connection-flooding — mitigated at the Cloudflare edge; a per-IP socket cap would break
+  one-NAT venue play; (b) a very long single game (up to the 3 hr sweep) holds one tick
+  loop — the old wall-clock cap was removed for being invisible to players, could return
+  as a surfaced countdown; (c) push-to-`master` / `workflow_dispatch` on the self-hosted
+  CI runner is RCE on the home hosting box by design — safe only because the repo is
+  private with no outside collaborators and the trigger is never `pull_request`; a
+  GitHub-account compromise is the worst case there.
 
 **Question repeats + difficulty banding:** noticeable question repeats between
 back-to-back sessions were traced to the no-repeat set being **per-room** — a new room

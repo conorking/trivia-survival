@@ -1,1 +1,4002 @@
-[]
+[
+  {
+    "q": "What is the capital city of New Zealand?",
+    "options": {
+      "A": "Auckland",
+      "B": "Wellington",
+      "C": "Christchurch"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is New Zealand's most populous city?",
+    "options": {
+      "A": "Wellington",
+      "B": "Auckland",
+      "C": "Hamilton"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "How many main islands does New Zealand have?",
+    "options": {
+      "A": "Two",
+      "B": "Three",
+      "C": "Four"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What are New Zealand's two largest islands called?",
+    "options": {
+      "A": "East and West Islands",
+      "B": "North and South Islands",
+      "C": "Upper and Lower Islands"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which strait separates New Zealand's North and South Islands?",
+    "options": {
+      "A": "Bass Strait",
+      "B": "Cook Strait",
+      "C": "Torres Strait"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the Maori name for New Zealand?",
+    "options": {
+      "A": "Aotearoa",
+      "B": "Rangitoto",
+      "C": "Waitangi"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What does 'Aotearoa' commonly translate to?",
+    "options": {
+      "A": "Land of the long white cloud",
+      "B": "Island of the brave",
+      "C": "Home of the fern"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is New Zealand's largest South Island city?",
+    "options": {
+      "A": "Dunedin",
+      "B": "Christchurch",
+      "C": "Nelson"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand city is nicknamed the 'Garden City'?",
+    "options": {
+      "A": "Hamilton",
+      "B": "Christchurch",
+      "C": "Napier"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand city is nicknamed the 'City of Sails'?",
+    "options": {
+      "A": "Wellington",
+      "B": "Auckland",
+      "C": "Tauranga"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand city is known for its strong Scottish heritage?",
+    "options": {
+      "A": "Invercargill",
+      "B": "Dunedin",
+      "C": "Timaru"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand city is famous for its Art Deco architecture, rebuilt after a 1931 earthquake?",
+    "options": {
+      "A": "Gisborne",
+      "B": "Napier",
+      "C": "Whanganui"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's third-largest city, in the Waikato region?",
+    "options": {
+      "A": "Hamilton",
+      "B": "Tauranga",
+      "C": "Palmerston North"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand town is world-renowned as an adventure and bungy-jumping destination?",
+    "options": {
+      "A": "Wanaka",
+      "B": "Queenstown",
+      "C": "Te Anau"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the southernmost city in New Zealand?",
+    "options": {
+      "A": "Dunedin",
+      "B": "Invercargill",
+      "C": "Gore"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand city is home to Te Papa, the national museum?",
+    "options": {
+      "A": "Auckland",
+      "B": "Wellington",
+      "C": "Christchurch"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the tall observation tower that dominates Auckland's skyline called?",
+    "options": {
+      "A": "Sky Tower",
+      "B": "Space Needle",
+      "C": "Beehive Tower"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is Wellington often nicknamed because of its weather?",
+    "options": {
+      "A": "Sunny Wellington",
+      "B": "Windy Wellington",
+      "C": "Foggy Wellington"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Wellington is the world's southernmost what?",
+    "options": {
+      "A": "City",
+      "B": "National capital of a sovereign state",
+      "C": "Port"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which region at the top of the South Island is famous for Sauvignon Blanc wine?",
+    "options": {
+      "A": "Central Otago",
+      "B": "Marlborough",
+      "C": "Hawke's Bay"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand town is famous for whale watching?",
+    "options": {
+      "A": "Kaikoura",
+      "B": "Picton",
+      "C": "Oamaru"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand town is famous for its geothermal geysers, hot springs and sulphur smell?",
+    "options": {
+      "A": "Taupo",
+      "B": "Rotorua",
+      "C": "Hanmer Springs"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the small far-northern settlement at the top of the North Island, with a famous lighthouse?",
+    "options": {
+      "A": "Cape Palliser",
+      "B": "Cape Reinga",
+      "C": "Cape Farewell"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What southern town is famous for its Bluff oysters?",
+    "options": {
+      "A": "Bluff",
+      "B": "Riverton",
+      "C": "Colac Bay"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which two harbours does Auckland sit between?",
+    "options": {
+      "A": "Waitemata and Manukau",
+      "B": "Otago and Blueskin",
+      "C": "Wellington and Porirua"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's highest mountain?",
+    "options": {
+      "A": "Mount Ruapehu",
+      "B": "Aoraki / Mount Cook",
+      "C": "Mount Taranaki"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Approximately how tall is Aoraki / Mount Cook?",
+    "options": {
+      "A": "About 2,200 m",
+      "B": "About 3,700 m",
+      "C": "About 5,000 m"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the main mountain range running down New Zealand's South Island?",
+    "options": {
+      "A": "The Remarkables",
+      "B": "The Southern Alps",
+      "C": "The Kaimai Range"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the highest mountain in the North Island?",
+    "options": {
+      "A": "Mount Taranaki",
+      "B": "Mount Ruapehu",
+      "C": "Mount Tongariro"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which nearly symmetrical North Island volcano is also known as Mount Egmont?",
+    "options": {
+      "A": "Ruapehu",
+      "B": "Taranaki",
+      "C": "Ngauruhoe"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which North Island volcano stood in for 'Mount Doom' in the Lord of the Rings films?",
+    "options": {
+      "A": "Ruapehu",
+      "B": "Ngauruhoe",
+      "C": "Tongariro"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's largest lake by surface area?",
+    "options": {
+      "A": "Lake Wakatipu",
+      "B": "Lake Taupo",
+      "C": "Lake Te Anau"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Lake Taupo sits in the caldera of what kind of volcano?",
+    "options": {
+      "A": "A shield volcano",
+      "B": "A supervolcano",
+      "C": "A mud volcano"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's longest river?",
+    "options": {
+      "A": "Clutha River",
+      "B": "Waikato River",
+      "C": "Rangitikei River"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which South Island river carries the most water, flowing from Lake Wakatipu's catchment through Otago?",
+    "options": {
+      "A": "Clutha River",
+      "B": "Buller River",
+      "C": "Rakaia River"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the famous fiord in Fiordland with Mitre Peak, often called the eighth wonder of the world?",
+    "options": {
+      "A": "Doubtful Sound",
+      "B": "Milford Sound",
+      "C": "Dusky Sound"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Milford Sound is technically what type of landform, not a sound?",
+    "options": {
+      "A": "A lagoon",
+      "B": "A fiord",
+      "C": "An estuary"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's third-largest island, south of the South Island?",
+    "options": {
+      "A": "Great Barrier Island",
+      "B": "Stewart Island / Rakiura",
+      "C": "Waiheke Island"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What are the two glaciers on the South Island's West Coast that descend into rainforest?",
+    "options": {
+      "A": "Tasman and Murchison",
+      "B": "Fox and Franz Josef",
+      "C": "Hooker and Mueller"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What limestone caves near the Waikato are famous for their glowworms?",
+    "options": {
+      "A": "Waitomo Caves",
+      "B": "Aranui Cave",
+      "C": "Honeycomb Hill"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What layered limestone formations on the West Coast at Punakaiki are a major attraction?",
+    "options": {
+      "A": "The Moeraki Boulders",
+      "B": "The Pancake Rocks",
+      "C": "The Twelve Apostles"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What spherical boulders lie on Koekohe Beach in Otago?",
+    "options": {
+      "A": "The Moeraki Boulders",
+      "B": "The Kaikoura Spheres",
+      "C": "The Catlins Stones"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which national park was New Zealand's first, established in 1887?",
+    "options": {
+      "A": "Fiordland",
+      "B": "Tongariro",
+      "C": "Abel Tasman"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which small national park at the top of the South Island is known for golden-sand beaches?",
+    "options": {
+      "A": "Kahurangi",
+      "B": "Abel Tasman",
+      "C": "Nelson Lakes"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the young volcanic island in Auckland's Waitemata Harbour?",
+    "options": {
+      "A": "Rangitoto",
+      "B": "Motutapu",
+      "C": "Tiritiri Matangi"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which lake, near Queenstown, has a distinctive zigzag or lightning-bolt shape?",
+    "options": {
+      "A": "Lake Wanaka",
+      "B": "Lake Wakatipu",
+      "C": "Lake Hawea"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What long sandy beach in the far north is misleadingly named for a length it does not have?",
+    "options": {
+      "A": "Ninety Mile Beach",
+      "B": "Ninety Foot Beach",
+      "C": "Long Beach"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which mountain range forms a dramatic backdrop to Queenstown?",
+    "options": {
+      "A": "The Kaikouras",
+      "B": "The Remarkables",
+      "C": "The Tararuas"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the large forest in Northland home to the giant kauri tree Tane Mahuta?",
+    "options": {
+      "A": "Waipoua Forest",
+      "B": "Pureora Forest",
+      "C": "Whirinaki Forest"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Roughly what is New Zealand's total population (as of the 2020s)?",
+    "options": {
+      "A": "About 1 million",
+      "B": "About 5 million",
+      "C": "About 15 million"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What flightless bird is New Zealand's national symbol and the nickname for its people?",
+    "options": {
+      "A": "Weka",
+      "B": "Kiwi",
+      "C": "Pukeko"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "When is the kiwi bird most active?",
+    "options": {
+      "A": "Midday",
+      "B": "At night",
+      "C": "Early morning only"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What large, flightless bird of New Zealand became extinct after human settlement?",
+    "options": {
+      "A": "Dodo",
+      "B": "Moa",
+      "C": "Great auk"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What giant eagle, now extinct, preyed on the moa?",
+    "options": {
+      "A": "Haast's eagle",
+      "B": "Wedge-tailed eagle",
+      "C": "Harpy eagle"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What critically endangered, flightless, nocturnal parrot is found in New Zealand?",
+    "options": {
+      "A": "Kea",
+      "B": "Kakapo",
+      "C": "Kaka"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What cheeky alpine parrot of the South Island is known for damaging cars and backpacks?",
+    "options": {
+      "A": "Kea",
+      "B": "Kakapo",
+      "C": "Tui"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What native songbird has a distinctive white tuft of feathers at its throat?",
+    "options": {
+      "A": "Bellbird",
+      "B": "Tui",
+      "C": "Fantail"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What small native bird constantly flicks its tail and follows walkers in the bush?",
+    "options": {
+      "A": "Fantail (piwakawaka)",
+      "B": "Silvereye",
+      "C": "Rifleman"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What large, blue-green flightless bird was rediscovered in 1948 after being thought extinct?",
+    "options": {
+      "A": "Takahe",
+      "B": "Weka",
+      "C": "Kokako"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What reptile, unique to New Zealand, is the sole survivor of an ancient order of reptiles?",
+    "options": {
+      "A": "Gecko",
+      "B": "Tuatara",
+      "C": "Skink"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Is the tuatara a lizard?",
+    "options": {
+      "A": "Yes",
+      "B": "No, it belongs to its own reptile order",
+      "C": "It is an amphibian"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What are New Zealand's only native land mammals?",
+    "options": {
+      "A": "Rats",
+      "B": "Bats",
+      "C": "Possums"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which small dolphin, found only in New Zealand waters, is one of the world's rarest?",
+    "options": {
+      "A": "Hector's dolphin",
+      "B": "Bottlenose dolphin",
+      "C": "Dusky dolphin"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What large native conifer tree of the north can live over 1,000 years?",
+    "options": {
+      "A": "Rimu",
+      "B": "Kauri",
+      "C": "Totara"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the largest living kauri tree, in Waipoua Forest?",
+    "options": {
+      "A": "Tane Mahuta",
+      "B": "Te Matua Ngahere",
+      "C": "Yakas"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What silver-backed fern is a national emblem of New Zealand?",
+    "options": {
+      "A": "Silver fern (ponga)",
+      "B": "Bracken",
+      "C": "Maidenhair fern"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What crimson-flowering coastal tree is nicknamed the 'New Zealand Christmas tree'?",
+    "options": {
+      "A": "Kowhai",
+      "B": "Pohutukawa",
+      "C": "Manuka"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What yellow-flowering native tree is often considered an unofficial national flower?",
+    "options": {
+      "A": "Kowhai",
+      "B": "Rata",
+      "C": "Flax"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Honey from which New Zealand plant is prized worldwide for its antibacterial properties?",
+    "options": {
+      "A": "Clover",
+      "B": "Manuka",
+      "C": "Rata"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Are there any native land snakes in New Zealand?",
+    "options": {
+      "A": "Yes, several",
+      "B": "No, none",
+      "C": "Only one species"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What introduced Australian marsupial is a major pest to New Zealand forests?",
+    "options": {
+      "A": "Wallaby",
+      "B": "Brushtail possum",
+      "C": "Quoll"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the flightless native rail, known for boldly stealing food from campers?",
+    "options": {
+      "A": "Weka",
+      "B": "Pukeko",
+      "C": "Banded rail"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What native pigeon, large and iridescent, is important for dispersing forest seeds?",
+    "options": {
+      "A": "Kereru",
+      "B": "Kaka",
+      "C": "Kea"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Unusually among the world's geckos, New Zealand's native geckos mostly do what?",
+    "options": {
+      "A": "Give birth to live young",
+      "B": "Hibernate underwater",
+      "C": "Have no toes"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What seabird nests in huge colonies at Cape Kidnappers in Hawke's Bay?",
+    "options": {
+      "A": "Albatross",
+      "B": "Australasian gannet",
+      "C": "Petrel"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the ceremonial war dance performed by New Zealand sports teams called?",
+    "options": {
+      "A": "Hula",
+      "B": "Haka",
+      "C": "Hongi"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the traditional Maori greeting of pressing noses and foreheads together?",
+    "options": {
+      "A": "Hongi",
+      "B": "Hangi",
+      "C": "Hui"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a Maori feast cooked in an earth oven called?",
+    "options": {
+      "A": "Hui",
+      "B": "Hangi",
+      "C": "Haka"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a Maori communal meeting ground with a carved meeting house called?",
+    "options": {
+      "A": "Marae",
+      "B": "Whare",
+      "C": "Pa"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the carved central meeting house on a marae called?",
+    "options": {
+      "A": "Wharenui",
+      "B": "Wharekai",
+      "C": "Waharoa"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the Maori word for 'family'?",
+    "options": {
+      "A": "Iwi",
+      "B": "Whanau",
+      "C": "Hapu"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the Maori word for a tribe or people?",
+    "options": {
+      "A": "Hapu",
+      "B": "Iwi",
+      "C": "Waka"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for a sub-tribe?",
+    "options": {
+      "A": "Iwi",
+      "B": "Hapu",
+      "C": "Whanau"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the common Maori greeting meaning roughly 'hello' or 'be well'?",
+    "options": {
+      "A": "Ka kite",
+      "B": "Kia ora",
+      "C": "Haere ra"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the Maori word for a canoe, also used for the founding vessels of iwi?",
+    "options": {
+      "A": "Waka",
+      "B": "Waharoa",
+      "C": "Wharenui"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is New Zealand jade or greenstone called in Maori?",
+    "options": {
+      "A": "Pounamu",
+      "B": "Paua",
+      "C": "Koru"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What spiral shape, based on an unfurling fern frond, is a common Maori design motif?",
+    "options": {
+      "A": "Koru",
+      "B": "Tiki",
+      "C": "Manaia"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a carved humanoid pendant, often of pounamu, called?",
+    "options": {
+      "A": "Hei-tiki",
+      "B": "Poi",
+      "C": "Patu"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What light ball on a string is swung in rhythmic Maori performance?",
+    "options": {
+      "A": "Poi",
+      "B": "Taiaha",
+      "C": "Patu"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori welcome ceremony onto a marae called?",
+    "options": {
+      "A": "Powhiri",
+      "B": "Tangi",
+      "C": "Waiata"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a Maori funeral or mourning ceremony called?",
+    "options": {
+      "A": "Tangi (tangihanga)",
+      "B": "Hui",
+      "C": "Kapa haka"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the Maori word for prestige, authority, or spiritual power?",
+    "options": {
+      "A": "Mana",
+      "B": "Tapu",
+      "C": "Noa"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori concept of something being sacred or restricted?",
+    "options": {
+      "A": "Noa",
+      "B": "Tapu",
+      "C": "Aroha"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for love, compassion or affection?",
+    "options": {
+      "A": "Aroha",
+      "B": "Utu",
+      "C": "Mana"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for food?",
+    "options": {
+      "A": "Kai",
+      "B": "Wai",
+      "C": "Whenua"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the Maori word for water?",
+    "options": {
+      "A": "Kai",
+      "B": "Wai",
+      "C": "Moana"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for the sea or ocean?",
+    "options": {
+      "A": "Wai",
+      "B": "Moana",
+      "C": "Awa"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for land?",
+    "options": {
+      "A": "Whenua",
+      "B": "Maunga",
+      "C": "Ngahere"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Maori word for a mountain?",
+    "options": {
+      "A": "Awa",
+      "B": "Maunga",
+      "C": "Roto"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for New Zealanders of European descent, from Maori?",
+    "options": {
+      "A": "Tangata whenua",
+      "B": "Pakeha",
+      "C": "Kaumatua"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'tangata whenua' mean?",
+    "options": {
+      "A": "People of the land (the indigenous people)",
+      "B": "People of the sea",
+      "C": "Newcomers"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a respected Maori elder called?",
+    "options": {
+      "A": "Rangatira",
+      "B": "Kaumatua",
+      "C": "Tohunga"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a Maori chief or person of rank called?",
+    "options": {
+      "A": "Rangatira",
+      "B": "Tohunga",
+      "C": "Toa"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the Maori word for a song, often performed after a speech?",
+    "options": {
+      "A": "Waiata",
+      "B": "Whaikorero",
+      "C": "Karakia"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a Maori prayer or incantation called?",
+    "options": {
+      "A": "Karakia",
+      "B": "Waiata",
+      "C": "Mihi"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What cluster of stars marks the Maori New Year?",
+    "options": {
+      "A": "Matariki",
+      "B": "Puanga",
+      "C": "Te Ra"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Matariki is another name for which star cluster?",
+    "options": {
+      "A": "Orion's Belt",
+      "B": "The Pleiades",
+      "C": "The Southern Cross"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In which year did Matariki become an official public holiday in New Zealand?",
+    "options": {
+      "A": "2012",
+      "B": "2022",
+      "C": "2005"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "According to Maori tradition, which explorer is often credited with discovering Aotearoa?",
+    "options": {
+      "A": "Kupe",
+      "B": "Tasman",
+      "C": "Cook"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In Maori mythology, which demigod is said to have fished up the North Island?",
+    "options": {
+      "A": "Tane",
+      "B": "Maui",
+      "C": "Tangaroa"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In Maori tradition, the North Island is 'the fish of' which figure?",
+    "options": {
+      "A": "Kupe",
+      "B": "Maui",
+      "C": "Rangi"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In Maori tradition, the South Island is often called Maui's what?",
+    "options": {
+      "A": "Net",
+      "B": "Canoe (waka)",
+      "C": "Paddle"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which two primal beings were separated to let light into the world in Maori creation stories?",
+    "options": {
+      "A": "Rangi and Papa (Sky Father and Earth Mother)",
+      "B": "Maui and Hina",
+      "C": "Tane and Tangaroa"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of the official languages of New Zealand was made official in 1987?",
+    "options": {
+      "A": "English",
+      "B": "Te reo Maori",
+      "C": "New Zealand Sign Language"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which language became an official language of New Zealand in 2006?",
+    "options": {
+      "A": "Te reo Maori",
+      "B": "New Zealand Sign Language",
+      "C": "Samoan"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who composed the haka 'Ka Mate', famously performed by the All Blacks?",
+    "options": {
+      "A": "Te Rauparaha",
+      "B": "Apirana Ngata",
+      "C": "Te Kooti"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the traditional Maori performing art of song and dance groups, often competitive, called?",
+    "options": {
+      "A": "Kapa haka",
+      "B": "Waiata-a-ringa",
+      "C": "Manu korero"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the Maori concept of environmental guardianship called?",
+    "options": {
+      "A": "Kaitiakitanga",
+      "B": "Manaakitanga",
+      "C": "Rangatiratanga"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Maori concept of hospitality and care for others called?",
+    "options": {
+      "A": "Whanaungatanga",
+      "B": "Manaakitanga",
+      "C": "Kotahitanga"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Who was the first European explorer to sight New Zealand, in 1642?",
+    "options": {
+      "A": "James Cook",
+      "B": "Abel Tasman",
+      "C": "Ferdinand Magellan"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which country did Abel Tasman sail for?",
+    "options": {
+      "A": "Portugal",
+      "B": "The Netherlands",
+      "C": "Spain"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which British explorer circumnavigated and charted New Zealand in 1769-70?",
+    "options": {
+      "A": "Captain James Cook",
+      "B": "Sir Francis Drake",
+      "C": "William Bligh"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "On what date was the Treaty of Waitangi first signed?",
+    "options": {
+      "A": "6 February 1840",
+      "B": "25 April 1915",
+      "C": "26 September 1907"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Treaty of Waitangi was an agreement between the British Crown and whom?",
+    "options": {
+      "A": "The Australian colonies",
+      "B": "Maori chiefs (rangatira)",
+      "C": "The Dutch East India Company"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which day is New Zealand's national day, marking the Treaty signing?",
+    "options": {
+      "A": "ANZAC Day",
+      "B": "Waitangi Day",
+      "C": "Labour Day"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Where is the Treaty House and grounds where the Treaty was signed?",
+    "options": {
+      "A": "Russell",
+      "B": "Waitangi, Bay of Islands",
+      "C": "Kerikeri"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "The Treaty of Waitangi has famously differing versions in which two languages?",
+    "options": {
+      "A": "English and Maori",
+      "B": "English and French",
+      "C": "Maori and Dutch"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 1865 New Zealand's capital was moved from where to Wellington?",
+    "options": {
+      "A": "Christchurch",
+      "B": "Auckland",
+      "C": "Dunedin"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In 1893 New Zealand became the first self-governing country to do what?",
+    "options": {
+      "A": "Grant women the right to vote in parliamentary elections",
+      "B": "Abolish the monarchy",
+      "C": "Introduce income tax"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which suffragist led the campaign for women's votes and appears on the New Zealand $10 note?",
+    "options": {
+      "A": "Katherine Mansfield",
+      "B": "Kate Sheppard",
+      "C": "Whina Cooper"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What symbol did the New Zealand women's suffrage movement adopt?",
+    "options": {
+      "A": "The white camellia",
+      "B": "The red poppy",
+      "C": "The silver fern"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In which year did New Zealand become a Dominion within the British Empire?",
+    "options": {
+      "A": "1840",
+      "B": "1907",
+      "C": "1947"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The 19th-century conflicts between the Crown and various Maori iwi over land and sovereignty are known as what?",
+    "options": {
+      "A": "The New Zealand Wars",
+      "B": "The Musket Wars",
+      "C": "The Boer War"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "The intertribal conflicts of the 1820s-30s, worsened by newly acquired firearms, are called what?",
+    "options": {
+      "A": "The New Zealand Wars",
+      "B": "The Musket Wars",
+      "C": "The King Country Wars"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "At which WWI campaign, starting 25 April 1915, did the ANZAC legend form?",
+    "options": {
+      "A": "The Somme",
+      "B": "Gallipoli",
+      "C": "Passchendaele"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the 'NZ' in ANZAC stand for?",
+    "options": {
+      "A": "New Zealand",
+      "B": "Northern Zone",
+      "C": "Naval Zone"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which long-serving Liberal-era Premier was known as 'King Dick'?",
+    "options": {
+      "A": "Richard Seddon",
+      "B": "William Massey",
+      "C": "Julius Vogel"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Prime Minister led the first Labour government and introduced the welfare state in the 1930s?",
+    "options": {
+      "A": "Peter Fraser",
+      "B": "Michael Joseph Savage",
+      "C": "Walter Nash"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "In 1953 which New Zealander became the first, with Tenzing Norgay, to summit Mount Everest?",
+    "options": {
+      "A": "Peter Blake",
+      "B": "Edmund Hillary",
+      "C": "Graeme Dingle"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What New Zealand-born physicist is known as the 'father of nuclear physics' and first split the atom?",
+    "options": {
+      "A": "Ernest Rutherford",
+      "B": "William Pickering",
+      "C": "Maurice Wilkins"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand woman led the 1975 Maori Land March to Parliament?",
+    "options": {
+      "A": "Whina Cooper",
+      "B": "Georgina Beyer",
+      "C": "Tariana Turia"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "In 1985 the Greenpeace ship Rainbow Warrior was sunk in Auckland Harbour by agents of which country?",
+    "options": {
+      "A": "The United States",
+      "B": "France",
+      "C": "The United Kingdom"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In 1987 New Zealand passed legislation making the country what?",
+    "options": {
+      "A": "Carbon neutral",
+      "B": "Nuclear-free",
+      "C": "A republic"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Prime Minister's government is most associated with New Zealand's 1980s free-market 'Rogernomics' reforms?",
+    "options": {
+      "A": "Robert Muldoon",
+      "B": "David Lange",
+      "C": "Jim Bolger"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which two devastating earthquakes struck Christchurch in 2010 and 2011?",
+    "options": {
+      "A": "The Canterbury earthquakes",
+      "B": "The Kaikoura earthquakes",
+      "C": "The Napier earthquakes"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The 1931 earthquake that destroyed and led to the Art Deco rebuild of Napier hit which region?",
+    "options": {
+      "A": "Canterbury",
+      "B": "Hawke's Bay",
+      "C": "Marlborough"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which explorer's name is given to the strait between the North and South Islands?",
+    "options": {
+      "A": "Tasman",
+      "B": "Cook",
+      "C": "Foveaux"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What strait separates the South Island from Stewart Island?",
+    "options": {
+      "A": "Cook Strait",
+      "B": "Foveaux Strait",
+      "C": "Bass Strait"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Maori politician and scholar, a champion of Maori culture, appears on the New Zealand $50 note?",
+    "options": {
+      "A": "Apirana Ngata",
+      "B": "Maui Pomare",
+      "C": "Peter Buck"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What voting system has New Zealand used for general elections since 1996?",
+    "options": {
+      "A": "First-past-the-post",
+      "B": "Mixed-member proportional (MMP)",
+      "C": "Single transferable vote"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "New Zealand's Parliament has how many chambers?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Three"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was New Zealand's upper house, abolished in 1951, called?",
+    "options": {
+      "A": "The Senate",
+      "B": "The Legislative Council",
+      "C": "The House of Lords"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the executive wing of New Zealand's Parliament buildings nicknamed?",
+    "options": {
+      "A": "The Beehive",
+      "B": "The Anthill",
+      "C": "The Dome"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is New Zealand's head of state?",
+    "options": {
+      "A": "The Prime Minister",
+      "B": "The British monarch (represented by the Governor-General)",
+      "C": "The Speaker"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who represents the monarch in New Zealand?",
+    "options": {
+      "A": "The Prime Minister",
+      "B": "The Governor-General",
+      "C": "The Chief Justice"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term length of a New Zealand Parliament?",
+    "options": {
+      "A": "Three years",
+      "B": "Four years",
+      "C": "Five years"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "New Zealand's Parliament reserves a number of seats for whom?",
+    "options": {
+      "A": "Farmers",
+      "B": "Maori (Maori electorates)",
+      "C": "Returned soldiers"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand Prime Minister led the country from 1999 to 2008 and later headed the UN Development Programme?",
+    "options": {
+      "A": "Jenny Shipley",
+      "B": "Helen Clark",
+      "C": "Jacinda Ardern"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was New Zealand's Prime Minister from 2017 to 2023?",
+    "options": {
+      "A": "Helen Clark",
+      "B": "Jacinda Ardern",
+      "C": "Chris Hipkins"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was New Zealand's first female Prime Minister (assuming office in 1997)?",
+    "options": {
+      "A": "Helen Clark",
+      "B": "Jenny Shipley",
+      "C": "Jacinda Ardern"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which National Party Prime Minister led New Zealand from 2008 to 2016?",
+    "options": {
+      "A": "Bill English",
+      "B": "John Key",
+      "C": "Jim Bolger"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which combative Prime Minister governed New Zealand from 1975 to 1984?",
+    "options": {
+      "A": "Keith Holyoake",
+      "B": "Robert Muldoon",
+      "C": "Norman Kirk"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealander became the world's first openly transgender mayor and later an MP?",
+    "options": {
+      "A": "Louisa Wall",
+      "B": "Georgina Beyer",
+      "C": "Marama Davidson"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the name of New Zealand's founding constitutional document, in te reo Maori?",
+    "options": {
+      "A": "Te Tiriti o Waitangi",
+      "B": "Te Ao Marama",
+      "C": "Te Papa Tongarewa"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which body hears claims of Crown breaches of the Treaty of Waitangi?",
+    "options": {
+      "A": "The Supreme Court",
+      "B": "The Waitangi Tribunal",
+      "C": "The Privy Council"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Until 2003, appeals from New Zealand's courts could go to which body in London?",
+    "options": {
+      "A": "The House of Lords",
+      "B": "The Judicial Committee of the Privy Council",
+      "C": "The European Court"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is New Zealand's two-vote MMP ballot made up of?",
+    "options": {
+      "A": "An electorate vote and a party vote",
+      "B": "A local vote and a regional vote",
+      "C": "A first and second preference"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What party-vote threshold must a party generally reach to enter Parliament under MMP?",
+    "options": {
+      "A": "3%",
+      "B": "5%",
+      "C": "10%"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What are New Zealand's two largest political parties?",
+    "options": {
+      "A": "Labour and National",
+      "B": "Liberal and Conservative",
+      "C": "Democratic and Republican"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand director made the Lord of the Rings and Hobbit film trilogies?",
+    "options": {
+      "A": "Jane Campion",
+      "B": "Peter Jackson",
+      "C": "Taika Waititi"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Where were the Lord of the Rings films primarily shot?",
+    "options": {
+      "A": "Ireland",
+      "B": "New Zealand",
+      "C": "Norway"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which New Zealand pop star released the hit 'Royals' in 2013?",
+    "options": {
+      "A": "Kimbra",
+      "B": "Lorde",
+      "C": "Benee"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is Lorde's real name?",
+    "options": {
+      "A": "Ella Yelich-O'Connor",
+      "B": "Ella Mai Howell",
+      "C": "Eleanor Ford"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand director won the Best Director Oscar for 'The Power of the Dog'?",
+    "options": {
+      "A": "Niki Caro",
+      "B": "Jane Campion",
+      "C": "Roger Donaldson"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand filmmaker directed 'Boy', 'Hunt for the Wilderpeople' and 'Jojo Rabbit'?",
+    "options": {
+      "A": "Taika Waititi",
+      "B": "Peter Jackson",
+      "C": "Andrew Adamson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which acclaimed short-story writer was born in Wellington in 1888?",
+    "options": {
+      "A": "Janet Frame",
+      "B": "Katherine Mansfield",
+      "C": "Ngaio Marsh"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand author wrote the Booker Prize-winning novel 'The Bone People'?",
+    "options": {
+      "A": "Keri Hulme",
+      "B": "Eleanor Catton",
+      "C": "Patricia Grace"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealander won the 2013 Booker Prize for 'The Luminaries', set on the Otago goldfields?",
+    "options": {
+      "A": "Lloyd Jones",
+      "B": "Eleanor Catton",
+      "C": "Witi Ihimaera"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which world-renowned opera soprano is a New Zealander who sang at Charles and Diana's wedding?",
+    "options": {
+      "A": "Hayley Westenra",
+      "B": "Kiri Te Kanawa",
+      "C": "Malvina Major"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which 2002 New Zealand film about a Maori girl and her chief grandfather earned an Oscar nomination for Keisha Castle-Hughes?",
+    "options": {
+      "A": "Once Were Warriors",
+      "B": "Whale Rider",
+      "C": "The Piano"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which gritty 1994 New Zealand film was based on Alan Duff's novel about an urban Maori family?",
+    "options": {
+      "A": "Whale Rider",
+      "B": "Once Were Warriors",
+      "C": "Boy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which 1993 film shot in New Zealand won the Palme d'Or and earned Anna Paquin an Oscar at age 11?",
+    "options": {
+      "A": "The Piano",
+      "B": "Heavenly Creatures",
+      "C": "Vigil"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which long-running New Zealand television soap opera is set in a fictional Auckland clinic?",
+    "options": {
+      "A": "Outrageous Fortune",
+      "B": "Shortland Street",
+      "C": "Go Girls"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which comedy duo of Bret McKenzie and Jemaine Clement had an HBO series set in New York?",
+    "options": {
+      "A": "Flight of the Conchords",
+      "B": "The Topp Twins",
+      "C": "Fan Brigade"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand-Australian band, fronted by Neil Finn, recorded 'Don't Dream It's Over'?",
+    "options": {
+      "A": "Split Enz",
+      "B": "Crowded House",
+      "C": "The Mutton Birds"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which quirky New Zealand band, featuring the Finn brothers, preceded Crowded House?",
+    "options": {
+      "A": "Split Enz",
+      "B": "The Chills",
+      "C": "Dragon"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand golfer became the youngest player, male or female, to be ranked world number one?",
+    "options": {
+      "A": "Danny Lee",
+      "B": "Lydia Ko",
+      "C": "Michael Campbell"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand canoe sprinter has won multiple Olympic gold medals?",
+    "options": {
+      "A": "Lisa Carrington",
+      "B": "Sarah Ulmer",
+      "C": "Barbara Kendall"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand yachtsman led Team New Zealand and won the Whitbread and America's Cup?",
+    "options": {
+      "A": "Russell Coutts",
+      "B": "Peter Blake",
+      "C": "Grant Dalton"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand runner won 5000 m gold at the 1976 Montreal Olympics and set world records?",
+    "options": {
+      "A": "Peter Snell",
+      "B": "John Walker",
+      "C": "Jack Lovelock"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand middle-distance runner won three Olympic golds in the early 1960s?",
+    "options": {
+      "A": "Peter Snell",
+      "B": "John Walker",
+      "C": "Rod Dixon"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealander won the men's 1500 m gold at the 1936 Berlin Olympics?",
+    "options": {
+      "A": "Jack Lovelock",
+      "B": "Murray Halberg",
+      "C": "Bill Baillie"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which mountaineer, besides Hillary, is the world-famous Sherpa who reached Everest's summit in 1953?",
+    "options": {
+      "A": "Tenzing Norgay",
+      "B": "Nawang Gombu",
+      "C": "Ang Rita"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's national rugby union team called?",
+    "options": {
+      "A": "The Wallabies",
+      "B": "The All Blacks",
+      "C": "The Springboks"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What do the All Blacks perform before matches?",
+    "options": {
+      "A": "A haka",
+      "B": "A hula",
+      "C": "A war chant in English"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "How many times have the All Blacks won the Rugby World Cup (as of 2019)?",
+    "options": {
+      "A": "One",
+      "B": "Three",
+      "C": "Five"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In which years did the All Blacks win back-to-back Rugby World Cups?",
+    "options": {
+      "A": "2003 and 2007",
+      "B": "2011 and 2015",
+      "C": "2015 and 2019"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The All Blacks won the very first Rugby World Cup in which year?",
+    "options": {
+      "A": "1987",
+      "B": "1991",
+      "C": "1995"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's national netball team called?",
+    "options": {
+      "A": "The Silver Ferns",
+      "B": "The Black Ferns",
+      "C": "The Tall Ferns"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's national women's rugby union team called?",
+    "options": {
+      "A": "The Silver Ferns",
+      "B": "The Black Ferns",
+      "C": "The White Ferns"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's national men's cricket team called?",
+    "options": {
+      "A": "The Black Caps",
+      "B": "The Kiwis",
+      "C": "The Silver Caps"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is New Zealand's national basketball team called?",
+    "options": {
+      "A": "The Tall Blacks",
+      "B": "The Black Ballers",
+      "C": "The Kiwi Hoops"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is New Zealand's men's football (soccer) team called?",
+    "options": {
+      "A": "The All Whites",
+      "B": "The Football Ferns",
+      "C": "The Kiwis"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's rugby league national team called?",
+    "options": {
+      "A": "The Kiwis",
+      "B": "The Warriors",
+      "C": "The Sea Eagles"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which record-breaking All Black captain lifted the World Cup in both 2011 and 2015?",
+    "options": {
+      "A": "Kieran Read",
+      "B": "Richie McCaw",
+      "C": "Sam Cane"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which powerful All Blacks winger became a global star at the 1995 Rugby World Cup?",
+    "options": {
+      "A": "Jonah Lomu",
+      "B": "Christian Cullen",
+      "C": "Joe Rokocoko"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which fly-half is New Zealand's all-time leading points scorer in test rugby?",
+    "options": {
+      "A": "Dan Carter",
+      "B": "Andrew Mehrtens",
+      "C": "Grant Fox"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand town claims the world's first commercial bungy-jumping operation, at the Kawarau Bridge?",
+    "options": {
+      "A": "Rotorua",
+      "B": "Queenstown",
+      "C": "Taupo"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which sailing trophy has Team New Zealand won multiple times since 1995?",
+    "options": {
+      "A": "The Admiral's Cup",
+      "B": "The America's Cup",
+      "C": "The Volvo Ocean Race"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand golfer won the 2005 US Open?",
+    "options": {
+      "A": "Michael Campbell",
+      "B": "Frank Nobilo",
+      "C": "Ryan Fox"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand shot putter has won multiple world and Olympic titles?",
+    "options": {
+      "A": "Valerie Adams",
+      "B": "Beatrice Faumuina",
+      "C": "Eliza McCartney"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand cyclist won individual pursuit gold at the 2004 Athens Olympics with a world record?",
+    "options": {
+      "A": "Sarah Ulmer",
+      "B": "Alison Shanks",
+      "C": "Linda Villumsen"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Auckland's rugby league club in the Australian NRL competition is known as what?",
+    "options": {
+      "A": "The Warriors",
+      "B": "The Storm",
+      "C": "The Broncos"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a meringue dessert topped with cream and fruit, claimed by both NZ and Australia?",
+    "options": {
+      "A": "Lamington",
+      "B": "Pavlova",
+      "C": "Anzac biscuit"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What New Zealand ice cream flavour is vanilla with pieces of honeycomb toffee?",
+    "options": {
+      "A": "Goody Goody Gum Drops",
+      "B": "Hokey pokey",
+      "C": "Boysenberry ripple"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the New Zealand word for flip-flops or thongs?",
+    "options": {
+      "A": "Jandals",
+      "B": "Slides",
+      "C": "Togs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the New Zealand word for a swimsuit?",
+    "options": {
+      "A": "Togs",
+      "B": "Bathers",
+      "C": "Cossie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What do New Zealanders call a simple holiday home, especially in the North Island?",
+    "options": {
+      "A": "A shanty",
+      "B": "A bach",
+      "C": "A lodge"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What do southern New Zealanders often call a holiday home instead of a 'bach'?",
+    "options": {
+      "A": "A crib",
+      "B": "A cabin",
+      "C": "A hut"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What soft drink, 'world famous in New Zealand', is named after a Waikato town?",
+    "options": {
+      "A": "L&P (Lemon & Paeroa)",
+      "B": "Ch'i",
+      "C": "Frujus"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What iconic wooden pull-along toy has been a New Zealand classic since the 1940s?",
+    "options": {
+      "A": "The Buzzy Bee",
+      "B": "The Jack-in-the-box",
+      "C": "The Slinky"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the New Zealand slang expression meaning 'no worries' or 'that's fine'?",
+    "options": {
+      "A": "Sweet as",
+      "B": "Hard yakka",
+      "C": "Chocka"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What does the Kiwi slang 'chocka' or 'chocka block' mean?",
+    "options": {
+      "A": "Completely full",
+      "B": "Very cold",
+      "C": "Broken"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does the Kiwi slang 'chur' typically express?",
+    "options": {
+      "A": "Thanks or acknowledgement",
+      "B": "Disgust",
+      "C": "Confusion"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'tramping' mean in New Zealand?",
+    "options": {
+      "A": "Hitchhiking",
+      "B": "Hiking / backcountry walking",
+      "C": "Camping in a car"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the celebrated New Zealand walking track in Fiordland, once billed 'the finest walk in the world'?",
+    "options": {
+      "A": "The Routeburn Track",
+      "B": "The Milford Track",
+      "C": "The Kepler Track"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the 'number 8 wire' mentality in New Zealand?",
+    "options": {
+      "A": "Improvising practical solutions with limited resources",
+      "B": "A strict rule of etiquette",
+      "C": "A farming subsidy scheme"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What are the two national flowers or emblems most linked to New Zealand identity?",
+    "options": {
+      "A": "The rose and the thistle",
+      "B": "The silver fern and the kowhai",
+      "C": "The tulip and the daisy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's currency?",
+    "options": {
+      "A": "The New Zealand dollar",
+      "B": "The New Zealand pound",
+      "C": "The Pacific franc"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the New Zealand dollar commonly nicknamed on currency markets?",
+    "options": {
+      "A": "The Kiwi",
+      "B": "The Fern",
+      "C": "The Buzzy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Whose portrait is on the New Zealand five-dollar note?",
+    "options": {
+      "A": "Ernest Rutherford",
+      "B": "Sir Edmund Hillary",
+      "C": "Kate Sheppard"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Whose portrait is on the New Zealand one-hundred-dollar note?",
+    "options": {
+      "A": "Sir Edmund Hillary",
+      "B": "Ernest Rutherford",
+      "C": "Sir Apirana Ngata"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What bird features on the reverse of the New Zealand one-dollar coin?",
+    "options": {
+      "A": "Tui",
+      "B": "Kiwi",
+      "C": "Kereru"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is depicted on the New Zealand flag alongside the Union Jack?",
+    "options": {
+      "A": "The Southern Cross in red stars",
+      "B": "A silver fern",
+      "C": "A kiwi"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In a 2015-16 referendum, New Zealanders voted to keep which flag?",
+    "options": {
+      "A": "The current flag with the Union Jack",
+      "B": "A silver fern design",
+      "C": "A koru design"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the New Zealand parliamentary term for a general election held on short notice?",
+    "options": {
+      "A": "A snap election",
+      "B": "A by-election",
+      "C": "A recall"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the New Zealand equivalent of a 'general store' in rural areas historically?",
+    "options": {
+      "A": "The dairy",
+      "B": "The bodega",
+      "C": "The trading post"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In New Zealand, what shop is a 'dairy'?",
+    "options": {
+      "A": "A milk-processing plant",
+      "B": "A small corner convenience store",
+      "C": "An ice cream parlour only"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What does the Maori word 'kaimoana' refer to?",
+    "options": {
+      "A": "Seafood",
+      "B": "A war canoe",
+      "C": "A meeting house"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What shellfish, with an iridescent shell used in jewellery, is a New Zealand delicacy?",
+    "options": {
+      "A": "Paua",
+      "B": "Pipi",
+      "C": "Tuatua"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a 'hangi' pit lined and heated with?",
+    "options": {
+      "A": "Charcoal briquettes",
+      "B": "Hot stones",
+      "C": "Electric elements"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What Maori flatbread or fried bread is a popular treat?",
+    "options": {
+      "A": "Rewena",
+      "B": "Paraoa parai (fry bread)",
+      "C": "Roti"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'kumara' in New Zealand cuisine?",
+    "options": {
+      "A": "A sweet potato",
+      "B": "A leafy green",
+      "C": "A shellfish"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand region is the country's largest wine producer overall?",
+    "options": {
+      "A": "Central Otago",
+      "B": "Marlborough",
+      "C": "Gisborne"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which South Island region is famous for pinot noir and stone fruit, around Cromwell and Bannockburn?",
+    "options": {
+      "A": "Marlborough",
+      "B": "Central Otago",
+      "C": "Nelson"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand city has, per Guinness records, held the title of world's steepest residential street (Baldwin Street)?",
+    "options": {
+      "A": "Wellington",
+      "B": "Dunedin",
+      "C": "Nelson"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand city describes itself as being at the country's geographic centre and among its sunniest?",
+    "options": {
+      "A": "Blenheim",
+      "B": "Nelson",
+      "C": "Napier"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the ferry service that crosses Cook Strait between Wellington and Picton?",
+    "options": {
+      "A": "The Interislander (and Bluebridge)",
+      "B": "The Spirit of Tasmania",
+      "C": "The Cook Strait Clipper"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which peninsula near Christchurch is a collapsed volcano with harbours at Lyttelton and Akaroa?",
+    "options": {
+      "A": "Otago Peninsula",
+      "B": "Banks Peninsula",
+      "C": "Coromandel Peninsula"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Akaroa, on Banks Peninsula, retains the heritage of settlers from which country?",
+    "options": {
+      "A": "Germany",
+      "B": "France",
+      "C": "Norway"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which North Island region is New Zealand's main dairy-farming heartland?",
+    "options": {
+      "A": "Northland",
+      "B": "Waikato",
+      "C": "Wairarapa"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which is the largest region of New Zealand by land area?",
+    "options": {
+      "A": "Canterbury",
+      "B": "Otago",
+      "C": "Waikato"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the volcanic plateau in the central North Island?",
+    "options": {
+      "A": "The Canterbury Plains",
+      "B": "The Central Plateau (Volcanic Plateau)",
+      "C": "The Mackenzie Country"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What high-country basin in the South Island is a Dark Sky Reserve near Lake Tekapo?",
+    "options": {
+      "A": "The Mackenzie Country",
+      "B": "The Maniototo",
+      "C": "The Wairau Plain"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which small stone church beside Lake Tekapo is one of New Zealand's most photographed buildings?",
+    "options": {
+      "A": "The Church of the Good Shepherd",
+      "B": "Old St Paul's",
+      "C": "The Cardrona Chapel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the beach on the Coromandel where visitors dig their own hot pools at low tide?",
+    "options": {
+      "A": "Hot Water Beach",
+      "B": "Ninety Mile Beach",
+      "C": "Piha"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which black-sand surf beach west of Auckland is known for its Lion Rock?",
+    "options": {
+      "A": "Piha",
+      "B": "Muriwai",
+      "C": "Raglan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Waikato coastal town is regarded as one of the world's great left-hand surf breaks?",
+    "options": {
+      "A": "Raglan",
+      "B": "Gisborne",
+      "C": "Mount Maunganui"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the popular walk over an active volcanic landscape in Tongariro National Park called?",
+    "options": {
+      "A": "The Tongariro Alpine Crossing",
+      "B": "The Rangipo Traverse",
+      "C": "The Ruapehu Round"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which two New Zealand sites hold UNESCO World Heritage status for natural values (as broad areas)?",
+    "options": {
+      "A": "Te Wahipounamu and Tongariro",
+      "B": "Waitomo and Rotorua",
+      "C": "Fiordland and Coromandel"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "The subantarctic islands south of New Zealand, a World Heritage site, are home to what?",
+    "options": {
+      "A": "Large seabird and megaherb communities",
+      "B": "Active volcanoes only",
+      "C": "Tropical reefs"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which cluster of small islands, a nature reserve, sits in the Hauraki Gulf and shelters rare birds like the takahe and kokako?",
+    "options": {
+      "A": "Tiritiri Matangi",
+      "B": "Rangitoto",
+      "C": "Motuihe"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the name of the road tunnel that provides the only vehicle access into Milford Sound?",
+    "options": {
+      "A": "The Homer Tunnel",
+      "B": "The Lyttelton Tunnel",
+      "C": "The Terrace Tunnel"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which river gorge near Taupo features the powerful Huka Falls?",
+    "options": {
+      "A": "The Waikato River",
+      "B": "The Whanganui River",
+      "C": "The Mohaka River"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which is New Zealand's largest man-made lake, created by a hydro dam on the Waikato?",
+    "options": {
+      "A": "Lake Karapiro",
+      "B": "Lake Benmore",
+      "C": "Lake Dunstan"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which braided Canterbury river, known locally as 'the Waimak', is popular for jet-boating and salmon fishing?",
+    "options": {
+      "A": "The Waimakariri",
+      "B": "The Waikato",
+      "C": "The Clutha"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which glacier-fed lake near Aoraki/Mount Cook has a striking milky-turquoise colour?",
+    "options": {
+      "A": "Lake Pukaki",
+      "B": "Lake Wanaka",
+      "C": "Lake Ohau"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which town is the gateway village at the foot of Aoraki/Mount Cook?",
+    "options": {
+      "A": "Twizel",
+      "B": "Mount Cook Village (Aoraki)",
+      "C": "Fairlie"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Roughly how far is New Zealand from Australia across the Tasman Sea at the closest sea route?",
+    "options": {
+      "A": "About 150 km",
+      "B": "About 1,500 km",
+      "C": "About 4,000 km"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What time zone is most of New Zealand in relative to UTC (standard time)?",
+    "options": {
+      "A": "UTC+8",
+      "B": "UTC+12",
+      "C": "UTC-5"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "New Zealand is one of the first places in the world to do what each day?",
+    "options": {
+      "A": "See the sunset",
+      "B": "See the new day/sunrise",
+      "C": "Reach midday"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What are the small self-governing island territories in free association with New Zealand?",
+    "options": {
+      "A": "The Cook Islands and Niue",
+      "B": "Fiji and Tonga",
+      "C": "Samoa and Vanuatu"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which South Pacific territory is a dependent territory of New Zealand?",
+    "options": {
+      "A": "Tokelau",
+      "B": "American Samoa",
+      "C": "New Caledonia"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Maori name for the South Island?",
+    "options": {
+      "A": "Te Ika-a-Maui",
+      "B": "Te Waipounamu",
+      "C": "Rakiura"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Maori name for the North Island?",
+    "options": {
+      "A": "Te Waipounamu",
+      "B": "Te Ika-a-Maui",
+      "C": "Aotearoa"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Maori name for Stewart Island?",
+    "options": {
+      "A": "Rakiura",
+      "B": "Rangitoto",
+      "C": "Motu"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What large gulf lies between Auckland and the Coromandel Peninsula?",
+    "options": {
+      "A": "The Hauraki Gulf",
+      "B": "Golden Bay",
+      "C": "Tasman Bay"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the museum and cultural centre Te Papa Tongarewa translated roughly as?",
+    "options": {
+      "A": "The treasure box / container of treasures",
+      "B": "The house of learning",
+      "C": "The place of the fern"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What annual event sees thousands of people gather at dawn on 25 April across New Zealand?",
+    "options": {
+      "A": "Waitangi Day",
+      "B": "ANZAC Day dawn services",
+      "C": "Guy Fawkes"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which public holiday, on the fourth Monday of October, celebrates the eight-hour working day?",
+    "options": {
+      "A": "Labour Day",
+      "B": "Anniversary Day",
+      "C": "Show Day"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "New Zealand's two official public holidays unique to it among the Anglo world include Waitangi Day and which newer one?",
+    "options": {
+      "A": "Matariki",
+      "B": "Boxing Day",
+      "C": "May Day"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of New Zealand's public broadcaster for radio and online news?",
+    "options": {
+      "A": "RNZ (Radio New Zealand)",
+      "B": "ABC",
+      "C": "CBC"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's largest airport by passenger numbers?",
+    "options": {
+      "A": "Wellington Airport",
+      "B": "Auckland Airport",
+      "C": "Christchurch Airport"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which mountain, sacred to local iwi, is climbed via the Pouakai Circuit and mirrors in a tarn for famous photos?",
+    "options": {
+      "A": "Ruapehu",
+      "B": "Taranaki",
+      "C": "Tongariro"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which national park protects the rugged wilderness at the top northwest of the South Island?",
+    "options": {
+      "A": "Kahurangi National Park",
+      "B": "Paparoa National Park",
+      "C": "Mount Aspiring National Park"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which alpine national park surrounds Aoraki/Mount Cook?",
+    "options": {
+      "A": "Aoraki/Mount Cook National Park",
+      "B": "Arthur's Pass National Park",
+      "C": "Westland Tai Poutini National Park"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Arthur's Pass is a mountain pass and road/rail route through which range?",
+    "options": {
+      "A": "The Southern Alps",
+      "B": "The Kaikoura Ranges",
+      "C": "The Tararua Range"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What scenic train journey crosses the South Island between Christchurch and Greymouth?",
+    "options": {
+      "A": "The TranzAlpine",
+      "B": "The Coastal Pacific",
+      "C": "The Northern Explorer"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which state highway is New Zealand's main route, running the length of both islands?",
+    "options": {
+      "A": "State Highway 1",
+      "B": "State Highway 6",
+      "C": "State Highway 3"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which desolate stretch of State Highway 1 crosses the Central Plateau past Mount Ruapehu?",
+    "options": {
+      "A": "The Desert Road",
+      "B": "The Haast Pass",
+      "C": "The Lewis Pass"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which hemisphere is New Zealand in?",
+    "options": {
+      "A": "Northern",
+      "B": "Southern",
+      "C": "Eastern only"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "When is summer in New Zealand?",
+    "options": {
+      "A": "June to August",
+      "B": "December to February",
+      "C": "March to May"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which side of the road do New Zealanders drive on?",
+    "options": {
+      "A": "The right",
+      "B": "The left",
+      "C": "The middle"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "New Zealand is often said to have more of which animal than people?",
+    "options": {
+      "A": "Cows",
+      "B": "Sheep",
+      "C": "Horses"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Can a kiwi bird fly?",
+    "options": {
+      "A": "Yes",
+      "B": "No",
+      "C": "Only short distances"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What colour is a kiwi bird's plumage?",
+    "options": {
+      "A": "Bright blue",
+      "B": "Brown and shaggy",
+      "C": "Black and white"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Roughly how big is a kiwi's egg relative to its body?",
+    "options": {
+      "A": "Tiny",
+      "B": "Enormous, one of the largest relative to body size",
+      "C": "Average for a bird"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What continent is closest to New Zealand?",
+    "options": {
+      "A": "South America",
+      "B": "Australia (Oceania)",
+      "C": "Antarctica"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What ocean lies to the east of New Zealand?",
+    "options": {
+      "A": "The Indian Ocean",
+      "B": "The Pacific Ocean",
+      "C": "The Atlantic Ocean"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What sea lies between New Zealand and Australia?",
+    "options": {
+      "A": "The Coral Sea",
+      "B": "The Tasman Sea",
+      "C": "The Arafura Sea"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which is further north: Auckland or Wellington?",
+    "options": {
+      "A": "Auckland",
+      "B": "Wellington",
+      "C": "They are the same latitude"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which island is Auckland on?",
+    "options": {
+      "A": "The North Island",
+      "B": "The South Island",
+      "C": "Stewart Island"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which island is Christchurch on?",
+    "options": {
+      "A": "The North Island",
+      "B": "The South Island",
+      "C": "Stewart Island"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which island is Queenstown on?",
+    "options": {
+      "A": "The North Island",
+      "B": "The South Island",
+      "C": "Great Barrier Island"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which island is Rotorua on?",
+    "options": {
+      "A": "The North Island",
+      "B": "The South Island",
+      "C": "Stewart Island"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which island is generally warmer?",
+    "options": {
+      "A": "The North Island",
+      "B": "The South Island",
+      "C": "They are identical"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a baby sheep called (also a common NZ meat)?",
+    "options": {
+      "A": "Calf",
+      "B": "Lamb",
+      "C": "Kid"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is New Zealand's biggest agricultural export product category?",
+    "options": {
+      "A": "Coffee",
+      "B": "Dairy products",
+      "C": "Rice"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What green fruit, once called the Chinese gooseberry, is a major New Zealand crop?",
+    "options": {
+      "A": "Feijoa",
+      "B": "Kiwifruit",
+      "C": "Tamarillo"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What egg-shaped, green-fleshed fruit with a fragrant tropical taste is a backyard favourite in NZ?",
+    "options": {
+      "A": "Feijoa",
+      "B": "Guava",
+      "C": "Passionfruit"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the traditional New Zealand summer holiday season centred on?",
+    "options": {
+      "A": "Easter",
+      "B": "Christmas and New Year",
+      "C": "Labour weekend"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the common New Zealand term for a cooler bag or ice box for drinks?",
+    "options": {
+      "A": "An esky",
+      "B": "A chilly bin",
+      "C": "A cool room"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What do New Zealanders commonly call a service station?",
+    "options": {
+      "A": "A garage or petrol station",
+      "B": "A gas bar",
+      "C": "A filling post"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What do New Zealanders commonly call the trunk of a car?",
+    "options": {
+      "A": "The boot",
+      "B": "The hood",
+      "C": "The bonnet"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a 'togs, togs, undies' joke in New Zealand about?",
+    "options": {
+      "A": "The line between swimwear and underwear as you walk from the beach",
+      "B": "A card game",
+      "C": "A rugby move"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What outdoor cooking method is central to a Kiwi summer?",
+    "options": {
+      "A": "The tandoor",
+      "B": "The barbecue (barbie)",
+      "C": "The rotisserie only"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the common New Zealand word for a small stream?",
+    "options": {
+      "A": "A creek",
+      "B": "A brook",
+      "C": "A rill"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'Fush and chups' a gentle joke about?",
+    "options": {
+      "A": "The New Zealand accent's vowels",
+      "B": "A seafood restaurant chain",
+      "C": "A rugby chant"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What do New Zealanders call a duvet (which Australians call a 'doona')?",
+    "options": {
+      "A": "A duvet",
+      "B": "A doona",
+      "C": "A comforter"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's approximate land area comparable to?",
+    "options": {
+      "A": "Japan or the British Isles",
+      "B": "Australia",
+      "C": "Fiji"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What large introduced grazing animal is farmed for velvet and venison in New Zealand?",
+    "options": {
+      "A": "Bison",
+      "B": "Deer",
+      "C": "Llama"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of Auckland's underground rail loop project, opening in the 2020s?",
+    "options": {
+      "A": "The City Rail Link",
+      "B": "The Waterview Connection",
+      "C": "The Northern Busway"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which fruit is New Zealand's Central Otago town of Cromwell known for, with a giant roadside sculpture?",
+    "options": {
+      "A": "Apples",
+      "B": "Stone fruit (cherries, apricots)",
+      "C": "Bananas"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the common New Zealand slang for a rural person or farmer?",
+    "options": {
+      "A": "A townie",
+      "B": "A cocky",
+      "C": "A blow-in"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'cuppa' in New Zealand?",
+    "options": {
+      "A": "A cup of tea or coffee",
+      "B": "A trophy",
+      "C": "A small measure of spirits"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What savoury spread, dark and yeasty, is the New Zealand-made rival to Australia's Vegemite?",
+    "options": {
+      "A": "Marmite (NZ version)",
+      "B": "Bovril",
+      "C": "Promite"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What round biscuit topped with marshmallow and coated in chocolate is a Griffin's-made New Zealand classic?",
+    "options": {
+      "A": "Mallowpuff",
+      "B": "Tim Tam",
+      "C": "Shortbread"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What kind of terrain covers much of New Zealand, making it popular for hiking and skiing?",
+    "options": {
+      "A": "Desert",
+      "B": "Mountains",
+      "C": "Tundra"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the New Zealand ski season roughly?",
+    "options": {
+      "A": "December to February",
+      "B": "June to October",
+      "C": "Year-round"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the largest ski area in the North Island, on an active volcano?",
+    "options": {
+      "A": "Coronet Peak",
+      "B": "Whakapapa (Mount Ruapehu)",
+      "C": "The Remarkables"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which two ski fields sit above Queenstown?",
+    "options": {
+      "A": "Coronet Peak and The Remarkables",
+      "B": "Cardrona and Treble Cone",
+      "C": "Mount Hutt and Porters"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a common New Zealand and Maori term of address for a friend or cousin?",
+    "options": {
+      "A": "Cuz",
+      "B": "Sire",
+      "C": "Squire"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What do New Zealanders call an outdoor barbecue gathering?",
+    "options": {
+      "A": "A barbie",
+      "B": "A luau",
+      "C": "A clambake"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What are 'gumboots' in New Zealand?",
+    "options": {
+      "A": "Rubber rain boots (Wellington boots)",
+      "B": "Football boots",
+      "C": "Slippers"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand town holds an annual gumboot-throwing festival?",
+    "options": {
+      "A": "Taihape",
+      "B": "Gore",
+      "C": "Kaitaia"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is New Zealand's national day of remembrance for war dead, shared with Australia?",
+    "options": {
+      "A": "Remembrance Sunday",
+      "B": "ANZAC Day",
+      "C": "Armistice Day"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which flightless native bird's name did New Zealand soldiers adopt as their own nickname?",
+    "options": {
+      "A": "Kiwi",
+      "B": "Weka",
+      "C": "Moa"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Roughly what proportion of New Zealand's population identifies as Maori?",
+    "options": {
+      "A": "About 17%",
+      "B": "About 2%",
+      "C": "About 45%"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What does 'Kia kaha' mean?",
+    "options": {
+      "A": "Stay strong",
+      "B": "Welcome",
+      "C": "Goodbye"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'haere mai' mean?",
+    "options": {
+      "A": "Goodbye",
+      "B": "Welcome / come here",
+      "C": "Be careful"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'ka kite ano' mean?",
+    "options": {
+      "A": "See you again",
+      "B": "Thank you",
+      "C": "Well done"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for the sun?",
+    "options": {
+      "A": "Marama",
+      "B": "Ra",
+      "C": "Whetu"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for the moon?",
+    "options": {
+      "A": "Ra",
+      "B": "Marama",
+      "C": "Whetu"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for a star?",
+    "options": {
+      "A": "Whetu",
+      "B": "Marama",
+      "C": "Rangi"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for the sky?",
+    "options": {
+      "A": "Whenua",
+      "B": "Rangi",
+      "C": "Moana"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo Maori word for a child?",
+    "options": {
+      "A": "Tamaiti",
+      "B": "Kaumatua",
+      "C": "Rangatira"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for a house or building?",
+    "options": {
+      "A": "Whare",
+      "B": "Marae",
+      "C": "Pa"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What was a fortified Maori village called?",
+    "options": {
+      "A": "Whare",
+      "B": "Pa",
+      "C": "Kainga"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the koru symbol most often carved or drawn to represent?",
+    "options": {
+      "A": "New life, growth and peace",
+      "B": "War and strength",
+      "C": "Death and mourning"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's largest lake located in which region?",
+    "options": {
+      "A": "Waikato",
+      "B": "Otago",
+      "C": "Canterbury"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand city sits on the Canterbury Plains?",
+    "options": {
+      "A": "Dunedin",
+      "B": "Christchurch",
+      "C": "Invercargill"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which strait would you cross on the ferry from Wellington?",
+    "options": {
+      "A": "Foveaux Strait",
+      "B": "Cook Strait",
+      "C": "Bass Strait"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the primary industry in the Waikato and Taranaki regions?",
+    "options": {
+      "A": "Mining",
+      "B": "Dairy farming",
+      "C": "Fishing"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What are New Zealand's native forests commonly called?",
+    "options": {
+      "A": "The outback",
+      "B": "The bush",
+      "C": "The wilds"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a 'tramper' in New Zealand?",
+    "options": {
+      "A": "A homeless person",
+      "B": "Someone who goes hiking",
+      "C": "A door-to-door salesperson"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do New Zealanders call the utility vehicle known elsewhere as a pickup truck?",
+    "options": {
+      "A": "A ute",
+      "B": "A rig",
+      "C": "A hauler"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the common New Zealand word for a rubbish bin?",
+    "options": {
+      "A": "A trash can",
+      "B": "A rubbish bin",
+      "C": "A skip"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What do New Zealanders call a frozen ice treat on a stick?",
+    "options": {
+      "A": "An iceblock",
+      "B": "A popsicle",
+      "C": "A freezie"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the New Zealand slang 'hard case' used to describe?",
+    "options": {
+      "A": "A tough legal matter",
+      "B": "A funny or characterful person",
+      "C": "A suitcase"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'dairy' most similar to overseas?",
+    "options": {
+      "A": "A convenience store / corner shop",
+      "B": "A supermarket",
+      "C": "A cafe"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a common New Zealand pastime involving small boats on lakes and rivers?",
+    "options": {
+      "A": "Gondola rides",
+      "B": "Jet-boating",
+      "C": "Punting only"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Where was the world's first commercial jet-boat developed, and by whom?",
+    "options": {
+      "A": "New Zealand, by Bill Hamilton",
+      "B": "Canada, by a logging company",
+      "C": "The USA, by the Army Corps"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the te reo greeting used to welcome many people, plural?",
+    "options": {
+      "A": "Kia ora",
+      "B": "Kia ora koutou",
+      "C": "Tena koe"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'tena koe' used for?",
+    "options": {
+      "A": "Greeting one person formally",
+      "B": "Saying goodbye",
+      "C": "Greeting a group"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the New Zealand term for the school year's long break?",
+    "options": {
+      "A": "Summer holidays (over Christmas)",
+      "B": "The winter term",
+      "C": "Spring break"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which sport, played on grass with a bat and ball over long matches, has NZ's Black Caps competing internationally?",
+    "options": {
+      "A": "Baseball",
+      "B": "Cricket",
+      "C": "Rounders"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is New Zealand's most popular spectator sport?",
+    "options": {
+      "A": "Rugby union",
+      "B": "Ice hockey",
+      "C": "Baseball"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which large southern city is the gateway to Fiordland and Stewart Island tourism?",
+    "options": {
+      "A": "Invercargill",
+      "B": "Timaru",
+      "C": "Ashburton"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name for the strong, warm, dry northwesterly wind of Canterbury?",
+    "options": {
+      "A": "The nor'wester",
+      "B": "The southerly buster",
+      "C": "The roaring forties"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What cold wind brings sudden temperature drops and rain to eastern and southern New Zealand?",
+    "options": {
+      "A": "The nor'wester",
+      "B": "The southerly",
+      "C": "The zephyr"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What band of strong westerly winds is New Zealand latitude often associated with?",
+    "options": {
+      "A": "The trade winds",
+      "B": "The Roaring Forties",
+      "C": "The doldrums"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What do New Zealanders say instead of the American 'going on vacation'?",
+    "options": {
+      "A": "Going on holiday",
+      "B": "Going on furlough",
+      "C": "Taking a recess"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the te reo word for 'welcome' used on many signs?",
+    "options": {
+      "A": "Haere ra",
+      "B": "Nau mai / haere mai",
+      "C": "Ka pai"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What does 'ka pai' mean?",
+    "options": {
+      "A": "Good / well done",
+      "B": "Hurry up",
+      "C": "Be quiet"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the te reo word for 'yes'?",
+    "options": {
+      "A": "Kao",
+      "B": "Ae",
+      "C": "Kia"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo word for 'no'?",
+    "options": {
+      "A": "Ae",
+      "B": "Kao",
+      "C": "Ehara"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What sweet, chewy, chocolate-coated pineapple-flavoured lolly is a New Zealand icon?",
+    "options": {
+      "A": "Pineapple Lumps",
+      "B": "Jaffas",
+      "C": "Eskimos"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What round, orange, hard-shelled chocolate sweets are traditionally rolled down a Dunedin street each year?",
+    "options": {
+      "A": "Jaffas",
+      "B": "Maltesers",
+      "C": "Minties"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo name for the New Zealand wood pigeon?",
+    "options": {
+      "A": "Kereru",
+      "B": "Kaka",
+      "C": "Kea"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is New Zealand's biggest island group and territory in the tropics that it administers?",
+    "options": {
+      "A": "The Chatham Islands",
+      "B": "Tokelau",
+      "C": "The Kermadec Islands"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which islands about 800 km east of the South Island are New Zealand's easternmost inhabited land?",
+    "options": {
+      "A": "The Chatham Islands",
+      "B": "The Auckland Islands",
+      "C": "The Antipodes Islands"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand city is closest to being directly antipodal to a major Spanish city?",
+    "options": {
+      "A": "Wellington (near Madrid's antipode)",
+      "B": "Auckland",
+      "C": "Dunedin"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What large body of water sits in the middle of the North Island, popular for trout fishing?",
+    "options": {
+      "A": "Lake Taupo",
+      "B": "Lake Rotorua",
+      "C": "Lake Waikaremoana"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which lake in Te Urewera is known for its scenic 'Great Walk' and Maori history?",
+    "options": {
+      "A": "Lake Waikaremoana",
+      "B": "Lake Tarawera",
+      "C": "Lake Rotoiti"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What volcanic eruption in 1886 buried villages and destroyed the Pink and White Terraces?",
+    "options": {
+      "A": "Mount Tarawera",
+      "B": "Mount Ruapehu",
+      "C": "White Island"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the active volcanic island in the Bay of Plenty, also called Whakaari?",
+    "options": {
+      "A": "White Island",
+      "B": "Rangitoto",
+      "C": "Mayor Island"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the te reo Maori word for 'bird'?",
+    "options": {
+      "A": "Manu",
+      "B": "Ngahere",
+      "C": "Moana"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'the bach' typically used for?",
+    "options": {
+      "A": "A weekend or holiday getaway house, often near the beach",
+      "B": "A garden shed",
+      "C": "A church hall"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which New Zealand-born actor played villainous roles and starred in 'Jurassic Park' as Dr Alan Grant?",
+    "options": {
+      "A": "Cliff Curtis",
+      "B": "Sam Neill",
+      "C": "Karl Urban"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which New Zealand actor from 'The Lord of the Rings' and 'Star Trek' films is known as Bones and Eomer?",
+    "options": {
+      "A": "Karl Urban",
+      "B": "Martin Csokas",
+      "C": "Craig Parker"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand-raised comedian and musician wrote Oscar-winning song 'Man or Muppet'?",
+    "options": {
+      "A": "Rhys Darby",
+      "B": "Bret McKenzie",
+      "C": "Taika Waititi"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand singer had a global hit with 'How Bizarre' in 1996 under the name OMC?",
+    "options": {
+      "A": "Pauly Fuemana",
+      "B": "Che Fu",
+      "C": "Bic Runga"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand singer-songwriter released the acclaimed album 'Beautiful Collision'?",
+    "options": {
+      "A": "Brooke Fraser",
+      "B": "Bic Runga",
+      "C": "Ladyhawke"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which New Zealand hip-hop and reggae band is known for hits like 'Don't Forget Your Roots'?",
+    "options": {
+      "A": "Six60",
+      "B": "Fat Freddy's Drop",
+      "C": "Shapeshifter"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which New Zealand children's entertainers, twin sisters, are also political activists and yodellers?",
+    "options": {
+      "A": "The Topp Twins",
+      "B": "The Chicks",
+      "C": "The Lada Sisters"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a common New Zealand word for a small, informal eatery serving pies and toasties?",
+    "options": {
+      "A": "A diner",
+      "B": "A tearoom or lunch bar",
+      "C": "A canteen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What savoury pastry is arguably New Zealand's most iconic quick food?",
+    "options": {
+      "A": "The sausage roll",
+      "B": "The mince and cheese pie",
+      "C": "The pasty"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which native tree's timber, prized for boat-building and carving, is now strictly protected?",
+    "options": {
+      "A": "Pine",
+      "B": "Kauri",
+      "C": "Macrocarpa"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What common New Zealand hedge and shelterbelt tree was introduced from California (Monterey)?",
+    "options": {
+      "A": "Kauri",
+      "B": "Radiata pine (Pinus radiata)",
+      "C": "Totara"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What has been New Zealand's main international tourism marketing slogan since 1999?",
+    "options": {
+      "A": "100% Pure New Zealand",
+      "B": "Incredible New Zealand",
+      "C": "The Real Middle-earth"
+    },
+    "correct": "A",
+    "difficulty": 3
+  }
+]

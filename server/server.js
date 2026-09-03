@@ -126,6 +126,7 @@ function sanitizeConfig(input, current) {
     if (picked.length) cfg.questionSets = picked;
   }
   if (typeof input.difficultyRamp === 'boolean') cfg.difficultyRamp = input.difficultyRamp;
+  if (['random', 'easy', 'medium', 'hard'].includes(input.questionDifficulty)) cfg.questionDifficulty = input.questionDifficulty;
   if (typeof input.bearTraps === 'boolean') cfg.bearTraps = input.bearTraps;
   if (['off', 'low', 'high'].includes(input.dogLunge)) cfg.dogLunge = input.dogLunge;
   if (typeof input.dynamicCellScaling === 'boolean') cfg.dynamicCellScaling = input.dynamicCellScaling;
@@ -163,6 +164,10 @@ io.on('connection', socket => {
       return;
     }
     const room = manager.createRoom(socket.id);
+    if (!room) {
+      socket.emit('host:error', { message: 'The server is at capacity right now - please try again shortly.' });
+      return;
+    }
     room.config = sanitizeConfig(payload, room.config);
     joinedRoomCode = room.code;
     isHost = true;
@@ -630,7 +635,7 @@ io.on('connection', socket => {
   // never in a brand-new room's first lobby (awaitingRematchStart guards that), since the
   // host may still be actively configuring there.
   function maybeStartRematchCountdown(room) {
-    if (!room.awaitingRematchStart || room.state !== 'lobby') return;
+    if (room.destroyed || !room.awaitingRematchStart || room.state !== 'lobby') return;
     // Auto-start only once EVERY connected player has readied up (not just a quorum) -
     // still gated on the 2-player minimum. The host's own START GAME button remains the
     // way to start with anyone not ready.
@@ -644,7 +649,7 @@ io.on('connection', socket => {
       io.to(room.code).emit('game:rematchCountdown', { endsAt });
       room.rematchTimer = setTimeout(() => {
         room.rematchTimer = null;
-        if (room.state === 'lobby' && room.awaitingRematchStart && readyToStart(room)) {
+        if (!room.destroyed && room.state === 'lobby' && room.awaitingRematchStart && readyToStart(room)) {
           room.start(io);
           io.to(room.code).emit('game:started', { config: room.config });
         }
@@ -698,6 +703,9 @@ const CATEGORY_LABELS = {
   music: '🎵 Music',
   history: '🏛️ History',
   literature: '📚 Literature',
+  science: '🔬 Science',
+  politics: '🗳️ Politics & Government',
+  'new-zealand': '🥝 New Zealand',
   webdev: '💻 Web Developer Trivia'
 };
 app.get('/api/question-categories', (req, res) => {
@@ -845,6 +853,7 @@ function renderDashboardHtml(summary) {
     <div class="config-row">
       <div>${renderCountTable(summary.config.questionSets, 'Question category')}</div>
       <div>${renderCountTable(summary.config.dogLunge, 'Dog lunge')}</div>
+      <div>${renderCountTable(summary.config.questionDifficulty, 'Question difficulty')}</div>
     </div>
     <div class="config-row" style="margin-top:16px;">
       <div>${renderCountTable(summary.config.difficultyRamp, 'Ramp difficulty')}</div>

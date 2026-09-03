@@ -3,13 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const analytics = require('./analytics');
 
-// Category-based question sets (see server/questions/, built by
-// server/build-questions.js). Politics/Science/New Zealand are real,
-// intentional gaps - genuinely empty for now (follow-up content work), so
-// they're deliberately left out of QUESTION_CATEGORIES entirely rather than
-// loaded as empty arrays a host could select and get a broken 0-question
-// game from. QUESTION_CATEGORIES is also the source of truth for which
-// category keys sanitizeConfig() (server.js) accepts.
+// Category-based question sets (see server/questions/). general/movies-tv/music/history/
+// webdev came from server/build-questions.js; science/politics/new-zealand and the
+// expanded literature set came from server/build-questions-extra.js. Every entry carries
+// a "difficulty" 1-5 (used by config.difficultyRamp and config.questionDifficulty).
+// QUESTION_CATEGORIES is the source of truth for which category keys sanitizeConfig()
+// (server.js) accepts - a category only appears here once its JSON file has real content
+// (a key with an empty file would give a host a broken 0-question game).
 const QUESTIONS_DIR = path.join(__dirname, 'questions');
 function loadCategory(file) {
   return JSON.parse(fs.readFileSync(path.join(QUESTIONS_DIR, file), 'utf8'));
@@ -20,6 +20,9 @@ const QUESTION_CATEGORIES = {
   music: loadCategory('music.json'),
   history: loadCategory('history.json'),
   literature: loadCategory('literature.json'),
+  science: loadCategory('science.json'),
+  politics: loadCategory('politics.json'),
+  'new-zealand': loadCategory('new-zealand.json'),
   webdev: loadCategory('webdev.json')
 };
 
@@ -152,6 +155,9 @@ const TICK_MS = 40; // 25Hz
 // player:join in a loop) a bounded rather than unbounded resource drain - every extra
 // player is broadcast in every 25Hz game:tick and iterated in the movement loop.
 const MAX_PLAYERS_PER_ROOM = 150;
+// Global ceiling on concurrent rooms (see GameManager.createRoom). One live server hosts
+// a handful of real events at once; 500 is far above that but still bounds a flood.
+const MAX_ROOMS = 500;
 
 // The avatar palette the client offers. Also the server-side allowlist for the `color`
 // field: a player's colour is rendered into `style="..."` attributes on both the player
@@ -418,6 +424,9 @@ function difficultyBand(d) {
   if (d === 3) return 1;
   return 2;
 }
+// Host's fixed-difficulty picker (config.questionDifficulty) -> the band it selects.
+// 'random' (and anything unrecognised) maps to null = no filter.
+const DIFFICULTY_CHOICE_BAND = { easy: 0, medium: 1, hard: 2 };
 
 // Builds an easy->hard ordered question list for the "ramp difficulty" mode: groups the
 // source pool into the 3 difficulty bands above, shuffles within each band so repeat
@@ -513,6 +522,9 @@ class Room {
       // CLAUDE.md if that changes).
       questionSets: ['general'],
       difficultyRamp: true, // opt-in: order questions easy->hard instead of shuffling
+      // Fixed-difficulty filter - 'random' (all) | 'easy' | 'medium' | 'hard'. Only
+      // consulted when difficultyRamp is OFF (the ramp deliberately spans every band).
+      questionDifficulty: 'random',
       bearTraps: false, // opt-in escape-phase hazard
       dogLunge: 'low', // 'off' | 'low' | 'high' - default: dogs leap rarely
       dynamicCellScaling: true // shrinking cages round over round (default on)
@@ -540,6 +552,7 @@ class Room {
     this.rematchTimer = null;
     this.botSeq = 0; // running counter for bot names (debug mode)
     this.botAccuracy = 0.6; // P(a bot picks the correct door) in the question phase
+    this.destroyed = false; // latched by destroy() - see GameManager.removeRoom
   }
 
   // ---- Debug-mode bots ----
@@ -842,7 +855,20 @@ class Room {
     const keys = (this.config.questionSets && this.config.questionSets.length)
       ? this.config.questionSets
       : ['general'];
-    const source = keys.flatMap(key => QUESTION_CATEGORIES[key] || []);
+    let source = keys.flatMap(key => QUESTION_CATEGORIES[key] || []);
+
+    // Fixed-difficulty picker: narrow the pool to one band before anything else. Only
+    // when the ramp is OFF - the ramp is itself a difficulty progression and owns the
+    // whole 1-5 range. 'random' (or an unknown value) -> no filter. If a band somehow
+    // has nothing in the chosen categories, keep the unfiltered pool rather than ship a
+    // 0-question game.
+    if (!this.config.difficultyRamp) {
+      const band = DIFFICULTY_CHOICE_BAND[this.config.questionDifficulty];
+      if (band != null) {
+        const filtered = source.filter(q => difficultyBand(q.difficulty) === band);
+        if (filtered.length) source = filtered;
+      }
+    }
 
     // Drop anything shown recently by ANY room on this process (see RECENTLY_SHOWN) so a
     // question doesn't resurface a game or two later - within a rematch chain or across a
@@ -901,6 +927,7 @@ class Room {
   }
 
   start(io) {
+    if (this.destroyed) return; // torn-down room - refuse (guards a late rematch-timer callback)
     this.clearRematchTimer();
     this.awaitingRematchStart = false;
     this.buildQuestionSet();
@@ -964,6 +991,7 @@ class Room {
   }
 
   startLoop(io) {
+    if (this.destroyed) return; // never resurrect a torn-down room (e.g. a late rematch timer)
     if (this.loop) clearInterval(this.loop);
     this.loop = setInterval(() => this.tick(io), TICK_MS);
   }
@@ -971,6 +999,17 @@ class Room {
   stopLoop() {
     if (this.loop) clearInterval(this.loop);
     this.loop = null;
+  }
+
+  // Permanent teardown - GameManager.removeRoom calls this. Kills every timer the room
+  // owns (the tick loop AND a possibly-pending rematch countdown) and latches `destroyed`
+  // so anything still holding a reference (an in-flight setTimeout callback) can't spin a
+  // new interval back up. Without the rematch-timer half, a host who left during the 6s
+  // post-rematch countdown could leak a 25Hz interval that never gets swept again.
+  destroy() {
+    this.destroyed = true;
+    this.stopLoop();
+    this.clearRematchTimer();
   }
 
   endGame(io, reason) {
@@ -1548,6 +1587,11 @@ class GameManager {
   }
 
   createRoom(hostSocketId) {
+    // Global ceiling across every host/IP. The per-IP rate limit (analytics.allowRoomCreate)
+    // only slows one source; this bounds the total, so a distributed burst can't spin up
+    // enough concurrent rooms (each an eventual 25Hz tick loop once a game starts) to
+    // exhaust CPU. Far above any real single-server load - the sweep frees empty ones fast.
+    if (this.rooms.size >= MAX_ROOMS) return null;
     let code;
     do { code = shortCode(); } while (this.rooms.has(code));
     const room = new Room(code, hostSocketId);
@@ -1564,7 +1608,7 @@ class GameManager {
   removeRoom(code) {
     const room = this.rooms.get(code);
     if (room) {
-      room.stopLoop();
+      room.destroy(); // stops the tick loop AND any pending rematch countdown, latches destroyed
       // Analytics only - anyone still in the room at this point (host left for
       // good, or this is the periodic sweep reaping an abandoned/stale room)
       // would otherwise never get a player_left record, since nothing else

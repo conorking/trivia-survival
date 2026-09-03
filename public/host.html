@@ -67,6 +67,16 @@
       <label>Question categories <span class="muted" style="font-size:var(--fs-vt-xs);">(pick one or more - they're merged into one pool)</span></label>
       <div id="categoryPicker"></div>
       <div class="error-msg" id="categoryError"></div>
+      <div id="cfgQuestionDifficultyRow">
+        <label>Question difficulty</label>
+        <select id="cfgQuestionDifficulty">
+          <option value="random" selected>Random — all difficulties</option>
+          <option value="easy">Easy only</option>
+          <option value="medium">Medium only</option>
+          <option value="hard">Hard only</option>
+        </select>
+        <span class="checkbox-desc" style="display:block; margin-top:4px;">Restricts the pool to one difficulty band. Turn off "Ramp difficulty" below to use this.</span>
+      </div>
       <label>Dog lunge (random speed bursts while hunting)</label>
       <select id="cfgDogLunge">
         <option value="off">Off</option>

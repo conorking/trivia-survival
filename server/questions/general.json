@@ -862,9 +862,9 @@
   {
     "q": "What is the only mammal capable of true flight?",
     "options": {
-      "A": "Squirrel",
+      "A": "Flying squirrel",
       "B": "Bat",
-      "C": "Flying fox"
+      "C": "Sugar glider"
     },
     "correct": "B",
     "difficulty": 2
@@ -3020,10 +3020,10 @@
     "difficulty": 5
   },
   {
-    "q": "Which letter of the alphabet does not appear in the symbol of any element on the periodic table?",
+    "q": "Which of these letters does not appear in the symbol of any element on the periodic table?",
     "options": {
       "A": "J",
-      "B": "Q",
+      "B": "X",
       "C": "Z"
     },
     "correct": "A",
@@ -3650,14 +3650,14 @@
     "difficulty": 5
   },
   {
-    "q": "Which company's logo is famous for containing a hidden arrow between the letters 'E' and 'x'?",
+    "q": "Which delivery company's logo famously contains a hidden arrow in the negative space of its wordmark?",
     "options": {
       "A": "FedEx",
-      "B": "Amazon",
+      "B": "DHL",
       "C": "UPS"
     },
     "correct": "A",
-    "difficulty": 5
+    "difficulty": 4
   },
   {
     "q": "De Eemhof, Port Zelande and Het Heijderbos are holiday villas owned by what company?",
@@ -3803,7 +3803,7 @@
     "q": "Which of these cities does NOT have a United States Minting location?",
     "options": {
       "A": "St. Louis, MO",
-      "B": "San Fransisco, CA",
+      "B": "San Francisco, CA",
       "C": "West Point, NY"
     },
     "correct": "A",
@@ -3843,7 +3843,7 @@
     "q": "What is the largest organ of the human body?",
     "options": {
       "A": "Skin",
-      "B": "large Intestine",
+      "B": "Large intestine",
       "C": "Liver"
     },
     "correct": "A",

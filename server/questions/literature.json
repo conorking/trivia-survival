@@ -70,16 +70,6 @@
     "difficulty": 1
   },
   {
-    "q": "Which language has the most native speakers in the world?",
-    "options": {
-      "A": "English",
-      "B": "Mandarin Chinese",
-      "C": "Spanish"
-    },
-    "correct": "B",
-    "difficulty": 1
-  },
-  {
     "q": "What does the Latin phrase 'et cetera' mean?",
     "options": {
       "A": "And so on",
@@ -338,26 +328,6 @@
     },
     "correct": "B",
     "difficulty": 2
-  },
-  {
-    "q": "What is the value of Pi rounded to two decimal places?",
-    "options": {
-      "A": "3.14",
-      "B": "3.41",
-      "C": "3.12"
-    },
-    "correct": "A",
-    "difficulty": 1
-  },
-  {
-    "q": "How many sides does a heptagon have?",
-    "options": {
-      "A": "6",
-      "B": "7",
-      "C": "8"
-    },
-    "correct": "B",
-    "difficulty": 1
   },
   {
     "q": "In which Shakespeare tragedy does the line 'Out, damned spot!' appear?",
@@ -700,26 +670,6 @@
     "difficulty": 5
   },
   {
-    "q": "What is 9 squared?",
-    "options": {
-      "A": "81",
-      "B": "72",
-      "C": "90"
-    },
-    "correct": "A",
-    "difficulty": 1
-  },
-  {
-    "q": "What is 17 mod 5 (the remainder when 17 is divided by 5)?",
-    "options": {
-      "A": "2",
-      "B": "3",
-      "C": "1"
-    },
-    "correct": "A",
-    "difficulty": 3
-  },
-  {
     "q": "The word 'disaster' comes from roots meaning 'bad star', reflecting old beliefs connecting misfortune to what?",
     "options": {
       "A": "Astrology",
@@ -860,23 +810,3613 @@
     "difficulty": 5
   },
   {
-    "q": "How many officially recognized planets are in our solar system, following the 2006 reclassification of Pluto as a dwarf planet?",
+    "q": "Who wrote 'Romeo and Juliet'?",
     "options": {
-      "A": "8",
-      "B": "9",
-      "C": "10"
+      "A": "Christopher Marlowe",
+      "B": "William Shakespeare",
+      "C": "Ben Jonson"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Hamlet'?",
+    "options": {
+      "A": "William Shakespeare",
+      "B": "John Milton",
+      "C": "Geoffrey Chaucer"
     },
     "correct": "A",
     "difficulty": 1
   },
   {
-    "q": "Which planet experiences the most extreme temperature swings of any in the solar system, due to having virtually no atmosphere to retain heat?",
+    "q": "Who wrote the 'Harry Potter' series?",
     "options": {
-      "A": "Mercury",
-      "B": "Mars",
-      "C": "Venus"
+      "A": "J.R.R. Tolkien",
+      "B": "J.K. Rowling",
+      "C": "Philip Pullman"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'The Lord of the Rings'?",
+    "options": {
+      "A": "C.S. Lewis",
+      "B": "J.R.R. Tolkien",
+      "C": "George R.R. Martin"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'A Christmas Carol'?",
+    "options": {
+      "A": "Charles Dickens",
+      "B": "Thomas Hardy",
+      "C": "Wilkie Collins"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Oliver Twist'?",
+    "options": {
+      "A": "Charles Dickens",
+      "B": "Robert Louis Stevenson",
+      "C": "Anthony Trollope"
     },
     "correct": "A",
     "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Jane Eyre'?",
+    "options": {
+      "A": "Emily Bronte",
+      "B": "Charlotte Bronte",
+      "C": "Anne Bronte"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Wuthering Heights'?",
+    "options": {
+      "A": "Charlotte Bronte",
+      "B": "Emily Bronte",
+      "C": "Elizabeth Gaskell"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Great Expectations'?",
+    "options": {
+      "A": "Charles Dickens",
+      "B": "William Thackeray",
+      "C": "George Gissing"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Adventures of Huckleberry Finn'?",
+    "options": {
+      "A": "Mark Twain",
+      "B": "Herman Melville",
+      "C": "Nathaniel Hawthorne"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Old Man and the Sea'?",
+    "options": {
+      "A": "William Faulkner",
+      "B": "Ernest Hemingway",
+      "C": "John Steinbeck"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Great Gatsby'?",
+    "options": {
+      "A": "F. Scott Fitzgerald",
+      "B": "Ernest Hemingway",
+      "C": "John Dos Passos"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'To Kill a Mockingbird'?",
+    "options": {
+      "A": "Harper Lee",
+      "B": "Flannery O'Connor",
+      "C": "Carson McCullers"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote '1984'?",
+    "options": {
+      "A": "Aldous Huxley",
+      "B": "George Orwell",
+      "C": "Ray Bradbury"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Animal Farm'?",
+    "options": {
+      "A": "George Orwell",
+      "B": "Kurt Vonnegut",
+      "C": "Arthur Koestler"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Brave New World'?",
+    "options": {
+      "A": "George Orwell",
+      "B": "Aldous Huxley",
+      "C": "H.G. Wells"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Fahrenheit 451'?",
+    "options": {
+      "A": "Isaac Asimov",
+      "B": "Ray Bradbury",
+      "C": "Philip K. Dick"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Grapes of Wrath'?",
+    "options": {
+      "A": "John Steinbeck",
+      "B": "William Faulkner",
+      "C": "Sinclair Lewis"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Of Mice and Men'?",
+    "options": {
+      "A": "John Steinbeck",
+      "B": "Ernest Hemingway",
+      "C": "Erskine Caldwell"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Moby-Dick'?",
+    "options": {
+      "A": "Herman Melville",
+      "B": "Jack London",
+      "C": "James Fenimore Cooper"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Anna Karenina'?",
+    "options": {
+      "A": "Fyodor Dostoevsky",
+      "B": "Leo Tolstoy",
+      "C": "Nikolai Gogol"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Les Miserables'?",
+    "options": {
+      "A": "Alexandre Dumas",
+      "B": "Victor Hugo",
+      "C": "Emile Zola"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Count of Monte Cristo' and 'The Three Musketeers'?",
+    "options": {
+      "A": "Victor Hugo",
+      "B": "Alexandre Dumas",
+      "C": "Gustave Flaubert"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Don Quixote'?",
+    "options": {
+      "A": "Miguel de Cervantes",
+      "B": "Lope de Vega",
+      "C": "Federico Garcia Lorca"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'One Hundred Years of Solitude'?",
+    "options": {
+      "A": "Jorge Luis Borges",
+      "B": "Gabriel Garcia Marquez",
+      "C": "Mario Vargas Llosa"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Odyssey' and 'The Iliad' (traditionally)?",
+    "options": {
+      "A": "Virgil",
+      "B": "Homer",
+      "C": "Sophocles"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote the epic poem 'The Aeneid'?",
+    "options": {
+      "A": "Homer",
+      "B": "Virgil",
+      "C": "Ovid"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Paradise Lost'?",
+    "options": {
+      "A": "John Milton",
+      "B": "John Donne",
+      "C": "Edmund Spenser"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Canterbury Tales'?",
+    "options": {
+      "A": "William Langland",
+      "B": "Geoffrey Chaucer",
+      "C": "Thomas Malory"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Frankenstein'?",
+    "options": {
+      "A": "Mary Shelley",
+      "B": "Bram Stoker",
+      "C": "Ann Radcliffe"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Dracula'?",
+    "options": {
+      "A": "Mary Shelley",
+      "B": "Bram Stoker",
+      "C": "Sheridan Le Fanu"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Strange Case of Dr Jekyll and Mr Hyde'?",
+    "options": {
+      "A": "Robert Louis Stevenson",
+      "B": "Arthur Conan Doyle",
+      "C": "H.G. Wells"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Treasure Island'?",
+    "options": {
+      "A": "Daniel Defoe",
+      "B": "Robert Louis Stevenson",
+      "C": "Jules Verne"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Robinson Crusoe'?",
+    "options": {
+      "A": "Jonathan Swift",
+      "B": "Daniel Defoe",
+      "C": "Henry Fielding"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Gulliver's Travels'?",
+    "options": {
+      "A": "Daniel Defoe",
+      "B": "Jonathan Swift",
+      "C": "Laurence Sterne"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who created Sherlock Holmes?",
+    "options": {
+      "A": "Agatha Christie",
+      "B": "Arthur Conan Doyle",
+      "C": "Wilkie Collins"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who created the detective Hercule Poirot?",
+    "options": {
+      "A": "Dorothy L. Sayers",
+      "B": "Agatha Christie",
+      "C": "G.K. Chesterton"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who created Miss Marple?",
+    "options": {
+      "A": "Agatha Christie",
+      "B": "Ngaio Marsh",
+      "C": "P.D. James"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'And Then There Were None', one of the best-selling novels of all time?",
+    "options": {
+      "A": "Agatha Christie",
+      "B": "Raymond Chandler",
+      "C": "Patricia Highsmith"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Catcher in the Rye'?",
+    "options": {
+      "A": "J.D. Salinger",
+      "B": "John Updike",
+      "C": "Philip Roth"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Lord of the Flies'?",
+    "options": {
+      "A": "William Golding",
+      "B": "Anthony Burgess",
+      "C": "Graham Greene"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Hobbit'?",
+    "options": {
+      "A": "C.S. Lewis",
+      "B": "J.R.R. Tolkien",
+      "C": "Lloyd Alexander"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'The Chronicles of Narnia'?",
+    "options": {
+      "A": "J.R.R. Tolkien",
+      "B": "C.S. Lewis",
+      "C": "E. Nesbit"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Charlie and the Chocolate Factory'?",
+    "options": {
+      "A": "Roald Dahl",
+      "B": "Enid Blyton",
+      "C": "Dr. Seuss"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Matilda' and 'James and the Giant Peach'?",
+    "options": {
+      "A": "Roald Dahl",
+      "B": "Michael Morpurgo",
+      "C": "David Walliams"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'The Very Hungry Caterpillar'?",
+    "options": {
+      "A": "Eric Carle",
+      "B": "Maurice Sendak",
+      "C": "Dr. Seuss"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Where the Wild Things Are'?",
+    "options": {
+      "A": "Dr. Seuss",
+      "B": "Maurice Sendak",
+      "C": "Shel Silverstein"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Cat in the Hat' and 'Green Eggs and Ham'?",
+    "options": {
+      "A": "Dr. Seuss",
+      "B": "Roald Dahl",
+      "C": "A.A. Milne"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who created Winnie-the-Pooh?",
+    "options": {
+      "A": "Beatrix Potter",
+      "B": "A.A. Milne",
+      "C": "Kenneth Grahame"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Wind in the Willows'?",
+    "options": {
+      "A": "Kenneth Grahame",
+      "B": "A.A. Milne",
+      "C": "J.M. Barrie"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who created Peter Pan?",
+    "options": {
+      "A": "Lewis Carroll",
+      "B": "J.M. Barrie",
+      "C": "E. Nesbit"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Alice's Adventures in Wonderland'?",
+    "options": {
+      "A": "Lewis Carroll",
+      "B": "George MacDonald",
+      "C": "Charles Kingsley"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'The Tale of Peter Rabbit'?",
+    "options": {
+      "A": "Beatrix Potter",
+      "B": "Kenneth Grahame",
+      "C": "Kate Greenaway"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Little Women'?",
+    "options": {
+      "A": "Louisa May Alcott",
+      "B": "Frances Hodgson Burnett",
+      "C": "L.M. Montgomery"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Anne of Green Gables'?",
+    "options": {
+      "A": "Louisa May Alcott",
+      "B": "L.M. Montgomery",
+      "C": "Laura Ingalls Wilder"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Secret Garden'?",
+    "options": {
+      "A": "Frances Hodgson Burnett",
+      "B": "E. Nesbit",
+      "C": "Johanna Spyri"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In which Shakespeare play does the line 'To be, or not to be' appear?",
+    "options": {
+      "A": "Macbeth",
+      "B": "Hamlet",
+      "C": "King Lear"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Shakespeare play features the witches' chant 'Double, double toil and trouble'?",
+    "options": {
+      "A": "The Tempest",
+      "B": "Macbeth",
+      "C": "Julius Caesar"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Shakespeare play is set on a remote island ruled by the magician Prospero?",
+    "options": {
+      "A": "A Midsummer Night's Dream",
+      "B": "The Tempest",
+      "C": "Twelfth Night"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which star-crossed lovers belong to the Montague and Capulet families?",
+    "options": {
+      "A": "Antony and Cleopatra",
+      "B": "Romeo and Juliet",
+      "C": "Troilus and Cressida"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In 'Hamlet', who is the Prince of Denmark's murdered father's brother and killer?",
+    "options": {
+      "A": "Polonius",
+      "B": "Claudius",
+      "C": "Laertes"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Shakespeare play features the Moor of Venice and the villain Iago?",
+    "options": {
+      "A": "Othello",
+      "B": "The Merchant of Venice",
+      "C": "Cymbeline"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Shakespeare play features Shylock and the demand for 'a pound of flesh'?",
+    "options": {
+      "A": "Othello",
+      "B": "The Merchant of Venice",
+      "C": "Measure for Measure"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Shakespeare comedy features the feuding fairy king and queen Oberon and Titania?",
+    "options": {
+      "A": "As You Like It",
+      "B": "A Midsummer Night's Dream",
+      "C": "Much Ado About Nothing"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which aging king in a Shakespeare tragedy divides his kingdom among his daughters?",
+    "options": {
+      "A": "Lear",
+      "B": "Duncan",
+      "C": "Richard"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Shakespeare play opens 'When shall we three meet again'?",
+    "options": {
+      "A": "King Lear",
+      "B": "Macbeth",
+      "C": "Julius Caesar"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "'Et tu, Brute?' are dying words in which Shakespeare play?",
+    "options": {
+      "A": "Coriolanus",
+      "B": "Julius Caesar",
+      "C": "Antony and Cleopatra"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Shakespeare heroine disguises herself as a man named 'Cesario' in Illyria?",
+    "options": {
+      "A": "Rosalind",
+      "B": "Viola",
+      "C": "Portia"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Shakespeare heroine disguises herself as a lawyer to save Antonio?",
+    "options": {
+      "A": "Viola",
+      "B": "Portia",
+      "C": "Beatrice"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What are the last words of the title character of 'Hamlet'?",
+    "options": {
+      "A": "'A horse! A horse!'",
+      "B": "'The rest is silence'",
+      "C": "'Out, out, brief candle'"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "'Now is the winter of our discontent' opens which Shakespeare history play?",
+    "options": {
+      "A": "Henry V",
+      "B": "Richard III",
+      "C": "King John"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which sprite serves Prospero in 'The Tempest'?",
+    "options": {
+      "A": "Puck",
+      "B": "Ariel",
+      "C": "Caliban"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which mischievous fairy serves Oberon in 'A Midsummer Night's Dream'?",
+    "options": {
+      "A": "Ariel",
+      "B": "Puck (Robin Goodfellow)",
+      "C": "Bottom"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Approximately how many plays is Shakespeare generally credited with?",
+    "options": {
+      "A": "About 12",
+      "B": "About 37-39",
+      "C": "About 100"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many lines does a Shakespearean (English) sonnet have?",
+    "options": {
+      "A": "12",
+      "B": "14",
+      "C": "16"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "The final two lines of a Shakespearean sonnet form what?",
+    "options": {
+      "A": "A rhyming couplet",
+      "B": "A quatrain",
+      "C": "A tercet"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel opens 'It was the best of times, it was the worst of times'?",
+    "options": {
+      "A": "Bleak House",
+      "B": "A Tale of Two Cities",
+      "C": "Hard Times"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel opens 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife'?",
+    "options": {
+      "A": "Emma",
+      "B": "Pride and Prejudice",
+      "C": "Sense and Sensibility"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel opens 'Call me Ishmael'?",
+    "options": {
+      "A": "Moby-Dick",
+      "B": "Billy Budd",
+      "C": "The Sea-Wolf"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel opens 'It was a bright cold day in April, and the clocks were striking thirteen'?",
+    "options": {
+      "A": "Brave New World",
+      "B": "1984",
+      "C": "Fahrenheit 451"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel opens 'All this happened, more or less'?",
+    "options": {
+      "A": "Catch-22",
+      "B": "Slaughterhouse-Five",
+      "C": "Gravity's Rainbow"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which novel opens 'Happy families are all alike; every unhappy family is unhappy in its own way'?",
+    "options": {
+      "A": "War and Peace",
+      "B": "Anna Karenina",
+      "C": "Fathers and Sons"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel opens 'Mr and Mrs Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal'?",
+    "options": {
+      "A": "Harry Potter and the Chamber of Secrets",
+      "B": "Harry Potter and the Philosopher's Stone",
+      "C": "Harry Potter and the Goblet of Fire"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel opens 'In a hole in the ground there lived a hobbit'?",
+    "options": {
+      "A": "The Fellowship of the Ring",
+      "B": "The Hobbit",
+      "C": "The Silmarillion"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel begins 'Last night I dreamt I went to Manderley again'?",
+    "options": {
+      "A": "Jane Eyre",
+      "B": "Rebecca",
+      "C": "Wuthering Heights"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel opens 'The sky above the port was the color of television, tuned to a dead channel'?",
+    "options": {
+      "A": "Neuromancer",
+      "B": "Snow Crash",
+      "C": "Do Androids Dream of Electric Sheep?"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "'It is a far, far better thing that I do, than I have ever done' ends which novel?",
+    "options": {
+      "A": "Great Expectations",
+      "B": "A Tale of Two Cities",
+      "C": "Nicholas Nickleby"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "'So we beat on, boats against the current, borne back ceaselessly into the past' ends which novel?",
+    "options": {
+      "A": "The Sun Also Rises",
+      "B": "The Great Gatsby",
+      "C": "Tender Is the Night"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "'All animals are equal, but some animals are more equal than others' is from which book?",
+    "options": {
+      "A": "1984",
+      "B": "Animal Farm",
+      "C": "Brave New World"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "'Big Brother is watching you' is a phrase from which novel?",
+    "options": {
+      "A": "Fahrenheit 451",
+      "B": "1984",
+      "C": "We"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "The phrase 'catch-22' comes from a novel by which author?",
+    "options": {
+      "A": "Kurt Vonnegut",
+      "B": "Joseph Heller",
+      "C": "Norman Mailer"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "'It was a pleasure to burn' opens which dystopian novel?",
+    "options": {
+      "A": "1984",
+      "B": "Fahrenheit 451",
+      "C": "The Handmaid's Tale"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "'Do not go gentle into that good night' is a famous villanelle by which Welsh poet?",
+    "options": {
+      "A": "Dylan Thomas",
+      "B": "R. S. Thomas",
+      "C": "Wilfred Owen"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "'Because I could not stop for Death' is a poem by whom?",
+    "options": {
+      "A": "Emily Dickinson",
+      "B": "Christina Rossetti",
+      "C": "Elizabeth Barrett Browning"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "'Two roads diverged in a yellow wood' is the opening of which poem?",
+    "options": {
+      "A": "'Stopping by Woods on a Snowy Evening'",
+      "B": "'The Road Not Taken'",
+      "C": "'Birches'"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "'April is the cruellest month' opens which long modernist poem?",
+    "options": {
+      "A": "'Howl'",
+      "B": "'The Waste Land'",
+      "C": "'The Love Song of J. Alfred Prufrock'"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In which novel would you meet the character Atticus Finch?",
+    "options": {
+      "A": "The Grapes of Wrath",
+      "B": "To Kill a Mockingbird",
+      "C": "A Time to Kill"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In which novel does the character Holden Caulfield appear?",
+    "options": {
+      "A": "On the Road",
+      "B": "The Catcher in the Rye",
+      "C": "A Separate Peace"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In which book does Bilbo Baggins first appear?",
+    "options": {
+      "A": "The Hobbit",
+      "B": "The Fellowship of the Ring",
+      "C": "The Silmarillion"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "In which novel does Elizabeth Bennet appear?",
+    "options": {
+      "A": "Emma",
+      "B": "Pride and Prejudice",
+      "C": "Persuasion"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the orphan Pip and the convict Magwitch?",
+    "options": {
+      "A": "Oliver Twist",
+      "B": "Great Expectations",
+      "C": "David Copperfield"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Dickens novel features the miser Ebenezer Scrooge?",
+    "options": {
+      "A": "Bleak House",
+      "B": "A Christmas Carol",
+      "C": "Little Dorrit"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which novel features the character Jay Gatsby?",
+    "options": {
+      "A": "The Great Gatsby",
+      "B": "This Side of Paradise",
+      "C": "The Beautiful and Damned"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features Winston Smith and the Ministry of Truth?",
+    "options": {
+      "A": "Brave New World",
+      "B": "1984",
+      "C": "Darkness at Noon"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the character Jean Valjean?",
+    "options": {
+      "A": "The Count of Monte Cristo",
+      "B": "Les Miserables",
+      "C": "Germinal"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In which novel does Captain Ahab hunt a white whale?",
+    "options": {
+      "A": "The Sea-Wolf",
+      "B": "Moby-Dick",
+      "C": "Twenty Thousand Leagues Under the Sea"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the March sisters: Meg, Jo, Beth and Amy?",
+    "options": {
+      "A": "Little Women",
+      "B": "The Railway Children",
+      "C": "What Katy Did"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the character Heathcliff?",
+    "options": {
+      "A": "Jane Eyre",
+      "B": "Wuthering Heights",
+      "C": "Rebecca"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the governess and the master Mr Rochester?",
+    "options": {
+      "A": "Wuthering Heights",
+      "B": "Jane Eyre",
+      "C": "Villette"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the character Boo Radley?",
+    "options": {
+      "A": "To Kill a Mockingbird",
+      "B": "The Help",
+      "C": "A Lesson Before Dying"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the schoolboys Ralph, Jack and Piggy stranded on an island?",
+    "options": {
+      "A": "Coral Island",
+      "B": "Lord of the Flies",
+      "C": "Robinson Crusoe"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the character Anna Karenina's love interest, Count Vronsky?",
+    "options": {
+      "A": "War and Peace",
+      "B": "Anna Karenina",
+      "C": "The Brothers Karamazov"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In 'Don Quixote', what is the name of the knight's loyal squire?",
+    "options": {
+      "A": "Rocinante",
+      "B": "Sancho Panza",
+      "C": "Dulcinea"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the one-legged pirate and ship's cook Long John Silver?",
+    "options": {
+      "A": "Kidnapped",
+      "B": "Treasure Island",
+      "C": "The Black Arrow"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features Mr Darcy?",
+    "options": {
+      "A": "Sense and Sensibility",
+      "B": "Pride and Prejudice",
+      "C": "Mansfield Park"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the character Tiny Tim?",
+    "options": {
+      "A": "Oliver Twist",
+      "B": "A Christmas Carol",
+      "C": "The Old Curiosity Shop"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the character Bigwig, a rabbit?",
+    "options": {
+      "A": "The Wind in the Willows",
+      "B": "Watership Down",
+      "C": "The Plague Dogs"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel features a pig named Wilbur and a spider named Charlotte?",
+    "options": {
+      "A": "Charlotte's Web",
+      "B": "Babe",
+      "C": "The Sheep-Pig"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which novel features the character Lyra Belacqua and her daemon?",
+    "options": {
+      "A": "The Chronicles of Narnia",
+      "B": "His Dark Materials",
+      "C": "A Wrinkle in Time"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel features the characters Katniss Everdeen and Peeta Mellark?",
+    "options": {
+      "A": "Divergent",
+      "B": "The Hunger Games",
+      "C": "The Maze Runner"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which series features the young wizard Ged, also called Sparrowhawk, on the archipelago of Earthsea?",
+    "options": {
+      "A": "The Wheel of Time",
+      "B": "A Wizard of Earthsea",
+      "C": "The Belgariad"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which prize is the most prestigious international award for a body of literary work, given in Stockholm?",
+    "options": {
+      "A": "The Booker Prize",
+      "B": "The Nobel Prize in Literature",
+      "C": "The Pulitzer Prize"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which UK-based prize is awarded annually for the best novel written in English and published in the UK/Ireland?",
+    "options": {
+      "A": "The Booker Prize",
+      "B": "The Costa Award",
+      "C": "The Baileys Prize"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "The Pulitzer Prizes are awarded in which country?",
+    "options": {
+      "A": "The United Kingdom",
+      "B": "The United States",
+      "C": "Canada"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first woman to win the Nobel Prize in Literature (1909)?",
+    "options": {
+      "A": "Selma Lagerlof",
+      "B": "Grazia Deledda",
+      "C": "Sigrid Undset"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which American author won the Nobel Prize in Literature in 1954, known for spare prose?",
+    "options": {
+      "A": "William Faulkner",
+      "B": "Ernest Hemingway",
+      "C": "John Steinbeck"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Colombian author won the Nobel Prize in Literature in 1982?",
+    "options": {
+      "A": "Mario Vargas Llosa",
+      "B": "Gabriel Garcia Marquez",
+      "C": "Pablo Neruda"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which British-Japanese author of 'The Remains of the Day' won the Nobel Prize in 2017?",
+    "options": {
+      "A": "Kazuo Ishiguro",
+      "B": "Salman Rushdie",
+      "C": "Ian McEwan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which African American author won the Nobel Prize in Literature in 1993 for works including 'Beloved'?",
+    "options": {
+      "A": "Alice Walker",
+      "B": "Toni Morrison",
+      "C": "Zora Neale Hurston"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What literary movement, valuing emotion, nature and the individual, dominated the early 19th century?",
+    "options": {
+      "A": "Realism",
+      "B": "Romanticism",
+      "C": "Modernism"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which movement featured stream-of-consciousness and fragmentation in the early 20th century?",
+    "options": {
+      "A": "Romanticism",
+      "B": "Modernism",
+      "C": "Naturalism"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a 'protagonist'?",
+    "options": {
+      "A": "The main character",
+      "B": "The villain",
+      "C": "The narrator only"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is an 'antagonist'?",
+    "options": {
+      "A": "The character who opposes the protagonist",
+      "B": "The comic-relief character",
+      "C": "The love interest"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a soliloquy'?",
+    "options": {
+      "A": "A speech a character makes alone, revealing inner thoughts",
+      "B": "A duet in a play",
+      "C": "The final line of a poem"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'an allegory'?",
+    "options": {
+      "A": "A story with a hidden moral or political meaning",
+      "B": "A short humorous poem",
+      "C": "A play within a play"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a metaphor'?",
+    "options": {
+      "A": "A comparison saying one thing is another",
+      "B": "A comparison using 'like' or 'as'",
+      "C": "An exaggeration"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'a simile'?",
+    "options": {
+      "A": "A comparison using 'like' or 'as'",
+      "B": "A direct comparison without 'like' or 'as'",
+      "C": "Giving human traits to objects"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'personification'?",
+    "options": {
+      "A": "Giving human qualities to non-human things",
+      "B": "Using a place name for an institution",
+      "C": "An intentional understatement"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'onomatopoeia'?",
+    "options": {
+      "A": "A word that imitates a sound",
+      "B": "A contradiction in terms",
+      "C": "An extended metaphor"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'an oxymoron'?",
+    "options": {
+      "A": "A phrase combining contradictory terms",
+      "B": "A repeated consonant sound",
+      "C": "An indirect reference"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'iambic pentameter'?",
+    "options": {
+      "A": "A line of five metrical feet, each an unstressed then stressed syllable",
+      "B": "A poem of exactly ten lines",
+      "C": "A rhyme scheme"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a haiku' traditionally?",
+    "options": {
+      "A": "A three-line poem, often 5-7-5 syllables",
+      "B": "A 14-line love poem",
+      "C": "An epic in blank verse"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a limerick'?",
+    "options": {
+      "A": "A humorous five-line poem with an AABBA rhyme",
+      "B": "A funeral poem",
+      "C": "A rhyming couplet"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the narrator' of a story?",
+    "options": {
+      "A": "The voice telling the story",
+      "B": "The author's editor",
+      "C": "The lead actor"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is 'first-person narration'?",
+    "options": {
+      "A": "Told using 'I' or 'we' by a character in the story",
+      "B": "Told by an all-knowing outside voice",
+      "C": "Told using 'you'"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'an omniscient narrator'?",
+    "options": {
+      "A": "One who knows all characters' thoughts and events",
+      "B": "One who only knows the protagonist's thoughts",
+      "C": "An unreliable one"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'an unreliable narrator'?",
+    "options": {
+      "A": "One whose account cannot be fully trusted",
+      "B": "A narrator who dies mid-story",
+      "C": "A narrator who is also the author"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'foreshadowing'?",
+    "options": {
+      "A": "Hinting at events that will occur later",
+      "B": "Summarising the plot at the start",
+      "C": "A flashback"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'dramatic irony'?",
+    "options": {
+      "A": "When the audience knows something the characters do not",
+      "B": "A joke told by the narrator",
+      "C": "A tragic ending"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a bildungsroman'?",
+    "options": {
+      "A": "A novel about a character's growth from youth to maturity",
+      "B": "A novel written in letters",
+      "C": "A crime novel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'an epistolary novel'?",
+    "options": {
+      "A": "A novel told through letters or documents",
+      "B": "A novel about a journey",
+      "C": "A very long novel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a sonnet'?",
+    "options": {
+      "A": "A 14-line poem in a set rhyme scheme",
+      "B": "A 100-line narrative poem",
+      "C": "A four-line stanza"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'blank verse'?",
+    "options": {
+      "A": "Unrhymed iambic pentameter",
+      "B": "Poetry with no metre or rhyme",
+      "C": "A blank page in a novel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'free verse'?",
+    "options": {
+      "A": "Poetry without regular metre or rhyme",
+      "B": "Poetry given away for free",
+      "C": "A strict 5-7-5 form"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'the climax' of a story?",
+    "options": {
+      "A": "The point of greatest tension or turning point",
+      "B": "The opening scene",
+      "C": "The list of characters"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is 'denouement'?",
+    "options": {
+      "A": "The resolution after the climax",
+      "B": "The rising action",
+      "C": "The inciting incident"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'a novella'?",
+    "options": {
+      "A": "A work of fiction between a short story and a novel in length",
+      "B": "A romance novel",
+      "C": "A collection of poems"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'satire'?",
+    "options": {
+      "A": "Using humour and irony to criticise vice or folly",
+      "B": "A tragic play",
+      "C": "A love poem"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is 'a protagonist's foil'?",
+    "options": {
+      "A": "A character who contrasts with the protagonist to highlight traits",
+      "B": "The main villain",
+      "C": "A plot twist"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is 'in medias res'?",
+    "options": {
+      "A": "Beginning a story in the middle of the action",
+      "B": "A moral at the end",
+      "C": "A recurring symbol"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is 'a motif'?",
+    "options": {
+      "A": "A recurring element that develops a theme",
+      "B": "The main character",
+      "C": "A single line of dialogue"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote the play 'Waiting for Godot'?",
+    "options": {
+      "A": "Harold Pinter",
+      "B": "Samuel Beckett",
+      "C": "Eugene Ionesco"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Death of a Salesman'?",
+    "options": {
+      "A": "Tennessee Williams",
+      "B": "Arthur Miller",
+      "C": "Edward Albee"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'A Streetcar Named Desire'?",
+    "options": {
+      "A": "Arthur Miller",
+      "B": "Tennessee Williams",
+      "C": "Eugene O'Neill"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Crucible', about the Salem witch trials?",
+    "options": {
+      "A": "Arthur Miller",
+      "B": "Nathaniel Hawthorne",
+      "C": "Thornton Wilder"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Pygmalion', the basis for 'My Fair Lady'?",
+    "options": {
+      "A": "Oscar Wilde",
+      "B": "George Bernard Shaw",
+      "C": "J.M. Synge"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The Importance of Being Earnest'?",
+    "options": {
+      "A": "George Bernard Shaw",
+      "B": "Oscar Wilde",
+      "C": "Noel Coward"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Picture of Dorian Gray'?",
+    "options": {
+      "A": "Oscar Wilde",
+      "B": "Robert Louis Stevenson",
+      "C": "Walter Pater"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Heart of Darkness'?",
+    "options": {
+      "A": "Joseph Conrad",
+      "B": "Rudyard Kipling",
+      "C": "E.M. Forster"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Jungle Book'?",
+    "options": {
+      "A": "Rudyard Kipling",
+      "B": "Jack London",
+      "C": "Edgar Rice Burroughs"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'A Passage to India'?",
+    "options": {
+      "A": "Joseph Conrad",
+      "B": "E.M. Forster",
+      "C": "W. Somerset Maugham"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Mrs Dalloway' and 'To the Lighthouse'?",
+    "options": {
+      "A": "Virginia Woolf",
+      "B": "Katherine Mansfield",
+      "C": "Dorothy Richardson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Ulysses'?",
+    "options": {
+      "A": "James Joyce",
+      "B": "Samuel Beckett",
+      "C": "Flann O'Brien"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "'Ulysses' by James Joyce takes place over the course of how long?",
+    "options": {
+      "A": "A single day",
+      "B": "A week",
+      "C": "A year"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The Sound and the Fury' and 'As I Lay Dying'?",
+    "options": {
+      "A": "Ernest Hemingway",
+      "B": "William Faulkner",
+      "C": "Thomas Wolfe"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Beloved'?",
+    "options": {
+      "A": "Alice Walker",
+      "B": "Toni Morrison",
+      "C": "Maya Angelou"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Color Purple'?",
+    "options": {
+      "A": "Toni Morrison",
+      "B": "Alice Walker",
+      "C": "Zora Neale Hurston"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the autobiography 'I Know Why the Caged Bird Sings'?",
+    "options": {
+      "A": "Maya Angelou",
+      "B": "Toni Morrison",
+      "C": "bell hooks"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Handmaid's Tale'?",
+    "options": {
+      "A": "Ursula K. Le Guin",
+      "B": "Margaret Atwood",
+      "C": "Doris Lessing"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Things Fall Apart'?",
+    "options": {
+      "A": "Wole Soyinka",
+      "B": "Chinua Achebe",
+      "C": "Ngugi wa Thiong'o"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "The title 'Things Fall Apart' is taken from a poem by whom?",
+    "options": {
+      "A": "T.S. Eliot",
+      "B": "W.B. Yeats",
+      "C": "Ezra Pound"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Who wrote 'One Flew Over the Cuckoo's Nest'?",
+    "options": {
+      "A": "Ken Kesey",
+      "B": "Joseph Heller",
+      "C": "Richard Yates"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Slaughterhouse-Five'?",
+    "options": {
+      "A": "Thomas Pynchon",
+      "B": "Kurt Vonnegut",
+      "C": "Philip Roth"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'A Clockwork Orange'?",
+    "options": {
+      "A": "Anthony Burgess",
+      "B": "William Golding",
+      "C": "J.G. Ballard"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Name of the Rose'?",
+    "options": {
+      "A": "Italo Calvino",
+      "B": "Umberto Eco",
+      "C": "Primo Levi"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Love in the Time of Cholera'?",
+    "options": {
+      "A": "Isabel Allende",
+      "B": "Gabriel Garcia Marquez",
+      "C": "Julio Cortazar"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The House of the Spirits'?",
+    "options": {
+      "A": "Isabel Allende",
+      "B": "Laura Esquivel",
+      "C": "Clarice Lispector"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Midnight's Children'?",
+    "options": {
+      "A": "V.S. Naipaul",
+      "B": "Salman Rushdie",
+      "C": "Vikram Seth"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The God of Small Things'?",
+    "options": {
+      "A": "Arundhati Roy",
+      "B": "Jhumpa Lahiri",
+      "C": "Kiran Desai"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Life of Pi'?",
+    "options": {
+      "A": "Yann Martel",
+      "B": "Rohinton Mistry",
+      "C": "Michael Ondaatje"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The English Patient'?",
+    "options": {
+      "A": "Michael Ondaatje",
+      "B": "Timothy Findley",
+      "C": "Mordecai Richler"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The Kite Runner'?",
+    "options": {
+      "A": "Khaled Hosseini",
+      "B": "Mohsin Hamid",
+      "C": "Orhan Pamuk"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Never Let Me Go' and 'The Remains of the Day'?",
+    "options": {
+      "A": "Ian McEwan",
+      "B": "Kazuo Ishiguro",
+      "C": "Julian Barnes"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Atonement'?",
+    "options": {
+      "A": "Kazuo Ishiguro",
+      "B": "Ian McEwan",
+      "C": "Sebastian Faulks"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Cloud Atlas'?",
+    "options": {
+      "A": "David Mitchell",
+      "B": "Zadie Smith",
+      "C": "Jonathan Coe"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'White Teeth'?",
+    "options": {
+      "A": "Zadie Smith",
+      "B": "Monica Ali",
+      "C": "Andrea Levy"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote the 'Discworld' series?",
+    "options": {
+      "A": "Douglas Adams",
+      "B": "Terry Pratchett",
+      "C": "Neil Gaiman"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Hitchhiker's Guide to the Galaxy'?",
+    "options": {
+      "A": "Terry Pratchett",
+      "B": "Douglas Adams",
+      "C": "Robert Sheckley"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In 'The Hitchhiker's Guide to the Galaxy', what is the 'Answer to the Ultimate Question of Life, the Universe, and Everything'?",
+    "options": {
+      "A": "42",
+      "B": "7",
+      "C": "0"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'American Gods' and 'Coraline'?",
+    "options": {
+      "A": "Clive Barker",
+      "B": "Neil Gaiman",
+      "C": "China Mieville"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'A Song of Ice and Fire', the basis for 'Game of Thrones'?",
+    "options": {
+      "A": "Robert Jordan",
+      "B": "George R.R. Martin",
+      "C": "Patrick Rothfuss"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Wheel of Time' series?",
+    "options": {
+      "A": "Brandon Sanderson",
+      "B": "Robert Jordan",
+      "C": "Terry Goodkind"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Dune'?",
+    "options": {
+      "A": "Frank Herbert",
+      "B": "Isaac Asimov",
+      "C": "Arthur C. Clarke"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the 'Foundation' series?",
+    "options": {
+      "A": "Isaac Asimov",
+      "B": "Robert Heinlein",
+      "C": "Larry Niven"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote '2001: A Space Odyssey'?",
+    "options": {
+      "A": "Ray Bradbury",
+      "B": "Arthur C. Clarke",
+      "C": "Philip K. Dick"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'Do Androids Dream of Electric Sheep?', the basis for 'Blade Runner'?",
+    "options": {
+      "A": "William Gibson",
+      "B": "Philip K. Dick",
+      "C": "Harlan Ellison"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'The War of the Worlds' and 'The Time Machine'?",
+    "options": {
+      "A": "Jules Verne",
+      "B": "H.G. Wells",
+      "C": "Edgar Rice Burroughs"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Twenty Thousand Leagues Under the Sea' and 'Around the World in Eighty Days'?",
+    "options": {
+      "A": "H.G. Wells",
+      "B": "Jules Verne",
+      "C": "Arthur Conan Doyle"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Handmaid's Tale' sequel 'The Testaments'?",
+    "options": {
+      "A": "Margaret Atwood",
+      "B": "Naomi Alderman",
+      "C": "Emily St. John Mandel"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote the 'Millennium' trilogy beginning with 'The Girl with the Dragon Tattoo'?",
+    "options": {
+      "A": "Jo Nesbo",
+      "B": "Stieg Larsson",
+      "C": "Henning Mankell"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Da Vinci Code'?",
+    "options": {
+      "A": "Dan Brown",
+      "B": "James Patterson",
+      "C": "John Grisham"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'The Shining', 'It' and 'Carrie'?",
+    "options": {
+      "A": "Dean Koontz",
+      "B": "Stephen King",
+      "C": "Clive Barker"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Who wrote 'Gone Girl'?",
+    "options": {
+      "A": "Gillian Flynn",
+      "B": "Paula Hawkins",
+      "C": "Tana French"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Fault in Our Stars'?",
+    "options": {
+      "A": "John Green",
+      "B": "Rainbow Rowell",
+      "C": "Jenny Han"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Little Fires Everywhere' and 'Everything I Never Told You'?",
+    "options": {
+      "A": "Celeste Ng",
+      "B": "Jenny Zhang",
+      "C": "Jean Kwok"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote 'Normal People' and 'Conversations with Friends'?",
+    "options": {
+      "A": "Sally Rooney",
+      "B": "Anna Burns",
+      "C": "Naoise Dolan"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the 'A Series of Unfortunate Events' books as Lemony Snicket?",
+    "options": {
+      "A": "Daniel Handler",
+      "B": "Eoin Colfer",
+      "C": "Rick Riordan"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who wrote the 'Percy Jackson' series?",
+    "options": {
+      "A": "Rick Riordan",
+      "B": "Cornelia Funke",
+      "C": "Jonathan Stroud"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who wrote 'Artemis Fowl'?",
+    "options": {
+      "A": "Eoin Colfer",
+      "B": "Anthony Horowitz",
+      "C": "Charlie Higson"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Book Thief'?",
+    "options": {
+      "A": "Markus Zusak",
+      "B": "John Boyne",
+      "C": "Ruta Sepetys"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Boy in the Striped Pyjamas'?",
+    "options": {
+      "A": "Markus Zusak",
+      "B": "John Boyne",
+      "C": "Morris Gleitzman"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote 'The Curious Incident of the Dog in the Night-Time'?",
+    "options": {
+      "A": "Mark Haddon",
+      "B": "David Nicholls",
+      "C": "Nick Hornby"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Romantic poet wrote 'Ode to a Nightingale' and 'To Autumn'?",
+    "options": {
+      "A": "Percy Bysshe Shelley",
+      "B": "John Keats",
+      "C": "Lord Byron"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet wrote 'The Rime of the Ancient Mariner'?",
+    "options": {
+      "A": "William Wordsworth",
+      "B": "Samuel Taylor Coleridge",
+      "C": "Robert Southey"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet wrote 'I Wandered Lonely as a Cloud' (the daffodils poem)?",
+    "options": {
+      "A": "Samuel Taylor Coleridge",
+      "B": "William Wordsworth",
+      "C": "William Blake"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which poet wrote 'The Tyger' ('Tyger Tyger, burning bright')?",
+    "options": {
+      "A": "William Blake",
+      "B": "William Wordsworth",
+      "C": "John Keats"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which American poet wrote 'The Raven'?",
+    "options": {
+      "A": "Walt Whitman",
+      "B": "Edgar Allan Poe",
+      "C": "Henry Wadsworth Longfellow"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which American poet wrote 'Leaves of Grass'?",
+    "options": {
+      "A": "Emily Dickinson",
+      "B": "Walt Whitman",
+      "C": "Robert Frost"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet wrote 'The Waste Land' and 'The Love Song of J. Alfred Prufrock'?",
+    "options": {
+      "A": "Ezra Pound",
+      "B": "T.S. Eliot",
+      "C": "W.H. Auden"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Irish poet wrote 'The Second Coming' and 'Sailing to Byzantium'?",
+    "options": {
+      "A": "Seamus Heaney",
+      "B": "W.B. Yeats",
+      "C": "Patrick Kavanagh"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet wrote the war poem 'Dulce et Decorum Est'?",
+    "options": {
+      "A": "Rupert Brooke",
+      "B": "Wilfred Owen",
+      "C": "Siegfried Sassoon"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet's works include 'Still I Rise' and 'Phenomenal Woman'?",
+    "options": {
+      "A": "Maya Angelou",
+      "B": "Nikki Giovanni",
+      "C": "Gwendolyn Brooks"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which former US Poet Laureate wrote 'The Road Not Taken' and 'Mending Wall'?",
+    "options": {
+      "A": "Carl Sandburg",
+      "B": "Robert Frost",
+      "C": "Wallace Stevens"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the epic poem 'The Divine Comedy'?",
+    "options": {
+      "A": "Petrarch",
+      "B": "Dante Alighieri",
+      "C": "Boccaccio"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In Dante's 'Inferno', how many circles of Hell are there?",
+    "options": {
+      "A": "Seven",
+      "B": "Nine",
+      "C": "Twelve"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Roman poet wrote the 'Metamorphoses'?",
+    "options": {
+      "A": "Ovid",
+      "B": "Horace",
+      "C": "Catullus"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which poet wrote 'Paradise Lost' while blind?",
+    "options": {
+      "A": "John Dryden",
+      "B": "John Milton",
+      "C": "Alexander Pope"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which anthology of Old English poetry contains 'Beowulf'?",
+    "options": {
+      "A": "The Exeter Book",
+      "B": "The Nowell Codex",
+      "C": "The Junius Manuscript"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "'Beowulf' is written in which language?",
+    "options": {
+      "A": "Old Norse",
+      "B": "Old English",
+      "C": "Middle English"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which poet wrote the sonnet beginning 'Shall I compare thee to a summer's day?'",
+    "options": {
+      "A": "Edmund Spenser",
+      "B": "William Shakespeare",
+      "C": "Philip Sidney"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the poem 'If-' ('If you can keep your head when all about you...')?",
+    "options": {
+      "A": "Alfred Lord Tennyson",
+      "B": "Rudyard Kipling",
+      "C": "A.E. Housman"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Victorian Poet Laureate wrote 'The Charge of the Light Brigade'?",
+    "options": {
+      "A": "Robert Browning",
+      "B": "Alfred Lord Tennyson",
+      "C": "Matthew Arnold"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Chilean poet won the Nobel Prize in 1971 and wrote love sonnets and odes?",
+    "options": {
+      "A": "Octavio Paz",
+      "B": "Pablo Neruda",
+      "C": "Cesar Vallejo"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which poet wrote the collection 'Ariel', published after her death?",
+    "options": {
+      "A": "Anne Sexton",
+      "B": "Sylvia Plath",
+      "C": "Elizabeth Bishop"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Sylvia Plath's only novel is titled what?",
+    "options": {
+      "A": "The Bell Jar",
+      "B": "The Golden Notebook",
+      "C": "The Yellow Wallpaper"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Irish poet won the 1995 Nobel Prize and translated 'Beowulf'?",
+    "options": {
+      "A": "Paul Muldoon",
+      "B": "Seamus Heaney",
+      "C": "Derek Mahon"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "In Greek myth, whose 'Odyssey' recounts a ten-year journey home from Troy?",
+    "options": {
+      "A": "Achilles",
+      "B": "Odysseus",
+      "C": "Agamemnon"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Greek playwright wrote 'Oedipus Rex' and 'Antigone'?",
+    "options": {
+      "A": "Aeschylus",
+      "B": "Sophocles",
+      "C": "Euripides"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Greek playwright is considered the father of tragedy?",
+    "options": {
+      "A": "Aeschylus",
+      "B": "Aristophanes",
+      "C": "Menander"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Greek comic playwright wrote 'Lysistrata' and 'The Clouds'?",
+    "options": {
+      "A": "Sophocles",
+      "B": "Aristophanes",
+      "C": "Euripides"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Aesop is famous for what kind of short moral tales?",
+    "options": {
+      "A": "Fables",
+      "B": "Sonnets",
+      "C": "Odes"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "'The Tortoise and the Hare' is one of whose fables?",
+    "options": {
+      "A": "La Fontaine",
+      "B": "Aesop",
+      "C": "The Brothers Grimm"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which brothers collected European folk and fairy tales in the 19th century?",
+    "options": {
+      "A": "The Grimm brothers",
+      "B": "The Andersen brothers",
+      "C": "The Perrault brothers"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Danish author wrote 'The Little Mermaid' and 'The Ugly Duckling'?",
+    "options": {
+      "A": "Hans Christian Andersen",
+      "B": "Selma Lagerlof",
+      "C": "Karen Blixen"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "'Out of Africa' was written under the pen name Isak Dinesen by whom?",
+    "options": {
+      "A": "Karen Blixen",
+      "B": "Doris Lessing",
+      "C": "Nadine Gordimer"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which author wrote under the pen name 'George Eliot'?",
+    "options": {
+      "A": "Mary Ann Evans",
+      "B": "Emily Bronte",
+      "C": "Elizabeth Gaskell"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which author wrote under the pen name 'Mark Twain'?",
+    "options": {
+      "A": "Samuel Clemens",
+      "B": "Bret Harte",
+      "C": "William Dean Howells"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which author wrote under the pen name 'Lewis Carroll'?",
+    "options": {
+      "A": "Charles Dodgson",
+      "B": "Edward Lear",
+      "C": "George MacDonald"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Bronte sisters published first under the pen names Currer, Ellis and Acton Bell?",
+    "options": {
+      "A": "Charlotte, Emily and Anne",
+      "B": "Only Charlotte and Emily",
+      "C": "Anne and a cousin"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel is subtitled 'The Modern Prometheus'?",
+    "options": {
+      "A": "Dracula",
+      "B": "Frankenstein",
+      "C": "The Island of Doctor Moreau"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the country house in 'Pride and Prejudice' owned by Mr Darcy?",
+    "options": {
+      "A": "Netherfield",
+      "B": "Pemberley",
+      "C": "Longbourn"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of Jay Gatsby's mansion's location, and Daisy's across the bay?",
+    "options": {
+      "A": "North Egg and South Egg",
+      "B": "West Egg and East Egg",
+      "C": "Old Egg and New Egg"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In '1984', what is the name of the totalitarian leader's ideology?",
+    "options": {
+      "A": "Newspeak",
+      "B": "Ingsoc (English Socialism)",
+      "C": "Doublethink"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In '1984', what is the deliberately impoverished official language?",
+    "options": {
+      "A": "Newspeak",
+      "B": "Oldspeak",
+      "C": "Prolefeed"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Brave New World', what drug keeps the population content?",
+    "options": {
+      "A": "Soma",
+      "B": "Moloko",
+      "C": "Substance D"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "In 'Fahrenheit 451', what is the job of 'firemen'?",
+    "options": {
+      "A": "Put out fires",
+      "B": "Burn books",
+      "C": "Guard libraries"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Lord of the Flies', what object represents order and the right to speak?",
+    "options": {
+      "A": "A spear",
+      "B": "A conch shell",
+      "C": "A fire"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'The Lord of the Rings', what is the name of Frodo's home region?",
+    "options": {
+      "A": "Rivendell",
+      "B": "The Shire",
+      "C": "Rohan"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In 'The Lord of the Rings', who is the wizard that guides the Fellowship?",
+    "options": {
+      "A": "Saruman",
+      "B": "Gandalf",
+      "C": "Radagast"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In 'Harry Potter', what is the name of the school Harry attends?",
+    "options": {
+      "A": "Beauxbatons",
+      "B": "Hogwarts",
+      "C": "Durmstrang"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In 'Harry Potter', what sport is played on broomsticks?",
+    "options": {
+      "A": "Quodpot",
+      "B": "Quidditch",
+      "C": "Gobstones"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "In 'Alice in Wonderland', which character is always late and carries a pocket watch?",
+    "options": {
+      "A": "The Mad Hatter",
+      "B": "The White Rabbit",
+      "C": "The Cheshire Cat"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In 'Moby-Dick', what colour is the whale?",
+    "options": {
+      "A": "Grey",
+      "B": "White",
+      "C": "Black"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the ranch worker who tends rabbits in his dreams in 'Of Mice and Men'?",
+    "options": {
+      "A": "George",
+      "B": "Lennie",
+      "C": "Candy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'To Kill a Mockingbird', what is the nickname of the narrator, Jean Louise Finch?",
+    "options": {
+      "A": "Dill",
+      "B": "Scout",
+      "C": "Jem"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "In 'A Christmas Carol', not counting Marley's ghost, how many spirits visit Scrooge?",
+    "options": {
+      "A": "Three",
+      "B": "One",
+      "C": "Five"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Great Expectations', who is the jilted woman who wears her wedding dress for decades?",
+    "options": {
+      "A": "Estella",
+      "B": "Miss Havisham",
+      "C": "Biddy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In 'Animal Farm', which pig is driven off the farm by Napoleon's dogs and then blamed for everything that goes wrong?",
+    "options": {
+      "A": "Snowball",
+      "B": "Squealer",
+      "C": "Old Major"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Animal Farm', which animal represents the loyal, hard-working proletariat?",
+    "options": {
+      "A": "Boxer the horse",
+      "B": "Benjamin the donkey",
+      "C": "Mollie the mare"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the sea captain narrator in Conrad's 'Heart of Darkness'?",
+    "options": {
+      "A": "Kurtz",
+      "B": "Marlow",
+      "C": "Jim"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In 'The Catcher in the Rye', what is Holden Caulfield's recurring complaint about people?",
+    "options": {
+      "A": "That they are 'phony'",
+      "B": "That they are 'boring'",
+      "C": "That they are 'loud'"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Pride and Prejudice', how many Bennet sisters are there?",
+    "options": {
+      "A": "Three",
+      "B": "Five",
+      "C": "Seven"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "In 'Little Women', which sister aspires to be a writer?",
+    "options": {
+      "A": "Meg",
+      "B": "Jo",
+      "C": "Amy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the fictional county in which many of Thomas Hardy's novels are set?",
+    "options": {
+      "A": "Barsetshire",
+      "B": "Wessex",
+      "C": "Loamshire"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Thomas Hardy novel features Tess Durbeyfield?",
+    "options": {
+      "A": "Far from the Madding Crowd",
+      "B": "Tess of the d'Urbervilles",
+      "C": "Jude the Obscure"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Thomas Hardy novel features the shepherd Gabriel Oak and Bathsheba Everdene?",
+    "options": {
+      "A": "The Mayor of Casterbridge",
+      "B": "Far from the Madding Crowd",
+      "C": "The Return of the Native"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Jane Austen novel features Emma Woodhouse, a well-meaning matchmaker?",
+    "options": {
+      "A": "Persuasion",
+      "B": "Emma",
+      "C": "Northanger Abbey"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which Jane Austen novel satirises Gothic fiction and features Catherine Morland?",
+    "options": {
+      "A": "Mansfield Park",
+      "B": "Northanger Abbey",
+      "C": "Lady Susan"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "How many completed novels did Jane Austen publish?",
+    "options": {
+      "A": "Three",
+      "B": "Six",
+      "C": "Ten"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Dostoevsky novel features the murderer Raskolnikov?",
+    "options": {
+      "A": "The Idiot",
+      "B": "Crime and Punishment",
+      "C": "Demons"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Dostoevsky novel features three brothers and their father's murder?",
+    "options": {
+      "A": "The Brothers Karamazov",
+      "B": "The Gambler",
+      "C": "Notes from Underground"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Russian author wrote the play 'The Cherry Orchard' and many short stories?",
+    "options": {
+      "A": "Ivan Turgenev",
+      "B": "Anton Chekhov",
+      "C": "Maxim Gorky"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Russian novel by Bulgakov features the Devil visiting Soviet Moscow?",
+    "options": {
+      "A": "Doctor Zhivago",
+      "B": "The Master and Margarita",
+      "C": "We"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which novel by Boris Pasternak was banned in the USSR and won him the 1958 Nobel?",
+    "options": {
+      "A": "The Master and Margarita",
+      "B": "Doctor Zhivago",
+      "C": "Life and Fate"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Kafka work features a man who wakes up transformed into an insect?",
+    "options": {
+      "A": "The Trial",
+      "B": "The Metamorphosis",
+      "C": "The Castle"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Kafka novel features Josef K. arrested for an unspecified crime?",
+    "options": {
+      "A": "The Castle",
+      "B": "The Trial",
+      "C": "Amerika"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Camus novel opens with the narrator learning of his mother's death and shows detachment?",
+    "options": {
+      "A": "The Plague",
+      "B": "The Stranger (The Outsider)",
+      "C": "The Fall"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Sartre novel's title refers to the experience of contingent existence?",
+    "options": {
+      "A": "No Exit",
+      "B": "Nausea",
+      "C": "The Age of Reason"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Proust work is a multi-volume novel beginning with 'Swann's Way'?",
+    "options": {
+      "A": "In Search of Lost Time",
+      "B": "The Human Comedy",
+      "C": "Les Rougon-Macquart"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Flaubert novel features a doctor's wife whose romantic fantasies lead to ruin?",
+    "options": {
+      "A": "Sentimental Education",
+      "B": "Madame Bovary",
+      "C": "Salammbo"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Stendhal novel is subtitled 'A Chronicle of 1830' and follows Julien Sorel?",
+    "options": {
+      "A": "The Charterhouse of Parma",
+      "B": "The Red and the Black",
+      "C": "Lucien Leuwen"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Hugo novel is set around Notre-Dame de Paris and features Quasimodo?",
+    "options": {
+      "A": "Les Miserables",
+      "B": "The Hunchback of Notre-Dame",
+      "C": "Toilers of the Sea"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Goethe work is a two-part tragic play about a scholar who makes a pact with the devil?",
+    "options": {
+      "A": "The Sorrows of Young Werther",
+      "B": "Faust",
+      "C": "Wilhelm Meister"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Cervantes character tilts at windmills, mistaking them for giants?",
+    "options": {
+      "A": "Sancho Panza",
+      "B": "Don Quixote",
+      "C": "The Barber"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is often called the first modern novel?",
+    "options": {
+      "A": "Robinson Crusoe",
+      "B": "Don Quixote",
+      "C": "Pamela"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which epic of ancient Mesopotamia is among the oldest known works of literature?",
+    "options": {
+      "A": "The Epic of Gilgamesh",
+      "B": "The Mahabharata",
+      "C": "The Poetic Edda"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which ancient Indian epic includes the 'Bhagavad Gita'?",
+    "options": {
+      "A": "The Ramayana",
+      "B": "The Mahabharata",
+      "C": "The Puranas"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which collection of Middle Eastern folk tales includes 'Aladdin' and 'Ali Baba'?",
+    "options": {
+      "A": "The Panchatantra",
+      "B": "One Thousand and One Nights",
+      "C": "The Decameron"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Italian work is a frame narrative of 100 tales told by young people fleeing the plague?",
+    "options": {
+      "A": "The Canterbury Tales",
+      "B": "The Decameron",
+      "C": "The Heptameron"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Who wrote 'The Prince', a treatise on political power?",
+    "options": {
+      "A": "Thomas More",
+      "B": "Niccolo Machiavelli",
+      "C": "Baldassare Castiglione"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who wrote the utopian work 'Utopia' (1516)?",
+    "options": {
+      "A": "Francis Bacon",
+      "B": "Thomas More",
+      "C": "Erasmus"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Orwell essay collection includes 'Politics and the English Language'?",
+    "options": {
+      "A": "Down and Out in Paris and London",
+      "B": "Shooting an Elephant",
+      "C": "Homage to Catalonia"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which novel by Ralph Ellison follows an unnamed Black narrator through 20th-century America?",
+    "options": {
+      "A": "Native Son",
+      "B": "Invisible Man",
+      "C": "Go Tell It on the Mountain"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which James Baldwin novel is set largely in Paris and explores love and identity?",
+    "options": {
+      "A": "Giovanni's Room",
+      "B": "Another Country",
+      "C": "If Beale Street Could Talk"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Zora Neale Hurston novel follows Janie Crawford in the American South?",
+    "options": {
+      "A": "The Bluest Eye",
+      "B": "Their Eyes Were Watching God",
+      "C": "Sula"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Hemingway novel is set during the Spanish Civil War and takes its title from a John Donne meditation?",
+    "options": {
+      "A": "A Farewell to Arms",
+      "B": "For Whom the Bell Tolls",
+      "C": "The Sun Also Rises"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Hemingway novel is set among American expatriates in 1920s Paris and Spain?",
+    "options": {
+      "A": "To Have and Have Not",
+      "B": "The Sun Also Rises",
+      "C": "Islands in the Stream"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Fitzgerald novel is set on the French Riviera and follows the Divers?",
+    "options": {
+      "A": "This Side of Paradise",
+      "B": "Tender Is the Night",
+      "C": "The Last Tycoon"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Steinbeck novella is about migrant workers and ends tragically by a river?",
+    "options": {
+      "A": "The Pearl",
+      "B": "Of Mice and Men",
+      "C": "Cannery Row"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Steinbeck novel follows the Trask and Hamilton families in the Salinas Valley?",
+    "options": {
+      "A": "The Grapes of Wrath",
+      "B": "East of Eden",
+      "C": "Tortilla Flat"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel by Nabokov is narrated by the unreliable Humbert Humbert?",
+    "options": {
+      "A": "Pale Fire",
+      "B": "Lolita",
+      "C": "Pnin"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Nabokov novel takes the form of a poem plus an obsessive commentary?",
+    "options": {
+      "A": "Lolita",
+      "B": "Pale Fire",
+      "C": "Ada"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which novel by Joseph Heller satirises military bureaucracy in WWII?",
+    "options": {
+      "A": "Catch-22",
+      "B": "Something Happened",
+      "C": "Good as Gold"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Vonnegut novel's protagonist becomes 'unstuck in time'?",
+    "options": {
+      "A": "Cat's Cradle",
+      "B": "Slaughterhouse-Five",
+      "C": "Breakfast of Champions"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which dystopian novel by Anthony Burgess is narrated in the slang 'Nadsat'?",
+    "options": {
+      "A": "1984",
+      "B": "A Clockwork Orange",
+      "C": "The Wanting Seed"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Le Guin novel explores an ambisexual society on the planet Gethen?",
+    "options": {
+      "A": "The Dispossessed",
+      "B": "The Left Hand of Darkness",
+      "C": "The Lathe of Heaven"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Margaret Atwood novel is set in the theocratic Republic of Gilead?",
+    "options": {
+      "A": "Oryx and Crake",
+      "B": "The Handmaid's Tale",
+      "C": "Alias Grace"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which J.M. Coetzee novel won the Booker Prize in 1999 and is set in post-apartheid South Africa?",
+    "options": {
+      "A": "Life & Times of Michael K",
+      "B": "Disgrace",
+      "C": "Waiting for the Barbarians"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Hilary Mantel novel about Thomas Cromwell won the Booker Prize in 2009?",
+    "options": {
+      "A": "Bring Up the Bodies",
+      "B": "Wolf Hall",
+      "C": "The Mirror & the Light"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Yann Martel novel features a boy adrift in a lifeboat with a tiger named Richard Parker?",
+    "options": {
+      "A": "Beatrice and Virgil",
+      "B": "Life of Pi",
+      "C": "The High Mountains of Portugal"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which novel by Donna Tartt, set at a small Vermont college, won a cult following?",
+    "options": {
+      "A": "The Goldfinch",
+      "B": "The Secret History",
+      "C": "The Little Friend"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Cormac McCarthy novel follows a father and son crossing a post-apocalyptic America?",
+    "options": {
+      "A": "Blood Meridian",
+      "B": "The Road",
+      "C": "No Country for Old Men"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Khaled Hosseini novel focuses on two Afghan women, Mariam and Laila?",
+    "options": {
+      "A": "The Kite Runner",
+      "B": "A Thousand Splendid Suns",
+      "C": "And the Mountains Echoed"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel by Anthony Doerr, set in WWII, won the 2015 Pulitzer for Fiction?",
+    "options": {
+      "A": "The Nightingale",
+      "B": "All the Light We Cannot See",
+      "C": "The Book Thief"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Colson Whitehead novel reimagines the escape network as a literal railroad?",
+    "options": {
+      "A": "The Nickel Boys",
+      "B": "The Underground Railroad",
+      "C": "Zone One"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel by Mary Ann Shaffer is set on the island of Guernsey after WWII?",
+    "options": {
+      "A": "The Guernsey Literary and Potato Peel Pie Society",
+      "B": "Small Island",
+      "C": "The Night Watch"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which classic children's novel features the Darling children and a boy who won't grow up?",
+    "options": {
+      "A": "The Water-Babies",
+      "B": "Peter Pan",
+      "C": "Five Children and It"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which E.B. White book features a mouse-like boy born to a human family?",
+    "options": {
+      "A": "Charlotte's Web",
+      "B": "Stuart Little",
+      "C": "The Trumpet of the Swan"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which C.S. Lewis Narnia book is chronologically first (the creation of Narnia)?",
+    "options": {
+      "A": "The Lion, the Witch and the Wardrobe",
+      "B": "The Magician's Nephew",
+      "C": "The Last Battle"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which is the first-published Narnia book?",
+    "options": {
+      "A": "The Magician's Nephew",
+      "B": "The Lion, the Witch and the Wardrobe",
+      "C": "Prince Caspian"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Philip Pullman trilogy begins with 'Northern Lights' (also titled 'The Golden Compass')?",
+    "options": {
+      "A": "The Edge Chronicles",
+      "B": "His Dark Materials",
+      "C": "The Bartimaeus Sequence"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which author created the boy detective and adventurer Tintin (originally in comics)?",
+    "options": {
+      "A": "Rene Goscinny",
+      "B": "Herge",
+      "C": "Albert Uderzo"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which prolific British author created the Famous Five and the Secret Seven?",
+    "options": {
+      "A": "Enid Blyton",
+      "B": "Noel Streatfeild",
+      "C": "Arthur Ransome"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which author wrote the sailing adventure series beginning with 'Swallows and Amazons'?",
+    "options": {
+      "A": "Arthur Ransome",
+      "B": "Richmal Crompton",
+      "C": "BB (Denys Watkins-Pitchford)"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which humourist created the schoolboy 'Just William'?",
+    "options": {
+      "A": "Richmal Crompton",
+      "B": "P.G. Wodehouse",
+      "C": "Anthony Buckeridge"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which author created the valet Jeeves and his employer Bertie Wooster?",
+    "options": {
+      "A": "Evelyn Waugh",
+      "B": "P.G. Wodehouse",
+      "C": "Nancy Mitford"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which Evelyn Waugh novel centres on the Flyte family and Brideshead?",
+    "options": {
+      "A": "A Handful of Dust",
+      "B": "Brideshead Revisited",
+      "C": "Scoop"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Graham Greene novel is set in Vienna's black market and inspired a famous film?",
+    "options": {
+      "A": "The Quiet American",
+      "B": "The Third Man",
+      "C": "Brighton Rock"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which John le Carre novel introduced the spy George Smiley hunting a mole?",
+    "options": {
+      "A": "The Spy Who Came in from the Cold",
+      "B": "Tinker Tailor Soldier Spy",
+      "C": "A Perfect Spy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which author created James Bond?",
+    "options": {
+      "A": "John le Carre",
+      "B": "Ian Fleming",
+      "C": "Len Deighton"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which author created Jack Reacher?",
+    "options": {
+      "A": "Lee Child",
+      "B": "Michael Connelly",
+      "C": "Robert Crais"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which author created the Los Angeles detective Harry Bosch?",
+    "options": {
+      "A": "Michael Connelly",
+      "B": "James Ellroy",
+      "C": "Walter Mosley"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which author wrote the hard-boiled detective Philip Marlowe novels?",
+    "options": {
+      "A": "Dashiell Hammett",
+      "B": "Raymond Chandler",
+      "C": "Ross Macdonald"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Dashiell Hammett novel features the detective Sam Spade?",
+    "options": {
+      "A": "The Thin Man",
+      "B": "The Maltese Falcon",
+      "C": "Red Harvest"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Belgian-set detective did Georges Simenon create?",
+    "options": {
+      "A": "Inspector Morse",
+      "B": "Maigret",
+      "C": "Wallander"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which Swedish duo created the Martin Beck police procedurals?",
+    "options": {
+      "A": "Sjowall and Wahloo",
+      "B": "Larsson and Mankell",
+      "C": "Nesbo and Lackberg"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Umberto Eco novel is a medieval monastery murder mystery?",
+    "options": {
+      "A": "Foucault's Pendulum",
+      "B": "The Name of the Rose",
+      "C": "The Prague Cemetery"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which novel by Muriel Spark follows an unconventional Edinburgh schoolteacher?",
+    "options": {
+      "A": "The Girls of Slender Means",
+      "B": "The Prime of Miss Jean Brodie",
+      "C": "Memento Mori"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Irish novel by Anna Burns, told by an unnamed narrator in an unnamed city, won the 2018 Booker?",
+    "options": {
+      "A": "Milkman",
+      "B": "Solar Bones",
+      "C": "The Gathering"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which Bernardine Evaristo novel, sharing the 2019 Booker, follows twelve mostly Black British women?",
+    "options": {
+      "A": "Blonde Roots",
+      "B": "Girl, Woman, Other",
+      "C": "Mr Loverman"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which novel by Douglas Stuart, set in 1980s Glasgow, won the 2020 Booker Prize?",
+    "options": {
+      "A": "Shuggie Bain",
+      "B": "Young Mungo",
+      "C": "Trainspotting"
+    },
+    "correct": "A",
+    "difficulty": 5
   }
 ]

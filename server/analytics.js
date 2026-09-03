@@ -71,9 +71,22 @@ function deviceHintFromUA(ua) {
 }
 
 // Cloudflare adds this on every request that reaches us through the tunnel
-// (see CLAUDE.md "Network access") - free, no geo lookup of our own needed.
+// (see CLAUDE.md "Network access") - free, no geo lookup of our own needed. Validated to
+// a 2-letter A-Z code so a spoofed header on a non-CF deployment can't push an
+// arbitrarily long string into every analytics line (CF's rare "T1" Tor sentinel just
+// falls through to "unknown", which is fine for this).
 function countryFromHeaders(headers) {
-  return (headers && headers['cf-ipcountry']) || 'unknown';
+  const raw = headers && headers['cf-ipcountry'];
+  return (typeof raw === 'string' && /^[A-Za-z]{2}$/.test(raw)) ? raw.toUpperCase() : 'unknown';
+}
+
+// Bounds a rate-limit Map's key count. Keys are client IPs; behind Cloudflare that's a
+// real, bounded set, but a direct-exposed deployment could see spoofed cf-connecting-ip
+// values. Evicting the oldest entry on overflow (Map keeps insertion order) caps memory
+// without ever denying a legitimate caller outright.
+const LIMITER_MAX_IPS = 20000;
+function capMap(map) {
+  while (map.size > LIMITER_MAX_IPS) map.delete(map.keys().next().value);
 }
 
 // ---- Room-creation rate limit ----
@@ -96,6 +109,7 @@ function allowRoomCreate(ip) {
   }
   kept.push(now);
   roomCreateLog.set(key, kept);
+  capMap(roomCreateLog);
   return true;
 }
 // ---- Player-join rate limit ----
@@ -120,6 +134,7 @@ function allowPlayerJoin(ip) {
   }
   kept.push(now);
   joinLog.set(key, kept);
+  capMap(joinLog);
   return true;
 }
 
@@ -241,6 +256,7 @@ function getSummary({ days = 30 } = {}) {
     config: {
       questionSets: countByArrayField(gamesStarted, e => e.config && e.config.questionSets),
       difficultyRamp: countBy(gamesStarted, e => e.config && !!e.config.difficultyRamp),
+      questionDifficulty: countBy(gamesStarted, e => e.config && (e.config.questionDifficulty || 'random')),
       bearTraps: countBy(gamesStarted, e => e.config && !!e.config.bearTraps),
       dogLunge: countBy(gamesStarted, e => e.config && e.config.dogLunge),
       dynamicCellScaling: countBy(gamesStarted, e => e.config && !!e.config.dynamicCellScaling)

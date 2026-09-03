@@ -633,12 +633,25 @@ function populateConfigForm(config) {
   document.getElementById('cfgQuestionCount').value = config.questionCount;
   document.getElementById('cfgQuestionCountRange').value = config.questionCount;
   document.getElementById('cfgDifficultyRamp').checked = !!config.difficultyRamp;
+  document.getElementById('cfgQuestionDifficulty').value = config.questionDifficulty || 'random';
   document.getElementById('cfgBearTraps').checked = !!config.bearTraps;
   document.getElementById('cfgDogLunge').value = config.dogLunge || 'off';
   document.getElementById('cfgDynamicCellScaling').checked = !!config.dynamicCellScaling;
   pendingConfig = config;
   if (categoriesLoaded) applyCategoryCheckboxes(config.questionSets);
+  syncQuestionDifficultyEnabled();
 }
+
+// The fixed-difficulty picker only does anything when the ramp is off (server enforces
+// this too - see buildQuestionSet). Grey it out and show why when the ramp is on.
+function syncQuestionDifficultyEnabled() {
+  const ramping = document.getElementById('cfgDifficultyRamp').checked;
+  const row = document.getElementById('cfgQuestionDifficultyRow');
+  const sel = document.getElementById('cfgQuestionDifficulty');
+  sel.disabled = ramping;
+  row.style.opacity = ramping ? '0.5' : '1';
+}
+document.getElementById('cfgDifficultyRamp').addEventListener('change', syncQuestionDifficultyEnabled);
 
 // Keep each slider and its paired number box in sync, both directions.
 function linkSlider(rangeId, numberId) {
@@ -659,6 +672,7 @@ function collectConfig() {
     questionCount: Number(document.getElementById('cfgQuestionCount').value),
     questionSets: Array.from(document.querySelectorAll('#categoryPicker input:checked')).map(el => el.dataset.key),
     difficultyRamp: document.getElementById('cfgDifficultyRamp').checked,
+    questionDifficulty: document.getElementById('cfgQuestionDifficulty').value,
     bearTraps: document.getElementById('cfgBearTraps').checked,
     dogLunge: document.getElementById('cfgDogLunge').value,
     dynamicCellScaling: document.getElementById('cfgDynamicCellScaling').checked

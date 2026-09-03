@@ -1,1 +1,4202 @@
-[]
+[
+  {
+    "q": "What gas do humans need to breathe to survive?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Nitrogen",
+      "C": "Helium"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is H2O more commonly known as?",
+    "options": {
+      "A": "Salt",
+      "B": "Water",
+      "C": "Sugar"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What force pulls objects toward the Earth?",
+    "options": {
+      "A": "Magnetism",
+      "B": "Gravity",
+      "C": "Friction"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the chemical symbol for gold?",
+    "options": {
+      "A": "Gd",
+      "B": "Au",
+      "C": "Go"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the chemical symbol for oxygen?",
+    "options": {
+      "A": "O",
+      "B": "Ox",
+      "C": "Og"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the chemical symbol for sodium?",
+    "options": {
+      "A": "So",
+      "B": "Na",
+      "C": "Sd"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the centre of an atom called?",
+    "options": {
+      "A": "Nucleus",
+      "B": "Electron",
+      "C": "Proton"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What particle in an atom has a negative charge?",
+    "options": {
+      "A": "Proton",
+      "B": "Neutron",
+      "C": "Electron"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What state of matter is water vapour?",
+    "options": {
+      "A": "Solid",
+      "B": "Liquid",
+      "C": "Gas"
+    },
+    "correct": "C",
+    "difficulty": 1
+  },
+  {
+    "q": "At what temperature does water freeze in Celsius?",
+    "options": {
+      "A": "0",
+      "B": "32",
+      "C": "100"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "At what temperature does water boil at sea level in Celsius?",
+    "options": {
+      "A": "50",
+      "B": "100",
+      "C": "212"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What simple machine is a see-saw an example of?",
+    "options": {
+      "A": "Pulley",
+      "B": "Lever",
+      "C": "Wedge"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What metal is liquid at room temperature?",
+    "options": {
+      "A": "Mercury",
+      "B": "Iron",
+      "C": "Zinc"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the most abundant gas in Earth's atmosphere?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Nitrogen",
+      "C": "Carbon dioxide"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do plants absorb from the air for photosynthesis?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Carbon dioxide",
+      "C": "Hydrogen"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What gas do plants release during photosynthesis?",
+    "options": {
+      "A": "Carbon dioxide",
+      "B": "Oxygen",
+      "C": "Methane"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the hardest known natural material?",
+    "options": {
+      "A": "Quartz",
+      "B": "Diamond",
+      "C": "Granite"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is rust a form of on iron?",
+    "options": {
+      "A": "Melting",
+      "B": "Oxidation",
+      "C": "Freezing"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What unit measures electric current?",
+    "options": {
+      "A": "Volt",
+      "B": "Ampere",
+      "C": "Watt"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What unit measures force?",
+    "options": {
+      "A": "Newton",
+      "B": "Joule",
+      "C": "Pascal"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What unit measures energy?",
+    "options": {
+      "A": "Watt",
+      "B": "Joule",
+      "C": "Newton"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the speed of light approximately?",
+    "options": {
+      "A": "300,000 km/s",
+      "B": "3,000 km/s",
+      "C": "30 million km/s"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Sound cannot travel through which of these?",
+    "options": {
+      "A": "Water",
+      "B": "Air",
+      "C": "A vacuum"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What colour of visible light has the longest wavelength?",
+    "options": {
+      "A": "Blue",
+      "B": "Green",
+      "C": "Red"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What device is used to measure atmospheric pressure?",
+    "options": {
+      "A": "Barometer",
+      "B": "Thermometer",
+      "C": "Hygrometer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the pH of a neutral substance?",
+    "options": {
+      "A": "0",
+      "B": "7",
+      "C": "14"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "An acid has a pH that is...",
+    "options": {
+      "A": "Below 7",
+      "B": "Exactly 7",
+      "C": "Above 7"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the lightest (least dense) element?",
+    "options": {
+      "A": "Helium",
+      "B": "Hydrogen",
+      "C": "Lithium"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "How many elements are in a water molecule?",
+    "options": {
+      "A": "Two",
+      "B": "Three",
+      "C": "One"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is dry ice made of?",
+    "options": {
+      "A": "Frozen water",
+      "B": "Frozen carbon dioxide",
+      "C": "Frozen nitrogen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What organ pumps blood around the body?",
+    "options": {
+      "A": "Liver",
+      "B": "Heart",
+      "C": "Lungs"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What organ is mainly used for breathing?",
+    "options": {
+      "A": "Lungs",
+      "B": "Kidneys",
+      "C": "Stomach"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the largest organ of the human body?",
+    "options": {
+      "A": "Liver",
+      "B": "Skin",
+      "C": "Brain"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "How many bones are in the adult human body?",
+    "options": {
+      "A": "106",
+      "B": "206",
+      "C": "306"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the powerhouse of the cell?",
+    "options": {
+      "A": "Nucleus",
+      "B": "Mitochondria",
+      "C": "Ribosome"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What carries genetic information in cells?",
+    "options": {
+      "A": "DNA",
+      "B": "RNA only",
+      "C": "Protein"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What are the building blocks of proteins?",
+    "options": {
+      "A": "Amino acids",
+      "B": "Fatty acids",
+      "C": "Nucleotides"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Red blood cells carry which gas around the body?",
+    "options": {
+      "A": "Nitrogen",
+      "B": "Oxygen",
+      "C": "Carbon monoxide"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What blood type is the universal donor?",
+    "options": {
+      "A": "AB positive",
+      "B": "O negative",
+      "C": "A positive"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which part of the brain controls balance and coordination?",
+    "options": {
+      "A": "Cerebrum",
+      "B": "Cerebellum",
+      "C": "Medulla"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many chambers does the human heart have?",
+    "options": {
+      "A": "Two",
+      "B": "Three",
+      "C": "Four"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the smallest bone in the human body?",
+    "options": {
+      "A": "Stapes",
+      "B": "Femur",
+      "C": "Radius"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which vitamin is produced when skin is exposed to sunlight?",
+    "options": {
+      "A": "Vitamin A",
+      "B": "Vitamin C",
+      "C": "Vitamin D"
+    },
+    "correct": "C",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the study of living organisms called?",
+    "options": {
+      "A": "Geology",
+      "B": "Biology",
+      "C": "Ecology"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a baby frog called?",
+    "options": {
+      "A": "Tadpole",
+      "B": "Cub",
+      "C": "Fry"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What process do caterpillars undergo to become butterflies?",
+    "options": {
+      "A": "Mitosis",
+      "B": "Metamorphosis",
+      "C": "Photosynthesis"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the largest artery in the human body?",
+    "options": {
+      "A": "Aorta",
+      "B": "Vena cava",
+      "C": "Carotid"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which organ produces insulin?",
+    "options": {
+      "A": "Liver",
+      "B": "Pancreas",
+      "C": "Spleen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many lungs does a human have?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Three"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the green pigment in plants called?",
+    "options": {
+      "A": "Carotene",
+      "B": "Chlorophyll",
+      "C": "Melanin"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What part of a plant conducts photosynthesis mainly?",
+    "options": {
+      "A": "Roots",
+      "B": "Leaves",
+      "C": "Stem"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do you call animals that eat only plants?",
+    "options": {
+      "A": "Carnivores",
+      "B": "Herbivores",
+      "C": "Omnivores"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do you call animals that eat both plants and meat?",
+    "options": {
+      "A": "Herbivores",
+      "B": "Omnivores",
+      "C": "Carnivores"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which scientist proposed the theory of evolution by natural selection?",
+    "options": {
+      "A": "Gregor Mendel",
+      "B": "Charles Darwin",
+      "C": "Louis Pasteur"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What did Gregor Mendel study using pea plants?",
+    "options": {
+      "A": "Photosynthesis",
+      "B": "Heredity",
+      "C": "Germination"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the basic unit of life?",
+    "options": {
+      "A": "The atom",
+      "B": "The cell",
+      "C": "The molecule"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Humans have how many pairs of chromosomes?",
+    "options": {
+      "A": "21",
+      "B": "23",
+      "C": "46"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What kingdom do mushrooms belong to?",
+    "options": {
+      "A": "Plantae",
+      "B": "Fungi",
+      "C": "Protista"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the process by which cells divide to make two identical cells?",
+    "options": {
+      "A": "Meiosis",
+      "B": "Mitosis",
+      "C": "Osmosis"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What term describes a warm-blooded animal?",
+    "options": {
+      "A": "Ectothermic",
+      "B": "Endothermic",
+      "C": "Poikilothermic"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the closest planet to the Sun?",
+    "options": {
+      "A": "Venus",
+      "B": "Mercury",
+      "C": "Earth"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the largest planet in our solar system?",
+    "options": {
+      "A": "Saturn",
+      "B": "Jupiter",
+      "C": "Neptune"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "Which planet is known as the Red Planet?",
+    "options": {
+      "A": "Venus",
+      "B": "Mars",
+      "C": "Mercury"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the name of the galaxy Earth is in?",
+    "options": {
+      "A": "Andromeda",
+      "B": "The Milky Way",
+      "C": "Triangulum"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What star is at the centre of our solar system?",
+    "options": {
+      "A": "Polaris",
+      "B": "The Sun",
+      "C": "Sirius"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is Earth's only natural satellite?",
+    "options": {
+      "A": "The Moon",
+      "B": "Phobos",
+      "C": "Titan"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Which planet has the most prominent ring system?",
+    "options": {
+      "A": "Jupiter",
+      "B": "Saturn",
+      "C": "Uranus"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What was reclassified from a planet to a dwarf planet in 2006?",
+    "options": {
+      "A": "Pluto",
+      "B": "Ceres",
+      "C": "Eris"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "How long does light from the Sun take to reach Earth?",
+    "options": {
+      "A": "About 8 minutes",
+      "B": "About 8 seconds",
+      "C": "About 8 hours"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What force keeps planets in orbit around the Sun?",
+    "options": {
+      "A": "Magnetism",
+      "B": "Gravity",
+      "C": "Friction"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a shooting star actually?",
+    "options": {
+      "A": "A dying star",
+      "B": "A meteor",
+      "C": "A comet"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which planet is closest in size to Earth?",
+    "options": {
+      "A": "Mars",
+      "B": "Venus",
+      "C": "Mercury"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the hottest planet in the solar system?",
+    "options": {
+      "A": "Mercury",
+      "B": "Venus",
+      "C": "Mars"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What galaxy is on a collision course with the Milky Way?",
+    "options": {
+      "A": "Andromeda",
+      "B": "Whirlpool",
+      "C": "Sombrero"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a star that has exploded?",
+    "options": {
+      "A": "Quasar",
+      "B": "Supernova",
+      "C": "Pulsar"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which planet spins on its side, with an axial tilt near 98 degrees?",
+    "options": {
+      "A": "Neptune",
+      "B": "Uranus",
+      "C": "Saturn"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the largest moon of Jupiter?",
+    "options": {
+      "A": "Europa",
+      "B": "Ganymede",
+      "C": "Io"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which spacecraft first carried humans to the Moon's surface?",
+    "options": {
+      "A": "Apollo 11",
+      "B": "Apollo 13",
+      "C": "Gemini 4"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who was the first human in space?",
+    "options": {
+      "A": "Neil Armstrong",
+      "B": "Yuri Gagarin",
+      "C": "Alan Shepard"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What telescope, launched in 1990, orbits Earth taking deep-space images?",
+    "options": {
+      "A": "Hubble",
+      "B": "Kepler",
+      "C": "Spitzer"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the boundary around a black hole beyond which nothing can escape?",
+    "options": {
+      "A": "Event horizon",
+      "B": "Photon sphere",
+      "C": "Singularity"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What unit is used to measure astronomical distance based on light travel time?",
+    "options": {
+      "A": "Parsec",
+      "B": "Light-year",
+      "C": "Astronomical unit"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What causes the phases of the Moon?",
+    "options": {
+      "A": "Earth's shadow",
+      "B": "The Sun's rotation",
+      "C": "The Moon's position relative to Earth and Sun"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What are Saturn's rings mostly made of?",
+    "options": {
+      "A": "Gas",
+      "B": "Ice and rock",
+      "C": "Dust only"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name of the Mars rover that landed in 2021?",
+    "options": {
+      "A": "Curiosity",
+      "B": "Perseverance",
+      "C": "Opportunity"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the most abundant element in the universe?",
+    "options": {
+      "A": "Helium",
+      "B": "Hydrogen",
+      "C": "Oxygen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for iron?",
+    "options": {
+      "A": "Ir",
+      "B": "Fe",
+      "C": "In"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the chemical symbol for potassium?",
+    "options": {
+      "A": "P",
+      "B": "K",
+      "C": "Po"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for lead?",
+    "options": {
+      "A": "Le",
+      "B": "Pb",
+      "C": "Ld"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for silver?",
+    "options": {
+      "A": "Si",
+      "B": "Ag",
+      "C": "Sv"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for tin?",
+    "options": {
+      "A": "Ti",
+      "B": "Sn",
+      "C": "Tn"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the chemical symbol for tungsten?",
+    "options": {
+      "A": "Tu",
+      "B": "W",
+      "C": "Tg"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "How many protons does a carbon atom have?",
+    "options": {
+      "A": "6",
+      "B": "12",
+      "C": "14"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the atomic number of hydrogen?",
+    "options": {
+      "A": "0",
+      "B": "1",
+      "C": "2"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What type of bond involves the sharing of electron pairs?",
+    "options": {
+      "A": "Ionic",
+      "B": "Covalent",
+      "C": "Metallic"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is table salt chemically?",
+    "options": {
+      "A": "Sodium chloride",
+      "B": "Potassium iodide",
+      "C": "Calcium carbonate"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What gas is produced when an acid reacts with a metal?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Hydrogen",
+      "C": "Chlorine"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the process of a solid turning directly into a gas called?",
+    "options": {
+      "A": "Evaporation",
+      "B": "Sublimation",
+      "C": "Condensation"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which noble gas is used in bright advertising signs?",
+    "options": {
+      "A": "Argon",
+      "B": "Neon",
+      "C": "Krypton"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the main component of natural gas?",
+    "options": {
+      "A": "Propane",
+      "B": "Methane",
+      "C": "Butane"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What element has the highest melting point?",
+    "options": {
+      "A": "Tungsten",
+      "B": "Iron",
+      "C": "Platinum"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the chemical formula for common table sugar (sucrose)?",
+    "options": {
+      "A": "C6H12O6",
+      "B": "C12H22O11",
+      "C": "CH4"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which scientist created the first widely used periodic table?",
+    "options": {
+      "A": "Antoine Lavoisier",
+      "B": "Dmitri Mendeleev",
+      "C": "John Dalton"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is Avogadro's number approximately?",
+    "options": {
+      "A": "6.02 x 10^23",
+      "B": "3.14 x 10^10",
+      "C": "9.81 x 10^9"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the lightest metal?",
+    "options": {
+      "A": "Aluminium",
+      "B": "Lithium",
+      "C": "Magnesium"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What acid is found in the human stomach?",
+    "options": {
+      "A": "Sulfuric acid",
+      "B": "Hydrochloric acid",
+      "C": "Nitric acid"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the common name for sodium bicarbonate?",
+    "options": {
+      "A": "Baking soda",
+      "B": "Bleach",
+      "C": "Vinegar"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Which element is a liquid halogen at room temperature?",
+    "options": {
+      "A": "Chlorine",
+      "B": "Bromine",
+      "C": "Iodine"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the study of carbon-containing compounds called?",
+    "options": {
+      "A": "Inorganic chemistry",
+      "B": "Organic chemistry",
+      "C": "Physical chemistry"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is produced when you burn hydrogen in oxygen?",
+    "options": {
+      "A": "Carbon dioxide",
+      "B": "Water",
+      "C": "Hydrogen peroxide"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who developed the theory of general relativity?",
+    "options": {
+      "A": "Isaac Newton",
+      "B": "Albert Einstein",
+      "C": "Niels Bohr"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who formulated the three laws of motion?",
+    "options": {
+      "A": "Galileo Galilei",
+      "B": "Isaac Newton",
+      "C": "Michael Faraday"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is Newton's first law also known as?",
+    "options": {
+      "A": "Law of gravity",
+      "B": "Law of inertia",
+      "C": "Law of acceleration"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What does E = mc^2 relate?",
+    "options": {
+      "A": "Energy and mass",
+      "B": "Force and distance",
+      "C": "Charge and voltage"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the SI unit of power?",
+    "options": {
+      "A": "Joule",
+      "B": "Watt",
+      "C": "Newton"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the SI unit of frequency?",
+    "options": {
+      "A": "Hertz",
+      "B": "Decibel",
+      "C": "Hertz per second"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the SI unit of electrical resistance?",
+    "options": {
+      "A": "Ohm",
+      "B": "Volt",
+      "C": "Farad"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What type of energy does a moving object have?",
+    "options": {
+      "A": "Potential",
+      "B": "Kinetic",
+      "C": "Thermal"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What phenomenon bends light as it passes from air into water?",
+    "options": {
+      "A": "Reflection",
+      "B": "Refraction",
+      "C": "Diffraction"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the transfer of heat through direct contact called?",
+    "options": {
+      "A": "Convection",
+      "B": "Conduction",
+      "C": "Radiation"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What particle carries the electromagnetic force?",
+    "options": {
+      "A": "Gluon",
+      "B": "Photon",
+      "C": "Neutrino"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is absolute zero in Celsius (approximately)?",
+    "options": {
+      "A": "-100",
+      "B": "-273",
+      "C": "-459"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the temperature scale that starts at absolute zero?",
+    "options": {
+      "A": "Celsius",
+      "B": "Kelvin",
+      "C": "Fahrenheit"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who discovered that gravity causes objects to fall at the same rate regardless of mass (in a vacuum)?",
+    "options": {
+      "A": "Galileo",
+      "B": "Kepler",
+      "C": "Copernicus"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the study of matter at very small scales, involving quanta, called?",
+    "options": {
+      "A": "Thermodynamics",
+      "B": "Quantum mechanics",
+      "C": "Fluid dynamics"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the name for materials that let electricity flow easily?",
+    "options": {
+      "A": "Insulators",
+      "B": "Conductors",
+      "C": "Semiconductors"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the unit of electric charge?",
+    "options": {
+      "A": "Coulomb",
+      "B": "Ampere",
+      "C": "Ohm"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What law states that pressure and volume of a gas are inversely proportional at constant temperature?",
+    "options": {
+      "A": "Charles's law",
+      "B": "Boyle's law",
+      "C": "Ohm's law"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What kind of wave is sound?",
+    "options": {
+      "A": "Transverse",
+      "B": "Longitudinal",
+      "C": "Electromagnetic"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What causes a rainbow?",
+    "options": {
+      "A": "Reflection only",
+      "B": "Dispersion of light through water droplets",
+      "C": "Cloud static"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the outermost layer of the Earth called?",
+    "options": {
+      "A": "Mantle",
+      "B": "Crust",
+      "C": "Core"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is molten rock beneath the Earth's surface called?",
+    "options": {
+      "A": "Lava",
+      "B": "Magma",
+      "C": "Basalt"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is molten rock called once it reaches the surface?",
+    "options": {
+      "A": "Magma",
+      "B": "Lava",
+      "C": "Obsidian"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What scale measures earthquake magnitude?",
+    "options": {
+      "A": "Beaufort",
+      "B": "Richter",
+      "C": "Mohs"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What scale measures mineral hardness?",
+    "options": {
+      "A": "Mohs",
+      "B": "Richter",
+      "C": "Kelvin"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the study of weather called?",
+    "options": {
+      "A": "Geology",
+      "B": "Meteorology",
+      "C": "Astronomy"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What type of rock is formed from cooled lava or magma?",
+    "options": {
+      "A": "Sedimentary",
+      "B": "Igneous",
+      "C": "Metamorphic"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What type of rock forms from layers of sediment compacted over time?",
+    "options": {
+      "A": "Igneous",
+      "B": "Sedimentary",
+      "C": "Metamorphic"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What gas in the atmosphere protects Earth from ultraviolet radiation?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Ozone",
+      "C": "Nitrogen"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for the supercontinent that existed around 300 million years ago?",
+    "options": {
+      "A": "Gondwana",
+      "B": "Pangaea",
+      "C": "Laurasia"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What drives the movement of tectonic plates?",
+    "options": {
+      "A": "Ocean currents",
+      "B": "Convection currents in the mantle",
+      "C": "The Moon's gravity"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the deepest part of the world's oceans?",
+    "options": {
+      "A": "Puerto Rico Trench",
+      "B": "Mariana Trench",
+      "C": "Java Trench"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What percentage of Earth's surface is covered by water (approximately)?",
+    "options": {
+      "A": "50%",
+      "B": "71%",
+      "C": "90%"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What causes tides on Earth?",
+    "options": {
+      "A": "Wind",
+      "B": "The Moon's and Sun's gravity",
+      "C": "Ocean temperature"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name for a scientist who studies rocks and the Earth?",
+    "options": {
+      "A": "Geologist",
+      "B": "Biologist",
+      "C": "Chemist"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What layer of the atmosphere contains most weather?",
+    "options": {
+      "A": "Stratosphere",
+      "B": "Troposphere",
+      "C": "Mesosphere"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for rain that is unusually acidic due to pollution?",
+    "options": {
+      "A": "Acid rain",
+      "B": "Smog",
+      "C": "Fog"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What natural event is measured on the Fujita or Enhanced Fujita scale?",
+    "options": {
+      "A": "Hurricanes",
+      "B": "Tornadoes",
+      "C": "Earthquakes"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the water cycle process where water vapour becomes liquid?",
+    "options": {
+      "A": "Evaporation",
+      "B": "Condensation",
+      "C": "Precipitation"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What mineral is the main component of sand on most beaches?",
+    "options": {
+      "A": "Calcite",
+      "B": "Quartz",
+      "C": "Feldspar"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Who discovered penicillin?",
+    "options": {
+      "A": "Alexander Fleming",
+      "B": "Louis Pasteur",
+      "C": "Joseph Lister"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is credited with discovering radioactivity's element radium?",
+    "options": {
+      "A": "Marie Curie",
+      "B": "Lise Meitner",
+      "C": "Dorothy Hodgkin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "How many Nobel Prizes did Marie Curie win?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Three"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who developed the polio vaccine in the 1950s?",
+    "options": {
+      "A": "Jonas Salk",
+      "B": "Edward Jenner",
+      "C": "Robert Koch"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who is often called the father of modern physics for his work on relativity?",
+    "options": {
+      "A": "Einstein",
+      "B": "Bohr",
+      "C": "Planck"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Who proposed that the Earth revolves around the Sun (heliocentrism)?",
+    "options": {
+      "A": "Ptolemy",
+      "B": "Copernicus",
+      "C": "Brahe"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who discovered the law of gravitation after (reportedly) seeing an apple fall?",
+    "options": {
+      "A": "Newton",
+      "B": "Hooke",
+      "C": "Halley"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "Who invented the telephone?",
+    "options": {
+      "A": "Thomas Edison",
+      "B": "Alexander Graham Bell",
+      "C": "Nikola Tesla"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is credited with inventing the practical light bulb?",
+    "options": {
+      "A": "Nikola Tesla",
+      "B": "Thomas Edison",
+      "C": "Michael Faraday"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who developed the theory that continents drift over time?",
+    "options": {
+      "A": "Alfred Wegener",
+      "B": "Charles Lyell",
+      "C": "James Hutton"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who discovered the structure of DNA's double helix (along with Crick)?",
+    "options": {
+      "A": "James Watson",
+      "B": "Linus Pauling",
+      "C": "Erwin Chargaff"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Whose work on X-ray diffraction was crucial to discovering DNA's structure?",
+    "options": {
+      "A": "Rosalind Franklin",
+      "B": "Barbara McClintock",
+      "C": "Ada Lovelace"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who formulated the laws of planetary motion?",
+    "options": {
+      "A": "Kepler",
+      "B": "Galileo",
+      "C": "Newton"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who first used a microscope to observe and name 'cells'?",
+    "options": {
+      "A": "Robert Hooke",
+      "B": "Anton van Leeuwenhoek",
+      "C": "Louis Pasteur"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who developed the smallpox vaccine in 1796?",
+    "options": {
+      "A": "Edward Jenner",
+      "B": "Louis Pasteur",
+      "C": "Alexander Fleming"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Which ancient Greek is known for a principle about buoyancy and shouting 'Eureka'?",
+    "options": {
+      "A": "Pythagoras",
+      "B": "Archimedes",
+      "C": "Euclid"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Who is regarded as the founder of modern chemistry, executed during the French Revolution?",
+    "options": {
+      "A": "Antoine Lavoisier",
+      "B": "Robert Boyle",
+      "C": "Joseph Priestley"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who discovered oxygen's role in combustion, overturning phlogiston theory?",
+    "options": {
+      "A": "Lavoisier",
+      "B": "Dalton",
+      "C": "Avogadro"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which scientist's cat thought experiment illustrates quantum superposition?",
+    "options": {
+      "A": "Heisenberg",
+      "B": "Schrodinger",
+      "C": "Pauli"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who introduced the uncertainty principle in quantum mechanics?",
+    "options": {
+      "A": "Heisenberg",
+      "B": "Bohr",
+      "C": "Dirac"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the largest animal ever known to have lived?",
+    "options": {
+      "A": "African elephant",
+      "B": "Blue whale",
+      "C": "Argentinosaurus"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the fastest land animal?",
+    "options": {
+      "A": "Lion",
+      "B": "Cheetah",
+      "C": "Pronghorn"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the tallest living animal?",
+    "options": {
+      "A": "Elephant",
+      "B": "Giraffe",
+      "C": "Ostrich"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "How many hearts does an octopus have?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Three"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What is a group of lions called?",
+    "options": {
+      "A": "A pack",
+      "B": "A pride",
+      "C": "A herd"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the only mammal capable of true flight?",
+    "options": {
+      "A": "Flying squirrel",
+      "B": "Bat",
+      "C": "Sugar glider"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do bees collect from flowers to make honey?",
+    "options": {
+      "A": "Pollen",
+      "B": "Nectar",
+      "C": "Sap"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the largest species of shark?",
+    "options": {
+      "A": "Great white shark",
+      "B": "Whale shark",
+      "C": "Tiger shark"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What gas makes up the bubbles in soda?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Carbon dioxide",
+      "C": "Nitrogen"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the scientific term for the periodic shedding of skin by snakes and other reptiles?",
+    "options": {
+      "A": "Ecdysis",
+      "B": "Osmosis",
+      "C": "Photosynthesis"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which bird is known for being unable to fly and living in Antarctica?",
+    "options": {
+      "A": "Puffin",
+      "B": "Penguin",
+      "C": "Albatross"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the largest species of big cat?",
+    "options": {
+      "A": "Lion",
+      "B": "Tiger",
+      "C": "Jaguar"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the smallest bird in the world?",
+    "options": {
+      "A": "Bee hummingbird",
+      "B": "Goldcrest",
+      "C": "Wren"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What insect order do beetles belong to?",
+    "options": {
+      "A": "Diptera",
+      "B": "Coleoptera",
+      "C": "Hymenoptera"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is a female horse called?",
+    "options": {
+      "A": "Filly",
+      "B": "Mare",
+      "C": "Foal"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the venomous snake with a distinctive rattle on its tail?",
+    "options": {
+      "A": "Cobra",
+      "B": "Rattlesnake",
+      "C": "Viper"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What allows chameleons to change colour?",
+    "options": {
+      "A": "Pigment cells and crystals in their skin",
+      "B": "Muscle temperature",
+      "C": "Their diet"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the largest land carnivore?",
+    "options": {
+      "A": "Grizzly bear",
+      "B": "Polar bear",
+      "C": "Siberian tiger"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "How many legs does a spider have?",
+    "options": {
+      "A": "Six",
+      "B": "Eight",
+      "C": "Ten"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What class of animals are frogs and toads?",
+    "options": {
+      "A": "Reptiles",
+      "B": "Amphibians",
+      "C": "Fish"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for animals active mainly at night?",
+    "options": {
+      "A": "Diurnal",
+      "B": "Nocturnal",
+      "C": "Crepuscular"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the study of heredity and genes called?",
+    "options": {
+      "A": "Genetics",
+      "B": "Genealogy",
+      "C": "Cytology"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What organ filters waste from the blood to produce urine?",
+    "options": {
+      "A": "Liver",
+      "B": "Kidney",
+      "C": "Bladder"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the largest bone in the human body?",
+    "options": {
+      "A": "Femur",
+      "B": "Tibia",
+      "C": "Humerus"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What connects muscle to bone?",
+    "options": {
+      "A": "Ligament",
+      "B": "Tendon",
+      "C": "Cartilage"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What connects bone to bone?",
+    "options": {
+      "A": "Tendon",
+      "B": "Ligament",
+      "C": "Muscle"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the fear response hormone released by the adrenal glands?",
+    "options": {
+      "A": "Insulin",
+      "B": "Adrenaline",
+      "C": "Melatonin"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What sleep-regulating hormone is produced by the pineal gland?",
+    "options": {
+      "A": "Melatonin",
+      "B": "Cortisol",
+      "C": "Oxytocin"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What type of blood vessel carries blood away from the heart?",
+    "options": {
+      "A": "Vein",
+      "B": "Artery",
+      "C": "Capillary"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the liquid part of blood called?",
+    "options": {
+      "A": "Plasma",
+      "B": "Serum",
+      "C": "Lymph"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the normal human body temperature in Celsius (approximately)?",
+    "options": {
+      "A": "35",
+      "B": "37",
+      "C": "39"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What vitamin deficiency causes scurvy?",
+    "options": {
+      "A": "Vitamin A",
+      "B": "Vitamin C",
+      "C": "Vitamin K"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which part of the eye controls how much light enters?",
+    "options": {
+      "A": "Cornea",
+      "B": "Iris",
+      "C": "Retina"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Where are red blood cells produced in adults?",
+    "options": {
+      "A": "Liver",
+      "B": "Bone marrow",
+      "C": "Spleen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the largest muscle in the human body?",
+    "options": {
+      "A": "Quadriceps",
+      "B": "Gluteus maximus",
+      "C": "Latissimus dorsi"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What gas is most responsible for the greenhouse effect from human activity?",
+    "options": {
+      "A": "Methane",
+      "B": "Carbon dioxide",
+      "C": "Nitrous oxide"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the name of the layer where the ozone hole forms?",
+    "options": {
+      "A": "Troposphere",
+      "B": "Stratosphere",
+      "C": "Thermosphere"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is renewable about solar and wind energy?",
+    "options": {
+      "A": "They never run out on human timescales",
+      "B": "They produce no electricity",
+      "C": "They only work at night"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What element makes up most of the Sun?",
+    "options": {
+      "A": "Helium",
+      "B": "Hydrogen",
+      "C": "Carbon"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is nuclear fission?",
+    "options": {
+      "A": "Splitting an atomic nucleus",
+      "B": "Joining two nuclei",
+      "C": "An electron changing orbit"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is nuclear fusion?",
+    "options": {
+      "A": "Splitting a nucleus",
+      "B": "Combining light nuclei into a heavier one",
+      "C": "Radioactive decay"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What element is used as fuel in most nuclear power plants?",
+    "options": {
+      "A": "Plutonium",
+      "B": "Uranium",
+      "C": "Thorium"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the common name for solid carbon dioxide?",
+    "options": {
+      "A": "Dry ice",
+      "B": "Quicklime",
+      "C": "Rock salt"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for an animal without a backbone?",
+    "options": {
+      "A": "Vertebrate",
+      "B": "Invertebrate",
+      "C": "Amphibian"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "Which blood cells fight infection?",
+    "options": {
+      "A": "Red blood cells",
+      "B": "White blood cells",
+      "C": "Platelets"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do platelets in blood help with?",
+    "options": {
+      "A": "Carrying oxygen",
+      "B": "Clotting",
+      "C": "Fighting viruses"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical process that releases energy from food in cells?",
+    "options": {
+      "A": "Photosynthesis",
+      "B": "Respiration",
+      "C": "Digestion"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the largest planet's Great Red Spot?",
+    "options": {
+      "A": "A volcano",
+      "B": "A giant storm",
+      "C": "A crater"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the pull that keeps satellites in orbit rather than flying off?",
+    "options": {
+      "A": "Centripetal force",
+      "B": "Centrifugal force",
+      "C": "Normal force"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What device converts sound waves into electrical signals?",
+    "options": {
+      "A": "Speaker",
+      "B": "Microphone",
+      "C": "Amplifier"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What device converts electrical signals into sound?",
+    "options": {
+      "A": "Microphone",
+      "B": "Speaker",
+      "C": "Transistor"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the common name for ascorbic acid?",
+    "options": {
+      "A": "Vitamin C",
+      "B": "Aspirin",
+      "C": "Caffeine"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the process of water moving through a semi-permeable membrane called?",
+    "options": {
+      "A": "Diffusion",
+      "B": "Osmosis",
+      "C": "Filtration"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which planet has the shortest day (fastest rotation)?",
+    "options": {
+      "A": "Earth",
+      "B": "Jupiter",
+      "C": "Mars"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a substance that speeds up a chemical reaction without being used up?",
+    "options": {
+      "A": "Reactant",
+      "B": "Catalyst",
+      "C": "Solvent"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the most electronegative element?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Fluorine",
+      "C": "Chlorine"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the approximate age of the universe?",
+    "options": {
+      "A": "4.5 billion years",
+      "B": "13.8 billion years",
+      "C": "100 billion years"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the approximate age of the Earth?",
+    "options": {
+      "A": "4.5 billion years",
+      "B": "6,000 years",
+      "C": "500 million years"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What sense is associated with the cochlea?",
+    "options": {
+      "A": "Sight",
+      "B": "Hearing",
+      "C": "Balance"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a light-year a measure of?",
+    "options": {
+      "A": "Time",
+      "B": "Distance",
+      "C": "Brightness"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What element has the atomic number 79?",
+    "options": {
+      "A": "Silver",
+      "B": "Gold",
+      "C": "Platinum"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the amount of matter in an object?",
+    "options": {
+      "A": "Weight",
+      "B": "Mass",
+      "C": "Density"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What happens to an object's weight on the Moon compared to Earth?",
+    "options": {
+      "A": "It increases",
+      "B": "It decreases",
+      "C": "It stays the same"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the boiling point of water in Fahrenheit at sea level?",
+    "options": {
+      "A": "180",
+      "B": "212",
+      "C": "100"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the primary greenhouse gas released by cattle?",
+    "options": {
+      "A": "Carbon dioxide",
+      "B": "Methane",
+      "C": "Ozone"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What kind of scientist studies fossils?",
+    "options": {
+      "A": "Archaeologist",
+      "B": "Palaeontologist",
+      "C": "Anthropologist"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What geological era are we currently in?",
+    "options": {
+      "A": "Mesozoic",
+      "B": "Cenozoic",
+      "C": "Paleozoic"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which dinosaur-era reptiles were flying, though not true dinosaurs?",
+    "options": {
+      "A": "Pterosaurs",
+      "B": "Plesiosaurs",
+      "C": "Ichthyosaurs"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for animals that are most active at dawn and dusk?",
+    "options": {
+      "A": "Nocturnal",
+      "B": "Diurnal",
+      "C": "Crepuscular"
+    },
+    "correct": "C",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the chemical symbol for helium?",
+    "options": {
+      "A": "He",
+      "B": "Hl",
+      "C": "Hm"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the chemical symbol for calcium?",
+    "options": {
+      "A": "Ca",
+      "B": "Cl",
+      "C": "Cm"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for carbon?",
+    "options": {
+      "A": "Ca",
+      "B": "C",
+      "C": "Cb"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the chemical symbol for nitrogen?",
+    "options": {
+      "A": "Ni",
+      "B": "N",
+      "C": "Nt"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the chemical symbol for copper?",
+    "options": {
+      "A": "Co",
+      "B": "Cu",
+      "C": "Cp"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for mercury?",
+    "options": {
+      "A": "Me",
+      "B": "Hg",
+      "C": "Mc"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the chemical symbol for zinc?",
+    "options": {
+      "A": "Zn",
+      "B": "Zi",
+      "C": "Zc"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the chemical symbol for chlorine?",
+    "options": {
+      "A": "Ch",
+      "B": "Cl",
+      "C": "Cr"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the process where a liquid becomes a gas below its boiling point, at the surface?",
+    "options": {
+      "A": "Boiling",
+      "B": "Evaporation",
+      "C": "Condensation"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for the temperature at which a solid becomes a liquid?",
+    "options": {
+      "A": "Boiling point",
+      "B": "Melting point",
+      "C": "Flash point"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What common material is an insulator of electricity?",
+    "options": {
+      "A": "Copper",
+      "B": "Rubber",
+      "C": "Aluminium"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the closest known star to the Sun?",
+    "options": {
+      "A": "Sirius",
+      "B": "Proxima Centauri",
+      "C": "Betelgeuse"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a planet outside our solar system?",
+    "options": {
+      "A": "Exoplanet",
+      "B": "Dwarf planet",
+      "C": "Rogue planet"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What causes an object to float in water?",
+    "options": {
+      "A": "It is lighter than air",
+      "B": "Its density is less than water's",
+      "C": "It is made of metal"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the main gas released when limestone is heated?",
+    "options": {
+      "A": "Oxygen",
+      "B": "Carbon dioxide",
+      "C": "Hydrogen"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which human sense is most closely linked to memory and emotion?",
+    "options": {
+      "A": "Sight",
+      "B": "Smell",
+      "C": "Touch"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the resistance of a fluid to flow?",
+    "options": {
+      "A": "Density",
+      "B": "Viscosity",
+      "C": "Buoyancy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the smallest unit of an element that retains its properties?",
+    "options": {
+      "A": "Molecule",
+      "B": "Atom",
+      "C": "Ion"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What charged particle is an atom that has gained or lost electrons?",
+    "options": {
+      "A": "Isotope",
+      "B": "Ion",
+      "C": "Radical"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What are atoms of the same element with different numbers of neutrons called?",
+    "options": {
+      "A": "Ions",
+      "B": "Isotopes",
+      "C": "Isomers"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the energy stored in chemical bonds?",
+    "options": {
+      "A": "Kinetic energy",
+      "B": "Chemical potential energy",
+      "C": "Nuclear energy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What was the first artificial satellite, launched in 1957?",
+    "options": {
+      "A": "Explorer 1",
+      "B": "Sputnik 1",
+      "C": "Vostok 1"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Who was the first woman in space?",
+    "options": {
+      "A": "Sally Ride",
+      "B": "Valentina Tereshkova",
+      "C": "Mae Jemison"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the apparent backward motion of a planet in the sky?",
+    "options": {
+      "A": "Retrograde motion",
+      "B": "Precession",
+      "C": "Parallax"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the most common blood type worldwide?",
+    "options": {
+      "A": "O positive",
+      "B": "AB negative",
+      "C": "B positive"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the study of the interactions between organisms and their environment?",
+    "options": {
+      "A": "Ecology",
+      "B": "Etymology",
+      "C": "Entomology"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the study of insects called?",
+    "options": {
+      "A": "Ornithology",
+      "B": "Entomology",
+      "C": "Ichthyology"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the study of birds called?",
+    "options": {
+      "A": "Ornithology",
+      "B": "Herpetology",
+      "C": "Mammalogy"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the study of fish called?",
+    "options": {
+      "A": "Ichthyology",
+      "B": "Ornithology",
+      "C": "Cetology"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What type of electromagnetic radiation has more energy than visible light?",
+    "options": {
+      "A": "Infrared",
+      "B": "Ultraviolet",
+      "C": "Radio waves"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What device splits white light into a spectrum of colours?",
+    "options": {
+      "A": "Lens",
+      "B": "Prism",
+      "C": "Mirror"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the SI base unit of length?",
+    "options": {
+      "A": "Metre",
+      "B": "Foot",
+      "C": "Mile"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the SI base unit of mass?",
+    "options": {
+      "A": "Gram",
+      "B": "Kilogram",
+      "C": "Pound"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the SI base unit of time?",
+    "options": {
+      "A": "Minute",
+      "B": "Second",
+      "C": "Hour"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the SI base unit of temperature?",
+    "options": {
+      "A": "Celsius",
+      "B": "Kelvin",
+      "C": "Fahrenheit"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a material that partly conducts electricity, used in chips?",
+    "options": {
+      "A": "Insulator",
+      "B": "Semiconductor",
+      "C": "Superconductor"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What element is diamond made of?",
+    "options": {
+      "A": "Silicon",
+      "B": "Carbon",
+      "C": "Boron"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What element is the main component of the mineral quartz, along with oxygen?",
+    "options": {
+      "A": "Silicon",
+      "B": "Calcium",
+      "C": "Aluminium"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a solution that has dissolved the maximum possible solute?",
+    "options": {
+      "A": "Dilute",
+      "B": "Saturated",
+      "C": "Concentrated"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What happens to the particles in a substance as it is heated?",
+    "options": {
+      "A": "They move faster",
+      "B": "They move slower",
+      "C": "They stop"
+    },
+    "correct": "A",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the name of the force that opposes motion between surfaces?",
+    "options": {
+      "A": "Gravity",
+      "B": "Friction",
+      "C": "Tension"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What kind of lens is thicker in the middle and converges light?",
+    "options": {
+      "A": "Concave",
+      "B": "Convex",
+      "C": "Cylindrical"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the phenomenon where a material loses all electrical resistance at very low temperatures?",
+    "options": {
+      "A": "Superconductivity",
+      "B": "Semiconductivity",
+      "C": "Piezoelectricity"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the primary function of white blood cells?",
+    "options": {
+      "A": "Transport oxygen",
+      "B": "Immune defence",
+      "C": "Blood clotting"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What organelle contains the cell's genetic material?",
+    "options": {
+      "A": "Mitochondrion",
+      "B": "Nucleus",
+      "C": "Golgi apparatus"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the rigid outer layer of a plant cell called?",
+    "options": {
+      "A": "Cell membrane",
+      "B": "Cell wall",
+      "C": "Cytoplasm"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What molecule do plants store energy as, similar to how animals use glycogen?",
+    "options": {
+      "A": "Cellulose",
+      "B": "Starch",
+      "C": "Chitin"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for organisms that make their own food?",
+    "options": {
+      "A": "Heterotrophs",
+      "B": "Autotrophs",
+      "C": "Decomposers"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the largest organ inside the human body?",
+    "options": {
+      "A": "Brain",
+      "B": "Liver",
+      "C": "Lungs"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which scientist is known for experiments with electricity and a kite (per popular legend)?",
+    "options": {
+      "A": "Benjamin Franklin",
+      "B": "Thomas Edison",
+      "C": "James Watt"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Who improved the steam engine, with a power unit named after him?",
+    "options": {
+      "A": "James Watt",
+      "B": "George Stephenson",
+      "C": "Richard Trevithick"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the distance light travels in one year?",
+    "options": {
+      "A": "Parsec",
+      "B": "Light-year",
+      "C": "Astronomical unit"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is Earth's magnetic field generated by?",
+    "options": {
+      "A": "The Moon",
+      "B": "Movement of molten iron in the outer core",
+      "C": "Solar wind"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the phenomenon of coloured light in polar skies called?",
+    "options": {
+      "A": "Aurora",
+      "B": "Halo",
+      "C": "Corona"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Roughly how many bones is a baby born with, more than an adult?",
+    "options": {
+      "A": "About 100",
+      "B": "About 300",
+      "C": "About 500"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the hardest substance produced by the human body?",
+    "options": {
+      "A": "Bone",
+      "B": "Tooth enamel",
+      "C": "Cartilage"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the change of a gas directly into a solid?",
+    "options": {
+      "A": "Sublimation",
+      "B": "Deposition",
+      "C": "Condensation"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the most common state of matter in the universe?",
+    "options": {
+      "A": "Solid",
+      "B": "Plasma",
+      "C": "Liquid"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for animals that carry their developing young in a pouch?",
+    "options": {
+      "A": "Monotremes",
+      "B": "Marsupials",
+      "C": "Placentals"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which mammal lays eggs?",
+    "options": {
+      "A": "Platypus",
+      "B": "Bat",
+      "C": "Dolphin"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the largest known type of star by volume?",
+    "options": {
+      "A": "Red giant",
+      "B": "Hypergiant",
+      "C": "White dwarf"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the visible surface of the Sun?",
+    "options": {
+      "A": "Corona",
+      "B": "Photosphere",
+      "C": "Chromosphere"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the main cause of ocean tides being higher at certain times of the month?",
+    "options": {
+      "A": "Alignment of the Sun and Moon",
+      "B": "Water temperature",
+      "C": "Wind speed"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What law describes the force between two electric charges?",
+    "options": {
+      "A": "Ohm's law",
+      "B": "Coulomb's law",
+      "C": "Faraday's law"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What did Michael Faraday's work lead to the invention of?",
+    "options": {
+      "A": "The telephone",
+      "B": "The electric generator",
+      "C": "The light bulb"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for splitting light or sound into its component frequencies?",
+    "options": {
+      "A": "Refraction",
+      "B": "Spectroscopy",
+      "C": "Diffusion"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "Which planet would float in water, being less dense than it?",
+    "options": {
+      "A": "Neptune",
+      "B": "Saturn",
+      "C": "Uranus"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the process of a species changing over generations called?",
+    "options": {
+      "A": "Adaptation",
+      "B": "Evolution",
+      "C": "Migration"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is a trait that helps an organism survive in its environment called?",
+    "options": {
+      "A": "A mutation",
+      "B": "An adaptation",
+      "C": "A phenotype"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for all the different living things in an area and their environment?",
+    "options": {
+      "A": "Population",
+      "B": "Ecosystem",
+      "C": "Habitat"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the specific place where an organism lives called?",
+    "options": {
+      "A": "Niche",
+      "B": "Habitat",
+      "C": "Biome"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What do we call the variety of life in a particular habitat or ecosystem?",
+    "options": {
+      "A": "Biomass",
+      "B": "Biodiversity",
+      "C": "Biosphere"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for a chemical that kills bacteria?",
+    "options": {
+      "A": "Antibiotic",
+      "B": "Antiviral",
+      "C": "Antihistamine"
+    },
+    "correct": "A",
+    "difficulty": 2
+  },
+  {
+    "q": "Why don't antibiotics work against the common cold?",
+    "options": {
+      "A": "Colds are caused by viruses",
+      "B": "Colds are not real illnesses",
+      "C": "The dose is too small"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the smallest blood vessels connecting arteries and veins?",
+    "options": {
+      "A": "Arterioles",
+      "B": "Capillaries",
+      "C": "Venules"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the human body's largest sensory organ?",
+    "options": {
+      "A": "The eye",
+      "B": "The skin",
+      "C": "The tongue"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for water that contains dissolved minerals like calcium and magnesium?",
+    "options": {
+      "A": "Soft water",
+      "B": "Hard water",
+      "C": "Distilled water"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a reaction that releases heat?",
+    "options": {
+      "A": "Endothermic",
+      "B": "Exothermic",
+      "C": "Isothermic"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a reaction that absorbs heat?",
+    "options": {
+      "A": "Exothermic",
+      "B": "Endothermic",
+      "C": "Isothermic"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is Newton's third law?",
+    "options": {
+      "A": "Objects in motion stay in motion",
+      "B": "Force equals mass times acceleration",
+      "C": "For every action there is an equal and opposite reaction"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What does F = ma stand for in physics?",
+    "options": {
+      "A": "Force equals mass times acceleration",
+      "B": "Frequency equals mass over amplitude",
+      "C": "Field equals magnetism times area"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What are the three classical states of matter?",
+    "options": {
+      "A": "Solid, liquid, plasma",
+      "B": "Solid, liquid, gas",
+      "C": "Gas, plasma, liquid"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the term for the middle layer of the Earth, between crust and core?",
+    "options": {
+      "A": "Lithosphere",
+      "B": "Mantle",
+      "C": "Asthenosphere"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What instrument is used to measure temperature?",
+    "options": {
+      "A": "Barometer",
+      "B": "Thermometer",
+      "C": "Anemometer"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What instrument measures wind speed?",
+    "options": {
+      "A": "Anemometer",
+      "B": "Barometer",
+      "C": "Hygrometer"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What instrument measures humidity?",
+    "options": {
+      "A": "Hygrometer",
+      "B": "Thermometer",
+      "C": "Seismograph"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What instrument records earthquakes?",
+    "options": {
+      "A": "Barometer",
+      "B": "Seismograph",
+      "C": "Spectrometer"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the sun primarily powered by?",
+    "options": {
+      "A": "Burning coal",
+      "B": "Nuclear fusion",
+      "C": "Chemical combustion"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the point in an orbit closest to the Sun?",
+    "options": {
+      "A": "Aphelion",
+      "B": "Perihelion",
+      "C": "Apogee"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for a substance that cannot be broken down into simpler substances chemically?",
+    "options": {
+      "A": "Compound",
+      "B": "Element",
+      "C": "Mixture"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is formed when two or more elements chemically combine?",
+    "options": {
+      "A": "A mixture",
+      "B": "A compound",
+      "C": "An alloy"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is a mixture of metals called?",
+    "options": {
+      "A": "A compound",
+      "B": "An alloy",
+      "C": "An element"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What alloy is made mainly of copper and tin?",
+    "options": {
+      "A": "Brass",
+      "B": "Bronze",
+      "C": "Steel"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What alloy is made mainly of copper and zinc?",
+    "options": {
+      "A": "Bronze",
+      "B": "Brass",
+      "C": "Pewter"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Steel is primarily an alloy of iron and which element?",
+    "options": {
+      "A": "Carbon",
+      "B": "Nickel",
+      "C": "Chromium"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the tendency of an object to resist changes in its motion?",
+    "options": {
+      "A": "Momentum",
+      "B": "Inertia",
+      "C": "Velocity"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What quantity is mass times velocity?",
+    "options": {
+      "A": "Force",
+      "B": "Momentum",
+      "C": "Energy"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the unit of pressure in the SI system?",
+    "options": {
+      "A": "Pascal",
+      "B": "Newton",
+      "C": "Bar"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the approximate acceleration due to gravity at Earth's surface?",
+    "options": {
+      "A": "9.8 m/s^2",
+      "B": "3.7 m/s^2",
+      "C": "1.6 m/s^2"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What organelle is responsible for photosynthesis in plant cells?",
+    "options": {
+      "A": "Mitochondrion",
+      "B": "Chloroplast",
+      "C": "Vacuole"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is DNA short for?",
+    "options": {
+      "A": "Deoxyribonucleic acid",
+      "B": "Dinucleic acid",
+      "C": "Diribonucleic acid"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the complementary base to adenine in DNA?",
+    "options": {
+      "A": "Guanine",
+      "B": "Thymine",
+      "C": "Cytosine"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What term describes species that no longer exist anywhere on Earth?",
+    "options": {
+      "A": "Endangered",
+      "B": "Extinct",
+      "C": "Threatened"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What was the mass extinction 66 million years ago most associated with?",
+    "options": {
+      "A": "The end of the dinosaurs",
+      "B": "The Ice Age",
+      "C": "The Cambrian explosion"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the leading scientific explanation for that extinction?",
+    "options": {
+      "A": "A large asteroid impact",
+      "B": "A supernova",
+      "C": "Rapid cooling from Earth's core"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for the gradual warming of Earth's climate due to greenhouse gases?",
+    "options": {
+      "A": "Ozone depletion",
+      "B": "Global warming",
+      "C": "Acid rain"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is the primary source of energy for Earth's climate system?",
+    "options": {
+      "A": "Geothermal heat",
+      "B": "The Sun",
+      "C": "Ocean currents"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is condensation of water vapour high in the atmosphere that we see as white masses?",
+    "options": {
+      "A": "Fog",
+      "B": "Clouds",
+      "C": "Smog"
+    },
+    "correct": "B",
+    "difficulty": 1
+  },
+  {
+    "q": "What is frozen precipitation that falls as balls of ice during thunderstorms?",
+    "options": {
+      "A": "Sleet",
+      "B": "Hail",
+      "C": "Frost"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What is the term for a wind system that reverses seasonally, bringing heavy rain to South Asia?",
+    "options": {
+      "A": "Trade wind",
+      "B": "Monsoon",
+      "C": "Jet stream"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the fast-flowing air current high in the atmosphere that affects weather and flights?",
+    "options": {
+      "A": "Trade wind",
+      "B": "Jet stream",
+      "C": "Chinook"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the name of the theoretical particle that gives other particles mass, confirmed in 2012?",
+    "options": {
+      "A": "Higgs boson",
+      "B": "Tau neutrino",
+      "C": "Graviton"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which facility discovered the Higgs boson?",
+    "options": {
+      "A": "Fermilab",
+      "B": "CERN's Large Hadron Collider",
+      "C": "SLAC"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the second law of thermodynamics broadly about?",
+    "options": {
+      "A": "Conservation of energy",
+      "B": "Entropy tends to increase",
+      "C": "Absolute zero is unreachable"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the first law of thermodynamics essentially?",
+    "options": {
+      "A": "Energy cannot be created or destroyed",
+      "B": "Heat flows from cold to hot",
+      "C": "Entropy always decreases"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Who proposed the Big Bang theory's expanding-universe idea, a Belgian priest and physicist?",
+    "options": {
+      "A": "Georges Lemaitre",
+      "B": "Fred Hoyle",
+      "C": "Edwin Hubble"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What observation is key evidence for the expanding universe?",
+    "options": {
+      "A": "Redshift of distant galaxies",
+      "B": "The colour of the Sun",
+      "C": "Meteor showers"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the faint radiation left over from the early universe called?",
+    "options": {
+      "A": "Solar wind",
+      "B": "Cosmic microwave background",
+      "C": "Gamma-ray burst"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What element is formed by nuclear fusion in the core of a main-sequence star like the Sun?",
+    "options": {
+      "A": "Helium from hydrogen",
+      "B": "Carbon from helium",
+      "C": "Iron from silicon"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What prevents a stable star from collapsing under its own gravity?",
+    "options": {
+      "A": "Magnetic fields",
+      "B": "Outward pressure from fusion",
+      "C": "Rotation alone"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a white dwarf?",
+    "options": {
+      "A": "A young hot star",
+      "B": "The dense remnant core of a low-mass star",
+      "C": "A failed star"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a neutron star's typical origin?",
+    "options": {
+      "A": "A supernova of a massive star",
+      "B": "A collision of two planets",
+      "C": "A collapsing gas cloud"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a pulsar?",
+    "options": {
+      "A": "A rotating neutron star emitting beams of radiation",
+      "B": "A variable red giant",
+      "C": "A type of quasar"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Chandrasekhar limit roughly about?",
+    "options": {
+      "A": "The maximum mass of a stable white dwarf",
+      "B": "The speed of light",
+      "C": "The size of the observable universe"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What quantity is conserved in an isolated system according to Noether's theorem when there is time symmetry?",
+    "options": {
+      "A": "Momentum",
+      "B": "Energy",
+      "C": "Charge"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the approximate value of the fine-structure constant's reciprocal?",
+    "options": {
+      "A": "137",
+      "B": "42",
+      "C": "299"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for elements heavier than iron being formed in supernovae and neutron-star mergers?",
+    "options": {
+      "A": "Nucleosynthesis",
+      "B": "Fission",
+      "C": "Ionisation"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which blood protein carries oxygen?",
+    "options": {
+      "A": "Albumin",
+      "B": "Haemoglobin",
+      "C": "Fibrin"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the iron-containing part at the centre of a haemoglobin molecule called?",
+    "options": {
+      "A": "Heme group",
+      "B": "Globin",
+      "C": "Porphyrin shell"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for programmed cell death?",
+    "options": {
+      "A": "Necrosis",
+      "B": "Apoptosis",
+      "C": "Lysis"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What enzyme unwinds the DNA double helix during replication?",
+    "options": {
+      "A": "Ligase",
+      "B": "Helicase",
+      "C": "Polymerase"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the process of making messenger RNA from a DNA template called?",
+    "options": {
+      "A": "Translation",
+      "B": "Transcription",
+      "C": "Replication"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Where does translation (protein synthesis) occur in the cell?",
+    "options": {
+      "A": "Nucleus",
+      "B": "Ribosome",
+      "C": "Lysosome"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What term describes an allele that is expressed only when two copies are present?",
+    "options": {
+      "A": "Dominant",
+      "B": "Recessive",
+      "C": "Codominant"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the observable expression of a gene called?",
+    "options": {
+      "A": "Genotype",
+      "B": "Phenotype",
+      "C": "Karyotype"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What blood-cell antigen system is described by the letters A, B, AB and O?",
+    "options": {
+      "A": "Rhesus",
+      "B": "ABO",
+      "C": "MN"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the Rh factor in blood typing?",
+    "options": {
+      "A": "A protein that may be present on red blood cells",
+      "B": "A type of white blood cell",
+      "C": "A clotting agent"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What part of a neuron receives signals from other neurons?",
+    "options": {
+      "A": "Axon",
+      "B": "Dendrite",
+      "C": "Myelin"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the gap between two neurons where signals are transmitted chemically?",
+    "options": {
+      "A": "Node",
+      "B": "Synapse",
+      "C": "Nucleus"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What neurotransmitter is strongly associated with reward and motivation?",
+    "options": {
+      "A": "Serotonin",
+      "B": "Dopamine",
+      "C": "GABA"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the pH range of a strong base?",
+    "options": {
+      "A": "1-3",
+      "B": "6-7",
+      "C": "12-14"
+    },
+    "correct": "C",
+    "difficulty": 3
+  },
+  {
+    "q": "What ion is responsible for acidity in aqueous solution?",
+    "options": {
+      "A": "Hydroxide (OH-)",
+      "B": "Hydrogen (H+)",
+      "C": "Chloride (Cl-)"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for a salt solution's ability to resist changes in pH?",
+    "options": {
+      "A": "Titration",
+      "B": "Buffering",
+      "C": "Neutralisation"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is Le Chatelier's principle about?",
+    "options": {
+      "A": "How a system at equilibrium responds to disturbance",
+      "B": "The rate of radioactive decay",
+      "C": "Electron configuration"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for the number of moles of solute per litre of solution?",
+    "options": {
+      "A": "Molality",
+      "B": "Molarity",
+      "C": "Normality"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What subatomic particles are found in the nucleus?",
+    "options": {
+      "A": "Protons and electrons",
+      "B": "Protons and neutrons",
+      "C": "Neutrons and electrons"
+    },
+    "correct": "B",
+    "difficulty": 2
+  },
+  {
+    "q": "What holds protons and neutrons together in the nucleus?",
+    "options": {
+      "A": "Gravity",
+      "B": "The strong nuclear force",
+      "C": "The electromagnetic force"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Which of the four fundamental forces is by far the weakest?",
+    "options": {
+      "A": "Gravity",
+      "B": "Electromagnetism",
+      "C": "The weak force"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a material magnetised strongly in the same direction as an applied field, like iron?",
+    "options": {
+      "A": "Diamagnetic",
+      "B": "Paramagnetic",
+      "C": "Ferromagnetic"
+    },
+    "correct": "C",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the Doppler effect?",
+    "options": {
+      "A": "A change in observed frequency due to relative motion",
+      "B": "The bending of light by gravity",
+      "C": "The scattering of light by air"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "Why is the sky blue?",
+    "options": {
+      "A": "Reflection off the oceans",
+      "B": "Rayleigh scattering of sunlight by the atmosphere",
+      "C": "The colour of nitrogen"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Why are sunsets red or orange?",
+    "options": {
+      "A": "The Sun changes colour",
+      "B": "Sunlight passes through more atmosphere, scattering blue light away",
+      "C": "Dust from space"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the minimum energy needed to start a chemical reaction?",
+    "options": {
+      "A": "Bond energy",
+      "B": "Activation energy",
+      "C": "Ionisation energy"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the process by which a radioactive element becomes a different element over time?",
+    "options": {
+      "A": "Fusion",
+      "B": "Radioactive decay",
+      "C": "Combustion"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the time it takes half of a radioactive sample to decay?",
+    "options": {
+      "A": "Decay constant",
+      "B": "Half-life",
+      "C": "Mean lifetime"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Carbon-14 dating is useful for materials up to roughly how old?",
+    "options": {
+      "A": "500 years",
+      "B": "50,000 years",
+      "C": "5 million years"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the largest structure known in the universe made of?",
+    "options": {
+      "A": "Galaxies and dark matter in filaments",
+      "B": "A single giant star",
+      "C": "Solid rock"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What makes up most of the mass-energy content of the universe, according to current models?",
+    "options": {
+      "A": "Ordinary matter",
+      "B": "Dark energy and dark matter",
+      "C": "Neutrinos"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the escape velocity from Earth's surface, approximately?",
+    "options": {
+      "A": "11 km/s",
+      "B": "1 km/s",
+      "C": "100 km/s"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the outer edge of the region of the universe we could ever observe called?",
+    "options": {
+      "A": "The cosmological horizon",
+      "B": "The event horizon",
+      "C": "The ecliptic"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Which gas law relates pressure and temperature at constant volume?",
+    "options": {
+      "A": "Boyle's law",
+      "B": "Gay-Lussac's law",
+      "C": "Avogadro's law"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the ideal gas law equation?",
+    "options": {
+      "A": "PV = nRT",
+      "B": "E = mc^2",
+      "C": "F = G m1 m2 / r^2"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for a solution's freezing point being lowered by a dissolved solute?",
+    "options": {
+      "A": "Osmotic pressure",
+      "B": "Freezing-point depression",
+      "C": "Vapour-pressure rise"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What device uses electromagnetic induction to change voltage in AC circuits?",
+    "options": {
+      "A": "Capacitor",
+      "B": "Transformer",
+      "C": "Rectifier"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What component stores electrical charge in a circuit?",
+    "options": {
+      "A": "Resistor",
+      "B": "Capacitor",
+      "C": "Inductor"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "What is Ohm's law?",
+    "options": {
+      "A": "V = IR",
+      "B": "P = VI",
+      "C": "Q = It"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the term for the rate of doing work or transferring energy?",
+    "options": {
+      "A": "Force",
+      "B": "Power",
+      "C": "Torque"
+    },
+    "correct": "B",
+    "difficulty": 3
+  },
+  {
+    "q": "Which scientist is credited with the discovery of the electron?",
+    "options": {
+      "A": "J.J. Thomson",
+      "B": "Ernest Rutherford",
+      "C": "James Chadwick"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "Which scientist discovered the neutron?",
+    "options": {
+      "A": "James Chadwick",
+      "B": "Niels Bohr",
+      "C": "Enrico Fermi"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "Whose gold-foil experiment revealed the atomic nucleus?",
+    "options": {
+      "A": "Rutherford",
+      "B": "Millikan",
+      "C": "Thomson"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What model of the atom did Niels Bohr propose?",
+    "options": {
+      "A": "Electrons in fixed energy levels around the nucleus",
+      "B": "A solid indivisible sphere",
+      "C": "A cloud of protons"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for an atom or molecule in an excited state releasing a photon?",
+    "options": {
+      "A": "Absorption",
+      "B": "Emission",
+      "C": "Refraction"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "What is a mole in chemistry?",
+    "options": {
+      "A": "A unit for amount of substance",
+      "B": "A unit of mass",
+      "C": "A type of bond"
+    },
+    "correct": "A",
+    "difficulty": 3
+  },
+  {
+    "q": "What is the approximate diameter of a human red blood cell?",
+    "options": {
+      "A": "8 micrometres",
+      "B": "8 millimetres",
+      "C": "8 nanometres"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What structure in bacteria can make them resistant to antibiotics by pumping the drug out?",
+    "options": {
+      "A": "Ribosome",
+      "B": "Efflux pump",
+      "C": "Flagellum"
+    },
+    "correct": "B",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the term for bacteria that require oxygen to grow?",
+    "options": {
+      "A": "Anaerobes",
+      "B": "Aerobes",
+      "C": "Extremophiles"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "In the three-domain system of life, which domain do bacteria belong to?",
+    "options": {
+      "A": "Bacteria",
+      "B": "Archaea",
+      "C": "Eukarya"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the term for organisms that thrive in extreme environments like hot springs?",
+    "options": {
+      "A": "Extremophiles",
+      "B": "Halophiles",
+      "C": "Mesophiles"
+    },
+    "correct": "A",
+    "difficulty": 4
+  },
+  {
+    "q": "What is the outer boundary of the solar system where the solar wind slows, called?",
+    "options": {
+      "A": "Heliopause",
+      "B": "Kuiper cliff",
+      "C": "Oort edge"
+    },
+    "correct": "A",
+    "difficulty": 5
+  },
+  {
+    "q": "What is the distant spherical shell of icy bodies thought to be the source of long-period comets?",
+    "options": {
+      "A": "Kuiper Belt",
+      "B": "Oort Cloud",
+      "C": "Asteroid Belt"
+    },
+    "correct": "B",
+    "difficulty": 4
+  },
+  {
+    "q": "Where is the asteroid belt located?",
+    "options": {
+      "A": "Between Mars and Jupiter",
+      "B": "Between Earth and Mars",
+      "C": "Beyond Neptune"
+    },
+    "correct": "A",
+    "difficulty": 3
+  }
+]
